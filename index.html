@@ -3,10 +3,16 @@
 	<meta charset="UTF-8">
 	<title>Hollow Knight Randomized Map Visualizer</title>
 	<script src="d3.js"></script>
+	<script src="testSaveData.js"></script>
+	<script src="dataGen.js"></script>
 	<style>
 		body, html { margin: 0; padding: 0; height: 100%; width: 100%; }
 
-		.nodeLabel {stroke: none; font-family: sans-serif; fill: black;}
+		svg { user-select: none; }
+
+		.mapNode { cursor: pointer; }
+
+		.nodeLabel {font-size: 11px;stroke: none;font-family: sans-serif;fill: black;text-anchor: middle;}
 		.nodeLabel.shadow {stroke: white;stroke-width: 3px;}
 	</style>
 </head>
@@ -14,15 +20,18 @@
 	<svg width="100%" height="100%"></svg>
 </body>
 <script>
-	var nodes = [{name: "A"}, {name: "B"}, {}, {}];
-	var links = [{source: nodes[0], target: nodes[1]}];
+	var data = new DataGen();
+	data.load(testSaveData)
+
+	// var nodes = [{name: "A"}, {name: "B"}, {}, {}];
+	// var links = [{source: nodes[0], target: nodes[1]}];
 
 	var svg = d3.select("svg");
 
 	const color = "blue";
 
-	var simulation = d3.forceSimulation(nodes)
-		.force("link", d3.forceLink(links))
+	var simulation = d3.forceSimulation(data.nodes)
+		.force("link", d3.forceLink(data.links))
 		.force("group", d3.forceManyBody())
 		.force("x", d3.forceX())
 		.force("y", d3.forceY())
@@ -67,7 +76,7 @@
 			.attr("stroke", "#999")
 			.attr("stroke-opacity", 0.6)
 		.selectAll("line")
-			.data(links)
+			.data(data.links)
 			.join("line")
 	;
 
@@ -77,8 +86,9 @@
 			.attr("stroke", "#fff")
 			.attr("stroke-width", 1.5)
 		.selectAll("g")
-			.data(nodes)
+			.data(data.nodes, x => x.room)
 			.join("g")
+				.classed("mapNode", true)
 				.call(setupDrag())
 	;
 
@@ -90,7 +100,7 @@
 
 	node.append("text")
 		.classed("nodeLabel shadow", true)
-		.text(d => d.name || "[empty]")
+		.text(d => d.room || "[unknown]")
 		.clone(true).classed("shadow", false)
 	;
 
