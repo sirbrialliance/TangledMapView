@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="UTF-8">
+	<title>Hollow Knight Randomized Map Visualizer</title>
+	<script src="d3.js"></script>
+	<style>
+		body, html { margin: 0; padding: 0; height: 100%; width: 100%; }
+
+		.nodeLabel {stroke: none; font-family: sans-serif; fill: black;}
+		.nodeLabel.shadow {stroke: white;stroke-width: 3px;}
+	</style>
+</head>
+<body>
+	<svg width="100%" height="100%"></svg>
+</body>
+<script>
+	var nodes = [{name: "A"}, {name: "B"}, {}, {}];
+	var links = [{source: nodes[0], target: nodes[1]}];
+
+	var svg = d3.select("svg");
+
+	const color = "blue";
+
+	var simulation = d3.forceSimulation(nodes)
+		.force("link", d3.forceLink(links))
+		.force("group", d3.forceManyBody())
+		.force("x", d3.forceX())
+		.force("y", d3.forceY())
+	;
+
+	function updateSize() {
+		var width = svg.node().clientWidth;
+		var height = svg.node().clientHeight;
+		simulation.force("center", d3.forceCenter(width / 2, height / 2));
+		simulation.restart();
+	}
+
+	window.addEventListener("resize", updateSize);
+
+	function setupDrag() {
+		function dragstarted(event) {
+			if (!event.active) simulation.alphaTarget(0.3).restart();
+			event.subject.fx = event.subject.x;
+			event.subject.fy = event.subject.y;
+		}
+
+		function dragged(event) {
+			event.subject.fx = event.x;
+			event.subject.fy = event.y;
+		}
+
+		function dragended(event) {
+			if (!event.active) simulation.alphaTarget(0);
+			event.subject.fx = null;
+			event.subject.fy = null;
+		}
+
+		return d3.drag()
+			.on("start", dragstarted)
+			.on("drag", dragged)
+			.on("end", dragended)
+		;
+	};
+
+	const link = svg
+		.append("g")
+			.attr("stroke", "#999")
+			.attr("stroke-opacity", 0.6)
+		.selectAll("line")
+			.data(links)
+			.join("line")
+	;
+
+  const node = svg
+		.append("g")
+			.attr("id", "nodes")
+			.attr("stroke", "#fff")
+			.attr("stroke-width", 1.5)
+		.selectAll("g")
+			.data(nodes)
+			.join("g")
+				.call(setupDrag())
+	;
+
+  // node.append("title").text(d => d.id)
+
+	node.append("circle")
+		.attr("r", 5)
+		.attr("fill", color)
+
+	node.append("text")
+		.classed("nodeLabel shadow", true)
+		.text(d => d.name || "[empty]")
+		.clone(true).classed("shadow", false)
+	;
+
+
+	simulation.on("tick", () => {
+		link
+			.attr("x1", d => d.source.x)
+			.attr("y1", d => d.source.y)
+			.attr("x2", d => d.target.x)
+			.attr("y2", d => d.target.y)
+		;
+
+		node.attr("transform", d => `translate(${d.x},${d.y})`);
+	});
+
+	updateSize();
+
+/* Some parts of code are
+Copyright 2017–2020 Observable, Inc.
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+*/
+
+</script>
+</html>
