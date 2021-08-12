@@ -6,6 +6,7 @@
 	<script src="testSaveData.js"></script>
 	<script src="DataRender.js"></script>
 	<script src="DataGen.js"></script>
+	<script src="ClusterHandler.js"></script>
 	<style>
 		body, html { margin: 0; padding: 0; height: 100%; width: 100%; }
 
@@ -59,13 +60,13 @@
 			.strength(x => x.strength)
 			.distance(35)
 		)
-		// .force("group", d3.forceManyBody()
-		// 	// .strength(-30)
-		// 	// .distanceMin(30)
-		// 	// .distanceMax(200)
-		// )
+		.force("group", d3.forceManyBody()
+			// .strength(-30)
+			// .distanceMin(30)
+			// .distanceMax(200)
+		)
 		.force("noExplode", dataRender.explosionPrevention(1000))
-		.force("custom", dataRender.getForceFunc())
+		// .force("custom", dataRender.getForceFunc())
 		// .alphaDecay(.005)
 
 	function updateSize() {
@@ -102,7 +103,7 @@
 			})
 			.on("end", (event) => {
 				note(event)
-				simulation.alpha(1).alphaTarget(0).restart()
+				simulation.alphaTarget(0)
 
 				if (event.subject.__hadFixedPos) {
 					delete event.subject.__hadFixedPos

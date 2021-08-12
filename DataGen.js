@@ -110,7 +110,7 @@ class DataGen {
 		for (let transitionId in this.visitedTransitions) {
 			if (includedTransitions[transitionId]) continue;//already handled
 
-if (this.links.length >= 8) break;
+// if (this.links.length >= 8) break;
 
 			var transitionA = this.transitions[transitionId]
 			if (!transitionA) continue;//one-way, handle from the other side
@@ -180,7 +180,7 @@ class RoomLink {
 
 		//Try to cluster near nexus rooms and allow larger distances for "straight-though"/travel rooms.
 		var mostRooms = Math.max(transitionA.srcRoom.numTransitions, transitionA.dstRoom.numTransitions)
-		this.strength = mostRooms * mostRooms / 30
+		this.strength = Math.pow(mostRooms, 1.2) / 30
 
 	}
 
