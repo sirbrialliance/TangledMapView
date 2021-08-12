@@ -36,7 +36,7 @@ class DataRender {
 					let room = event.subject; note(event)
 					let [simulation, target] = getTargets(room)
 
-					console.log(`Clicked ${room.displayText} which links to ${Object.keys(room.transitions).join(", ")}`, room)
+					console.log(`Clicked ${room.displayText} which links to ${Object.keys(room.doorIds).join(", ")}`, room)
 
 					simulation.alphaTarget(0.3).restart()//ask it to "keep the alpha warm" while we drag
 
@@ -100,7 +100,7 @@ class DataRender {
 		node.filter(x => !x.isHub).call(setupDrag(false))
 
 		node.append("circle")
-			.attr("r", node => node.numTransitions * 2.5 + 3.5)
+			.attr("r", node => node.numDoors * 2.5 + 3.5)
 			.attr("fill", room => {
 				if (room.isStartRoom) return "orange"
 				else if (room.island.hub === room) return "red"
@@ -111,7 +111,7 @@ class DataRender {
 		node.append("text")
 			.classed("mapNodeLabel shadow", true)
 			// .text(x => x.displayText)
-			.text(x => x.displayText + " Island: " + x.island.id + " - " + x.islandDistance)
+			.text(x => `${x.displayText}, dist ${x.islandDistance} on ${x.island.id} with ${x.numTransitionsVisited - x.numDoors} unvisited`)
 			.clone(true).classed("shadow", false)
 
 		island.simulation.on("tick", () => {

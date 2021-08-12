@@ -5,8 +5,9 @@
 	- xx two(+) simulations:
 		- macro simulation, arranges islands only (so they don't overlap)
 		- island simulations, arranges items within an island
-	- add cross-island link lins (dotted, emphasize on hover)
-		- and figure out why we have orphans
+	- figure out why we have orphans
+		- we are considering all data when we crawl, but not making links for two adjacent visited rooms you haven't used the transition on yet
+	- add cross-island link lines (dotted, emphasize on hover)
 	- instead of using link forces and trying to keep things on certain sides, make a force function that calculates an "ideal" position and pulls toward that
 		- adjust radii as we get farther from the hub so it's easier to fit "impossible" room arrangements
 

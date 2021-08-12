@@ -6,6 +6,7 @@ class ClusterHandler {
 
 	hubs = []//central room of each island
 	islands = []
+	crossIslandLinks = []
 	macro = null
 
 	constructor(data) {
@@ -34,7 +35,7 @@ class ClusterHandler {
 
 		//grab top rooms
 		var rooms = Object.values(this.data.rooms)
-		rooms.sort((a, b) => b.numTransitions - a.numTransitions)
+		rooms.sort((a, b) => b.numDoors - a.numDoors)
 
 		for (let i = 0; i < numIslands; i++) this.hubs.push(rooms[i])
 	}
@@ -92,9 +93,8 @@ class ClusterHandler {
 
 		++islandDistance
 
-		for (let tId in room.transitions) {
-			let transition = this.data.transitions[tId]
-			if (!transition) continue//inbound-only transition
+		for (let doorId in room.doorIds) {
+			let transition = this.data.doorTransitions[doorId]
 
 			let otherRoom = transition.dstRoom === room ? transition.srcRoom : transition.dstRoom
 
@@ -121,28 +121,25 @@ class ClusterHandler {
 	_buildIslandData(island) {
 		let links = island.links
 
-		var includedTransitions = {}
+		var handledDoors = {}
 
-		for (let transitionId in this.data.visitedTransitions) {
-			if (includedTransitions[transitionId]) continue;//already handled
+		for (let doorId in this.data.visitedDoors) {
+			if (handledDoors[doorId]) continue;//already handled
+			// if (links.length >= 8) break;
 
-// if (links.length >= 8) break;
-
-			var transitionA = this.data.allTransitions[transitionId]
+			var transitionA = this.data.transitions[doorId]
+			if (!transitionA) continue //one-way that doesn't start on doorId we'll get this form the other side
 
 			if (transitionA.srcRoom.island !== island || transitionA.dstRoom.island !== island) {
 				//todo, cross island connecting stuffs
 				continue
 			}
 
-			//(transitionA might only end at transitionId, so pick the right side to check for the return transition)
-			var transitionADoor = transitionA.id === transitionId ? transitionId : transitionA.dst
-
-			var transitionB = transitionA.bidi ? this.data.transitions[transitionADoor] : null
+			var transitionB = this.data.transitions[transitionA.dstDoorId]
 
 			links.push(new RoomLink(transitionA, transitionB))
-			includedTransitions[transitionA.id] = true
-			if (transitionB) includedTransitions[transitionB.id] = true
+			handledDoors[transitionA.srcDoor] = true
+			handledDoors[transitionA.dstDoor] = true
 		}
 
 		const explosionPrevention = () => {
@@ -180,7 +177,7 @@ class ClusterHandler {
 			.force("noExplode", explosionPrevention)
 			// .force("custom", dataRender.getForceFunc())
 			.alphaDecay(.005)
-			.alphaMin(.05)
+			.alphaMin(.09)
 	}
 
 }

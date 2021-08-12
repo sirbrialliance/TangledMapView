@@ -14,87 +14,81 @@ door_*: 13
 class DataGen {
 	// centerPos = [0, 0]
 	rooms = {}//map of room id => RoomNode
-	transitions = {}//map of transition id => RoomLink
-	/** transitions, but includes lookups for destination-only doors (e.g. A->B can be found in allTransitions[A] or allTransitions[B]) */
-	allTransitions = {}
+	transitions = {}//map of (srcDoorId) => RoomTransition
+	/** Map of door id => RoomTransition. The forward transition is preferred, but if there isn't one the reverse transition is used. */
+	doorTransitions = {}
+	/** set of doors we've used including src and dst door, door id => true */
+	visitedDoors = {}
+
 
 	load(saveData) {
 		this.saveData = saveData
 		var randomizerDataJSON = saveData["PolymorphicModData"]["RandomizerMod"]
 		this.randomizerData = JSON.parse(randomizerDataJSON)
 
-		var transitionRawData = JSON.parse(this.randomizerData["StringValues"]["_obtainedTransitions"])
+		var visitedDoorIdsRaw = JSON.parse(this.randomizerData["StringValues"]["_obtainedTransitions"])
 
-
-		this.visitedTransitions = {}
 		this.transitions = {}
+		this.visitedDoors = {}
 		this.rooms = {}
 
-		for (let id of transitionRawData._keys) this.visitedTransitions[id] = true
-
-		const getAndUpdateRoom = (roomId, transitionId) => {
-			var room = this.rooms[roomId]
-			if (!room) {
-				room = this.rooms[roomId] = new RoomNode(roomId, this)
-
-				//pin starting room to the center
-				// if (room === this.randomizerData.StringValues.StartSceneName) {
-				// 	this.setCenter(this.centerPos)
-				// }
-			}
-			room.addTransition(transitionId)
+		const getAndUpdateRoom = (roomId, doorId) => {
+			var room = this.rooms[roomId] || (this.rooms[roomId] = new RoomNode(roomId, this))
+			room.addDoor(doorId)
 			return room
 		}
 
 		var tPlacements = this.randomizerData["_transitionPlacements"];
-		for (var src in tPlacements) {
-			var srcInfo = this.parseTransition(src)
-			var dst = tPlacements[src]
-			var dstInfo = this.parseTransition(dst)
+		for (var srcDoor in tPlacements) {
+			var srcInfo = this.parseDoorId(srcDoor)
+			var dstDoor = tPlacements[srcDoor]
+			var dstInfo = this.parseDoorId(dstDoor)
 
-			var srcRoom = getAndUpdateRoom(srcInfo.room, src)
-			var dstRoom = getAndUpdateRoom(dstInfo.room, dst)
+			var srcRoom = getAndUpdateRoom(srcInfo.roomId, srcDoor)
+			var dstRoom = getAndUpdateRoom(dstInfo.roomId, dstDoor)
 
-			this.transitions[src] = Object.assign(new RoomTransition, {
-				id: src,
-				src,
+			this.transitions[srcDoor] = Object.assign(new RoomTransition, {
+				id: srcDoor + "-" + dstDoor,
+				srcDoor,
 				srcRoom,
 				srcSide: srcInfo.side,
 
-				dst,
+				dstDoor,
 				dstRoom,
 				dstSide: dstInfo.side,
 
-				visited: this.visitedTransitions[src] || false,
-				bidi: tPlacements[dst] === src,//bidirectional link
+				visited: null,//will fill out shortly
+				bidi: tPlacements[dstDoor] === srcDoor,//bidirectional link
 			})
 		}
 
-		//Extra lookup for finding at least SOME transition when looking at destination-only doors
-		this.allTransitions = {...this.transitions}
+		this.doorTransitions = {}
+		//add door mappings
 		for (let k in this.transitions) {
 			var transition = this.transitions[k]
-			if (!this.allTransitions[transition.dst]) this.allTransitions[transition.dst] = transition
+			this.doorTransitions[transition.srcDoor] = transition
+			if (!transition.bidi) this.doorTransitions[transition.dstDoor] = transition
 		}
 
-		this.buildNodes()
+		//mark what's been visited
+		for (let doorId of visitedDoorIdsRaw._keys) {
+			let transitionA = this.doorTransitions[doorId]
+			transitionA.visited = true
+			this.visitedDoors[transitionA.srcDoor] = true
+			this.visitedDoors[transitionA.dstDoor] = true
+
+			if (transitionA.bidi) {
+				let transitionB = this.doorTransitions[transitionA.dstDoor]
+				transitionB.visited = true
+			}
+		}
 	}
 
-	// setCenter(pos) {
-	// 	this.centerPos = pos;
-
-	// 	var startRoom = this.rooms[this.randomizerData.StringValues.StartSceneName]
-	// 	if (startRoom) {
-	// 		[startRoom.fx, startRoom.fy] = pos
-	// 	}
-
-	// }
-
-	parseTransition(transitionName) {
-		var parts = transitionName.match(/^(\w+)\[([a-zA-Z_]+)(\d*)\]$/);
+	parseDoorId(doorId) {
+		var parts = doorId.match(/^(\w+)\[([a-zA-Z_]+)(\d*)\]$/);
 		return {
-			transition: transitionName,
-			room: parts[1],
+			doorId,
+			roomId: parts[1],
 			side: parts[2],
 			number: parts[3] || -1,
 		}
@@ -104,59 +98,22 @@ class DataGen {
 		//can't use this.saveData.playerData.scenesVisited, not all rooms get recorded (e.g. White_Palace*)
 		var ret = {}
 
-		for (let transitionId in this.visitedTransitions) {
-			if (ret[transitionId]) continue;
+		for (let doorId in this.visitedDoors) {
+			if (ret[doorId]) continue;
 
-			var transitionA = this.transitions[transitionId]
-			if (!transitionA) continue;//one-way, handle from the other side
-
-			ret[transitionA.srcRoom.id] = true
-			ret[transitionA.dstRoom.id] = true
+			var transition = this.doorTransitions[doorId]
+			ret[transition.srcRoom.id] = true
+			ret[transition.dstRoom.id] = true
 		}
 
 		return ret
 	}
 
-	/** Populates this.nodes and this.links with data for rendering the map (generally a subset of this.rooms and this.transitions). */
-	buildNodes() {
-		this.nodes = []
-		this.links = []
-		var includedRooms = {}, includedTransitions = {}
-
-
-		const ensureRoomNode = room => {
-			if (!includedRooms[room.id]) {
-				this.nodes.push(room)
-				includedRooms[room.id] = true
-			}
-			return room
-		}
-
-		for (let transitionId in this.visitedTransitions) {
-			if (includedTransitions[transitionId]) continue;//already handled
-
-// if (this.links.length >= 8) break;
-
-			var transitionA = this.transitions[transitionId]
-			if (!transitionA) continue;//one-way, handle from the other side
-
-			var transitionB = transitionA.bidi ? this.transitions[transitionA.dst] : null
-
-			ensureRoomNode(transitionA.srcRoom)
-			ensureRoomNode(transitionA.dstRoom)
-
-			this.links.push(new RoomLink(transitionA, transitionB))
-			includedTransitions[transitionA.id] = true
-			if (transitionB) includedTransitions[transitionB.id] = true
-
-		}
-	}
-
 }
 
 class RoomNode {
-	transitions = {}
-	numTransitions = 0
+	doorIds = {}//set of door id => true that leave this room
+	numDoors = 0
 	island = null
 	islandDistance = 0//0 = hub, 1 = adjacent to hub, 2 = adjacent to that, etc.
 
@@ -165,9 +122,9 @@ class RoomNode {
 		this.dataSource = dataSource
 	}
 
-	addTransition(transitionId) {
-		this.transitions[transitionId] = true
-		this.numTransitions = Object.keys(this.transitions).length
+	addDoor(doorId) {
+		this.doorIds[doorId] = true
+		this.numDoors = Object.keys(this.doorIds).length
 	}
 
 	get isStartRoom() {
@@ -175,19 +132,26 @@ class RoomNode {
 	}
 
 	get isEveryTransitionVisited() {
-		let visitedTransitions = this.dataSource.visitedTransitions
-		for (let k in this.transitions) {
-			if (!visitedTransitions[k]) {
-				return false
-			}
+		let visitedDoors = this.dataSource.visitedDoors
+		for (let k in this.doorIds) {
+			if (!visitedDoors[k]) return false
 		}
 		return true
 	}
 
+	get numTransitionsVisited() {
+		let visitedDoors = this.dataSource.visitedDoors
+		let ret = 0
+		for (let k in this.doorIds) {
+			if (visitedDoors[k]) ++ret
+		}
+		return ret
+	}
+
 	get adjacentRooms() {
 		var ret = []
-		for (let k in this.transitions) {
-			let transition = this.dataSource.allTransitions[k]
+		for (let doorId in this.doorIds) {
+			let transition = this.dataSource.doorTransitions[doorId]
 			if (transition.srcRoom !== this && ret.indexOf(transition.srcRoom) < 0) ret.push(transition.srcRoom)
 			if (transition.dstRoom !== this && ret.indexOf(transition.dstRoom) < 0) ret.push(transition.dstRoom)
 		}
@@ -206,12 +170,12 @@ class RoomNode {
 
 /** A transition from room A to room B. Might have a brother that's for room B to A. */
 class RoomTransition {}
-/** A connecting line between rooms on the map. */
+/** A connecting line between rooms on the map. Only one link even if it covers two transitions.  */
 class RoomLink {
 
 	constructor(transitionA, transitionB) {
 		//id is transition name + "-" + transition name, with the alphabetically first one first
-		this.id = [transitionA.src, transitionA.dst].sort().join("-")
+		this.id = [transitionA.srcDoor, transitionA.dstDoor].sort().join("-")
 
 		this.transitionA = transitionA
 		//optional, but if given must be transitionA with src and dst swapped
@@ -221,8 +185,8 @@ class RoomLink {
 		this.target = transitionA.dstRoom
 
 		//Try to cluster near nexus rooms and allow larger distances for "straight-though"/travel rooms.
-		var mostRooms = Math.max(transitionA.srcRoom.numTransitions, transitionA.dstRoom.numTransitions)
-		this.strength = Math.pow(mostRooms, 1.2) / 30
+		var mostDoors = Math.max(transitionA.srcRoom.numDoors, transitionA.dstRoom.numDoors)
+		this.strength = Math.pow(mostDoors, 1.2) / 30
 
 	}
 
