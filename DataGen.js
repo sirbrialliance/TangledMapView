@@ -1,34 +1,84 @@
-class DataGen {
-	nodeMap = {}
-	linkMap = {}
+/*
 
+Transition types:
+bot: 123
+left: 321
+right: 288
+top: 117
+door: 20
+door_*: 13
+
+*/
+
+ /** Data gen from save file */
+class DataGen {
+	centerPos = [200, 200]
+	rooms = {}//map of room id => RoomNode
+	transitions = {}//map of transition id => RoomLink
 
 	load(saveData) {
 		this.saveData = saveData
-		var randomizerDataJSON = saveData.PolymorphicModData.RandomizerMod
+		var randomizerDataJSON = saveData["PolymorphicModData"]["RandomizerMod"]
 		this.randomizerData = JSON.parse(randomizerDataJSON)
 
-		var transitionRawData = JSON.parse(this.randomizerData.StringValues._obtainedTransitions)
-		this.obtainedTransitions = transitionRawData._keys
+		var transitionRawData = JSON.parse(this.randomizerData["StringValues"]["_obtainedTransitions"])
 
+
+		this.visitedTransitions = {}
 		this.transitions = {}
 		this.rooms = {}
 
-		var tPlacements = this.randomizerData._transitionPlacements;
-		for (var k in tPlacements) {
-			var info = this.parseTransition(k)
-			var target = tPlacements[k]
+		for (let id of transitionRawData._keys) this.visitedTransitions[id] = true
 
-			this.transitions[k] = {
-				target: target,
-				side: info.side,
-				sideNumber: info.number,
-				room: info.room,
-				bidi: tPlacements[target] === k,//bidirectional link?
-			};
+		const getAndUpdateRoom = (roomId, transitionId) => {
+			var room = this.rooms[roomId]
+			if (!room) {
+				room = this.rooms[roomId] = new RoomNode(roomId, this)
+
+				//pin starting room to the center
+				if (room === this.randomizerData.StringValues.StartSceneName) {
+					this.setCenter(this.centerPos)
+				}
+			}
+			room.addTransition(transitionId)
+			return room
+		}
+
+		var tPlacements = this.randomizerData["_transitionPlacements"];
+		for (var src in tPlacements) {
+			var srcInfo = this.parseTransition(src)
+			var dst = tPlacements[src]
+			var dstInfo = this.parseTransition(dst)
+
+			var srcRoom = getAndUpdateRoom(srcInfo.room, src)
+			var dstRoom = getAndUpdateRoom(dstInfo.room, dst)
+
+			this.transitions[src] = Object.assign(new RoomTransition, {
+				id: src,
+				src,
+				srcRoom,
+				srcSide: srcInfo.side,
+
+				dst,
+				dstRoom,
+				dstSide: dstInfo.side,
+
+				visited: this.visitedTransitions[src] || false,
+				bidi: tPlacements[dst] === src,//bidirectional link
+			})
 		}
 
 		this.buildNodes()
+	}
+
+	setCenter(pos) {
+		this.centerPos = pos;
+
+		var startRoom = this.rooms[this.randomizerData.StringValues.StartSceneName]
+		if (startRoom) {
+			[startRoom.fx, startRoom.fy] = pos
+		}
+
 	}
 
 	parseTransition(transitionName) {
@@ -41,77 +91,93 @@ class DataGen {
 		}
 	}
 
+	/** Populates this.nodes and this.links with data for rendering the map (generally a subset of this.rooms and this.transitions). */
 	buildNodes() {
 		this.nodes = []
 		this.links = []
-		this.linkMap = {}
-
-		const getAndUpdateNode = (room, transitionId) => {
-			var node = this.nodeMap[room]
-			if (!node) {
-				node = this.nodeMap[room] = {
-					room: room,
-					transitions: {},
-					numTransitions: 0,
-				}
-
-				//pin starting room to the center
-				if (room === this.randomizerData.StringValues.StartSceneName) {
-					node.fx = 600
-					node.fy = 600
-				}
-
-				this.nodes.push(node)
-			}
-			node.transitions[transitionId] = true
-			node.numTransitions = Object.keys(node.transitions).length
-			return node
-		}
+		var includedRooms = {}, includedTransitions = {}
 
 		//can't use this.saveData.playerData.scenesVisited to make all nodes, not all rooms get recorded (e.g. White_Palace*)
 
-		for (let linkName of this.obtainedTransitions) {
+		const ensureRoomNode = room => {
+			if (!includedRooms[room.id]) {
+				this.nodes.push(room)
+				includedRooms[room.id] = true
+			}
+			return room
+		}
+
+		for (let transitionId in this.visitedTransitions) {
+			if (includedTransitions[transitionId]) continue;//already handled
+
 // if (this.links.length > 20) break;
 
-			if (this.linkMap[linkName]) continue;//already handled
-			var linkInfo = this.transitions[linkName]
-			if (!linkInfo) continue;//one-way link, handle from the other side
+			var transitionA = this.transitions[transitionId]
+			if (!transitionA) continue;//one-way, handle from the other side
 
-			var reverseLink = linkInfo.bidi ? this.transitions[linkInfo.target] : null
-			var targetInfo = reverseLink || this.parseTransition(linkInfo.target)
+			var transitionB = transitionA.bidi ? this.transitions[transitionA.dst] : null
 
-			var sourceRoom = getAndUpdateNode(linkInfo.room, linkName)
-			var targetRoom = getAndUpdateNode(targetInfo.room, linkInfo.target)
+			ensureRoomNode(transitionA.srcRoom)
+			ensureRoomNode(transitionA.dstRoom)
 
+			this.links.push(new RoomLink(transitionA, transitionB))
+			includedTransitions[transitionA.id] = true
+			if (transitionB) includedTransitions[transitionB.id] = true
 
-			//id is transition name + "-" + transition name, with the alphabetically first one first
-			var id = [linkName, linkInfo.target].sort().join("-")
-
-			//Try to cluster near nexus rooms and allow larger distances for "straight-though"/travel rooms.
-			var mostRooms = Math.max(sourceRoom.numTransitions, targetRoom.numTransitions)
-			var strength = mostRooms * mostRooms / 30
-
-			let link = {
-				id: id,
-
-				source: sourceRoom,
-				sourceTransition: linkName,
-
-				target: targetRoom,
-				targetTransition: linkInfo.target,
-
-				bidi: !!reverseLink,
-
-				strength: strength,
-			}
-
-			this.linkMap[linkName] = link
-			if (reverseLink) this.linkMap[reverseLink] = link
-
-			this.links.push(link)
 		}
 	}
 
+}
 
+class RoomNode {
+	transitions = {}
+	numTransitions = 0
+
+	constructor(id, dataSource) {
+		this.id = id
+		this.dataSource = dataSource
+	}
+
+	addTransition(transitionId) {
+		this.transitions[transitionId] = true
+		this.numTransitions = Object.keys(this.transitions).length
+	}
+
+	isEveryTransitionVisited() {
+		let visitedTransitions = this.dataSource.visitedTransitions
+		for (let k in this.transitions) {
+			if (!visitedTransitions[k]) {
+				return false
+			}
+		}
+		return true
+	}
+
+	get displayText() {
+		return this.id
+	}
+}
+
+/** A transition from room A to room B. Might have a brother that's for room B to A. */
+class RoomTransition {}
+/** A connecting line between rooms on the map. */
+class RoomLink {
+
+	constructor(transitionA, transitionB) {
+		//id is transition name + "-" + transition name, with the alphabetically first one first
+		this.id = [transitionA.src, transitionA.dst].sort().join("-")
+
+		this.transitionA = transitionA
+		//optional, but if given must be transitionA with src and dst swapped
+		this.transitionB = transitionB
+
+		this.source = transitionA.srcRoom
+		this.target = transitionA.dstRoom
+
+		//Try to cluster near nexus rooms and allow larger distances for "straight-though"/travel rooms.
+		var mostRooms = Math.max(transitionA.srcRoom.numTransitions, transitionA.dstRoom.numTransitions)
+		this.strength = mostRooms * mostRooms / 30
+
+	}
 
 }

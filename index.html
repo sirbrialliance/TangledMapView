@@ -4,7 +4,8 @@
 	<title>Hollow Knight Randomized Map Visualizer</title>
 	<script src="d3.js"></script>
 	<script src="testSaveData.js"></script>
-	<script src="dataGen.js"></script>
+	<script src="DataRender.js"></script>
+	<script src="DataGen.js"></script>
 	<style>
 		body, html { margin: 0; padding: 0; height: 100%; width: 100%; }
 
@@ -17,15 +18,20 @@
 
 		.mapNode { cursor: pointer; }
 
-		.nodeLabel {
-			opacity: 0;
+		.mapNodeLabel {
+			display: none;
+			opacity: 1;
 			font-size: 11px;
 			stroke: none;
 			font-family: sans-serif;
 			fill: black;
 			transform: translate(0, .5em);
+			text-anchor: middle;
 		}
-		.nodeLabel.shadow {stroke: white;stroke-width: 3px;}
+		.mapNodeLabel.shadow {stroke: white; stroke-width: 3px;}
+		.mapNode:hover .mapNodeLabel {
+			display: block;
+		}
 	</style>
 </head>
 <body>
@@ -35,37 +41,42 @@
 	var data = new DataGen();
 	data.load(testSaveData)
 
-	// var nodes = [{name: "A"}, {name: "B"}, {}, {}];
-	// var links = [{source: nodes[0], target: nodes[1]}];
+	var dataRender = new DataRender(data)
 
 	var svg = d3.select("svg");
 
-	const color = "blue";
-
 	var zoom = d3.zoom()
 		.scaleExtent([.1, 2])
+		.filter(ev => {
+			if (ev.ctrlKey && ev.type === "wheel") return false
+			if (!ev.type.startsWith("mouse")) return true
+			return ev.button === 0 || ev.button === 2
+		})
 		.on("zoom", ev => updateZoom(ev.transform))
 
 	var simulation = d3.forceSimulation(data.nodes)
 		.force("link", d3.forceLink(data.links).strength(x => x.strength))
-		.force("group", d3.forceManyBody())
-		// .force("x", d3.forceX())
-		// .force("y", d3.forceY())
-		// .alphaDecay(.001)
-	;
+		.force("group", d3.forceManyBody()
+			// .distanceMin(30)
+			.distanceMax(800)
+		)
+		.force("custom", dataRender.getForceFunc())
+		// .alphaDecay(.005)
 
 	function updateSize() {
 		var width = svg.node().clientWidth
 		var height = svg.node().clientHeight
+		var center = [width / 2, height / 2]
+		data.setCenter(center)
 		zoom.extent([[0, 0], [width, height]])
-		simulation.force("center", d3.forceCenter(width / 2, height / 2))
-		simulation.restart()
+		simulation
+			.force("center", d3.forceCenter(center[0], center[1]))
+			.restart()
 	}
 
 	window.addEventListener("resize", updateSize);
 
 	function updateZoom(transform) {
-		console.log(transform, d3.event)
 		nodeHolder.attr("transform", transform)
 	}
 
@@ -94,7 +105,10 @@
 		;
 	};
 
-	svg.call(zoom)
+	svg
+		.call(zoom)
+		.on("dblclick.zoom", null)
+		.on("contextmenu", ev => ev.preventDefault())//don't show menu, we can use right drag to pan
 
 	const nodeHolder = svg.append("g")
 		.attr("id", "mainMap")
@@ -108,20 +122,24 @@
 	;
 
 	const node = nodeHolder.selectAll("g")
-		.data(data.nodes, x => x.room)
+		.data(data.nodes, x => x.id)
 		.join("g")
 			.classed("mapNode", true)
+			.attr("title", x => x.id)
 			.call(setupDrag())
 
   // node.append("title").text(d => d.id)
 
 	node.append("circle")
-		.attr("r", node => node.numTransitions * 2.5)
-		.attr("fill", color)
+		.attr("r", node => node.numTransitions * 2.5 + 3.5)
+		.attr("fill", room => {
+			if (room.isEveryTransitionVisited()) return "green"
+			else return "blue"
+		})
 
 	node.append("text")
-		.classed("nodeLabel shadow", true)
-		.text(d => d.room || "[unknown]")
+		.classed("mapNodeLabel shadow", true)
+		.text(x => x.displayText)
 		.clone(true).classed("shadow", false)
 	;
 
