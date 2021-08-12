@@ -36,6 +36,8 @@ class DataRender {
 					let room = event.subject; note(event)
 					let [simulation, target] = getTargets(room)
 
+					console.log(`Clicked ${room.displayText} which links to ${Object.keys(room.transitions).join(", ")}`, room)
+
 					simulation.alphaTarget(0.3).restart()//ask it to "keep the alpha warm" while we drag
 
 					if (typeof target.fx === "number") target.__hadFixedPos = true
@@ -84,7 +86,15 @@ class DataRender {
 			.data(island.rooms, x => x.id)
 			.join("g")
 				.classed("mapNode", true)
-				.attr("title", x => x.id)
+				.attr("id", x => "room-" + x.id)
+				.on("pointerover", (ev, room) => {
+					d3.selectAll(room.adjacentRooms.map(x => document.getElementById(`room-${x.id}`)))
+						.classed("hoverRelated", true)
+				})
+				.on("pointerleave", (ev, room) => {
+					d3.selectAll(room.adjacentRooms.map(x => document.getElementById(`room-${x.id}`)))
+						.classed("hoverRelated", false)
+				})
 
 		node.filter(x => x.isHub).call(setupDrag(true))
 		node.filter(x => !x.isHub).call(setupDrag(false))
@@ -100,7 +110,8 @@ class DataRender {
 
 		node.append("text")
 			.classed("mapNodeLabel shadow", true)
-			.text(x => x.displayText)
+			// .text(x => x.displayText)
+			.text(x => x.displayText + " Island: " + x.island.id + " - " + x.islandDistance)
 			.clone(true).classed("shadow", false)
 
 		island.simulation.on("tick", () => {

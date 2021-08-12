@@ -128,15 +128,17 @@ class ClusterHandler {
 
 // if (links.length >= 8) break;
 
-			var transitionA = this.data.transitions[transitionId]
-			if (!transitionA) continue;//one-way, handle from the other side
+			var transitionA = this.data.allTransitions[transitionId]
 
 			if (transitionA.srcRoom.island !== island || transitionA.dstRoom.island !== island) {
 				//todo, cross island connecting stuffs
 				continue
 			}
 
-			var transitionB = transitionA.bidi ? this.data.transitions[transitionA.dst] : null
+			//(transitionA might only end at transitionId, so pick the right side to check for the return transition)
+			var transitionADoor = transitionA.id === transitionId ? transitionId : transitionA.dst
+
+			var transitionB = transitionA.bidi ? this.data.transitions[transitionADoor] : null
 
 			links.push(new RoomLink(transitionA, transitionB))
 			includedTransitions[transitionA.id] = true
@@ -177,7 +179,8 @@ class ClusterHandler {
 			)
 			.force("noExplode", explosionPrevention)
 			// .force("custom", dataRender.getForceFunc())
-			// .alphaDecay(.005)
+			.alphaDecay(.005)
+			.alphaMin(.05)
 	}
 
 }

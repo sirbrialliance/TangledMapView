@@ -15,7 +15,7 @@
 
 - Or, just go with only rendering nearby rooms for now?
 
-- pathfinding to room/item, https://github.com/anvaka/ngraph.path looks good
+- pathfinding to room/item, https://github.com/anvaka/ngraph.path looks like good lib for helping
 
 - Show roughly real room shapes
 

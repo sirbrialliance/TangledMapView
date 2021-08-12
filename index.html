@@ -18,6 +18,11 @@
 		}
 
 		.mapNode { cursor: pointer; }
+		.mapNode.hoverRelated > circle, .mapNode:hover > circle {
+			stroke: black;
+			stroke-width: 3px;
+		}
+
 
 		.mapNodeLabel {
 			display: none;
@@ -33,6 +38,9 @@
 		.mapNode:hover .mapNodeLabel {
 			display: block;
 		}
+
+		#room-Ruins1_05 > circle { fill: blue; }
+
 	</style>
 </head>
 <body>

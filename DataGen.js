@@ -15,6 +15,8 @@ class DataGen {
 	// centerPos = [0, 0]
 	rooms = {}//map of room id => RoomNode
 	transitions = {}//map of transition id => RoomLink
+	/** transitions, but includes lookups for destination-only doors (e.g. A->B can be found in allTransitions[A] or allTransitions[B]) */
+	allTransitions = {}
 
 	load(saveData) {
 		this.saveData = saveData
@@ -66,6 +68,13 @@ class DataGen {
 				visited: this.visitedTransitions[src] || false,
 				bidi: tPlacements[dst] === src,//bidirectional link
 			})
+		}
+
+		//Extra lookup for finding at least SOME transition when looking at destination-only doors
+		this.allTransitions = {...this.transitions}
+		for (let k in this.transitions) {
+			var transition = this.transitions[k]
+			if (!this.allTransitions[transition.dst]) this.allTransitions[transition.dst] = transition
 		}
 
 		this.buildNodes()
@@ -173,6 +182,16 @@ class RoomNode {
 			}
 		}
 		return true
+	}
+
+	get adjacentRooms() {
+		var ret = []
+		for (let k in this.transitions) {
+			let transition = this.dataSource.allTransitions[k]
+			if (transition.srcRoom !== this && ret.indexOf(transition.srcRoom) < 0) ret.push(transition.srcRoom)
+			if (transition.dstRoom !== this && ret.indexOf(transition.dstRoom) < 0) ret.push(transition.dstRoom)
+		}
+		return ret
 	}
 
 	get displayText() {
