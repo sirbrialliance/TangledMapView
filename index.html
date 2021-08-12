@@ -12,7 +12,7 @@
 
 		svg { user-select: none; }
 
-		#mainMap > line {
+		#mainMap .island > line {
 			stroke: #999;
 			stroke-opacity: .6;
 		}
@@ -42,8 +42,8 @@
 	var data = new DataGen();
 	data.load(testSaveData)
 
-	var dataRender = new DataRender(data)
 	var cluster = new ClusterHandler(data)
+	var dataRender = new DataRender(cluster)
 
 	cluster.buildIslands()
 
@@ -58,29 +58,12 @@
 		})
 		.on("zoom", ev => updateZoom(ev.transform))
 
-	var simulation = d3.forceSimulation(data.nodes)
-		.force("link", d3.forceLink(data.links)
-			.strength(x => x.strength)
-			.distance(35)
-		)
-		.force("group", d3.forceManyBody()
-			// .strength(-30)
-			// .distanceMin(30)
-			// .distanceMax(200)
-		)
-		.force("noExplode", dataRender.explosionPrevention(1000))
-		// .force("custom", dataRender.getForceFunc())
-		// .alphaDecay(.005)
 
 	function updateSize() {
 		var w2 = svg.node().clientWidth / 2
 		var h2 = svg.node().clientHeight / 2
-		data.setCenter([0, 0])
 		svg.attr("viewBox", [-w2, -h2, w2 * 2, h2 * 2])
 		zoom.extent([[-w2, -h2], [w2, h2]])
-		simulation
-			// breaks things pretty good: .force("center", d3.forceCenter(center[0], center[1]))
-			.restart()
 	}
 
 	window.addEventListener("resize", updateSize);
@@ -89,84 +72,17 @@
 		nodeHolder.attr("transform", transform)
 	}
 
-	function setupDrag() {
-		function note(ev) {}// console.log(ev.active, ev.subject, simulation.alpha(), simulation.alphaTarget(), simulation.alphaMin())}
-		return d3.drag()
-			.on("start", (event) => {
-				note(event)
-				simulation.alphaTarget(0.3).restart()
-				if (typeof event.subject.fx === "number") event.subject.__hadFixedPos = true
-				event.subject.fx = event.subject.x
-				event.subject.fy = event.subject.y
-			})
-			.on("drag", (event) => {
-				note(event)
-				event.subject.fx = event.x
-				event.subject.fy = event.y
-			})
-			.on("end", (event) => {
-				note(event)
-				simulation.alphaTarget(0)
-
-				if (event.subject.__hadFixedPos) {
-					delete event.subject.__hadFixedPos
-				} else {
-					event.subject.fx = null
-					event.subject.fy = null
-				}
-			})
-	}
-
 	svg
 		.call(zoom)
 		.on("dblclick.zoom", null)
-		.on("contextmenu", ev => ev.preventDefault())//don't show menu, we can use right drag to pan
+		.on("contextmenu", ev => ev.preventDefault())//don't show menu, we permit right drag to pan
 
 	const nodeHolder = svg.append("g")
 		.attr("id", "mainMap")
 		.attr("stroke", "#fff")
 		.attr("stroke-width", 1.5)
 
-	const link = nodeHolder
-		.selectAll("line")
-			.data(data.links, x => x.id)
-			.join("line")
-	;
-
-	const node = nodeHolder.selectAll("g")
-		.data(data.nodes, x => x.id)
-		.join("g")
-			.classed("mapNode", true)
-			.attr("title", x => x.id)
-			.call(setupDrag())
-
-  // node.append("title").text(d => d.id)
-
-	node.append("circle")
-		.attr("r", node => node.numTransitions * 2.5 + 3.5)
-		.attr("fill", room => {
-			if (room.isStartRoom) return "red"
-			else if (room.isEveryTransitionVisited) return "green"
-			else return "#BB0"
-		})
-
-	node.append("text")
-		.classed("mapNodeLabel shadow", true)
-		.text(x => x.displayText)
-		.clone(true).classed("shadow", false)
-	;
-
-
-	simulation.on("tick", () => {
-		link
-			.attr("x1", d => d.source.x)
-			.attr("y1", d => d.source.y)
-			.attr("x2", d => d.target.x)
-			.attr("y2", d => d.target.y)
-		;
-
-		node.attr("transform", d => `translate(${d.x},${d.y})`);
-	});
+	dataRender.renderInto(nodeHolder)
 
 	updateSize();
 

@@ -2,12 +2,16 @@
 - Island rework:
 	- xx Pick island "hub" rooms based on number of connections of visited room. Most wins. Number is based on reasonable sizes (e.g. 20 rooms to an island)
 	- xx gradient pathfind and tag all rooms with the island of the closest hub
-	- two(+) simulations:
+	- xx two(+) simulations:
 		- macro simulation, arranges islands only (so they don't overlap)
 		- island simulations, arranges items within an island
-			- instead of using link forces and trying to keep things on certain sides, make a force function that calculates an "ideal" position and pulls toward that
-				- adjust radii as we get farther from the hub so it's easier to fit "impossible" room arrangements
+	- add cross-island link lins (dotted, emphasize on hover)
+		- and figure out why we have orphans
+	- instead of using link forces and trying to keep things on certain sides, make a force function that calculates an "ideal" position and pulls toward that
+		- adjust radii as we get farther from the hub so it's easier to fit "impossible" room arrangements
 
+- constrain islands to circles with dynamic and cross-simulation influenced radii?
+	- copy forces to keep objects inside to push on the circle radius, counteract it with forces from the inter-island interactions
 
 - Or, just go with only rendering nearby rooms for now?
 

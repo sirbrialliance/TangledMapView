@@ -1,29 +1,189 @@
 class DataRender {
-	constructor(dataGen) {
-		this.dataGen = dataGen
+	constructor(cluster) {
+		this.cluster = cluster
+		this.dataGen = cluster.data
 	}
 
-	explosionPrevention(maxDistance) {
-		const maxDistance2 = maxDistance * maxDistance
-		return alpha => {
-			let nodes = this.dataGen.nodes
-			for (let i = 0, len = nodes.length; i < len; i++) {
-				let node = nodes[i]
+	renderInto(holder) {
+		var dataRender = this
 
-				//prevent explosions, stop things that are going far
-				var dist2 = node.vx * node.vx + node.vy * node.vy
-				if (dist2 > maxDistance2) {
-					var dist = Math.sqrt(dist2)
-					node.vx = node.vy = 0
-					// var old = [node.x, node.y]
-					node.x = node.x / dist * maxDistance
-					node.y = node.y / dist * maxDistance
-					//console.log(`Warp bad from ${old[0]} ${old[1]} to ${node.x} ${node.y}`)
-				}
+		var islandHolder = holder
+			.selectAll("g.island")
+			.data(this.cluster.islands)
+			.join("g")
+				.classed("island", true)
+				.each(function(island, idx, el) { dataRender._renderIsland(island, d3.select(this)) })
+
+		this.cluster.macro.simulation.on("tick", () => {
+			islandHolder.attr("transform", d => `translate(${d.x},${d.y})`)
+		})
+	}
+
+	_renderIsland(island, holder) {
+		var _this = this
+
+		function setupDrag(isHub) {
+			function note(ev) {}// console.log(ev.active, ev.subject, simulation.alpha(), simulation.alphaTarget(), simulation.alphaMin())}
+
+			//Target simulation can very based on the node, we want to drag the room in the macro simulation if you grab an island hub
+			function getTargets(room) {
+				if (room.isHub) return [_this.cluster.macro.simulation, room.island]
+				else return [island.simulation, room]
 			}
-		}
-	}
 
+			var ret = d3.drag()
+				.on("start", (event) => {
+					let room = event.subject; note(event)
+					let [simulation, target] = getTargets(room)
+
+					simulation.alphaTarget(0.3).restart()//ask it to "keep the alpha warm" while we drag
+
+					if (typeof target.fx === "number") target.__hadFixedPos = true
+
+					if (isHub) target.__eventOffset = [target.x, target.y]
+					target.fx = target.x
+					target.fy = target.y
+				})
+				.on("drag", (event) => {
+					let room = event.subject; note(event)
+					let [simulation, target] = getTargets(room)
+
+
+					if (isHub) {
+						let [ox, oy] = target.__eventOffset
+						target.fx = event.x + ox
+						target.fy = event.y + oy
+					} else {
+						target.fx = event.x
+						target.fy = event.y
+					}
+				})
+				.on("end", (event) => {
+					let room = event.subject; note(event)
+					let [simulation, target] = getTargets(room)
+
+					simulation.alphaTarget(0)//let alpha cool off and stop now
+
+					delete target.__eventOffset
+					if (target.__hadFixedPos) {
+						delete target.__hadFixedPos
+					} else {
+						target.fx = null
+						target.fy = null
+					}
+				})
+			if (isHub) return ret.container(holder)
+			else return ret
+		}
+
+		const link = holder.selectAll("line")
+			.data(island.links, x => x.id)
+			.join("line")
+
+		const node = holder.selectAll("g")
+			.data(island.rooms, x => x.id)
+			.join("g")
+				.classed("mapNode", true)
+				.attr("title", x => x.id)
+
+		node.filter(x => x.isHub).call(setupDrag(true))
+		node.filter(x => !x.isHub).call(setupDrag(false))
+
+		node.append("circle")
+			.attr("r", node => node.numTransitions * 2.5 + 3.5)
+			.attr("fill", room => {
+				if (room.isStartRoom) return "orange"
+				else if (room.island.hub === room) return "red"
+				else if (room.isEveryTransitionVisited) return "green"
+				else return "#BB0"
+			})
+
+		node.append("text")
+			.classed("mapNodeLabel shadow", true)
+			.text(x => x.displayText)
+			.clone(true).classed("shadow", false)
+
+		island.simulation.on("tick", () => {
+			link
+				.attr("x1", d => d.source.x)
+				.attr("y1", d => d.source.y)
+				.attr("x2", d => d.target.x)
+				.attr("y2", d => d.target.y)
+
+			node.attr("transform", d => `translate(${d.x},${d.y})`)
+		})
+
+	}
+}
+
+/*
+function setupDrag(isHub) {
+			function note(ev) {}// console.log(ev.active, ev.subject, simulation.alpha(), simulation.alphaTarget(), simulation.alphaMin())}
+
+			//Target simulation can very based on the node, we want to drag the room in the macro simulation if you grab an island hub
+			function getTargets(room) {
+				if (room.isHub) return [_this.cluster.macro.simulation, room.island]
+				else return [island.simulation, room]
+			}
+
+			return d3.drag()
+				.on("start", (event) => {
+					let room = event.subject; note(event)
+					let [simulation, target] = getTargets(room)
+
+					simulation.alphaTarget(0.3).restart()//ask it to "keep the alpha warm" while we drag
+
+					if (typeof target.fx === "number") target.__hadFixedPos = true
+
+					target.__eventOffset = [event.x, event.y]
+					target.fx = target.x
+					target.fy = target.y
+				})
+				.on("drag", (event) => {
+					let room = event.subject; note(event)
+					let [simulation, target] = getTargets(room)
+
+					let [ox, oy] = target.__eventOffset
+
+					// target.fx = event.x - ox
+					// target.fy = event.y - oy
+					target.fx = event.x
+					target.fy = event.y
+				})
+				.on("end", (event) => {
+					let room = event.subject; note(event)
+					let [simulation, target] = getTargets(room)
+
+					simulation.alphaTarget(0)//let alpha cool off and stop now
+
+					delete target.__eventOffset
+					if (target.__hadFixedPos) {
+						delete target.__hadFixedPos
+					} else {
+						target.fx = null
+						target.fy = null
+					}
+				})
+		}
+*/
+
+
+/* Some parts of code are
+Copyright 2017–2020 Observable, Inc.
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+*/
+
+/*
 	getForceFunc() {
 		// const alignStrength = .5
 		const alignStrength = .3
@@ -67,5 +227,4 @@ class DataRender {
 				}
 			}
 		}
-	}
-}
+	}*/

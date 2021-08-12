@@ -12,7 +12,7 @@ door_*: 13
 
  /** Loads data from the save file and hands general information about that data */
 class DataGen {
-	centerPos = [200, 200]
+	// centerPos = [0, 0]
 	rooms = {}//map of room id => RoomNode
 	transitions = {}//map of transition id => RoomLink
 
@@ -36,9 +36,9 @@ class DataGen {
 				room = this.rooms[roomId] = new RoomNode(roomId, this)
 
 				//pin starting room to the center
-				if (room === this.randomizerData.StringValues.StartSceneName) {
-					this.setCenter(this.centerPos)
-				}
+				// if (room === this.randomizerData.StringValues.StartSceneName) {
+				// 	this.setCenter(this.centerPos)
+				// }
 			}
 			room.addTransition(transitionId)
 			return room
@@ -71,15 +71,15 @@ class DataGen {
 		this.buildNodes()
 	}
 
-	setCenter(pos) {
-		this.centerPos = pos;
+	// setCenter(pos) {
+	// 	this.centerPos = pos;
 
-		var startRoom = this.rooms[this.randomizerData.StringValues.StartSceneName]
-		if (startRoom) {
-			[startRoom.fx, startRoom.fy] = pos
-		}
+	// 	var startRoom = this.rooms[this.randomizerData.StringValues.StartSceneName]
+	// 	if (startRoom) {
+	// 		[startRoom.fx, startRoom.fy] = pos
+	// 	}
 
-	}
+	// }
 
 	parseTransition(transitionName) {
 		var parts = transitionName.match(/^(\w+)\[([a-zA-Z_]+)(\d*)\]$/);
@@ -177,6 +177,11 @@ class RoomNode {
 
 	get displayText() {
 		return this.id
+	}
+
+	/** True if we are an island hub */
+	get isHub() {
+		return this.island && this.island.hub === this
 	}
 }
 
