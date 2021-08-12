@@ -10,9 +10,21 @@
 
 		svg { user-select: none; }
 
+		#mainMap > line {
+			stroke: #999;
+			stroke-opacity: .6;
+		}
+
 		.mapNode { cursor: pointer; }
 
-		.nodeLabel {font-size: 11px;stroke: none;font-family: sans-serif;fill: black;text-anchor: middle;}
+		.nodeLabel {
+			opacity: 0;
+			font-size: 11px;
+			stroke: none;
+			font-family: sans-serif;
+			fill: black;
+			transform: translate(0, .5em);
+		}
 		.nodeLabel.shadow {stroke: white;stroke-width: 3px;}
 	</style>
 </head>
@@ -30,21 +42,32 @@
 
 	const color = "blue";
 
+	var zoom = d3.zoom()
+		.scaleExtent([.1, 2])
+		.on("zoom", ev => updateZoom(ev.transform))
+
 	var simulation = d3.forceSimulation(data.nodes)
-		.force("link", d3.forceLink(data.links))
+		.force("link", d3.forceLink(data.links).strength(x => x.strength))
 		.force("group", d3.forceManyBody())
-		.force("x", d3.forceX())
-		.force("y", d3.forceY())
+		// .force("x", d3.forceX())
+		// .force("y", d3.forceY())
+		// .alphaDecay(.001)
 	;
 
 	function updateSize() {
-		var width = svg.node().clientWidth;
-		var height = svg.node().clientHeight;
-		simulation.force("center", d3.forceCenter(width / 2, height / 2));
-		simulation.restart();
+		var width = svg.node().clientWidth
+		var height = svg.node().clientHeight
+		zoom.extent([[0, 0], [width, height]])
+		simulation.force("center", d3.forceCenter(width / 2, height / 2))
+		simulation.restart()
 	}
 
 	window.addEventListener("resize", updateSize);
+
+	function updateZoom(transform) {
+		console.log(transform, d3.event)
+		nodeHolder.attr("transform", transform)
+	}
 
 	function setupDrag() {
 		function dragstarted(event) {
@@ -71,31 +94,29 @@
 		;
 	};
 
-	const link = svg
-		.append("g")
-			.attr("stroke", "#999")
-			.attr("stroke-opacity", 0.6)
+	svg.call(zoom)
+
+	const nodeHolder = svg.append("g")
+		.attr("id", "mainMap")
+		.attr("stroke", "#fff")
+		.attr("stroke-width", 1.5)
+
+	const link = nodeHolder
 		.selectAll("line")
-			.data(data.links)
+			.data(data.links, x => x.id)
 			.join("line")
 	;
 
-  const node = svg
-		.append("g")
-			.attr("id", "nodes")
-			.attr("stroke", "#fff")
-			.attr("stroke-width", 1.5)
-		.selectAll("g")
-			.data(data.nodes, x => x.room)
-			.join("g")
-				.classed("mapNode", true)
-				.call(setupDrag())
-	;
+	const node = nodeHolder.selectAll("g")
+		.data(data.nodes, x => x.room)
+		.join("g")
+			.classed("mapNode", true)
+			.call(setupDrag())
 
   // node.append("title").text(d => d.id)
 
 	node.append("circle")
-		.attr("r", 5)
+		.attr("r", node => node.numTransitions * 2.5)
 		.attr("fill", color)
 
 	node.append("text")

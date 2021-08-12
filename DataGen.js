@@ -46,12 +46,25 @@ class DataGen {
 		this.links = []
 		this.linkMap = {}
 
-		const getOrMakeNode = room => {
+		const getAndUpdateNode = (room, transitionId) => {
 			var node = this.nodeMap[room]
 			if (!node) {
-				node = this.nodeMap[room] = {room: room}
+				node = this.nodeMap[room] = {
+					room: room,
+					transitions: {},
+					numTransitions: 0,
+				}
+
+				//pin starting room to the center
+				if (room === this.randomizerData.StringValues.StartSceneName) {
+					node.fx = 600
+					node.fy = 600
+				}
+
 				this.nodes.push(node)
 			}
+			node.transitions[transitionId] = true
+			node.numTransitions = Object.keys(node.transitions).length
 			return node
 		}
 
@@ -67,12 +80,29 @@ class DataGen {
 			var reverseLink = linkInfo.bidi ? this.transitions[linkInfo.target] : null
 			var targetInfo = reverseLink || this.parseTransition(linkInfo.target)
 
+			var sourceRoom = getAndUpdateNode(linkInfo.room, linkName)
+			var targetRoom = getAndUpdateNode(targetInfo.room, linkInfo.target)
+
+
+			//id is transition name + "-" + transition name, with the alphabetically first one first
+			var id = [linkName, linkInfo.target].sort().join("-")
+
+			//Try to cluster near nexus rooms and allow larger distances for "straight-though"/travel rooms.
+			var mostRooms = Math.max(sourceRoom.numTransitions, targetRoom.numTransitions)
+			var strength = mostRooms * mostRooms / 30
+
 			let link = {
-				source: getOrMakeNode(linkInfo.room),
+				id: id,
+
+				source: sourceRoom,
 				sourceTransition: linkName,
-				target: getOrMakeNode(targetInfo.room),
+
+				target: targetRoom,
 				targetTransition: linkInfo.target,
+
 				bidi: !!reverseLink,
+
+				strength: strength,
 			}
 
 			this.linkMap[linkName] = link
