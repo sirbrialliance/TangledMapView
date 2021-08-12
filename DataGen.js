@@ -173,9 +173,13 @@ class RoomTransition {}
 /** A connecting line between rooms on the map. Only one link even if it covers two transitions.  */
 class RoomLink {
 
+	static getId(transition) {
+		return [transition.srcDoor, transition.dstDoor].sort().join("-")
+	}
+
 	constructor(transitionA, transitionB) {
-		//id is transition name + "-" + transition name, with the alphabetically first one first
-		this.id = [transitionA.srcDoor, transitionA.dstDoor].sort().join("-")
+		//id is door id + "-" + door id, with the alphabetically first one first
+		this.id = RoomLink.getId(transitionA)
 
 		this.transitionA = transitionA
 		//optional, but if given must be transitionA with src and dst swapped

@@ -12,10 +12,11 @@
 
 		svg { user-select: none; }
 
-		#mainMap .island > line {
-			stroke: #999;
-			stroke-opacity: .6;
+		.island > line {
+			stroke: black;
+			stroke-opacity: .4;
 		}
+		.island > line.hoverRelated { stroke-width: 3px; stroke-opacity: 1; }
 
 		.mapNode { cursor: pointer; }
 		.mapNode.hoverRelated > circle, .mapNode:hover > circle {
@@ -41,9 +42,10 @@
 
 		.crossIslandLink > line {
 			stroke: rgb(48, 100, 0);
-			opacity: .5;
+			opacity: .3;
 			stroke-dasharray: 7, 7;
 		}
+		.crossIslandLink.hoverRelated > line { stroke-width: 3px; opacity: 1; stroke-dasharray: none; }
 
 		/* #room-Fungus2_30 > circle { fill: blue; } */
 

@@ -19,10 +19,13 @@ class DataRender {
 			this._updateCrossLinks()
 		})
 
-		var crossIslandLinks = holder.selectAll("g.crossIslandLink")
-			.data(this.cluster.crossIslandLinks)
+		var crossIslandHolder = holder.append("g").attr("id", "crossIslandHolder").lower()
+
+		var crossIslandLinks = crossIslandHolder.selectAll("g.crossIslandLink")
+			.data(this.cluster.crossIslandLinks, x => x.id)
 			.join("g")
 				.classed("crossIslandLink", true)
+				.attr("id", link => link.id)
 
 		this._crossLinkLines = crossIslandLinks.append("line")
 	}
@@ -89,6 +92,17 @@ class DataRender {
 		const link = holder.selectAll("line")
 			.data(island.links, x => x.id)
 			.join("line")
+				.attr("id", link => link.id)
+
+		const relatedElements = room => {
+			return [
+				...room.adjacentRooms.map(x => document.getElementById(`room-${x.id}`)),
+				...Object.keys(room.doorIds).map(doorId => {
+					var elId = RoomLink.getId(this.dataGen.doorTransitions[doorId])
+					return document.getElementById(elId)
+				}),
+			]
+		}
 
 		const node = holder.selectAll("g")
 			.data(island.rooms, x => x.id)
@@ -96,12 +110,10 @@ class DataRender {
 				.classed("mapNode", true)
 				.attr("id", x => "room-" + x.id)
 				.on("pointerover", (ev, room) => {
-					d3.selectAll(room.adjacentRooms.map(x => document.getElementById(`room-${x.id}`)))
-						.classed("hoverRelated", true)
+					d3.selectAll(relatedElements(room)).classed("hoverRelated", true)
 				})
 				.on("pointerleave", (ev, room) => {
-					d3.selectAll(room.adjacentRooms.map(x => document.getElementById(`room-${x.id}`)))
-						.classed("hoverRelated", false)
+					d3.selectAll(relatedElements(room)).classed("hoverRelated", false)
 				})
 
 		node.filter(x => x.isHub).call(setupDrag(true))

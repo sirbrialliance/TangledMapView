@@ -7,9 +7,9 @@
 		- xx island simulations, arranges items within an island
 	- xx figure out why we have orphans
 		- xx we are considering all data when we crawl, but not making links for two adjacent visited rooms you haven't used the transition on yet
-	- add cross-island link lines (dotted, )
+	- add cross-island link lines (dotted)
 		- xx add
-		- we have rooms adjacent to hubs...that aren't in the island and are semidistant form their hub
+		- xx we have rooms adjacent to hubs...that aren't in the island and are semidistant form their hub
 		- emphasize on hover
 	- push to repo
 	- instead of using link forces and trying to keep things on certain sides, make a force function that calculates an "ideal" position and pulls toward that
