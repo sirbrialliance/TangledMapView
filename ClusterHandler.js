@@ -24,6 +24,7 @@ class ClusterHandler {
 
 	_pickIslands() {
 		this.islands = []
+		this.crossIslandLinks = []
 
 		//rough visible room estimate:
 		var numRooms = Object.keys(this._visitedRooms).length
@@ -130,16 +131,27 @@ class ClusterHandler {
 			var transitionA = this.data.transitions[doorId]
 			if (!transitionA) continue //one-way that doesn't start on doorId we'll get this form the other side
 
-			if (transitionA.srcRoom.island !== island || transitionA.dstRoom.island !== island) {
-				//todo, cross island connecting stuffs
+			if (transitionA.srcRoom.island !== island && transitionA.dstRoom.island !== island) {
+				//Fully unrelated to this island
 				continue
 			}
 
 			var transitionB = this.data.transitions[transitionA.dstDoorId]
+			let link = new RoomLink(transitionA, transitionB)
 
-			links.push(new RoomLink(transitionA, transitionB))
-			handledDoors[transitionA.srcDoor] = true
-			handledDoors[transitionA.dstDoor] = true
+			if (transitionA.srcRoom.island !== transitionA.dstRoom.island) {
+				//different islands
+				if (this.crossIslandLinks.every(x => x.id !== link.id)) {
+					//not a duplicate, add it
+					this.crossIslandLinks.push(link)
+				}
+			} else {
+				//same island
+				links.push(link)
+				handledDoors[transitionA.srcDoor] = true
+				handledDoors[transitionA.dstDoor] = true
+			}
+
 		}
 
 		const explosionPrevention = () => {

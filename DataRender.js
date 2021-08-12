@@ -16,7 +16,15 @@ class DataRender {
 
 		this.cluster.macro.simulation.on("tick", () => {
 			islandHolder.attr("transform", d => `translate(${d.x},${d.y})`)
+			this._updateCrossLinks()
 		})
+
+		var crossIslandLinks = holder.selectAll("g.crossIslandLink")
+			.data(this.cluster.crossIslandLinks)
+			.join("g")
+				.classed("crossIslandLink", true)
+
+		this._crossLinkLines = crossIslandLinks.append("line")
 	}
 
 	_renderIsland(island, holder) {
@@ -122,8 +130,18 @@ class DataRender {
 				.attr("y2", d => d.target.y)
 
 			node.attr("transform", d => `translate(${d.x},${d.y})`)
+			this._updateCrossLinks()
 		})
 
+	}
+
+	_updateCrossLinks() {
+		this._crossLinkLines.each(function(link, idx, el) {
+			this.setAttribute("x1", link.source.x + link.source.island.x)
+			this.setAttribute("y1", link.source.y + link.source.island.y)
+			this.setAttribute("x2", link.target.x + link.target.island.x)
+			this.setAttribute("y2", link.target.y + link.target.island.y)
+		})
 	}
 }
 
