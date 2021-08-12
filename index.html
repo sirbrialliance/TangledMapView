@@ -55,10 +55,13 @@
 		.on("zoom", ev => updateZoom(ev.transform))
 
 	var simulation = d3.forceSimulation(data.nodes)
-		.force("link", d3.forceLink(data.links).strength(x => x.strength))
+		.force("link", d3.forceLink(data.links)
+			.strength(x => x.strength)
+		)
 		.force("group", d3.forceManyBody()
+			// .strength(-30)
 			// .distanceMin(30)
-			.distanceMax(800)
+			// .distanceMax(200)
 		)
 		.force("custom", dataRender.getForceFunc())
 		// .alphaDecay(.005)
@@ -81,29 +84,27 @@
 	}
 
 	function setupDrag() {
-		function dragstarted(event) {
-			if (!event.active) simulation.alphaTarget(0.3).restart();
-			event.subject.fx = event.subject.x;
-			event.subject.fy = event.subject.y;
-		}
-
-		function dragged(event) {
-			event.subject.fx = event.x;
-			event.subject.fy = event.y;
-		}
-
-		function dragended(event) {
-			if (!event.active) simulation.alphaTarget(0);
-			event.subject.fx = null;
-			event.subject.fy = null;
-		}
-
 		return d3.drag()
-			.on("start", dragstarted)
-			.on("drag", dragged)
-			.on("end", dragended)
-		;
-	};
+			.on("start", (event) => {
+				if (!event.active) simulation.alphaTarget(0.8).restart();
+				if (typeof event.subject.fx !== "undefined") event.subject.__hadFixedPos = true
+				event.subject.fx = event.subject.x
+				event.subject.fy = event.subject.y
+			})
+			.on("drag", (event) => {
+				event.subject.fx = event.x
+				event.subject.fy = event.y
+			})
+			.on("end", (event) => {
+				if (!event.active) simulation.alphaTarget(0);
+				if (event.subject.__hadFixedPos) {
+					delete event.subject.__hadFixedPos
+				} else {
+					event.subject.fx = null
+					event.subject.fy = null
+				}
+			})
+	}
 
 	svg
 		.call(zoom)
@@ -133,8 +134,9 @@
 	node.append("circle")
 		.attr("r", node => node.numTransitions * 2.5 + 3.5)
 		.attr("fill", room => {
-			if (room.isEveryTransitionVisited()) return "green"
-			else return "blue"
+			if (room.isStartRoom) return "red"
+			else if (room.isEveryTransitionVisited) return "green"
+			else return "#BB0"
 		})
 
 	node.append("text")

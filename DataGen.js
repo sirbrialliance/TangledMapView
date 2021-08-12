@@ -143,7 +143,11 @@ class RoomNode {
 		this.numTransitions = Object.keys(this.transitions).length
 	}
 
-	isEveryTransitionVisited() {
+	get isStartRoom() {
+		return this.id === this.dataSource.randomizerData.StringValues.StartSceneName
+	}
+
+	get isEveryTransitionVisited() {
 		let visitedTransitions = this.dataSource.visitedTransitions
 		for (let k in this.transitions) {
 			if (!visitedTransitions[k]) {
