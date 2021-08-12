@@ -10,7 +10,7 @@ door_*: 13
 
 */
 
- /** Data gen from save file */
+ /** Loads data from the save file and hands general information about that data */
 class DataGen {
 	centerPos = [200, 200]
 	rooms = {}//map of room id => RoomNode
@@ -91,13 +91,29 @@ class DataGen {
 		}
 	}
 
+	getVisitedRoomIds() {
+		//can't use this.saveData.playerData.scenesVisited, not all rooms get recorded (e.g. White_Palace*)
+		var ret = {}
+
+		for (let transitionId in this.visitedTransitions) {
+			if (ret[transitionId]) continue;
+
+			var transitionA = this.transitions[transitionId]
+			if (!transitionA) continue;//one-way, handle from the other side
+
+			ret[transitionA.srcRoom.id] = true
+			ret[transitionA.dstRoom.id] = true
+		}
+
+		return ret
+	}
+
 	/** Populates this.nodes and this.links with data for rendering the map (generally a subset of this.rooms and this.transitions). */
 	buildNodes() {
 		this.nodes = []
 		this.links = []
 		var includedRooms = {}, includedTransitions = {}
 
-		//can't use this.saveData.playerData.scenesVisited to make all nodes, not all rooms get recorded (e.g. White_Palace*)
 
 		const ensureRoomNode = room => {
 			if (!includedRooms[room.id]) {
@@ -132,6 +148,8 @@ class DataGen {
 class RoomNode {
 	transitions = {}
 	numTransitions = 0
+	island = null
+	islandDistance = 0//0 = hub, 1 = adjacent to hub, 2 = adjacent to that, etc.
 
 	constructor(id, dataSource) {
 		this.id = id

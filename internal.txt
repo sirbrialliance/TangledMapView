@@ -1,7 +1,7 @@
 (It's an ugly, jumbled mess)
 - Island rework:
-	- Pick island "hub" rooms based on number of connections of visited room. Most wins. Number is based on reasonable sizes (e.g. 20 rooms to an island)
-	- gradient pathfind and tag all rooms with the island of the closest hub
+	- xx Pick island "hub" rooms based on number of connections of visited room. Most wins. Number is based on reasonable sizes (e.g. 20 rooms to an island)
+	- xx gradient pathfind and tag all rooms with the island of the closest hub
 	- two(+) simulations:
 		- macro simulation, arranges islands only (so they don't overlap)
 		- island simulations, arranges items within an island
@@ -11,6 +11,9 @@
 
 - Or, just go with only rendering nearby rooms for now?
 
-- pathfinding
+- pathfinding to room/item, https://github.com/anvaka/ngraph.path looks good
 
 - Show roughly real room shapes
+
+- deal with later:
+	- isolated room groups that don't have an island hub won't appear

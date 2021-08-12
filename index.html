@@ -43,6 +43,9 @@
 	data.load(testSaveData)
 
 	var dataRender = new DataRender(data)
+	var cluster = new ClusterHandler(data)
+
+	cluster.buildIslands()
 
 	var svg = d3.select("svg");
 
@@ -70,11 +73,11 @@
 		// .alphaDecay(.005)
 
 	function updateSize() {
-		var width = svg.node().clientWidth
-		var height = svg.node().clientHeight
-		var center = [width / 2, height / 2]
-		data.setCenter(center)
-		zoom.extent([[0, 0], [width, height]])
+		var w2 = svg.node().clientWidth / 2
+		var h2 = svg.node().clientHeight / 2
+		data.setCenter([0, 0])
+		svg.attr("viewBox", [-w2, -h2, w2 * 2, h2 * 2])
+		zoom.extent([[-w2, -h2], [w2, h2]])
 		simulation
 			// breaks things pretty good: .force("center", d3.forceCenter(center[0], center[1]))
 			.restart()
