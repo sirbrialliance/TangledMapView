@@ -40,6 +40,16 @@ class ClusterHandler {
 		for (let i = 0; i < numIslands; i++) this.hubs.push(rooms[i])
 	}
 
+	_addIsland(room) {
+		let island = room.island = new Island(room)
+		room.islandDistance = 0
+		this.islands.push(island)
+
+		//pin to local origin
+		room.fx = 0
+		room.fy = 0
+	}
+
 	/** Marks each room with the closest island */
 	_measureDistances() {
 		var rooms = this.data.rooms
@@ -53,21 +63,7 @@ class ClusterHandler {
 		}
 
 		//promote islands
-		for (let room of this.hubs) {
-			let island = room.island = {
-				id: room.id,
-				rooms: [],
-				links: [],
-				hub: room,
-				simulation: null,
-			}
-			room.islandDistance = 0
-			this.islands.push(island)
-
-			//pin to local origin
-			room.fx = 0
-			room.fy = 0
-		}
+		for (let room of this.hubs) this._addIsland(room)
 
 		//find distances
 		for (let room of this.hubs) {
@@ -78,8 +74,9 @@ class ClusterHandler {
 		for (let roomId in this._visitedRooms) {
 			let room = rooms[roomId]
 			if (!room.island) {
-				// console.warn("Isolated room " + roomId)
-				continue
+				//isolated, make an island for it
+				this._addIsland(room)
+				this._crawlDistances(room, room.island, 0)
 			}
 			room.island.rooms.push(room)
 		}
@@ -114,8 +111,11 @@ class ClusterHandler {
 		}
 
 		this.macro.simulation = d3.forceSimulation(this.macro.nodes)
-			.force("group", d3.forceManyBody())
+			// .force("group", d3.forceManyBody())
+			.force("group", d3.forceCollide().radius(400).strength(.5))
 			.force("center", d3.forceCenter())
+			.force("x", d3.forceX().strength(.1))
+			.force("y", d3.forceY().strength(.1))
 	}
 
 	_buildIslandData(island) {
@@ -182,3 +182,15 @@ class ClusterHandler {
 
 }
 
+
+class Island {
+	rooms = []
+	links = []
+	simulation = null
+
+	constructor(room) {
+		this.hub = room
+		this.id = room.id
+	}
+
+}
