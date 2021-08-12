@@ -90,10 +90,10 @@ class ClusterHandler {
 
 		room.island = island
 		room.islandDistance = islandDistance
-
 		++islandDistance
 
 		for (let doorId in room.doorIds) {
+			if (!this.data.visitedDoors[doorId]) continue
 			let transition = this.data.doorTransitions[doorId]
 
 			let otherRoom = transition.dstRoom === room ? transition.srcRoom : transition.dstRoom
