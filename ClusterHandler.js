@@ -101,7 +101,7 @@ class ClusterHandler {
 
 			if (islandDistance < otherRoom.islandDistance) {
 				//we're closer than what it currently has
-				this._crawlDistances(transition.dstRoom, island, islandDistance)
+				this._crawlDistances(otherRoom, island, islandDistance)
 			}
 		}
 	}

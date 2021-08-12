@@ -44,7 +44,7 @@ class DataRender {
 					let room = event.subject; note(event)
 					let [simulation, target] = getTargets(room)
 
-					console.log(`Clicked ${room.displayText} which links to ${Object.keys(room.doorIds).join(", ")}`, room)
+					//console.log(`Clicked ${room.displayText} which links to ${Object.keys(room.doorIds).join(", ")}`, room)
 
 					simulation.alphaTarget(0.3).restart()//ask it to "keep the alpha warm" while we drag
 
