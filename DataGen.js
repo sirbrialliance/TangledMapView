@@ -110,7 +110,7 @@ class DataGen {
 		for (let transitionId in this.visitedTransitions) {
 			if (includedTransitions[transitionId]) continue;//already handled
 
-// if (this.links.length > 20) break;
+if (this.links.length >= 8) break;
 
 			var transitionA = this.transitions[transitionId]
 			if (!transitionA) continue;//one-way, handle from the other side

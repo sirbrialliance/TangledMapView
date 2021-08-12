@@ -57,12 +57,14 @@
 	var simulation = d3.forceSimulation(data.nodes)
 		.force("link", d3.forceLink(data.links)
 			.strength(x => x.strength)
+			.distance(35)
 		)
-		.force("group", d3.forceManyBody()
-			// .strength(-30)
-			// .distanceMin(30)
-			// .distanceMax(200)
-		)
+		// .force("group", d3.forceManyBody()
+		// 	// .strength(-30)
+		// 	// .distanceMin(30)
+		// 	// .distanceMax(200)
+		// )
+		.force("noExplode", dataRender.explosionPrevention(1000))
 		.force("custom", dataRender.getForceFunc())
 		// .alphaDecay(.005)
 
@@ -73,7 +75,7 @@
 		data.setCenter(center)
 		zoom.extent([[0, 0], [width, height]])
 		simulation
-			.force("center", d3.forceCenter(center[0], center[1]))
+			// breaks things pretty good: .force("center", d3.forceCenter(center[0], center[1]))
 			.restart()
 	}
 
@@ -84,19 +86,24 @@
 	}
 
 	function setupDrag() {
+		function note(ev) {}// console.log(ev.active, ev.subject, simulation.alpha(), simulation.alphaTarget(), simulation.alphaMin())}
 		return d3.drag()
 			.on("start", (event) => {
-				if (!event.active) simulation.alphaTarget(0.8).restart();
-				if (typeof event.subject.fx !== "undefined") event.subject.__hadFixedPos = true
+				note(event)
+				simulation.alphaTarget(0.3).restart()
+				if (typeof event.subject.fx === "number") event.subject.__hadFixedPos = true
 				event.subject.fx = event.subject.x
 				event.subject.fy = event.subject.y
 			})
 			.on("drag", (event) => {
+				note(event)
 				event.subject.fx = event.x
 				event.subject.fy = event.y
 			})
 			.on("end", (event) => {
-				if (!event.active) simulation.alphaTarget(0);
+				note(event)
+				simulation.alpha(1).alphaTarget(0).restart()
+
 				if (event.subject.__hadFixedPos) {
 					delete event.subject.__hadFixedPos
 				} else {

@@ -1,9 +1,12 @@
 
 - It's an ugly, jumbled mess
-	- Try to prioritize "nexus" rooms
-	- Deprioritize "straight-through" rooms
+	- xx Try to prioritize "nexus" rooms
+		- Deprioritize "straight-through" rooms
+	- xx Influence visualization to respect what side a connection is on.
 
+	- two simulations? One to arrange the clusters and (array of) secondary simulations to arrange within a cluster
+	- instead of using link forces and trying to keep things on certain sides, can we just assign relative positions and try to move to that?
 
-- Influence visualization to respect what side a connection is on.
+- pathfinding
 
 - Show roughly real room shapes
