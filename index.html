@@ -8,7 +8,10 @@
 	<script src="DataGen.js"></script>
 	<script src="ClusterHandler.js"></script>
 	<style>
-		body, html { margin: 0; padding: 0; height: 100%; width: 100%; }
+		:root {
+			--highlight-color: #BBB;
+		}
+		body, html { margin: 0; padding: 0; height: 100%; width: 100%; background: #555; }
 
 		svg { user-select: none; }
 
@@ -16,17 +19,26 @@
 			fill: none;
 			stroke: black;
 			stroke-opacity: .4;
+			stroke-width: 3px;
 		}
 		.crossIslandLink .roomLink {
-			stroke: rgb(48, 100, 0);
+			stroke: rgba(0, 0, 0, 0.5);
 			stroke-dasharray: 7, 7;
 		}
-		.roomLink.hoverRelated, .hoverRelated .roomLink { stroke-width: 3px; stroke-opacity: 1; stroke-dasharray: none; }
+		.roomLink.hoverRelated, .hoverRelated .roomLink {
+			stroke: var(--highlight-color);
+			stroke-width: 6px;
+			stroke-opacity: 1;
+			stroke-dasharray: none;
+		}
 
 
-		.mapNode { cursor: pointer; }
-		.mapNode.hoverRelated > circle, .mapNode:hover > circle {
+		.mapNode {
 			stroke: black;
+			cursor: pointer;
+		}
+		.mapNode.hoverRelated > circle, .mapNode:hover > circle {
+			stroke: var(--highlight-color);
 			stroke-width: 3px;
 		}
 
@@ -37,13 +49,19 @@
 			font-size: 11px;
 			stroke: none;
 			font-family: sans-serif;
-			fill: black;
+			fill: white;
 			transform: translate(0, .5em);
 			text-anchor: middle;
 		}
-		.mapNodeLabel.shadow {stroke: white; stroke-width: 3px;}
+		.mapNodeLabel.shadow {stroke: rgba(0, 0, 0, 0.548); stroke-width: 3px;}
 		.mapNode:hover .mapNodeLabel {
 			display: block;
+		}
+
+		.islandBackdrop {
+			fill: none;
+			stroke: rgba(255, 255, 255, 0.192);
+			stroke-width: 1px;
 		}
 
 		/* #room-Fungus2_30 > circle { fill: blue; } */

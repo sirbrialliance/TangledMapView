@@ -22,8 +22,14 @@ class DataRender {
 				.classed("island", true)
 				.each(function(island, idx, el) { dataRender._renderIsland(island, d3.select(this)) })
 
+		islandHolder.append("circle")
+			.lower()
+			.classed("islandBackdrop", true)
+			.attr("r", island => island.radius)
+
 		this.cluster.macro.simulation.on("tick", () => {
 			islandHolder.attr("transform", d => `translate(${d.x},${d.y})`)
+
 			this._updateCrossLinks()
 		})
 
@@ -156,13 +162,15 @@ class DataRender {
 		if (this._crossLinkTask) return
 
 		this._crossLinkTask = setTimeout(() => {
-			this._crossLinkLines.attr("d", link => DataRender.buildLinkPath(link.transitionA, {
-				x: link.source.x + link.source.island.x, y: link.source.y + link.source.island.y,
-			}, {
-				x: link.target.x + link.target.island.x, y: link.target.y + link.target.island.y,
-			}))
 			this._crossLinkTask = null
-		})
+			this._crossLinkLines.attr("d", link => {
+				let src = {x: link.source.x + link.source.island.x, y: link.source.y + link.source.island.y}
+				// let island = link.source.island
+				// let dst = {x: island.x, y: island.y}
+				let dst = {x: link.target.x + link.target.island.x, y: link.target.y + link.target.island.y}
+				return DataRender.buildLinkPath(link.transitionA, src, dst)
+			})
+		}, 0)
 	}
 
 	/** Returns the path bit to use with a <path d=XXYY /> */

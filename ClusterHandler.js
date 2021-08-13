@@ -18,8 +18,8 @@ class ClusterHandler {
 
 		this._pickIslands()
 		this._measureDistances()
-		this._buildMacroData()
 		for (let island of this.islands) this._buildIslandData(island)
+		this._buildMacroData()
 	}
 
 	_pickIslands() {
@@ -113,7 +113,7 @@ class ClusterHandler {
 
 		this.macro.simulation = d3.forceSimulation(this.macro.nodes)
 			// .force("group", d3.forceManyBody())
-			.force("group", d3.forceCollide().radius(400).strength(.5))
+			.force("group", d3.forceCollide().radius(island => island.radius).strength(.5))
 			.force("center", d3.forceCenter())
 			.force("x", d3.forceX().strength(.05))
 			.force("y", d3.forceY().strength(.05))
@@ -154,6 +154,7 @@ class ClusterHandler {
 		}
 
 		const positionDistance = 300
+		//Picks relative positions and parent for parent-relative positioning mode
 		const positionRooms = (room, depth) => {
 			var levelDistance = positionDistance / Math.pow(1.5, depth)
 			// var levelDistance = positionDistance * (1 - depth / 5)
@@ -192,6 +193,25 @@ class ClusterHandler {
 		island.hub.y = 0
 		positionRooms(island.hub, 0)
 
+		const islandBoundary = alpha => {
+			var radius2 = island.radius * island.radius
+			const strength = 3
+			const nodes = island.rooms
+			for (let i = 0, len = nodes.length; i < len; i++) {
+				let node = nodes[i]
+				var dist2 = node.x * node.x + node.y * node.y
+				if (dist2 > radius2) {
+					var dist = Math.sqrt(dist2)
+					var force = (dist - island.radius) * strength * alpha
+					node.vx += -force * node.x / dist
+					node.vy += -force * node.y / dist
+				}
+			}
+		}
+
+		// island.radius = 40 * Math.sqrt(island.rooms.length) + 30
+		island.radius = 80 * Math.sqrt(island.rooms.length)
+
 		island.simulation = d3.forceSimulation(island.rooms)
 			.force("link", d3.forceLink(island.links)
 				.strength(.3)
@@ -207,6 +227,7 @@ class ClusterHandler {
 			// .force("placement", ClusterHandler.forceParentRelative().strength(.03))
 			.force("noExplode", ClusterHandler.forcePreventExplosions())
 			.force("doorAlign", ClusterHandler.forceDoorAlignment(island.links).strengths(.3, .3))
+			.force("islandBoundary", islandBoundary)
 			.alphaDecay(.005)
 			.alphaMin(.09)
 	}
@@ -221,7 +242,7 @@ class ClusterHandler {
 				let node = nodes[i]
 
 				//prevent explosions, stop things that are going far
-				var dist2 = node.vx * node.vx + node.vy * node.vy
+				var dist2 = node.x * node.x + node.y * node.y
 				if (dist2 > maxDistance2) {
 					var dist = Math.sqrt(dist2)
 					node.vx = node.vy = 0
@@ -315,6 +336,7 @@ class Island {
 	rooms = []
 	links = []
 	simulation = null
+	radius = 300
 
 	constructor(room) {
 		this.hub = room

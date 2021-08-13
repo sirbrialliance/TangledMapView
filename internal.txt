@@ -1,15 +1,27 @@
 (It's an ugly, jumbled mess)
 
-- try different ways of aligning rooms
+- xx try different ways of aligning rooms
+- nn It's still a jumbled mess, table that for now and move on.
 
-- try pulling more related islands closer together, maybe
+- size island based on number of nodes
 
-- constrain islands to circles with dynamic and cross-simulation influenced radii?
-	- copy forces to keep objects inside to push on the circle radius, counteract it with forces from the inter-island interactions
+- Dynamically add new (visible) nodes works
 
-- Or, just go with only rendering nearby rooms for now?
+- Button to rearrange to be user-centric
+- Sliders to adjust room align forces/radii
+
+- Toggle memory mode vs guide mode
 
 - pathfinding to room/item, https://github.com/anvaka/ngraph.path looks like good lib for helping
 
-- Show roughly real room shapes
+- Integrate with real game
+
+- Show real room icons
+
+- Jumbled mess
+	- try sinking cross-island links to an outer circle, then jump to other islands from there?
+	- constrain islands to circles with dynamic and cross-simulation influenced radii?
+		- copy forces to keep objects inside to push on the circle radius, counteract it with forces from the inter-island interactions
+
+
 
