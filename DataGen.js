@@ -116,6 +116,7 @@ class RoomNode {
 	numDoors = 0
 	island = null
 	islandDistance = 0//0 = hub, 1 = adjacent to hub, 2 = adjacent to that, etc.
+	graphParent = null//an adjacent room on our island that's closer to the hub than us
 
 	constructor(id, dataSource) {
 		this.id = id
@@ -149,6 +150,7 @@ class RoomNode {
 	}
 
 	get adjacentRooms() {
+		//(aside: rooms can link to themselves, FYI)
 		var ret = []
 		for (let doorId in this.doorIds) {
 			let transition = this.dataSource.doorTransitions[doorId]

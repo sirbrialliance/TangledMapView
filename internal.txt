@@ -11,7 +11,7 @@
 		- xx add
 		- xx we have rooms adjacent to hubs...that aren't in the island and are semidistant form their hub
 		- xx emphasize on hover
-	- push to repo
+	- xx push to repo
 	- instead of using link forces and trying to keep things on certain sides, make a force function that calculates an "ideal" position and pulls toward that
 		- adjust radii as we get farther from the hub so it's easier to fit "impossible" room arrangements
 

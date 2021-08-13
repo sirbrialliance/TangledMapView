@@ -151,8 +151,46 @@ class ClusterHandler {
 				handledDoors[transitionA.srcDoor] = true
 				handledDoors[transitionA.dstDoor] = true
 			}
+		}
+
+		const positionDistance = 300
+		const positionRooms = (room, depth) => {
+			var levelDistance = positionDistance / Math.pow(1.5, depth)
+			// var levelDistance = positionDistance * (1 - depth / 5)
+			let i = 0, doorIds = Object.keys(room.doorIds)
+			for (let doorId of doorIds) {
+				let transition = this.data.doorTransitions[doorId]
+				let [cRoom, side] = transition.dstRoom === room ? [transition.srcRoom, transition.dstSide] : [transition.dstRoom, transition.srcSide]
+
+				if (cRoom.island !== island) continue//leaving the island
+				if (cRoom.islandDistance <= depth) continue//would be handled at a higher level already
+
+				cRoom.graphParent = room
+
+				cRoom.parentDeltaX = 0
+				cRoom.parentDeltaY = 0
+
+				switch (side) {
+					case "top": cRoom.parentDeltaY += -levelDistance; break
+					case "bot": cRoom.parentDeltaY += levelDistance; break
+					case "right": cRoom.parentDeltaX += levelDistance; break
+					case "left": cRoom.parentDeltaX += -levelDistance; break
+					default: {
+						let angle = i / doorIds.length * 2 * Math.PI + Math.PI / 8
+						cRoom.parentDeltaX += levelDistance * Math.cos(angle)
+						cRoom.parentDeltaY += levelDistance * Math.sin(angle)
+						break
+					}
+				}
+
+				positionRooms(cRoom, depth + 1)
+				++i
+			}
 
 		}
+		island.hub.x = 0
+		island.hub.y = 0
+		positionRooms(island.hub, 0)
 
 		const explosionPrevention = () => {
 			const maxDistance = 1000
@@ -176,17 +214,37 @@ class ClusterHandler {
 			}
 		}
 
+		const targetPositionForce = () => {
+			const strength = .3
+
+			return alpha => {
+				let nodes = island.rooms
+				for (let i = 0, len = nodes.length; i < len; i++) {
+					let node = nodes[i]
+					let parent = node.graphParent
+					if (!parent) continue
+
+					let diffX = (node.parentDeltaX + parent.x) - node.x
+					let diffY = (node.parentDeltaY + parent.y) - node.y
+
+					node.vx += strength * diffX * alpha
+					node.vy += strength * diffY * alpha
+				}
+			}
+		}
+
 		island.simulation = d3.forceSimulation(island.rooms)
-			.force("link", d3.forceLink(island.links)
-				.strength(x => x.strength)
-				.distance(35)
-			)
+			// .force("link", d3.forceLink(island.links)
+			// 	.strength(x => x.strength)
+			// 	.distance(35)
+			// )
 			.force("group", d3.forceManyBody()
 				// .strength(-30)
 				// .distanceMin(30)
 				// .distanceMax(200)
 			)
-			.force("noExplode", explosionPrevention)
+			.force("placement", targetPositionForce())
+			.force("noExplode", explosionPrevention())
 			// .force("custom", dataRender.getForceFunc())
 			.alphaDecay(.005)
 			.alphaMin(.09)
