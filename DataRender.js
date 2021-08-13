@@ -9,7 +9,7 @@ const roomDirections = {
 class DataRender {
 	constructor(cluster) {
 		this.cluster = cluster
-		this.dataGen = cluster.data
+		this.data = cluster.data
 	}
 
 	renderInto(holder) {
@@ -61,7 +61,11 @@ class DataRender {
 					let room = event.subject; note(event)
 					let [simulation, target] = getTargets(room)
 
-					console.log(`Clicked ${room.displayText} which links to ${Object.keys(room.doorIds).join(", ")}`, room)
+					console.log(
+						`Clicked ${room.displayText}`, room,
+						`Visited: ${room.visitedDoors.map(x=>x + " => " + _this.data.doorTransitions[x].dstDoor).join(", ")}`,
+						`Unvisited: ${room.unvisitedDoors.map(x=>x + " => " + _this.data.doorTransitions[x].dstDoor).join(", ")}`,
+					)
 
 					simulation.alphaTarget(0.3).restart()//ask it to "keep the alpha warm" while we drag
 
@@ -113,7 +117,7 @@ class DataRender {
 			return [
 				...room.adjacentRooms.map(x => document.getElementById(`room-${x.id}`)),
 				...Object.keys(room.doorIds).map(doorId => {
-					var elId = RoomLink.getId(this.dataGen.doorTransitions[doorId])
+					var elId = RoomLink.getId(this.data.doorTransitions[doorId])
 					return document.getElementById(elId)
 				}),
 			]
@@ -146,7 +150,7 @@ class DataRender {
 		node.append("text")
 			.classed("mapNodeLabel shadow", true)
 			// .text(x => x.displayText)
-			.text(x => `${x.displayText}, dist ${x.islandDistance} on ${x.island.id} with ${x.numTransitionsVisited - x.numDoors} unvisited`)
+			.text(x => `${x.displayText}, dist ${x.islandDistance} on ${x.island.id} with ${x.numDoors - x.numTransitionsVisited} unvisited`)
 			.clone(true).classed("shadow", false)
 
 		island.simulation.on("tick", () => {
@@ -187,7 +191,7 @@ class DataRender {
 		let delta = {x: curveStart.x - curveEnd.x, y: curveStart.y - curveEnd.y}
 		var curveDist = Math.sqrt(delta.x * delta.x + delta.y * delta.y)
 
-		let tangentLen = Math.max(50, Math.min(curveDist * .6, 100))
+		let tangentLen = Math.max(50, Math.min(curveDist * .6, 300))
 
 
 		var ret = `M ${src.x} ${src.y} `

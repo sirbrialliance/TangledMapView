@@ -14,7 +14,8 @@ class ClusterHandler {
 	}
 
 	buildIslands() {
-		this._visitedRooms = this.data.getVisitedRoomIds()
+		this._visibleRooms = this.data.visibleRooms
+		this._visibleTransitions = this.data.visibleTransitions
 
 		this._pickIslands()
 		this._measureDistances()
@@ -27,7 +28,7 @@ class ClusterHandler {
 		this.crossIslandLinks = []
 
 		//rough visible room estimate:
-		var numRooms = Object.keys(this._visitedRooms).length
+		var numRooms = Object.keys(this._visibleRooms).length
 
 		if (numRooms === 0) return
 
@@ -56,7 +57,7 @@ class ClusterHandler {
 		var rooms = this.data.rooms
 
 		//clear
-		for (let roomId in this._visitedRooms) {
+		for (let roomId in this._visibleRooms) {
 			rooms[roomId].island = null
 			rooms[roomId].islandDistance = Infinity
 			rooms[roomId].fx = null
@@ -72,7 +73,7 @@ class ClusterHandler {
 		}
 
 		//collect island members
-		for (let roomId in this._visitedRooms) {
+		for (let roomId in this._visibleRooms) {
 			let room = rooms[roomId]
 			if (!room.island) {
 				//isolated, make an island for it
@@ -91,13 +92,16 @@ class ClusterHandler {
 		++islandDistance
 
 		for (let doorId in room.doorIds) {
-			if (!this.data.visitedDoors[doorId]) continue
+			//don't allow graph traversal along transitions we haven't taken, even if both rooms are visited or not
+			if (!this._visibleTransitions[doorId]) continue
+
 			let transition = this.data.doorTransitions[doorId]
 
 			let otherRoom = transition.dstRoom === room ? transition.srcRoom : transition.dstRoom
 
-			//ignore unvisited rooms
-			if (!this._visitedRooms[otherRoom.id]) continue
+			//ignore non-visible rooms
+			if (!this._visibleRooms[otherRoom.id]) continue
+
 
 			if (islandDistance < otherRoom.islandDistance) {
 				//we're closer than what it currently has
@@ -124,12 +128,13 @@ class ClusterHandler {
 
 		var handledDoors = {}
 
-		for (let doorId in this.data.visitedDoors) {
+		//build links form transitions/doors
+		for (let doorId in this._visibleTransitions) {
 			if (handledDoors[doorId]) continue;//already handled
 			// if (links.length >= 2) break;
 
-			var transitionA = this.data.transitions[doorId]
-			if (!transitionA) continue //one-way that doesn't start on doorId we'll get this form the other side
+			var transitionA = this._visibleTransitions[doorId]
+			if (!transitionA) continue //one-way that doesn't start on doorId we'll get this from the other side
 
 			if (transitionA.srcRoom.island !== island && transitionA.dstRoom.island !== island) {
 				//Fully unrelated to this island
@@ -163,6 +168,7 @@ class ClusterHandler {
 				let transition = this.data.doorTransitions[doorId]
 				let [cRoom, side] = transition.dstRoom === room ? [transition.srcRoom, transition.dstSide] : [transition.dstRoom, transition.srcSide]
 
+				if (cRoom === room) continue//room links to self
 				if (cRoom.island !== island) continue//leaving the island
 				if (cRoom.islandDistance <= depth) continue//would be handled at a higher level already
 

@@ -1,9 +1,7 @@
-(It's an ugly, jumbled mess)
 
 - xx try different ways of aligning rooms
 - nn It's still a jumbled mess, table that for now and move on.
-
-- size island based on number of nodes
+- xx size island based on number of nodes
 
 - Dynamically add new (visible) nodes works
 
@@ -11,6 +9,8 @@
 - Sliders to adjust room align forces/radii
 
 - Toggle memory mode vs guide mode
+
+- Select room for name and stats (num transitions visited/unvisited, items found/not found (or count of not found if no spoilers))
 
 - pathfinding to room/item, https://github.com/anvaka/ngraph.path looks like good lib for helping
 

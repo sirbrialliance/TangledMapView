@@ -14,11 +14,14 @@ door_*: 13
 class DataGen {
 	// centerPos = [0, 0]
 	rooms = {}//map of room id => RoomNode
-	transitions = {}//map of (srcDoorId) => RoomTransition
+	transitions = {}//map of (srcDoor) => RoomTransition
 	/** Map of door id => RoomTransition. The forward transition is preferred, but if there isn't one the reverse transition is used. */
 	doorTransitions = {}
 	/** set of doors we've used including src and dst door, door id => true */
 	visitedDoors = {}
+
+	/** Show everything? If false just what we've visited. */
+	showAll = false
 
 
 	load(saveData) {
@@ -94,19 +97,50 @@ class DataGen {
 		}
 	}
 
-	getVisitedRoomIds() {
-		//can't use this.saveData.playerData.scenesVisited, not all rooms get recorded (e.g. White_Palace*)
-		var ret = {}
+	/** Returns a map of rooms that are currently visible (roomId => room) */
+	get visibleRooms() {
+		if (this.showAll) {
+			return this.rooms
+		} else {
+			//just what we've visited
+			//can't use this.saveData.playerData.scenesVisited, not all rooms get recorded (e.g. White_Palace*)
+			var ret = {}
 
-		for (let doorId in this.visitedDoors) {
-			if (ret[doorId]) continue;
+			for (let doorId in this.visitedDoors) {
+				if (ret[doorId]) continue;
 
-			var transition = this.doorTransitions[doorId]
-			ret[transition.srcRoom.id] = true
-			ret[transition.dstRoom.id] = true
+				var transition = this.doorTransitions[doorId]
+				ret[transition.srcRoom.id] = transition.srcRoom
+				ret[transition.dstRoom.id] = transition.dstRoom
+			}
+
+			return ret
 		}
+	}
 
-		return ret
+	/** Returns a map of visible transitions (srcDoor => transition) */
+	get visibleTransitions() {
+		if (this.showAll) {
+			return this.transitions
+		} else {
+			var ret = {}
+			for (let doorId in this.visitedDoors) {
+				var transition = this.doorTransitions[doorId]
+				ret[transition.srcDoor] = transition
+				if (transition.bidi) {
+					var transitionB = this.transitions[transition.dstDoor]
+					ret[transitionB.srcDoor] = transitionB
+				}
+			}
+
+			return ret
+		}
+	}
+
+	addVisit(doorId) {
+		var transition = this.doorTransitions[doorId]
+		this.visitedDoors[transition.srcDoor] = true
+		this.visitedDoors[transition.dstDoor] = true
 	}
 
 }
@@ -138,6 +172,19 @@ class RoomNode {
 			if (!visitedDoors[k]) return false
 		}
 		return true
+	}
+
+	get visitedDoors() {
+		let allVisited = this.dataSource.visitedDoors
+		let ret = []
+		for (let k in this.doorIds) if (allVisited[k]) ret.push(k)
+		return ret
+	}
+	get unvisitedDoors() {
+		let allVisited = this.dataSource.visitedDoors
+		let ret = []
+		for (let k in this.doorIds) if (!allVisited[k]) ret.push(k)
+		return ret
 	}
 
 	get numTransitionsVisited() {
