@@ -192,47 +192,6 @@ class ClusterHandler {
 		island.hub.y = 0
 		positionRooms(island.hub, 0)
 
-		const explosionPrevention = () => {
-			const maxDistance = 1000
-			const maxDistance2 = maxDistance * maxDistance
-			return alpha => {
-				let nodes = island.rooms
-				for (let i = 0, len = nodes.length; i < len; i++) {
-					let node = nodes[i]
-
-					//prevent explosions, stop things that are going far
-					var dist2 = node.vx * node.vx + node.vy * node.vy
-					if (dist2 > maxDistance2) {
-						var dist = Math.sqrt(dist2)
-						node.vx = node.vy = 0
-						// var old = [node.x, node.y]
-						node.x = node.x / dist * maxDistance
-						node.y = node.y / dist * maxDistance
-						//console.log(`Warp bad from ${old[0]} ${old[1]} to ${node.x} ${node.y}`)
-					}
-				}
-			}
-		}
-
-		const targetPositionForce = () => {
-			const strength = .03
-
-			return alpha => {
-				let nodes = island.rooms
-				for (let i = 0, len = nodes.length; i < len; i++) {
-					let node = nodes[i]
-					let parent = node.graphParent
-					if (!parent) continue
-
-					let diffX = (node.parentDeltaX + parent.x) - node.x
-					let diffY = (node.parentDeltaY + parent.y) - node.y
-
-					node.vx += strength * diffX * alpha
-					node.vy += strength * diffY * alpha
-				}
-			}
-		}
-
 		island.simulation = d3.forceSimulation(island.rooms)
 			.force("link", d3.forceLink(island.links)
 				.strength(x => x.strength)
@@ -243,12 +202,62 @@ class ClusterHandler {
 				// .distanceMin(30)
 				// .distanceMax(200)
 			)
-			.force("placement", targetPositionForce())
-			.force("noExplode", explosionPrevention())
+			// .force("placement", ClusterHandler.forceParentRelative().strength(.03))
+			.force("noExplode", ClusterHandler.forcePreventExplosions())
 			// .force("custom", dataRender.getForceFunc())
 			.alphaDecay(.005)
 			.alphaMin(.09)
 	}
+
+	static forcePreventExplosions(maxDistance_ = 1000) {
+		const maxDistance = maxDistance_
+		const maxDistance2 = maxDistance * maxDistance
+		var nodes
+
+		var ret = alpha => {
+			for (let i = 0, len = nodes.length; i < len; i++) {
+				let node = nodes[i]
+
+				//prevent explosions, stop things that are going far
+				var dist2 = node.vx * node.vx + node.vy * node.vy
+				if (dist2 > maxDistance2) {
+					var dist = Math.sqrt(dist2)
+					node.vx = node.vy = 0
+					// var old = [node.x, node.y]
+					node.x = node.x / dist * maxDistance
+					node.y = node.y / dist * maxDistance
+					//console.log(`Warp bad from ${old[0]} ${old[1]} to ${node.x} ${node.y}`)
+				}
+			}
+		}
+
+		ret.initialize = nodes_ => nodes = nodes_
+
+		return ret
+	}
+
+	static forceParentRelative() {
+		var strength = 1, nodes
+		var ret = alpha => {
+			for (let i = 0, len = nodes.length; i < len; i++) {
+				let node = nodes[i]
+				let parent = node.graphParent
+				if (!parent) continue
+
+				let diffX = (node.parentDeltaX + parent.x) - node.x
+				let diffY = (node.parentDeltaY + parent.y) - node.y
+
+				node.vx += strength * diffX * alpha
+				node.vy += strength * diffY * alpha
+			}
+		}
+
+		ret.initialize = nodes_ => nodes = nodes_
+		ret.strength = str => (strength = str, ret)
+
+		return ret
+	}
+
 
 }
 

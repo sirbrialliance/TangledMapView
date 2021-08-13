@@ -1,19 +1,8 @@
 (It's an ugly, jumbled mess)
-- Island rework:
-	- xx Pick island "hub" rooms based on number of connections of visited room. Most wins. Number is based on reasonable sizes (e.g. 20 rooms to an island)
-	- xx gradient pathfind and tag all rooms with the island of the closest hub
-	- xx two(+) simulations:
-		- xx macro simulation, arranges islands only (so they don't overlap)
-		- xx island simulations, arranges items within an island
-	- xx figure out why we have orphans
-		- xx we are considering all data when we crawl, but not making links for two adjacent visited rooms you haven't used the transition on yet
-	- add cross-island link lines (dotted)
-		- xx add
-		- xx we have rooms adjacent to hubs...that aren't in the island and are semidistant form their hub
-		- xx emphasize on hover
-	- xx push to repo
-	- instead of using link forces and trying to keep things on certain sides, make a force function that calculates an "ideal" position and pulls toward that
-		- adjust radii as we get farther from the hub so it's easier to fit "impossible" room arrangements
+
+- try different ways of aligning rooms
+
+- try pulling more related islands closer together, maybe
 
 - constrain islands to circles with dynamic and cross-simulation influenced radii?
 	- copy forces to keep objects inside to push on the circle radius, counteract it with forces from the inter-island interactions
@@ -24,5 +13,3 @@
 
 - Show roughly real room shapes
 
-- deal with later:
-	- isolated room groups that don't have an island hub won't appear
