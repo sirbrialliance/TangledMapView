@@ -115,8 +115,8 @@ class ClusterHandler {
 			// .force("group", d3.forceManyBody())
 			.force("group", d3.forceCollide().radius(400).strength(.5))
 			.force("center", d3.forceCenter())
-			.force("x", d3.forceX().strength(.1))
-			.force("y", d3.forceY().strength(.1))
+			.force("x", d3.forceX().strength(.05))
+			.force("y", d3.forceY().strength(.05))
 	}
 
 	_buildIslandData(island) {
@@ -126,7 +126,7 @@ class ClusterHandler {
 
 		for (let doorId in this.data.visitedDoors) {
 			if (handledDoors[doorId]) continue;//already handled
-			// if (links.length >= 8) break;
+			// if (links.length >= 2) break;
 
 			var transitionA = this.data.transitions[doorId]
 			if (!transitionA) continue //one-way that doesn't start on doorId we'll get this form the other side
@@ -194,17 +194,19 @@ class ClusterHandler {
 
 		island.simulation = d3.forceSimulation(island.rooms)
 			.force("link", d3.forceLink(island.links)
-				.strength(x => x.strength)
-				.distance(35)
+				.strength(.3)
+				// .strength(x => x.strength)
+				.distance(60)
 			)
-			.force("group", d3.forceManyBody()
-				// .strength(-30)
-				// .distanceMin(30)
-				// .distanceMax(200)
-			)
+			.force("group", d3.forceCollide().radius(60).strength(.3))
+			// .force("group", d3.forceManyBody()
+			// 	.strength(-30)
+			// 	.distanceMin(30)
+			// 	.distanceMax(200)
+			// )
 			// .force("placement", ClusterHandler.forceParentRelative().strength(.03))
 			.force("noExplode", ClusterHandler.forcePreventExplosions())
-			// .force("custom", dataRender.getForceFunc())
+			.force("doorAlign", ClusterHandler.forceDoorAlignment(island.links).strengths(.3, .3))
 			.alphaDecay(.005)
 			.alphaMin(.09)
 	}
@@ -254,6 +256,53 @@ class ClusterHandler {
 
 		ret.initialize = nodes_ => nodes = nodes_
 		ret.strength = str => (strength = str, ret)
+
+		return ret
+	}
+
+	/** Tries to push nodes so they line up with the correct side fora doorway. */
+	static forceDoorAlignment(links) {
+		var alignStrength = 1
+		var sideShiftStrength = .1
+
+		var ret = alpha => {
+			for (let i = 0, len = links.length; i < len; i++) {
+				let link = links[i]
+
+				const pushLink = (side, room, otherRoom) => {
+					if (side[0] === "d") return//for side.startsWith(door), don't apply forces to them
+
+					var dx = otherRoom.x - room.x
+					var dy = otherRoom.y - room.y
+
+					switch (side) {
+						case "top":
+							room.vx += dx * alignStrength * alpha
+							if (dy > 0) room.vy += dy * sideShiftStrength * alpha
+							break
+						case "bot":
+							room.vx += dx * alignStrength * alpha
+							if (dy < 0) room.vy -= -dy * sideShiftStrength * alpha
+							break
+						case "right":
+							room.vy += dy * alignStrength * alpha
+							if (dx < 0) room.vx -= -dx * sideShiftStrength * alpha
+							break
+						case "left":
+							room.vy += dy * alignStrength * alpha
+							if (dx > 0) room.vx += dx * sideShiftStrength * alpha
+							break
+					}
+
+				}
+
+				pushLink(link.transitionA.srcSide, link.transitionA.srcRoom, link.transitionA.dstRoom)
+				pushLink(link.transitionA.dstSide, link.transitionA.dstRoom, link.transitionA.srcRoom)
+			}
+		}
+
+		//ret.initialize = nodes_ => nodes = nodes_
+		ret.strengths = (alignStr, sideStr) => (alignStrength = alignStr, sideShiftStrength = sideStr, ret)
 
 		return ret
 	}
