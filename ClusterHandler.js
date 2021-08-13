@@ -215,7 +215,7 @@ class ClusterHandler {
 		}
 
 		const targetPositionForce = () => {
-			const strength = .3
+			const strength = .03
 
 			return alpha => {
 				let nodes = island.rooms
@@ -234,10 +234,10 @@ class ClusterHandler {
 		}
 
 		island.simulation = d3.forceSimulation(island.rooms)
-			// .force("link", d3.forceLink(island.links)
-			// 	.strength(x => x.strength)
-			// 	.distance(35)
-			// )
+			.force("link", d3.forceLink(island.links)
+				.strength(x => x.strength)
+				.distance(35)
+			)
 			.force("group", d3.forceManyBody()
 				// .strength(-30)
 				// .distanceMin(30)

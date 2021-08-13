@@ -1,3 +1,11 @@
+
+const roomDirections = {
+	top: [0, -1],
+	bot: [0, 1],
+	right: [1, 0],
+	left: [-1, 0],
+}
+
 class DataRender {
 	constructor(cluster) {
 		this.cluster = cluster
@@ -27,7 +35,7 @@ class DataRender {
 				.classed("crossIslandLink", true)
 				.attr("id", link => link.id)
 
-		this._crossLinkLines = crossIslandLinks.append("line")
+		this._crossLinkLines = crossIslandLinks.append("path").classed("roomLink", true)
 	}
 
 	_renderIsland(island, holder) {
@@ -89,9 +97,10 @@ class DataRender {
 			else return ret
 		}
 
-		const link = holder.selectAll("line")
+		const linkEls = holder.selectAll("path")
 			.data(island.links, x => x.id)
-			.join("line")
+			.join("path")
+				.classed("roomLink", true)
 				.attr("id", link => link.id)
 
 		const relatedElements = room => {
@@ -135,11 +144,7 @@ class DataRender {
 			.clone(true).classed("shadow", false)
 
 		island.simulation.on("tick", () => {
-			link
-				.attr("x1", d => d.source.x)
-				.attr("y1", d => d.source.y)
-				.attr("x2", d => d.target.x)
-				.attr("y2", d => d.target.y)
+			linkEls.attr("d", link => DataRender.buildLinkPath(link.transitionA, link.source, link.target))
 
 			node.attr("transform", d => `translate(${d.x},${d.y})`)
 			this._updateCrossLinks()
@@ -148,12 +153,35 @@ class DataRender {
 	}
 
 	_updateCrossLinks() {
-		this._crossLinkLines.each(function(link, idx, el) {
-			this.setAttribute("x1", link.source.x + link.source.island.x)
-			this.setAttribute("y1", link.source.y + link.source.island.y)
-			this.setAttribute("x2", link.target.x + link.target.island.x)
-			this.setAttribute("y2", link.target.y + link.target.island.y)
+		if (this._crossLinkTask) return
+
+		this._crossLinkTask = setTimeout(() => {
+			this._crossLinkLines.attr("d", link => DataRender.buildLinkPath(link.transitionA, {
+				x: link.source.x + link.source.island.x, y: link.source.y + link.source.island.y,
+			}, {
+				x: link.target.x + link.target.island.x, y: link.target.y + link.target.island.y,
+			}))
+			this._crossLinkTask = null
 		})
+	}
+
+	/** Returns the path bit to use with a <path d=XXYY /> */
+	static buildLinkPath(transition, src, dst) {
+		let srcSide = transition.srcSide, dstSide = transition.dstSide
+		//Unit (or zero) vector for the direction we want to head towards (use zero influence on doors)
+		let srcDir = roomDirections[srcSide] || [0, 0], dstDir = roomDirections[dstSide] || [0, 0]
+		let delta = [src.x - dst.x, src.y - dst.y]
+		let tangentLen = Math.max(
+			Math.sqrt(delta[0] * delta[0] + delta[1] * delta[1]) * .6,
+			50
+		)
+
+
+		//calculate tangents
+		return `M ${src.x} ${src.y} ` +
+			`C ${src.x + srcDir[0] * tangentLen} ${src.y + srcDir[1] * tangentLen} ` +
+			`${dst.x + dstDir[0] * tangentLen} ${dst.y + dstDir[1] * tangentLen} ` +
+			`${dst.x} ${dst.y}`
 	}
 }
 

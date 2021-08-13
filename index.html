@@ -12,11 +12,17 @@
 
 		svg { user-select: none; }
 
-		.island > line {
+		.roomLink {
+			fill: none;
 			stroke: black;
 			stroke-opacity: .4;
 		}
-		.island > line.hoverRelated { stroke-width: 3px; stroke-opacity: 1; }
+		.crossIslandLink .roomLink {
+			stroke: rgb(48, 100, 0);
+			stroke-dasharray: 7, 7;
+		}
+		.roomLink.hoverRelated, .hoverRelated .roomLink { stroke-width: 3px; stroke-opacity: 1; stroke-dasharray: none; }
+
 
 		.mapNode { cursor: pointer; }
 		.mapNode.hoverRelated > circle, .mapNode:hover > circle {
@@ -39,13 +45,6 @@
 		.mapNode:hover .mapNodeLabel {
 			display: block;
 		}
-
-		.crossIslandLink > line {
-			stroke: rgb(48, 100, 0);
-			opacity: .3;
-			stroke-dasharray: 7, 7;
-		}
-		.crossIslandLink.hoverRelated > line { stroke-width: 3px; opacity: 1; stroke-dasharray: none; }
 
 		/* #room-Fungus2_30 > circle { fill: blue; } */
 
