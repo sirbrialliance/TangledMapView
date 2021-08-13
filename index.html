@@ -22,9 +22,15 @@
 			stroke-width: 3px;
 		}
 		.crossIslandLink .roomLink {
+			stroke-width: 1.5px;
 			stroke: rgba(0, 0, 0, 0.5);
-			stroke-dasharray: 7, 7;
 		}
+		.crossIslandLink:nth-child(6n + 0) {stroke-dasharray: 4, 4;}
+		.crossIslandLink:nth-child(6n + 1) {stroke-dasharray: 7, 7;}
+		.crossIslandLink:nth-child(6n + 2) {stroke-dasharray: 12, 2;}
+		.crossIslandLink:nth-child(6n + 3) {stroke-dasharray: 7, 3, 16, 3;}
+		.crossIslandLink:nth-child(6n + 4) {stroke-dasharray: 2, 7;}
+		.crossIslandLink:nth-child(6n + 5) {stroke-dasharray: 7, 2;}
 		.roomLink.hoverRelated, .hoverRelated .roomLink {
 			stroke: var(--highlight-color);
 			stroke-width: 6px;

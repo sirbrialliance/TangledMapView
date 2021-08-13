@@ -1,9 +1,9 @@
 
 const roomDirections = {
-	top: [0, -1],
-	bot: [0, 1],
-	right: [1, 0],
-	left: [-1, 0],
+	top: {x: 0, y: -1},
+	bot: {x: 0, y: 1},
+	right: {x: 1, y: 0},
+	left: {x: -1, y: 0},
 }
 
 class DataRender {
@@ -175,21 +175,32 @@ class DataRender {
 
 	/** Returns the path bit to use with a <path d=XXYY /> */
 	static buildLinkPath(transition, src, dst) {
+		const leadOutLen = 15
+
 		let srcSide = transition.srcSide, dstSide = transition.dstSide
 		//Unit (or zero) vector for the direction we want to head towards (use zero influence on doors)
-		let srcDir = roomDirections[srcSide] || [0, 0], dstDir = roomDirections[dstSide] || [0, 0]
-		let delta = [src.x - dst.x, src.y - dst.y]
-		let tangentLen = Math.max(
-			Math.sqrt(delta[0] * delta[0] + delta[1] * delta[1]) * .6,
-			50
-		)
+		let srcDir = roomDirections[srcSide] || false, dstDir = roomDirections[dstSide] || false
+
+		var curveStart = srcDir ? {x: src.x + srcDir.x * leadOutLen, y: src.y + srcDir.y * leadOutLen} : src
+		var curveEnd = dstDir ? {x: dst.x + dstDir.x * leadOutLen, y: dst.y + dstDir.y * leadOutLen} : dst
+
+		let delta = {x: curveStart.x - curveEnd.x, y: curveStart.y - curveEnd.y}
+		var curveDist = Math.sqrt(delta.x * delta.x + delta.y * delta.y)
+
+		let tangentLen = Math.max(50, Math.min(curveDist * .6, 100))
 
 
-		//calculate tangents
-		return `M ${src.x} ${src.y} ` +
-			`C ${src.x + srcDir[0] * tangentLen} ${src.y + srcDir[1] * tangentLen} ` +
-			`${dst.x + dstDir[0] * tangentLen} ${dst.y + dstDir[1] * tangentLen} ` +
-			`${dst.x} ${dst.y}`
+		var ret = `M ${src.x} ${src.y} `
+
+		if (srcDir) ret += `L ${curveStart.x} ${curveStart.y} `
+
+		ret += `C ${curveStart.x + (srcDir.x || 0) * tangentLen} ${curveStart.y + (srcDir.y || 0) * tangentLen} ` +
+			`${curveEnd.x + (dstDir.x || 0) * tangentLen} ${curveEnd.y + (dstDir.y || 0) * tangentLen} ` +
+			`${curveEnd.x} ${curveEnd.y} `
+
+		if (dstDir) ret += `L ${dst.x} ${dst.y} `
+
+		return ret
 	}
 }
 

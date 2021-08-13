@@ -19,6 +19,8 @@
 - Show real room icons
 
 - Jumbled mess
+	- tune door constraint, much stronger repulsion if inline on the wrong side, less force if off-axis at a distance
+	- try turning off "keep apart" constraints for a warmup period then turn them back on
 	- try sinking cross-island links to an outer circle, then jump to other islands from there?
 	- constrain islands to circles with dynamic and cross-simulation influenced radii?
 		- copy forces to keep objects inside to push on the circle radius, counteract it with forces from the inter-island interactions

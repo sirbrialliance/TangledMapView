@@ -193,43 +193,56 @@ class ClusterHandler {
 		island.hub.y = 0
 		positionRooms(island.hub, 0)
 
-		const islandBoundary = alpha => {
-			var radius2 = island.radius * island.radius
-			const strength = 3
-			const nodes = island.rooms
-			for (let i = 0, len = nodes.length; i < len; i++) {
-				let node = nodes[i]
-				var dist2 = node.x * node.x + node.y * node.y
-				if (dist2 > radius2) {
-					var dist = Math.sqrt(dist2)
-					var force = (dist - island.radius) * strength * alpha
-					node.vx += -force * node.x / dist
-					node.vy += -force * node.y / dist
-				}
-			}
-		}
-
-		// island.radius = 40 * Math.sqrt(island.rooms.length) + 30
 		island.radius = 80 * Math.sqrt(island.rooms.length)
+
+		//initial positions (helps start expanded instead of growing out as it relaxes)
+		let i = 0
+		for (let room of island.rooms) {
+			var angle = i / island.rooms.length * 2 * Math.PI
+			room.x = island.radius * Math.cos(angle)
+			room.y = island.radius * Math.sin(angle)
+			++i
+		}
 
 		island.simulation = d3.forceSimulation(island.rooms)
 			.force("link", d3.forceLink(island.links)
-				.strength(.3)
-				// .strength(x => x.strength)
+				.strength(x => x.strength)
 				.distance(60)
 			)
-			.force("group", d3.forceCollide().radius(60).strength(.3))
-			// .force("group", d3.forceManyBody()
+			.force("keepApart", d3.forceCollide().radius(60).strength(.3))
+			// .force("keepApart", d3.forceManyBody()
 			// 	.strength(-30)
 			// 	.distanceMin(30)
 			// 	.distanceMax(200)
 			// )
 			// .force("placement", ClusterHandler.forceParentRelative().strength(.03))
 			.force("noExplode", ClusterHandler.forcePreventExplosions())
-			.force("doorAlign", ClusterHandler.forceDoorAlignment(island.links).strengths(.3, .3))
-			.force("islandBoundary", islandBoundary)
+			.force("doorAlign", ClusterHandler.forceDoorAlignment(island.links).strengths(.5, .6))
+			.force("keepAway", ClusterHandler.forceKeepInsideCircle(island.radius))
 			.alphaDecay(.005)
 			.alphaMin(.09)
+	}
+
+	static forceKeepInsideCircle(radius) {
+		var nodes, radius2 = radius * radius, strength = 3
+
+		var ret = alpha => {
+			for (let i = 0, len = nodes.length; i < len; i++) {
+				let node = nodes[i]
+				var dist2 = node.x * node.x + node.y * node.y
+				if (dist2 > radius2) {
+					var dist = Math.sqrt(dist2)
+					var force = (dist - radius) * strength * alpha
+					node.vx += -force * node.x / dist
+					node.vy += -force * node.y / dist
+				}
+			}
+		}
+
+		ret.initialize = nodes_ => nodes = nodes_
+		ret.strength = str => (strength = str, ret)
+
+		return ret
 	}
 
 	static forcePreventExplosions(maxDistance_ = 1000) {
