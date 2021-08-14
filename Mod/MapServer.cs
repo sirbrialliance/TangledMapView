@@ -1,76 +1,83 @@
 ﻿
 using System;
 using System.IO;
-using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading;
+using WebSocketSharp;
+using WebSocketSharp.Net;
+using WebSocketSharp.Server;
 
 namespace TangledMapView {
 
 public class MapServer {
-	private HttpListener server;
+	private HttpServer server;
 	public int port = 7900;
+	private WebSocketSessionManager sessions;
 
-	private volatile bool serverEnabled = true;
+	internal class WSHandler : WebSocketBehavior {
+		protected override void OnMessage(MessageEventArgs e) {
+			Send("You sent me: " + e.Data);
+		}
+
+		protected override void OnOpen() {
+			Send("Hello");
+		}
+	}
+
 
 	public void Start() {
-		server = new HttpListener();
-		server.Prefixes.Add("http://*:" + port + "/");
+		server = new HttpServer(port);
+		server.OnGet += OnGet;
+
+		server.AddWebSocketService<WSHandler>("/ws");
+		sessions = server.WebSocketServices["/ws"].Sessions;
+
 		server.Start();
-		serverEnabled = true;
-		new Thread(ListenThread).Start();
 	}
 
-	private void ListenThread() {
-		while (serverEnabled) {
-			try {
-				var context = server.GetContext();
-				new Thread(ResponseThread).Start(context);
-			} catch (HttpListenerException) {
-				break;
-			} catch (Exception ex) {
-				Modding.Logger.LogError("Web server error " + ex.Message);
-			}
-		}
+	public void Send(string msg) {
+		sessions.Broadcast(msg);
 	}
 
-	private void ResponseThread(object obj) {
-		var context = (HttpListenerContext)obj;
+	private void OnGet(object sender, HttpRequestEventArgs e) {
+		var req = e.Request;
+		var res = e.Response;
 
-		var path = context.Request.Url.AbsolutePath;
+		var path = req.Url.AbsolutePath;
 		if (path == "/") path = "/index.html";
 
-		var res = context.Response;
-		var resourceName = "TangledMapView.Web." + path.Substring(1);
-		using (var resourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName)) {
-			if (resourceStream == null) {
-				res.StatusCode = 404;
-				using (var output = new StreamWriter(res.OutputStream)) output.WriteLine("Not found.");
-				return;
-			}
+		var resourceName = "Web\\" + path.Substring(1);
+		var resourceInfo = Assembly.GetExecutingAssembly().GetManifestResourceInfo(resourceName);
 
-			if (path.EndsWith(".js")) res.AddHeader("Content-Type", "application/javascript");
-			else if (path.EndsWith(".html")) res.AddHeader("Content-Type", "text/html");
-			else res.AddHeader("Content-Type", "text/plain");
-
-			var buffer = new byte[1024 * 10];
-			int readCount;
-			while ((readCount = resourceStream.Read(buffer, 0, buffer.Length)) > 0) {
-				res.OutputStream.Write(buffer, 0, readCount);
-			}
-
-			res.OutputStream.Close();
+		if (resourceInfo == null) {
+			res.StatusCode = 404;
+			var text = Encoding.UTF8.GetBytes("Not found.");
+			res.Close(text, true);
+			return;
 		}
-	}
 
-	private string HTMLEscape(string s) {
-		//simple, not perfect. Use something better if it's important.
-		return s.Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;");
+		using (var resourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName)) {
+			var len = resourceStream.Length;
+
+			if (path.EndsWith(".js")) res.ContentType = "application/javascript";
+			else if (path.EndsWith(".html")) res.ContentType = "text/html";
+			else res.ContentType = "text/plain";
+
+			res.ContentEncoding = Encoding.UTF8;
+			res.ContentLength64 = len;
+
+			var buffer = new byte[len];
+			int readCount, pos = 0;
+			while ((readCount = resourceStream.Read(buffer, pos, buffer.Length - pos)) > 0) {
+				pos += readCount;
+			}
+
+			res.Close(buffer, true);
+		}
 	}
 
 	public void Stop() {
-		serverEnabled = false;
 		server.Stop();
 	}
 }

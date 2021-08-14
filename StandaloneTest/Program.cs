@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using TangledMapView;
 
 class Program {
@@ -7,8 +8,13 @@ class Program {
 		var server = new MapServer();
 		server.Start();
 
-
 		System.Console.WriteLine("Server started");
-		System.Console.ReadKey();
+
+		var i = 0;
+		while (!System.Console.KeyAvailable) {
+			Thread.Sleep(1000);
+
+			server.Send("thing: " + i++);
+		}
 	}
 }

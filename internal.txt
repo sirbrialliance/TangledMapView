@@ -1,8 +1,8 @@
 - xx There's already a "RandoMap" for Hollow Knight, so should change name
 
 - Integrate with real game
-	- start web server
-	- include assets
+	- xx start web server
+	- xx include assets
 	- websockets
 	- hook when player changes maps
 

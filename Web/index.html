@@ -87,7 +87,7 @@
 	</div>
 </body>
 <script>
-	var data = new DataGen();
+	var data = new DataGen()
 	data.load(testSaveData)
 
 	var cluster = new ClusterHandler(data)
@@ -95,7 +95,7 @@
 
 	cluster.buildIslands()
 
-	var svg = d3.select("svg");
+	var svg = d3.select("svg")
 
 	var zoom = d3.zoom()
 		.scaleExtent([.1, 2])
@@ -114,7 +114,7 @@
 		zoom.extent([[-w2, -h2], [w2, h2]])
 	}
 
-	window.addEventListener("resize", updateSize);
+	window.addEventListener("resize", updateSize)
 
 	function updateZoom(transform) {
 		nodeHolder.attr("transform", transform)
@@ -125,30 +125,35 @@
 		.on("dblclick.zoom", null)
 		.on("contextmenu", ev => ev.preventDefault())//don't show menu, we permit right drag to pan
 
-	const nodeHolder = svg.append("g")
-		.attr("id", "mainMap")
-		.attr("stroke", "#fff")
-		.attr("stroke-width", 1.5)
+	const nodeHolder = svg.append("g").attr("id", "mainMap")
 
 	dataRender.renderInto(nodeHolder)
 	zoom.scaleTo(svg, .3)
 
-	updateSize();
+	updateSize()
 
-/* Some parts of code are
-Copyright 2017–2020 Observable, Inc.
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted, provided that the above
-copyright notice and this permission notice appear in all copies.
+	var ws
 
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-*/
+	function wsConnect() {
+		if (ws) return
+
+		ws = new WebSocket("ws://" + location.host + "/ws")
+		ws.addEventListener("open", ev => {
+			console.log("Connected to server")
+		})
+		ws.addEventListener("message", ev => {
+			console.log("Msg", ev.data)
+		})
+		ws.addEventListener("close", ev => {
+			ws = null
+		})
+		ws.addEventListener("error", ev => {
+			ws = null
+		})
+	}
+
+	wsConnect()
+	setInterval(wsConnect, 10 * 1000)
 
 </script>
 </html>
