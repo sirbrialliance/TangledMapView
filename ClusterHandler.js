@@ -21,10 +21,24 @@ class ClusterHandler {
 		//flag links to delete
 		this.crossIslandLinks.forEach(x => x.dead = true)
 
+		//convert existing room positions to absolute coordinates
+		for (let room of Object.values(this.data.rooms)) {
+			if (typeof room.x !== "number" || !room.island) continue
+			room.x += room.island.x
+			room.y += room.island.y
+		}
+
 		this._pickIslands()
 		this._measureDistances()
 		for (let island of this.islands) this._buildIslandData(island)
 		this._buildMacroData()
+
+		//convert room positions back to relative coordinates
+		for (let room of Object.values(this.data.rooms)) {
+			if (!room.island) continue
+			room.x -= room.island.x
+			room.y -= room.island.y
+		}
 
 		//delete links that weren't renewed
 		this.crossIslandLinks = this.crossIslandLinks.filter(x => !x.dead)
@@ -56,6 +70,16 @@ class ClusterHandler {
 			while (this.islands.some(x => x.hub === hub)) rooms.shift()
 
 			this._addIsland(hub)
+		}
+
+		//give islands initial positions
+		let i = 0
+		for (let island of this.islands) {
+			if (typeof island.x === "number") continue
+			var angle = i / this.islands.length * 2 * Math.PI
+			island.x = 1200 * Math.cos(angle)
+			island.y = 1200 * Math.sin(angle)
+			++i
 		}
 	}
 
@@ -133,8 +157,8 @@ class ClusterHandler {
 			.force("center", d3.forceCenter())
 			.force("x", d3.forceX().strength(.05))
 			.force("y", d3.forceY().strength(.05))
-			.alpha(1)
-			.restart()
+
+		if (this.macroSimulation.alpha() < .2) this.macroSimulation.alpha(.2).restart()
 	}
 
 	_buildIslandData(island) {
@@ -221,8 +245,9 @@ class ClusterHandler {
 		for (let room of island.rooms) {
 			if (typeof room.x !== "number") {
 				var angle = i / island.rooms.length * 2 * Math.PI
-				room.x = island.radius * Math.cos(angle)
-				room.y = island.radius * Math.sin(angle)
+				//(room coordinates are absolute, not relative, right now)
+				room.x = island.radius * Math.cos(angle) + island.x
+				room.y = island.radius * Math.sin(angle) + island.y
 			}
 			++i
 		}
@@ -373,6 +398,7 @@ class ClusterHandler {
 
 
 class Island {
+	x = null; y = null
 	rooms = []
 	links = []
 	simulation = null
