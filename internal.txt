@@ -3,8 +3,10 @@
 - Integrate with real game
 	- xx start web server
 	- xx include assets
-	- websockets
+	- xx websockets
 	- hook when player changes maps
+	- push loaded save data
+	- message when ont in game
 
 
 

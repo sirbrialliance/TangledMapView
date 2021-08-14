@@ -14,7 +14,7 @@ class Program {
 		while (!System.Console.KeyAvailable) {
 			Thread.Sleep(1000);
 
-			server.Send("thing: " + i++);
+			server.Send("{\"type\": \"playerMove\", \"newRoom\": \"" + (i++ % 2 == 0 ? "Town" : "Mines_02") + "\"}");
 		}
 	}
 }

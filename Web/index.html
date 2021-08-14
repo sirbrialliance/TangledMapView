@@ -7,78 +7,8 @@
 	<script src="DataRender.js"></script>
 	<script src="DataGen.js"></script>
 	<script src="ClusterHandler.js"></script>
-	<style>
-		:root {
-			--highlight-color: #BBB;
-		}
-		body, html { margin: 0; padding: 0; height: 100%; width: 100%; background: #555; }
-
-		svg { user-select: none; }
-
-		.roomLink {
-			fill: none;
-			stroke: black;
-			stroke-opacity: .4;
-			stroke-width: 3px;
-		}
-		.crossIslandLink .roomLink {
-			stroke-width: 1.5px;
-			stroke: rgba(0, 0, 0, 0.5);
-		}
-		.crossIslandLink:nth-child(6n + 0) {stroke-dasharray: 4, 4;}
-		.crossIslandLink:nth-child(6n + 1) {stroke-dasharray: 7, 7;}
-		.crossIslandLink:nth-child(6n + 2) {stroke-dasharray: 12, 2;}
-		.crossIslandLink:nth-child(6n + 3) {stroke-dasharray: 7, 3, 16, 3;}
-		.crossIslandLink:nth-child(6n + 4) {stroke-dasharray: 2, 7;}
-		.crossIslandLink:nth-child(6n + 5) {stroke-dasharray: 7, 2;}
-		.roomLink.hoverRelated, .hoverRelated .roomLink {
-			stroke: var(--highlight-color);
-			stroke-width: 6px;
-			stroke-opacity: 1;
-			stroke-dasharray: none;
-		}
-
-
-		.mapNode {
-			stroke: black;
-			cursor: pointer;
-		}
-		.mapNode.hoverRelated > circle, .mapNode:hover > circle {
-			stroke: var(--highlight-color);
-			stroke-width: 3px;
-		}
-
-
-		.mapNodeLabel {
-			display: none;
-			opacity: 1;
-			font-size: 11px;
-			stroke: none;
-			font-family: sans-serif;
-			fill: white;
-			transform: translate(0, .5em);
-			text-anchor: middle;
-		}
-		.mapNodeLabel.shadow {stroke: rgba(0, 0, 0, 0.548); stroke-width: 3px;}
-		.mapNode:hover .mapNodeLabel {
-			display: block;
-		}
-
-		.islandBackdrop {
-			fill: none;
-			stroke: rgba(255, 255, 255, 0.192);
-			stroke-width: 1px;
-		}
-
-		/* #room-Fungus2_30 > circle { fill: blue; } */
-
-
-		#controlPanel {
-			position: fixed;
-			top: 0; left: 0;
-			margin: 15px;
-		}
-	</style>
+	<script src="App.js"></script>
+	<link href="style.css" rel="stylesheet">
 </head>
 <body>
 	<svg width="100%" height="100%"></svg>
@@ -87,73 +17,7 @@
 	</div>
 </body>
 <script>
-	var data = new DataGen()
-	data.load(testSaveData)
-
-	var cluster = new ClusterHandler(data)
-	var dataRender = new DataRender(cluster)
-
-	cluster.buildIslands()
-
-	var svg = d3.select("svg")
-
-	var zoom = d3.zoom()
-		.scaleExtent([.1, 2])
-		.filter(ev => {
-			if (ev.ctrlKey && ev.type === "wheel") return false
-			if (!ev.type.startsWith("mouse")) return true
-			return ev.button === 0 || ev.button === 2
-		})
-		.on("zoom", ev => updateZoom(ev.transform))
-
-
-	function updateSize() {
-		var w2 = svg.node().clientWidth / 2
-		var h2 = svg.node().clientHeight / 2
-		svg.attr("viewBox", [-w2, -h2, w2 * 2, h2 * 2])
-		zoom.extent([[-w2, -h2], [w2, h2]])
-	}
-
-	window.addEventListener("resize", updateSize)
-
-	function updateZoom(transform) {
-		nodeHolder.attr("transform", transform)
-	}
-
-	svg
-		.call(zoom)
-		.on("dblclick.zoom", null)
-		.on("contextmenu", ev => ev.preventDefault())//don't show menu, we permit right drag to pan
-
-	const nodeHolder = svg.append("g").attr("id", "mainMap")
-
-	dataRender.renderInto(nodeHolder)
-	zoom.scaleTo(svg, .3)
-
-	updateSize()
-
-	var ws
-
-	function wsConnect() {
-		if (ws) return
-
-		ws = new WebSocket("ws://" + location.host + "/ws")
-		ws.addEventListener("open", ev => {
-			console.log("Connected to server")
-		})
-		ws.addEventListener("message", ev => {
-			console.log("Msg", ev.data)
-		})
-		ws.addEventListener("close", ev => {
-			ws = null
-		})
-		ws.addEventListener("error", ev => {
-			ws = null
-		})
-	}
-
-	wsConnect()
-	setInterval(wsConnect, 10 * 1000)
-
+	var app = new App()
+	app.start()
 </script>
 </html>

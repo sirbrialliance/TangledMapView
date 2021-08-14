@@ -17,11 +17,11 @@ public class MapServer {
 
 	internal class WSHandler : WebSocketBehavior {
 		protected override void OnMessage(MessageEventArgs e) {
-			Send("You sent me: " + e.Data);
+			//Send("You sent me: " + e.Data);
 		}
 
 		protected override void OnOpen() {
-			Send("Hello");
+			//Send("Hello");
 		}
 	}
 
@@ -53,6 +53,8 @@ public class MapServer {
 		if (resourceInfo == null) {
 			res.StatusCode = 404;
 			var text = Encoding.UTF8.GetBytes("Not found.");
+			res.ContentType = "text/plain";
+			res.ContentLength64 = text.Length;
 			res.Close(text, true);
 			return;
 		}
@@ -62,6 +64,7 @@ public class MapServer {
 
 			if (path.EndsWith(".js")) res.ContentType = "application/javascript";
 			else if (path.EndsWith(".html")) res.ContentType = "text/html";
+			else if (path.EndsWith(".css")) res.ContentType = "text/css";
 			else res.ContentType = "text/plain";
 
 			res.ContentEncoding = Encoding.UTF8;
