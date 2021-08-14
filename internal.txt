@@ -1,12 +1,19 @@
 - xx There's already a "RandoMap" for Hollow Knight, so should change name
 
+- Integrate with real game
+	- start web server
+	- include assets
+	- websockets
+	- hook when player changes maps
+
+
+
 - Button to rearrange to be user-centric
 
 - Select room for name and stats (num transitions visited/unvisited, items found/not found (or count of not found if no spoilers))
 
 - pathfinding to room/item, https://github.com/anvaka/ngraph.path looks like good lib for helping
 
-- Integrate with real game
 
 - Show real room icons
 

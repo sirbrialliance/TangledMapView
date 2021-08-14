@@ -10,8 +10,8 @@ public class TangledMapViewMod : Mod {
 		base.Initialize();
 
 		Log("Hello mod world");
-		start web server...
-		log when player changes maps
+		// start web server...
+		// log when player changes maps
 	}
 
 	public override string GetVersion() {

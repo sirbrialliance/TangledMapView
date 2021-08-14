@@ -2,3 +2,5 @@ __ref/
 Mod/bin/
 Mod/obj/
 *.sublime-workspace
+StandaloneTest/bin/
+StandaloneTest/obj/
