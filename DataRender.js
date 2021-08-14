@@ -13,46 +13,31 @@ class DataRender {
 	}
 
 	renderInto(holder) {
-		var dataRender = this
+		this._holder = holder
 
-		var islandHolder = holder
-			.selectAll("g.island")
-			.data(this.cluster.islands)
-			.join("g")
-				.classed("island", true)
-				.each(function(island, idx, el) { dataRender._renderIsland(island, d3.select(this)) })
+		this._crossIslandHolder = this._holder.append("g").attr("id", "crossIslandHolder").lower()
 
-		islandHolder.append("circle")
-			.lower()
-			.classed("islandBackdrop", true)
-			.attr("r", island => island.radius)
+		this.update()
 
-		this.cluster.macro.simulation.on("tick", () => {
-			islandHolder.attr("transform", d => `translate(${d.x},${d.y})`)
+		this.cluster.macroSimulation.on("tick", () => {
+			this._islandEls.attr("transform", d => `translate(${d.x},${d.y})`)
 
 			this._updateCrossLinks()
 		})
-
-		var crossIslandHolder = holder.append("g").attr("id", "crossIslandHolder").lower()
-
-		var crossIslandLinks = crossIslandHolder.selectAll("g.crossIslandLink")
-			.data(this.cluster.crossIslandLinks, x => x.id)
-			.join("g")
-				.classed("crossIslandLink", true)
-				.attr("id", link => link.id)
-
-		this._crossLinkLines = crossIslandLinks.append("path").classed("roomLink", true)
 	}
 
 	_renderIsland(island, holder) {
-		var _this = this
+		var el = holder.node()
+		var isNew = el.__establishedIsland__ === undefined
+		el.__establishedIsland__ = true
+		var this_ = this
 
 		function setupDrag(isHub) {
 			function note(ev) {}// console.log(ev.active, ev.subject, simulation.alpha(), simulation.alphaTarget(), simulation.alphaMin())}
 
 			//Target simulation can very based on the node, we want to drag the room in the macro simulation if you grab an island hub
 			function getTargets(room) {
-				if (room.isHub) return [_this.cluster.macro.simulation, room.island]
+				if (room.isHub) return [this_.cluster.macroSimulation, room.island]
 				else return [island.simulation, room]
 			}
 
@@ -63,8 +48,8 @@ class DataRender {
 
 					console.log(
 						`Clicked ${room.displayText}`, room,
-						`Visited: ${room.visitedDoors.map(x=>x + " => " + _this.data.doorTransitions[x].dstDoor).join(", ")}`,
-						`Unvisited: ${room.unvisitedDoors.map(x=>x + " => " + _this.data.doorTransitions[x].dstDoor).join(", ")}`,
+						`Visited: ${room.visitedDoors.map(x=>x + " => " + this_.data.doorTransitions[x].dstDoor).join(", ")}`,
+						`Unvisited: ${room.unvisitedDoors.map(x=>x + " => " + this_.data.doorTransitions[x].dstDoor).join(", ")}`,
 					)
 
 					simulation.alphaTarget(0.3).restart()//ask it to "keep the alpha warm" while we drag
@@ -123,35 +108,41 @@ class DataRender {
 			]
 		}
 
-		const node = holder.selectAll("g")
+		var node = holder.selectAll("g.mapNode")
 			.data(island.rooms, x => x.id)
-			.join("g")
-				.classed("mapNode", true)
-				.attr("id", x => "room-" + x.id)
-				.on("pointerover", (ev, room) => {
-					d3.selectAll(relatedElements(room)).classed("hoverRelated", true)
-				})
-				.on("pointerleave", (ev, room) => {
-					d3.selectAll(relatedElements(room)).classed("hoverRelated", false)
-				})
+			.join(enter => {
+				var els = enter.append("g")
+					.classed("mapNode", true)
+					.attr("id", x => "room-" + x.id)
+				els.append("circle")
+				els.append("text")
+					.classed("mapNodeLabel shadow", true)
+					.clone(true).classed("shadow", false)
+				return els
+			})
+			.on("pointerover", (ev, room) => {
+				d3.selectAll(relatedElements(room)).classed("hoverRelated", true)
+			})
+			.on("pointerleave", (ev, room) => {
+				d3.selectAll(relatedElements(room)).classed("hoverRelated", false)
+			})
 
 		node.filter(x => x.isHub).call(setupDrag(true))
 		node.filter(x => !x.isHub).call(setupDrag(false))
 
-		node.append("circle")
+		node.select("circle")
 			.attr("r", node => node.numDoors * 2.5 + 3.5)
 			.attr("fill", room => {
 				if (room.isStartRoom) return "orange"
 				else if (room.island.hub === room) return "red"
+				else if (room.numTransitionsVisited === 0) return "gray"
 				else if (room.isEveryTransitionVisited) return "green"
 				else return "#BB0"
 			})
 
-		node.append("text")
-			.classed("mapNodeLabel shadow", true)
+		node.selectAll("text")
 			// .text(x => x.displayText)
 			.text(x => `${x.displayText}, dist ${x.islandDistance} on ${x.island.id} with ${x.numDoors - x.numTransitionsVisited} unvisited`)
-			.clone(true).classed("shadow", false)
 
 		island.simulation.on("tick", () => {
 			linkEls.attr("d", link => DataRender.buildLinkPath(link.transitionA, link.source, link.target))
@@ -206,61 +197,44 @@ class DataRender {
 
 		return ret
 	}
+
+	/** Updates the graph and rendering with any changes. */
+	update() {
+		this.cluster.update()
+
+		var this_ = this
+
+		function islandUpdate(island, idx, el) { this_._renderIsland(island, d3.select(this)) }
+
+		this._islandEls = this._holder
+			.selectAll("g.island")
+			.data(this.cluster.islands, x => x.id)
+			.join(enter => {
+				var els = enter.append("g").classed("island", true)
+				els.append("circle").lower().classed("islandBackdrop", true)
+				return els
+			})
+			.each(islandUpdate)
+		this._islandEls.select("circle.islandBackdrop").attr("r", island => island.radius)
+
+
+		var crossIslandLinks = this._crossIslandHolder.selectAll("g.crossIslandLink")
+			.data(this.cluster.crossIslandLinks, x => x.id)
+			.join(enter => {
+				var els = enter.append("g").classed("crossIslandLink", true)
+				els.append("path").classed("roomLink", true)
+				return els
+			})
+			.attr("id", link => link.id)
+
+		this._crossLinkLines = crossIslandLinks.select("path")
+	}
+
 }
 
-/*
-function setupDrag(isHub) {
-			function note(ev) {}// console.log(ev.active, ev.subject, simulation.alpha(), simulation.alphaTarget(), simulation.alphaMin())}
-
-			//Target simulation can very based on the node, we want to drag the room in the macro simulation if you grab an island hub
-			function getTargets(room) {
-				if (room.isHub) return [_this.cluster.macro.simulation, room.island]
-				else return [island.simulation, room]
-			}
-
-			return d3.drag()
-				.on("start", (event) => {
-					let room = event.subject; note(event)
-					let [simulation, target] = getTargets(room)
-
-					simulation.alphaTarget(0.3).restart()//ask it to "keep the alpha warm" while we drag
-
-					if (typeof target.fx === "number") target.__hadFixedPos = true
-
-					target.__eventOffset = [event.x, event.y]
-					target.fx = target.x
-					target.fy = target.y
-				})
-				.on("drag", (event) => {
-					let room = event.subject; note(event)
-					let [simulation, target] = getTargets(room)
-
-					let [ox, oy] = target.__eventOffset
-
-					// target.fx = event.x - ox
-					// target.fy = event.y - oy
-					target.fx = event.x
-					target.fy = event.y
-				})
-				.on("end", (event) => {
-					let room = event.subject; note(event)
-					let [simulation, target] = getTargets(room)
-
-					simulation.alphaTarget(0)//let alpha cool off and stop now
-
-					delete target.__eventOffset
-					if (target.__hadFixedPos) {
-						delete target.__hadFixedPos
-					} else {
-						target.fx = null
-						target.fy = null
-					}
-				})
-		}
-*/
 
 
-/* Some parts of code are
+/* Some parts of code may be
 Copyright 2017–2020 Observable, Inc.
 Permission to use, copy, modify, and/or distribute this software for any
 purpose with or without fee is hereby granted, provided that the above

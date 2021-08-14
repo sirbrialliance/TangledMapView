@@ -4,42 +4,59 @@ const roomsPerIsland = 40
 
 class ClusterHandler {
 
-	hubs = []//central room of each island
 	islands = []
 	crossIslandLinks = []
-	macro = null
+	macroSimulation = null
 
 	constructor(data) {
 		this.data = data
 	}
 
+	update() { this.buildIslands() }
+
 	buildIslands() {
 		this._visibleRooms = this.data.visibleRooms
 		this._visibleTransitions = this.data.visibleTransitions
+
+		//flag links to delete
+		this.crossIslandLinks.forEach(x => x.dead = true)
 
 		this._pickIslands()
 		this._measureDistances()
 		for (let island of this.islands) this._buildIslandData(island)
 		this._buildMacroData()
+
+		//delete links that weren't renewed
+		this.crossIslandLinks = this.crossIslandLinks.filter(x => !x.dead)
 	}
 
 	_pickIslands() {
-		this.islands = []
-		this.crossIslandLinks = []
-
-		//rough visible room estimate:
 		var numRooms = Object.keys(this._visibleRooms).length
-
 		if (numRooms === 0) return
 
-		var numIslands = Math.round(numRooms / roomsPerIsland)
-		if (numIslands === 0 || numIslands > numRooms) numIslands = 1
+		var desiredNumIslands = Math.round(numRooms / roomsPerIsland)
+		if (desiredNumIslands === 0 || desiredNumIslands > numRooms) desiredNumIslands = 1
 
-		//grab top rooms
-		var rooms = Object.values(this.data.rooms)
+		//delete islands that are no longer visible
+		this.islands.filter(x => !this._visibleRooms[x.hub.id]).forEach(island => {
+			island.dead = true
+			delete island.hub.fx
+			delete island.hub.fy
+		})
+		this.islands = this.islands.filter(x => this._visibleRooms[x.hub.id])
+
+		//grab top rooms (most doors)
+		var rooms = Object.values(this._visibleRooms)
 		rooms.sort((a, b) => b.numDoors - a.numDoors)
 
-		for (let i = 0; i < numIslands; i++) this.hubs.push(rooms[i])
+		//add new islands to target number
+		while (this.islands.length < desiredNumIslands) {
+			let hub = rooms.shift()
+			//skip room if already hub of an island
+			while (this.islands.some(x => x.hub === hub)) rooms.shift()
+
+			this._addIsland(hub)
+		}
 	}
 
 	_addIsland(room) {
@@ -48,28 +65,24 @@ class ClusterHandler {
 		this.islands.push(island)
 
 		//pin to local origin
-		room.fx = 0
-		room.fy = 0
+		room.x = room.fx = 0
+		room.y = room.fy = 0
 	}
 
 	/** Marks each room with the closest island */
 	_measureDistances() {
 		var rooms = this.data.rooms
 
-		//clear
+		//clear island data from rooms
 		for (let roomId in this._visibleRooms) {
 			rooms[roomId].island = null
 			rooms[roomId].islandDistance = Infinity
-			rooms[roomId].fx = null
-			rooms[roomId].fy = null
 		}
 
-		//promote islands
-		for (let room of this.hubs) this._addIsland(room)
-
 		//find distances
-		for (let room of this.hubs) {
-			this._crawlDistances(room, room.island, 0)
+		for (let island of this.islands) {
+			island.rooms = []
+			this._crawlDistances(island.hub, island, 0)
 		}
 
 		//collect island members
@@ -92,7 +105,7 @@ class ClusterHandler {
 		++islandDistance
 
 		for (let doorId in room.doorIds) {
-			//don't allow graph traversal along transitions we haven't taken, even if both rooms are visited or not
+			//don't allow graph traversal along transitions we haven't taken, even if both rooms are visited (or not)
 			if (!this._visibleTransitions[doorId]) continue
 
 			let transition = this.data.doorTransitions[doorId]
@@ -111,20 +124,21 @@ class ClusterHandler {
 	}
 
 	_buildMacroData() {
-		this.macro = {
-			nodes: this.islands
-		}
+		if (!this.macroSimulation) this.macroSimulation = d3.forceSimulation([])
 
-		this.macro.simulation = d3.forceSimulation(this.macro.nodes)
+		this.macroSimulation
+			.nodes(this.islands)
 			// .force("group", d3.forceManyBody())
 			.force("group", d3.forceCollide().radius(island => island.radius).strength(.5))
 			.force("center", d3.forceCenter())
 			.force("x", d3.forceX().strength(.05))
 			.force("y", d3.forceY().strength(.05))
+			.alpha(1)
+			.restart()
 	}
 
 	_buildIslandData(island) {
-		let links = island.links
+		let links = island.links = []//just fully rebuilding links each time (for now?)
 
 		var handledDoors = {}
 
@@ -146,8 +160,10 @@ class ClusterHandler {
 
 			if (transitionA.srcRoom.island !== transitionA.dstRoom.island) {
 				//different islands
-				if (this.crossIslandLinks.every(x => x.id !== link.id)) {
-					//not a duplicate, add it
+				let existing = this.crossIslandLinks.find(x => x. id === link.id)
+				if (existing) {
+					delete existing.dead//keep alive
+				} else {
 					this.crossIslandLinks.push(link)
 				}
 			} else {
@@ -158,6 +174,7 @@ class ClusterHandler {
 			}
 		}
 
+		/*
 		const positionDistance = 300
 		//Picks relative positions and parent for parent-relative positioning mode
 		const positionRooms = (room, depth) => {
@@ -193,24 +210,27 @@ class ClusterHandler {
 				positionRooms(cRoom, depth + 1)
 				++i
 			}
-
 		}
-		island.hub.x = 0
-		island.hub.y = 0
 		positionRooms(island.hub, 0)
+		*/
 
 		island.radius = 80 * Math.sqrt(island.rooms.length)
 
 		//initial positions (helps start expanded instead of growing out as it relaxes)
 		let i = 0
 		for (let room of island.rooms) {
-			var angle = i / island.rooms.length * 2 * Math.PI
-			room.x = island.radius * Math.cos(angle)
-			room.y = island.radius * Math.sin(angle)
+			if (typeof room.x !== "number") {
+				var angle = i / island.rooms.length * 2 * Math.PI
+				room.x = island.radius * Math.cos(angle)
+				room.y = island.radius * Math.sin(angle)
+			}
 			++i
 		}
 
-		island.simulation = d3.forceSimulation(island.rooms)
+		if (!island.simulation) island.simulation = d3.forceSimulation([])
+
+		island.simulation
+			.nodes(island.rooms)
 			.force("link", d3.forceLink(island.links)
 				.strength(x => x.strength)
 				.distance(60)
@@ -227,6 +247,7 @@ class ClusterHandler {
 			.force("keepAway", ClusterHandler.forceKeepInsideCircle(island.radius))
 			.alphaDecay(.005)
 			.alphaMin(.09)
+		if (island.simulation.alpha() < .5) island.simulation.alpha(.5).restart()
 	}
 
 	static forceKeepInsideCircle(radius) {
