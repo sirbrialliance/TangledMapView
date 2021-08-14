@@ -1,14 +1,6 @@
-
-- xx try different ways of aligning rooms
-- nn It's still a jumbled mess, table that for now and move on.
-- xx size island based on number of nodes
-
-- Dynamically add new (visible) nodes works
+- xx There's already a "RandoMap" for Hollow Knight, so should change name
 
 - Button to rearrange to be user-centric
-- Sliders to adjust room align forces/radii
-
-- Toggle memory mode vs guide mode
 
 - Select room for name and stats (num transitions visited/unvisited, items found/not found (or count of not found if no spoilers))
 
@@ -17,6 +9,9 @@
 - Integrate with real game
 
 - Show real room icons
+
+
+- Sliders to adjust room align forces/radii
 
 - Jumbled mess
 	- tune door constraint, much stronger repulsion if inline on the wrong side, less force if off-axis at a distance

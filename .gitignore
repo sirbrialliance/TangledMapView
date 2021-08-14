@@ -1,1 +1,4 @@
 __ref/
+Mod/bin/
+Mod/obj/
+*.sublime-workspace
