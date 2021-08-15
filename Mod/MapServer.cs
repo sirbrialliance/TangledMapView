@@ -39,6 +39,30 @@ public class MapServer {
 	public void Send(string msg) {
 		sessions.Broadcast(msg);
 	}
+	public void Send(string type, string dataPartialJSON) {
+		sessions.Broadcast($"{{\"type\": \"{type}\", {dataPartialJSON}}}");
+	}
+
+	public void Send(string type, params object[] kvDataPairs) {
+		var sb = new StringBuilder();
+
+		sb.Append("{\"type\": \"").Append(type).Append("\"");
+
+		for (int i = 0; i < kvDataPairs.Length; i += 2) {
+			sb.Append(", \"").Append((string)kvDataPairs[i]).Append("\": ");
+
+			var value = kvDataPairs[i + 1];
+			if (value == null) sb.Append("null");
+			else if (value is bool b) sb.Append(b ? "true" : "false");
+			else if (value is int ii) sb.Append(ii);
+			else if (value is float f) sb.Append(f);
+			else if (value is string s) sb.Append("\"").Append(s).Append("\"");
+			else throw new ArgumentException("unknown type", nameof(kvDataPairs));
+		}
+
+		sb.Append("}");
+		sessions.Broadcast(sb.ToString());
+	}
 
 	private void OnGet(object sender, HttpRequestEventArgs e) {
 		var req = e.Request;
