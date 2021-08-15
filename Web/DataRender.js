@@ -27,9 +27,6 @@ class DataRender {
 	}
 
 	_renderIsland(island, holder) {
-		var el = holder.node()
-		var isNew = el.__establishedIsland__ === undefined
-		el.__establishedIsland__ = true
 		var this_ = this
 
 		function setupDrag(isHub) {
@@ -48,8 +45,8 @@ class DataRender {
 
 					console.log(
 						`Clicked ${room.displayText}`, room,
-						`Visited: ${room.visitedDoors.map(x=>x + " => " + this_.data.doorTransitions[x].dstDoor).join(", ")}`,
-						`Unvisited: ${room.unvisitedDoors.map(x=>x + " => " + this_.data.doorTransitions[x].dstDoor).join(", ")}`,
+						`Visited: ${room.visitedDoors.map(x=>x + " => " + this_.data.doorTransitions[x].otherDoor(x)).join(", ")}`,
+						`Unvisited: ${room.unvisitedDoors.map(x=>x + " => " + this_.data.doorTransitions[x].otherDoor(x)).join(", ")}`,
 					)
 
 					simulation.alphaTarget(0.3).restart()//ask it to "keep the alpha warm" while we drag
@@ -87,6 +84,15 @@ class DataRender {
 						target.fx = null
 						target.fy = null
 					}
+
+					//debug reveal
+					var doors = room.unvisitedDoors
+					if (doors.length) {
+						var door = doors[Math.floor(Math.random() * doors.length)]
+						console.log("debug reveal " + door)
+						this_.data.addVisit(door)
+						this_.update()
+					}
 				})
 			if (isHub) return ret.container(holder)
 			else return ret
@@ -94,7 +100,7 @@ class DataRender {
 
 		const linkEls = holder.selectAll("path")
 			.data(island.links, x => x.id)
-			.join("path")
+			.join(enter => enter.append("path").lower())
 				.classed("roomLink", true)
 				.attr("id", link => link.id)
 

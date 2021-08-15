@@ -49,6 +49,7 @@ class DataGen {
 		}
 
 		var tPlacements = this.randomizerData["_transitionPlacements"];
+
 		for (var srcDoor in tPlacements) {
 			var srcInfo = this.parseDoorId(srcDoor)
 			var dstDoor = tPlacements[srcDoor]
@@ -125,7 +126,7 @@ class DataGen {
 		}
 	}
 
-	/** Returns a map of visible transitions (srcDoor => transition) */
+	/** Returns a map of visible transitions (srcDoor (or maybe dstDoor) => transition) */
 	get visibleTransitions() {
 		if (this.showAll) {
 			return this.transitions
@@ -137,6 +138,8 @@ class DataGen {
 				if (transition.bidi) {
 					var transitionB = this.transitions[transition.dstDoor]
 					ret[transitionB.srcDoor] = transitionB
+				} else {
+					ret[transition.dstDoor] = transition
 				}
 			}
 
@@ -225,7 +228,21 @@ class RoomNode {
 }
 
 /** A transition from room A to room B. Might have a brother that's for room B to A. */
-class RoomTransition {}
+class RoomTransition {
+	/** Returns the room on this transition that isn't the given one. */
+	otherRoom(room) {
+		if (this.srcRoom === room) return this.dstRoom
+		else if (this.dstRoom === room) return this.srcRoom
+		else throw new Error("Room is unrelated")
+	}
+
+	otherDoor(doorId) {
+		if (this.srcDoor === doorId) return this.dstDoor
+		else if (this.dstDoor === doorId) return this.srcDoor
+		else throw new Error("Door is unrelated")
+	}
+
+}
 /** A connecting line between rooms on the map. Only one link even if it covers two transitions.  */
 class RoomLink {
 

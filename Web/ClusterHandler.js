@@ -50,6 +50,7 @@ class ClusterHandler {
 
 		var desiredNumIslands = Math.round(numRooms / roomsPerIsland)
 		if (desiredNumIslands === 0 || desiredNumIslands > numRooms) desiredNumIslands = 1
+		//console.log("have " + numRooms + " want " + desiredNumIslands)
 
 		//delete islands that are no longer visible
 		this.islands.filter(x => !this._visibleRooms[x.hub.id]).forEach(island => {
@@ -67,7 +68,7 @@ class ClusterHandler {
 		while (this.islands.length < desiredNumIslands) {
 			let hub = rooms.shift()
 			//skip room if already hub of an island
-			while (this.islands.some(x => x.hub === hub)) rooms.shift()
+			while (this.islands.some(x => x.hub === hub)) hub = rooms.shift()
 
 			this._addIsland(hub)
 		}
@@ -114,6 +115,7 @@ class ClusterHandler {
 			let room = rooms[roomId]
 			if (!room.island) {
 				//isolated, make an island for it
+				console.log(roomId + " is isolated, make it an island")
 				this._addIsland(room)
 				this._crawlDistances(room, room.island, 0)
 			}
@@ -179,7 +181,7 @@ class ClusterHandler {
 				continue
 			}
 
-			var transitionB = this.data.transitions[transitionA.dstDoorId]
+			var transitionB = this.data.transitions[transitionA.otherDoor(doorId)]
 			let link = new RoomLink(transitionA, transitionB)
 
 			if (transitionA.srcRoom.island !== transitionA.dstRoom.island) {

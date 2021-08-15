@@ -130,4 +130,22 @@ class App {
 				break
 		}
 	}
+
+	debugReveal(type) {
+		var bestRoom, bestDistance = -Infinity
+		for (let room of Object.values(this.data.visibleRooms)) {
+			if (room.islandDistance > bestDistance && !room.isEveryTransitionVisited) {
+				bestRoom = room
+				bestDistance = room.islandDistance
+			}
+		}
+
+		if (bestRoom) {
+			var doors = bestRoom.unvisitedDoors
+			var door = doors[Math.floor(Math.random() * doors.length)]
+			console.log("debug reveal " + door)
+			this.data.addVisit(door)
+			this.dataRender.update()
+		}
+	}
 }
