@@ -1,6 +1,7 @@
 
 //target number of rooms per island, in practice will vary
 const roomsPerIsland = 40
+const breakOffThreshold = 20
 
 class ClusterHandler {
 
@@ -44,6 +45,19 @@ class ClusterHandler {
 		this.crossIslandLinks = this.crossIslandLinks.filter(x => !x.dead)
 	}
 
+	fullRebuild() {
+		for (let room of Object.values(this.data.rooms)) {
+			delete room.x
+			delete room.y
+			delete room.fx
+			delete room.fy
+			delete room.island
+			delete room.islandDistance
+		}
+		this.islands = []
+		this.buildIslands()
+	}
+
 	_pickIslands() {
 		var numRooms = Object.keys(this._visibleRooms).length
 		if (numRooms === 0) return
@@ -60,27 +74,42 @@ class ClusterHandler {
 		})
 		this.islands = this.islands.filter(x => this._visibleRooms[x.hub.id])
 
-		//grab top rooms (most doors)
+
 		var rooms = Object.values(this._visibleRooms)
-		rooms.sort((a, b) => b.numDoors - a.numDoors)
-
-		//add new islands to target number
-		while (this.islands.length < desiredNumIslands) {
-			let hub = rooms.shift()
-			//skip room if already hub of an island
-			while (this.islands.some(x => x.hub === hub)) hub = rooms.shift()
-
-			this._addIsland(hub)
+		//Anything that's really far away from the nearest hub? We should split it to its own island
+		//but, use a weighted "distance" so we're moor likely to pick a room with more connections
+		const distanceWeight = room => room.island ? room.islandDistance + room.numDoors * 1.4 : 0
+		rooms.sort((a, b) => distanceWeight(b) - distanceWeight(a))
+		if (distanceWeight(rooms[0]) > breakOffThreshold) {
+			this._addIsland(rooms[0])
+			//limit once per iter, we want to see the new "farthest" after adding a new island
 		}
 
+
+		//need more islands?
+		if (this.islands.length < desiredNumIslands) {
+			//grab top rooms (most doors)
+			rooms.sort((a, b) => b.numDoors - a.numDoors)
+
+			//add new islands to target number
+			while (this.islands.length < desiredNumIslands) {
+				let hub = rooms.shift()
+				//skip room if already hub of an island
+				while (this.islands.some(x => x.hub === hub)) hub = rooms.shift()
+
+				this._addIsland(hub)
+			}
+		}
+
+
 		//give islands initial positions
-		let i = 0
+		let i = -1
 		for (let island of this.islands) {
+			++i
 			if (typeof island.x === "number") continue
-			var angle = i / this.islands.length * 2 * Math.PI
+			var angle = (i / this.islands.length + (this.islands.length % 8) / 8) * 2 * Math.PI
 			island.x = 1200 * Math.cos(angle)
 			island.y = 1200 * Math.sin(angle)
-			++i
 		}
 	}
 
