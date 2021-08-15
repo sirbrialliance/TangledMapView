@@ -23,6 +23,13 @@ class DataGen {
 	/** Show everything? If false just what we've visited. */
 	showAll = false
 
+	clear() {
+		this.saveData = null
+		this.randomizerData = null
+		this.transitions = {}
+		this.visitedDoors = {}
+		this.rooms = {}
+	}
 
 	load(saveData) {
 		this.saveData = saveData

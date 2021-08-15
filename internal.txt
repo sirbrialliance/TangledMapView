@@ -4,21 +4,22 @@
 	- xx start web server
 	- xx include assets
 	- xx websockets
-	- hook when player changes maps
-	- push loaded save data
-	- message when ont in game
+	- xx hook when player changes maps
+	- xx push loaded save data
+	- xx message when not in game
+	- add rooms and such as we explore
 
 
 
-- Button to rearrange to be user-centric
+- Show real room icons
 
 - Select room for name and stats (num transitions visited/unvisited, items found/not found (or count of not found if no spoilers))
 
 - pathfinding to room/item, https://github.com/anvaka/ngraph.path looks like good lib for helping
 
 
-- Show real room icons
 
+- Button to rearrange to be user-centric
 
 - Sliders to adjust room align forces/radii
 
@@ -30,4 +31,5 @@
 		- copy forces to keep objects inside to push on the circle radius, counteract it with forces from the inter-island interactions
 
 
-
+- Bugs
+	- Doesn't work with new save? Maybe?
