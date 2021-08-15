@@ -25,6 +25,7 @@ public class MapServer {
 		protected override void OnOpen() {
 			if (TangledMapViewMod.Instance != null) {
 				Send(TangledMapViewMod.Instance.PrepareSaveDataMessage());
+				Send(TangledMapViewMod.Instance.PreparePlayerMoveMessage());
 			}
 		}
 	}

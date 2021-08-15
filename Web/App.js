@@ -120,6 +120,11 @@ class App {
 			case "unloadSave":
 				this.unloadSave()
 				break
+			case "revealTransition":
+				this.data.addVisit(msg.from)
+				this.data.addVisit(msg.to)
+				this.dataRender.update()
+				break
 			default:
 				console.warn("Unknown message: ", msg)
 				break

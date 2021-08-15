@@ -1,6 +1,7 @@
 ﻿
 using System.Collections;
 using Modding;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -12,6 +13,8 @@ public class TangledMapViewMod : Mod {
 
 	internal MapServer server;
 	public SaveGameData activeSaveData;
+	private RandomizerMod.RandomizerMod rndMod;
+	public string CurrentRoom { get; private set; }
 
 	public TangledMapViewMod() : base("TangledMapView") { }
 
@@ -29,6 +32,8 @@ public class TangledMapViewMod : Mod {
 		tmm.mod = this;
 		Object.DontDestroyOnLoad(go);
 
+		rndMod = RandomizerMod.RandomizerMod.Instance;
+
 
 		UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
 		ModHooks.Instance.AfterSavegameLoadHook += OnSaveLoaded;
@@ -40,14 +45,31 @@ public class TangledMapViewMod : Mod {
 	}
 
 	private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
-		Log("Scene change: " + scene.name);
+		var from = rndMod.LastRandomizedExit;
+		var to = rndMod.LastRandomizedEntrance;
+		Log($"Left {from} to enter {to} in {scene.name}");
+
+		CurrentRoom = scene.name;
+
 		if (scene.name == "Menu_Title") {
 			if (activeSaveData != null) {
 				activeSaveData = null;
 				server.Send(PrepareSaveDataMessage());
 			}
+			return;
 		}
-		server.Send("playerMove", "newRoom", scene.name);
+
+		if (from != null && to != null) {
+			server.Send("revealTransition", "from", from, "to", to);
+		}
+		server.Send(PreparePlayerMoveMessage());
+	}
+
+	public string PreparePlayerMoveMessage() {
+		return JToken.FromObject(new {
+			type = "playerMove",
+			newRoom = CurrentRoom,
+		}).ToString();
 	}
 
 	public string PrepareSaveDataMessage() {
@@ -61,7 +83,8 @@ public class TangledMapViewMod : Mod {
 			type = "loadSave",
 			data = new {
 				//don't need the full save file, just the stuff we need
-				activeSaveData.PolymorphicModData,
+				// activeSaveData.PolymorphicModData,
+				PolymorphicModData = new {RandomizerMod = JsonConvert.SerializeObject(rndMod.Settings)},
 			},
 		}).ToString();
 	}

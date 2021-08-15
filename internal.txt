@@ -9,6 +9,12 @@
 	- xx message when not in game
 	- add rooms and such as we explore
 
+- new transitions have their lines on top of items
+- reload page while save data is stale gives...stale save data (pull directly from mod)
+- it split to more islands too early?
+- as you reveal the map, things end up in funny places, the hub isn't cenetered in island
+
+
 
 
 - Show real room icons
@@ -32,4 +38,4 @@
 
 
 - Bugs
-	- Doesn't work with new save? Maybe?
+	- Doesn't work with fresh save file, have to exit and reload
