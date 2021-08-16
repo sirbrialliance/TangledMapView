@@ -1,22 +1,31 @@
-- xx There's already a "RandoMap" for Hollow Knight, so should change name
 
-- Integrate with real game
-	- xx start web server
-	- xx include assets
-	- xx websockets
-	- xx hook when player changes maps
-	- xx push loaded save data
-	- xx message when not in game
-	- add rooms and such as we explore
 
-- xx new transitions have their lines on top of items
-- xx it split to more islands too early?
+- playtest:
+	- xx main game performance issues
+		- seems to be caused mostly by showing the map on a non-primary-GPU display
+
+	- user-centric would be very useful, plus pick a room to route
+		- maybe arrange nodes in circualr pattern radius is based on "distance" from user
+	- hands-free follow me
+	- some rooms show connected, but internally are divided (e.g. A-B and C-D okay, but A-C is never possible)
+		- Ruins1_18
+		- Fungus3_48
+		- Maybe just have an in-game shortcut to add pins/tags to rooms and let the user deal with it how they'd like
+	- hard to track rooms when they jitter on transition
+	- it'd be nice to know which transitinos go to waht on a room
+	- show what rooms you missed item in
+	- maybe collapse 1 entrace/1 exit rooms "straight through"? or inline them a lot?
+	- not stopping server causes hang on quit?
+
+- show one-way transitions?
+- Show real room icons
+
 - as you reveal the map, things end up in funny places, the hub isn't cenetered in island
 
+- the inward jutter some nodes experience when we add data. What's causing that?
 
 
 
-- Show real room icons
 
 - Select room for name and stats (num transitions visited/unvisited, items found/not found (or count of not found if no spoilers))
 
