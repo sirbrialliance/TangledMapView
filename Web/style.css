@@ -37,6 +37,7 @@ svg { user-select: none; }
 	fill: magenta; /* "shouldn't happen" */
 	rx: 5px;
 	ry: 5px;
+	fill-opacity: .8;
 }
 .mapNode.hoverRelated > rect, .mapNode:hover > rect {
 	stroke: var(--highlight-color);
@@ -62,6 +63,14 @@ svg { user-select: none; }
 .area-Town > rect { stroke: #a7a6a2; fill: #2f2f2d; }
 .area-White_Palace > rect { stroke: #e4e4e4; fill: #757575; }
 
+
+circle.door {
+	r: 3px;
+	stroke: white;
+	fill: black;
+	stroke-width: 1px;
+	opacitY: .4;
+}
 
 
 .mapNodeLabel {

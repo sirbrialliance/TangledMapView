@@ -43,7 +43,7 @@
 
 
 
-
+- Room link joints try to position to center of other room instead of its corresponding door
 - Pathfinding to item in spoiler mode?
 - Select room for name and stats (num transitions visited/unvisited, items found/not found (or count of not found if no spoilers))
 - as you reveal the map, things end up in funny places, the hub isn't cenetered in island

@@ -131,6 +131,17 @@ class DataRender {
 						this.classList.add("area-" + area)
 					})
 				els.append("rect")
+				els.each(function(room) {
+					let doorDoors = Object.keys(room.doors).filter(x => x.indexOf("[door") >= 0)
+
+					d3.select(this)
+						.selectAll("circle.door")
+						.data(doorDoors.map(x => ({doorId: x})))
+						.join("circle")
+						.classed("door", true)
+						.attr("cx", d => room.doors[d.doorId].x * roomScale - room.aabb.cx * roomScale)
+						.attr("cy", d => room.doors[d.doorId].y * roomScale - room.aabb.cy * roomScale)
+				})
 				els.append("text")
 					.classed("mapNodeLabel shadow", true)
 					.clone(true).classed("shadow", false)

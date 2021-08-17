@@ -168,7 +168,7 @@ class RoomNode {
 	islandDistance = 0//0 = hub, 1 = adjacent to hub, 2 = adjacent to that, etc.
 	graphParent = null//an adjacent room on our island that's closer to the hub than us
 	/** Bounding box, in local coordinates, center of that, width and height of that. */
-	aabb = {x1: 0, y1: 0, x2: 0, y2: 0, cx: 0, cy: 0, width: 0, height: 0}
+	aabb = {x1: Infinity, y1: Infinity, x2: -Infinity, y2: -Infinity, cx: null, cy: null, width: null, height: null}
 
 	constructor(id, dataSource) {
 		this.id = id
@@ -181,7 +181,19 @@ class RoomNode {
 	}
 
 	finishSetup() {
+		//how big to make a room if we don't have data for its doors
+		const defaultSize = 30
+		const defaultSize2 = defaultSize / 2
+
+		if (this.numDoors === 0) {
+			this._calcAABBData(-defaultSize2, -defaultSize2)
+			this._calcAABBData(defaultSize2, defaultSize2)
+			this._calcAABBData()
+			return
+		}
+
 		var b = this.aabb
+		let sidesArray = Object.keys(this.doors).map(x => DataGen.parseDoorId(x).side)
 
 		//Check for door positions we know about
 		var unknownDoorCount = 0
@@ -196,23 +208,60 @@ class RoomNode {
 			}
 		}
 
+		//make room big enough for unknown doors
+		if (unknownDoorCount > 0) {
+			let hCount = sidesArray.filter(x => x === "left" || x === "right").length
+			let vCount = sidesArray.filter(x => x === "top" || x === "bot").length
+			if (hCount) {
+				this._expandAABB(-defaultSize2 * hCount, NaN)
+				this._expandAABB(defaultSize2 * hCount, NaN)
+			}
+			if (vCount) {
+				this._expandAABB(-defaultSize2 * vCount, NaN)
+				this._expandAABB(defaultSize2 * vCount, NaN)
+			}
+		}
+
 		this._calcAABBData()
 
-		//how big to make a room if we don't have dat for its doors
-		const defaultSize = 30
+		//Make room at least minimum width/height, keeping in mind the local origin may not be included
+		if (b.width < defaultSize) {
+			if (b.x1 === Infinity && b.x2 === -Infinity) b.x1 = -defaultSize2, b.x2 = defaultSize2
+			else if (b.x1 === Infinity) b.x1 = b.x2 - defaultSize
+			else if (b.x2 === -Infinity) b.x2 = b.x1 + defaultSize
+			else {
+				let axisDoors = sidesArray.filter(x => x === "left" || x === "right")
+				if (axisDoors.length === 1) {
+					if (axisDoors[0] === "left") b.x2 = b.x1 + defaultSize
+					else b.x1 = b.x2 - defaultSize
+				} else {
+					let c = (b.x1 + b.x2) / 2
+					b.x1 = c - defaultSize2
+					b.x2 = c + defaultSize2
+				}
+			}
+		}
+		if (b.height < defaultSize) {
+			if (b.y1 === Infinity && b.y2 === -Infinity) b.y1 = -defaultSize2, b.y2 = defaultSize2
+			else if (b.y1 === Infinity) b.y1 = b.y2 - defaultSize
+			else if (b.y2 === -Infinity) b.y2 = b.y1 + defaultSize
+			else {
+				let axisDoors = sidesArray.filter(x => x === "top" || x === "bot")
+				if (axisDoors.length === 1) {
+					if (axisDoors[0] === "left") b.y2 = b.y1 + defaultSize
+					else b.y1 = b.y2 - defaultSize
+				} else {
+					let c = (b.y1 + b.y2) / 2
+					b.y1 = c - defaultSize2
+					b.y2 = c + defaultSize2
+				}
+			}
+		}
 
+		this._calcAABBData()
+
+		//add unknown doors to edges is maybe plausible locations
 		if (unknownDoorCount > 0) {
-			let sidesArray = Object.keys(this.doors).map(x => DataGen.parseDoorId(x).side)
-			if (!b.width) {
-				let hCount = sidesArray.filter(x => x === "left" || x === "right").length || 1
-				b.x1 = -defaultSize / 2 * hCount, b.x2 = defaultSize / 2 * hCount
-			}
-			if (!b.height) {
-				let vCount = sidesArray.filter(x => x === "top" || x === "bot").length || 1
-				b.y1 = -defaultSize / 2 * vCount, b.y2 = defaultSize / 2 * vCount
-			}
-			this._calcAABBData()
-
 			for (let doorId in this.doors) {
 				let door = this.doors[doorId]
 				if (typeof door.x === "number") continue
@@ -234,10 +283,14 @@ class RoomNode {
 
 	_expandAABB(x, y) {
 		var b = this.aabb
-		b.x1 = Math.min(b.x1, x)
-		b.x2 = Math.max(b.x2, x)
-		b.y1 = Math.min(b.y1, y)
-		b.y2 = Math.max(b.y2, y)
+		if (!isNaN(x)) {
+			b.x1 = Math.min(b.x1, x)
+			b.x2 = Math.max(b.x2, x)
+		}
+		if (!isNaN(y)) {
+			b.y1 = Math.min(b.y1, y)
+			b.y2 = Math.max(b.y2, y)
+		}
 	}
 
 	_calcAABBData() {
