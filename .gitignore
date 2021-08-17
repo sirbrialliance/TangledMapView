@@ -4,3 +4,5 @@ Mod/obj/
 *.sublime-workspace
 StandaloneTest/bin/
 StandaloneTest/obj/
+Metadata/yamap*
+.vscode/

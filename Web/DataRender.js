@@ -1,3 +1,4 @@
+const roomScale = 3 //in-game room size time this = SVG pixel size
 
 const roomDirections = {
 	top: {x: 0, y: -1},
@@ -107,7 +108,7 @@ class DataRender {
 		const relatedElements = room => {
 			return [
 				...room.adjacentRooms.map(x => document.getElementById(`room-${x.id}`)),
-				...Object.keys(room.doorIds).map(doorId => {
+				...Object.keys(room.doors).map(doorId => {
 					var elId = RoomLink.getId(this.data.doorTransitions[doorId])
 					return document.getElementById(elId)
 				}),
@@ -120,7 +121,7 @@ class DataRender {
 				var els = enter.append("g")
 					.classed("mapNode", true)
 					.attr("id", x => "room-" + x.id)
-				els.append("circle")
+				els.append("rect")
 				els.append("text")
 					.classed("mapNodeLabel shadow", true)
 					.clone(true).classed("shadow", false)
@@ -136,8 +137,11 @@ class DataRender {
 		node.filter(x => x.isHub).call(setupDrag(true))
 		node.filter(x => !x.isHub).call(setupDrag(false))
 
-		node.select("circle")
-			.attr("r", node => node.numDoors * 2.5 + 3.5)
+		node.select("rect")
+			.attr("x", node => -node.aabb.width / 2 * roomScale)
+			.attr("y", node => -node.aabb.height / 2 * roomScale)
+			.attr("width", node => node.aabb.width * roomScale)
+			.attr("height", node => node.aabb.height * roomScale)
 			.attr("fill", room => {
 				if (room.isStartRoom) return "orange"
 				else if (room.island.hub === room) return "red"
@@ -151,12 +155,31 @@ class DataRender {
 			.text(x => `${x.displayText}, dist ${x.islandDistance} on ${x.island.id} with ${x.numDoors - x.numTransitionsVisited} unvisited`)
 
 		island.simulation.on("tick", () => {
-			linkEls.attr("d", link => DataRender.buildLinkPath(link.transitionA, link.source, link.target))
+			linkEls.attr("d", link => {
+				var pos = this._getDoorPositions(link)
+				return DataRender.buildLinkPath(link.transitionA, pos.src, pos.dst)
+			})
 
 			node.attr("transform", d => `translate(${d.x},${d.y})`)
 			this._updateCrossLinks()
 		})
 
+	}
+
+	_getDoorPositions(link) {
+		let srcDoor = link.source.doors[link.transitionA.srcDoor]
+		let dstDoor = link.target.doors[link.transitionA.dstDoor]
+
+		return {
+			src: {
+				x: link.source.x + (srcDoor.x) * roomScale,
+				y: link.source.y + (srcDoor.y) * roomScale,
+			},
+			dst: {
+				x: link.target.x + (dstDoor.x) * roomScale,
+				y: link.target.y + (dstDoor.y) * roomScale,
+			},
+		}
 	}
 
 	_updateCrossLinks() {
@@ -165,11 +188,14 @@ class DataRender {
 		this._crossLinkTask = setTimeout(() => {
 			this._crossLinkTask = null
 			this._crossLinkLines.attr("d", link => {
-				let src = {x: link.source.x + link.source.island.x, y: link.source.y + link.source.island.y}
-				// let island = link.source.island
-				// let dst = {x: island.x, y: island.y}
-				let dst = {x: link.target.x + link.target.island.x, y: link.target.y + link.target.island.y}
-				return DataRender.buildLinkPath(link.transitionA, src, dst)
+				var pos = this._getDoorPositions(link)
+				pos.src.x += link.source.island.x
+				pos.src.y += link.source.island.y
+
+				pos.dst.x += link.target.island.x
+				pos.dst.y += link.target.island.y
+
+				return DataRender.buildLinkPath(link.transitionA, pos.src, pos.dst)
 			})
 		}, 0)
 	}

@@ -159,7 +159,7 @@ class ClusterHandler {
 		room.islandDistance = islandDistance
 		++islandDistance
 
-		for (let doorId in room.doorIds) {
+		for (let doorId in room.doors) {
 			//don't allow graph traversal along transitions we haven't taken, even if both rooms are visited (or not)
 			if (!this._visibleTransitions[doorId]) continue
 
@@ -235,8 +235,8 @@ class ClusterHandler {
 		const positionRooms = (room, depth) => {
 			var levelDistance = positionDistance / Math.pow(1.5, depth)
 			// var levelDistance = positionDistance * (1 - depth / 5)
-			let i = 0, doorIds = Object.keys(room.doorIds)
-			for (let doorId of doorIds) {
+			let i = 0, doors = Object.keys(room.doors)
+			for (let doorId of doors) {
 				let transition = this.data.doorTransitions[doorId]
 				let [cRoom, side] = transition.dstRoom === room ? [transition.srcRoom, transition.dstSide] : [transition.dstRoom, transition.srcSide]
 
@@ -255,7 +255,7 @@ class ClusterHandler {
 					case "right": cRoom.parentDeltaX += levelDistance; break
 					case "left": cRoom.parentDeltaX += -levelDistance; break
 					default: {
-						let angle = i / doorIds.length * 2 * Math.PI + Math.PI / 8
+						let angle = i / doors.length * 2 * Math.PI + Math.PI / 8
 						cRoom.parentDeltaX += levelDistance * Math.cos(angle)
 						cRoom.parentDeltaY += levelDistance * Math.sin(angle)
 						break

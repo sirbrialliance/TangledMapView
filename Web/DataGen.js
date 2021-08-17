@@ -37,6 +37,7 @@ class DataGen {
 		this.randomizerData = JSON.parse(randomizerDataJSON)
 
 		var visitedDoorIdsRaw = JSON.parse(this.randomizerData["StringValues"]["_obtainedTransitions"])
+//visitedDoorIdsRaw._keys = ["Town[left1]"]
 
 		this.transitions = {}
 		this.visitedDoors = {}
@@ -51,9 +52,9 @@ class DataGen {
 		var tPlacements = this.randomizerData["_transitionPlacements"];
 
 		for (var srcDoor in tPlacements) {
-			var srcInfo = this.parseDoorId(srcDoor)
+			var srcInfo = DataGen.parseDoorId(srcDoor)
 			var dstDoor = tPlacements[srcDoor]
-			var dstInfo = this.parseDoorId(dstDoor)
+			var dstInfo = DataGen.parseDoorId(dstDoor)
 
 			var srcRoom = getAndUpdateRoom(srcInfo.roomId, srcDoor)
 			var dstRoom = getAndUpdateRoom(dstInfo.roomId, dstDoor)
@@ -93,9 +94,13 @@ class DataGen {
 				transitionB.visited = true
 			}
 		}
+
+		for (let roomId in this.rooms) {
+			this.rooms[roomId].finishSetup()
+		}
 	}
 
-	parseDoorId(doorId) {
+	static parseDoorId(doorId) {
 		var parts = doorId.match(/^(\w+)\[([a-zA-Z_]+)(\d*)\]$/);
 		return {
 			doorId,
@@ -156,11 +161,13 @@ class DataGen {
 }
 
 class RoomNode {
-	doorIds = {}//set of door id => true that leave this room
+	doors = {}//map of door id => {x, y} that leave this room
 	numDoors = 0
 	island = null
 	islandDistance = 0//0 = hub, 1 = adjacent to hub, 2 = adjacent to that, etc.
 	graphParent = null//an adjacent room on our island that's closer to the hub than us
+	/** Bounding box, in local coordinates, center of that, width and height of that. */
+	aabb = {x1: 0, y1: 0, x2: 0, y2: 0, cx: 0, cy: 0, wight: 0, height: 0}
 
 	constructor(id, dataSource) {
 		this.id = id
@@ -168,8 +175,71 @@ class RoomNode {
 	}
 
 	addDoor(doorId) {
-		this.doorIds[doorId] = true
-		this.numDoors = Object.keys(this.doorIds).length
+		this.doors[doorId] = {}
+		this.numDoors = Object.keys(this.doors).length
+	}
+
+	finishSetup() {
+		var b = this.aabb
+
+		//Check for door positions we know about
+		var unknownDoorCount = 0
+		for (let doorId in this.doors) {
+			//todo
+			// this.doors[doorId].x = lookup[scene][doorId].x
+			// this._expandAABB(x, y)
+			//else
+			++unknownDoorCount
+		}
+
+		this._calcAABBData()
+
+		const defaultSize = 10
+		if (unknownDoorCount > 0) {
+			let sidesArray = Object.keys(this.doors).map(x => DataGen.parseDoorId(x).side)
+			if (!b.width) {
+				let hCount = sidesArray.filter(x => x === "left" || x === "right").length || 1
+				b.x1 = -defaultSize / 2 * hCount, b.x2 = defaultSize / 2 * hCount
+			}
+			if (!b.height) {
+				let vCount = sidesArray.filter(x => x === "top" || x === "bot").length || 1
+				b.y1 = -defaultSize / 2 * vCount, b.y2 = defaultSize / 2 * vCount
+			}
+			this._calcAABBData()
+
+			for (let doorId in this.doors) {
+				let door = this.doors[doorId]
+				if (typeof door.x === "number") continue
+				let parts = DataGen.parseDoorId(doorId)
+
+				let numThatSide = sidesArray.filter(x => x === parts.side).length
+				let posNorm = numThatSide === 1 ? .5 : (parts.number - 1) / (numThatSide - 1)
+				switch (parts.side) {
+					case "top": door.x = b.x1 + posNorm * b.width, door.y = b.y1; break
+					case "bot": door.x = b.x1 + posNorm * b.width, door.y = b.y2; break
+					case "left": door.y = b.y1 + posNorm * b.height, door.x = b.x1; break
+					case "right": door.y = b.y1 + posNorm * b.height, door.x = b.x2; break
+					default: door.x = door.y = 0; break
+				}
+
+			}
+		}
+	}
+
+	_expandAABB(x, y) {
+		var b = this.aabb
+		b.x1 = Math.min(b.x1, x)
+		b.x2 = Math.max(b.x2, x)
+		b.y1 = Math.min(b.y1, x)
+		b.y2 = Math.max(b.y2, x)
+	}
+
+	_calcAABBData() {
+		var b = this.aabb
+		b.width = b.x2 - b.x1
+		b.height = b.y2 - b.y1
+		b.cx = b.x1 + b.width / 2
+		b.cy = b.y1 + b.height / 2
 	}
 
 	get isStartRoom() {
@@ -178,7 +248,7 @@ class RoomNode {
 
 	get isEveryTransitionVisited() {
 		let visitedDoors = this.dataSource.visitedDoors
-		for (let k in this.doorIds) {
+		for (let k in this.doors) {
 			if (!visitedDoors[k]) return false
 		}
 		return true
@@ -187,20 +257,20 @@ class RoomNode {
 	get visitedDoors() {
 		let allVisited = this.dataSource.visitedDoors
 		let ret = []
-		for (let k in this.doorIds) if (allVisited[k]) ret.push(k)
+		for (let k in this.doors) if (allVisited[k]) ret.push(k)
 		return ret
 	}
 	get unvisitedDoors() {
 		let allVisited = this.dataSource.visitedDoors
 		let ret = []
-		for (let k in this.doorIds) if (!allVisited[k]) ret.push(k)
+		for (let k in this.doors) if (!allVisited[k]) ret.push(k)
 		return ret
 	}
 
 	get numTransitionsVisited() {
 		let visitedDoors = this.dataSource.visitedDoors
 		let ret = 0
-		for (let k in this.doorIds) {
+		for (let k in this.doors) {
 			if (visitedDoors[k]) ++ret
 		}
 		return ret
@@ -209,7 +279,7 @@ class RoomNode {
 	get adjacentRooms() {
 		//(aside: rooms can link to themselves, FYI)
 		var ret = []
-		for (let doorId in this.doorIds) {
+		for (let doorId in this.doors) {
 			let transition = this.dataSource.doorTransitions[doorId]
 			if (transition.srcRoom !== this && ret.indexOf(transition.srcRoom) < 0) ret.push(transition.srcRoom)
 			if (transition.dstRoom !== this && ret.indexOf(transition.dstRoom) < 0) ret.push(transition.dstRoom)

@@ -13,30 +13,45 @@
 		- Maybe just have an in-game shortcut to add pins/tags to rooms and let the user deal with it how they'd like
 	- hard to track rooms when they jitter on transition
 	- it'd be nice to know which transitinos go to waht on a room
-	- show what rooms you missed item in
+	- show what rooms you missed items in
 	- maybe collapse 1 entrace/1 exit rooms "straight through"? or inline them a lot?
 	- not stopping server causes hang on quit?
 
-- show one-way transitions?
-- Show real room icons
 
-- as you reveal the map, things end up in funny places, the hub isn't cenetered in island
+- Button to rearrange to be user-centric
+
+- Button to enable following the user
+
+- Show real room sizes and door positions
+	- need to prebuild position metadata
+		- script guid for door: 1c941bf77e19ad542aaf2777b2c75f81
+		- don't know if we need to find real bounds, just use the doors?
+
+- click to select,
+	- pathfinding to selected room, https://github.com/anvaka/ngraph.path looks like good lib for helping
+
+- icons for rooms:
+	- user-applied icons
+	- all doors used
+	- all items collected
 
 - the inward jutter some nodes experience when we add data. What's causing that?
 
 
 
 
+
+
+
+
+- Pathfinding to item in spoiler mode?
 - Select room for name and stats (num transitions visited/unvisited, items found/not found (or count of not found if no spoilers))
-
-- pathfinding to room/item, https://github.com/anvaka/ngraph.path looks like good lib for helping
-
-
-
-- Button to rearrange to be user-centric
-
+- as you reveal the map, things end up in funny places, the hub isn't cenetered in island
 - Sliders to adjust room align forces/radii
 
+- zz Show real room icons
+
+- show one-way transitions?
 - Jumbled mess
 	- tune door constraint, much stronger repulsion if inline on the wrong side, less force if off-axis at a distance
 	- try turning off "keep apart" constraints for a warmup period then turn them back on
