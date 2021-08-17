@@ -12,7 +12,7 @@
 		- Fungus3_48
 		- Maybe just have an in-game shortcut to add pins/tags to rooms and let the user deal with it how they'd like
 	- hard to track rooms when they jitter on transition
-	- it'd be nice to know which transitinos go to waht on a room
+	- xx it'd be nice to know which transitinos go to waht on a room
 	- show what rooms you missed items in
 	- maybe collapse 1 entrace/1 exit rooms "straight through"? or inline them a lot?
 	- not stopping server causes hang on quit?

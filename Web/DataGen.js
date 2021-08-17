@@ -101,12 +101,13 @@ class DataGen {
 	}
 
 	static parseDoorId(doorId) {
-		var parts = doorId.match(/^(\w+)\[([a-zA-Z_]+)(\d*)\]$/);
+		var parts = doorId.match(/^(\w+)\[(([a-zA-Z_]+)(\d*))\]$/);
 		return {
 			doorId,
 			roomId: parts[1],
-			side: parts[2],
-			number: parts[3] || -1,
+			doorName: parts[2],
+			side: parts[3],
+			number: parts[4] || -1,
 		}
 	}
 
@@ -167,7 +168,7 @@ class RoomNode {
 	islandDistance = 0//0 = hub, 1 = adjacent to hub, 2 = adjacent to that, etc.
 	graphParent = null//an adjacent room on our island that's closer to the hub than us
 	/** Bounding box, in local coordinates, center of that, width and height of that. */
-	aabb = {x1: 0, y1: 0, x2: 0, y2: 0, cx: 0, cy: 0, wight: 0, height: 0}
+	aabb = {x1: 0, y1: 0, x2: 0, y2: 0, cx: 0, cy: 0, width: 0, height: 0}
 
 	constructor(id, dataSource) {
 		this.id = id
@@ -185,16 +186,21 @@ class RoomNode {
 		//Check for door positions we know about
 		var unknownDoorCount = 0
 		for (let doorId in this.doors) {
-			//todo
-			// this.doors[doorId].x = lookup[scene][doorId].x
-			// this._expandAABB(x, y)
-			//else
-			++unknownDoorCount
+			let doorInfo = DataGen.parseDoorId(doorId)
+			try {
+				var door = this.doors[doorId] = window.doorData[doorInfo.roomId][doorInfo.doorName]
+				door.y *= -1
+				this._expandAABB(door.x, door.y)
+			} catch {
+				++unknownDoorCount
+			}
 		}
 
 		this._calcAABBData()
 
-		const defaultSize = 10
+		//how big to make a room if we don't have dat for its doors
+		const defaultSize = 30
+
 		if (unknownDoorCount > 0) {
 			let sidesArray = Object.keys(this.doors).map(x => DataGen.parseDoorId(x).side)
 			if (!b.width) {
@@ -230,8 +236,8 @@ class RoomNode {
 		var b = this.aabb
 		b.x1 = Math.min(b.x1, x)
 		b.x2 = Math.max(b.x2, x)
-		b.y1 = Math.min(b.y1, x)
-		b.y2 = Math.max(b.y2, x)
+		b.y1 = Math.min(b.y1, y)
+		b.y2 = Math.max(b.y2, y)
 	}
 
 	_calcAABBData() {

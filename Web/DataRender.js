@@ -1,4 +1,4 @@
-const roomScale = 3 //in-game room size time this = SVG pixel size
+const roomScale = .5 //in-game room size time this = SVG pixel size
 
 const roomDirections = {
 	top: {x: 0, y: -1},
@@ -86,14 +86,14 @@ class DataRender {
 						target.fy = null
 					}
 
-					//debug reveal
-					var doors = room.unvisitedDoors
-					if (doors.length) {
-						var door = doors[Math.floor(Math.random() * doors.length)]
-						console.log("debug reveal " + door)
-						this_.data.addVisit(door)
-						this_.update()
-					}
+					// //debug reveal
+					// var doors = room.unvisitedDoors
+					// if (doors.length) {
+					// 	var door = doors[Math.floor(Math.random() * doors.length)]
+					// 	console.log("debug reveal " + door)
+					// 	this_.data.addVisit(door)
+					// 	this_.update()
+					// }
 				})
 			if (isHub) return ret.container(holder)
 			else return ret
@@ -181,12 +181,12 @@ class DataRender {
 
 		return {
 			src: {
-				x: link.source.x + (srcDoor.x) * roomScale,
-				y: link.source.y + (srcDoor.y) * roomScale,
+				x: link.source.x + (srcDoor.x - link.source.aabb.cx) * roomScale,
+				y: link.source.y + (srcDoor.y - link.source.aabb.cy) * roomScale,
 			},
 			dst: {
-				x: link.target.x + (dstDoor.x) * roomScale,
-				y: link.target.y + (dstDoor.y) * roomScale,
+				x: link.target.x + (dstDoor.x - link.target.aabb.cx) * roomScale,
+				y: link.target.y + (dstDoor.y - link.target.aabb.cy) * roomScale,
 			},
 		}
 	}
