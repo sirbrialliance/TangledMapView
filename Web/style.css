@@ -33,11 +33,35 @@ svg { user-select: none; }
 	stroke: black;
 	cursor: pointer;
 }
-/* .mapNode > rect { opacity: .3} */
+.mapNode > rect {
+	fill: magenta; /* "shouldn't happen" */
+	rx: 5px;
+	ry: 5px;
+}
 .mapNode.hoverRelated > rect, .mapNode:hover > rect {
 	stroke: var(--highlight-color);
 	stroke-width: 3px;
 }
+
+.area-Abyss > rect { stroke: #6b6d6c; fill: #1d1d1d; }
+.area-Cliffs > rect, .area-Tutorial > rect { stroke: #6d6d6d; fill: #1c1c1c; }
+.area-Crossroads > rect { stroke: #cbdbea; fill: #2f363c; }
+.area-Deepnest > rect { stroke: #c0c3d4; fill: #272c32; }
+.area-Deepnest_East > rect { stroke: #ddd9d0; fill: #35322d; }
+.area-Fungus1 > rect { stroke: #fcfcfc; fill: #3d3d3d; }
+.area-Fungus2 > rect { stroke: #fafde8; fill: #3c3d35; }
+.area-Fungus3 > rect { stroke: #a3a88a; fill: #2d2f21; }
+.area-GG > rect, .area-Waterways > rect { stroke: #b3edee; fill: #223f3d; }
+.area-Grimm > rect { stroke: #e28383; fill: #421f1f; }
+.area-Hive > rect { stroke: #e7e1af; fill: #3c3926; }
+.area-Mines > rect { stroke: #cebdd0; fill: #373038; }
+.area-RestingGrounds > rect { stroke: #dbbfb3; fill: #3c2f26; }
+.area-Room > rect { stroke: #b2b7dd; fill: #232136; }
+.area-Ruins > rect, .area-Ruins1 > rect { stroke: #a5a3cb; fill: #2a2d3e; }
+.area-Ruins2 > rect { stroke: #8c8dc5; fill: #202038; }
+.area-Town > rect { stroke: #a7a6a2; fill: #2f2f2d; }
+.area-White_Palace > rect { stroke: #e4e4e4; fill: #757575; }
+
 
 
 .mapNodeLabel {

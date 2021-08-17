@@ -121,6 +121,15 @@ class DataRender {
 				var els = enter.append("g")
 					.classed("mapNode", true)
 					.attr("id", x => "room-" + x.id)
+					.each(function(room) {
+						var area = "Unknown"
+						if (room.id.startsWith("Deepnest_East")) area = "Deepnest_East"
+						else if (room.id.startsWith("White_Palace")) area = "White_Palace"
+						else if (room.id === "Town") area = "Town"
+						else area = room.id.substring(0, room.id.indexOf("_"))
+
+						this.classList.add("area-" + area)
+					})
 				els.append("rect")
 				els.append("text")
 					.classed("mapNodeLabel shadow", true)
@@ -142,13 +151,13 @@ class DataRender {
 			.attr("y", node => -node.aabb.height / 2 * roomScale)
 			.attr("width", node => node.aabb.width * roomScale)
 			.attr("height", node => node.aabb.height * roomScale)
-			.attr("fill", room => {
-				if (room.isStartRoom) return "orange"
-				else if (room.island.hub === room) return "red"
-				else if (room.numTransitionsVisited === 0) return "gray"
-				else if (room.isEveryTransitionVisited) return "green"
-				else return "#BB0"
-			})
+			// .attr("fill", room => {
+			// 	if (room.isStartRoom) return "orange"
+			// 	else if (room.island.hub === room) return "red"
+			// 	else if (room.numTransitionsVisited === 0) return "gray"
+			// 	else if (room.isEveryTransitionVisited) return "green"
+			// 	else return "#BB0"
+			// })
 
 		node.selectAll("text")
 			// .text(x => x.displayText)
