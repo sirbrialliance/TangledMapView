@@ -9,7 +9,14 @@ svg { user-select: none; }
 	fill: none;
 	stroke: black;
 	stroke-opacity: .4;
-	stroke-width: 3px;
+	stroke-width: 2px;
+	stroke-linecap: round;
+}
+.roomLeadOut {
+	fill: none;
+	stroke-width: 2px;
+	stroke: black;
+	stroke-linecap: round;
 }
 .crossIslandLink .roomLink {
 	stroke-width: 1.5px;
@@ -27,6 +34,7 @@ svg { user-select: none; }
 	stroke-opacity: 1;
 	stroke-dasharray: none;
 }
+
 
 
 .mapNode {
@@ -66,10 +74,9 @@ svg { user-select: none; }
 
 circle.door {
 	r: 3px;
-	stroke: white;
+	stroke: none;
 	fill: black;
 	stroke-width: 1px;
-	opacitY: .4;
 }
 
 

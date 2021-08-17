@@ -17,6 +17,7 @@
 	- maybe collapse 1 entrace/1 exit rooms "straight through"? or inline them a lot?
 	- not stopping server causes hang on quit?
 
+- object sizes match room size
 
 - Button to rearrange to be user-centric
 

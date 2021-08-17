@@ -1,4 +1,5 @@
 const roomScale = .5 //in-game room size time this = SVG pixel size
+const roomLeadOutLen = 10//length of "leaving this room" stub lines
 
 const roomDirections = {
 	top: {x: 0, y: -1},
@@ -122,6 +123,7 @@ class DataRender {
 					.classed("mapNode", true)
 					.attr("id", x => "room-" + x.id)
 					.each(function(room) {
+						//Set class for room (original) area
 						var area = "Unknown"
 						if (room.id.startsWith("Deepnest_East")) area = "Deepnest_East"
 						else if (room.id.startsWith("White_Palace")) area = "White_Palace"
@@ -130,8 +132,35 @@ class DataRender {
 
 						this.classList.add("area-" + area)
 					})
+					.each(function(room) {
+						//edge stubs
+						let c = {x: room.aabb.cx * roomScale, y: room.aabb.cy * roomScale}
+						let edgeDoors = Object.keys(room.doors)
+							.filter(x => x.indexOf("[door") < 0)
+							.map(x => {
+								let door = room.doors[x]
+								let dir = roomDirections[door.side] || {x: 0, y: 0}
+								return {
+									x1: door.x * roomScale - c.x,
+									y1: door.y * roomScale - c.y,
+									x2: door.x * roomScale + roomLeadOutLen * dir.x - c.x,
+									y2: door.y * roomScale + roomLeadOutLen * dir.y - c.y,
+								}
+							})
+
+						d3.select(this)
+							.selectAll("line.roomLeadOut")
+							.data(edgeDoors)
+							.join("line")
+							.classed("roomLeadOut", true)
+							.attr("x1", d => d.x1)
+							.attr("x2", d => d.x2)
+							.attr("y1", d => d.y1)
+							.attr("y2", d => d.y2)
+					})
 				els.append("rect")
 				els.each(function(room) {
+					//door dots
 					let doorDoors = Object.keys(room.doors).filter(x => x.indexOf("[door") >= 0)
 
 					d3.select(this)
@@ -190,14 +219,17 @@ class DataRender {
 		let srcDoor = link.source.doors[link.transitionA.srcDoor]
 		let dstDoor = link.target.doors[link.transitionA.dstDoor]
 
+		let srcDir = roomDirections[srcDoor.side] || {x: 0, y: 0}
+		let dstDir = roomDirections[dstDoor.side] || {x: 0, y: 0}
+
 		return {
 			src: {
-				x: link.source.x + (srcDoor.x - link.source.aabb.cx) * roomScale,
-				y: link.source.y + (srcDoor.y - link.source.aabb.cy) * roomScale,
+				x: link.source.x + (srcDoor.x - link.source.aabb.cx) * roomScale + srcDir.x * roomLeadOutLen,
+				y: link.source.y + (srcDoor.y - link.source.aabb.cy) * roomScale + srcDir.y * roomLeadOutLen,
 			},
 			dst: {
-				x: link.target.x + (dstDoor.x - link.target.aabb.cx) * roomScale,
-				y: link.target.y + (dstDoor.y - link.target.aabb.cy) * roomScale,
+				x: link.target.x + (dstDoor.x - link.target.aabb.cx) * roomScale + dstDir.x * roomLeadOutLen,
+				y: link.target.y + (dstDoor.y - link.target.aabb.cy) * roomScale + dstDir.y * roomLeadOutLen,
 			},
 		}
 	}
@@ -222,30 +254,30 @@ class DataRender {
 
 	/** Returns the path bit to use with a <path d=XXYY /> */
 	static buildLinkPath(transition, src, dst) {
-		const leadOutLen = 15
-
 		let srcSide = transition.srcSide, dstSide = transition.dstSide
 		//Unit (or zero) vector for the direction we want to head towards (use zero influence on doors)
 		let srcDir = roomDirections[srcSide] || false, dstDir = roomDirections[dstSide] || false
 
-		var curveStart = srcDir ? {x: src.x + srcDir.x * leadOutLen, y: src.y + srcDir.y * leadOutLen} : src
-		var curveEnd = dstDir ? {x: dst.x + dstDir.x * leadOutLen, y: dst.y + dstDir.y * leadOutLen} : dst
+		// var curveStart = srcDir ? {x: src.x + srcDir.x * leadOutLen, y: src.y + srcDir.y * leadOutLen} : src
+		// var curveEnd = dstDir ? {x: dst.x + dstDir.x * leadOutLen, y: dst.y + dstDir.y * leadOutLen} : dst
+		var curveStart = src
+		var curveEnd = dst
 
 		let delta = {x: curveStart.x - curveEnd.x, y: curveStart.y - curveEnd.y}
 		var curveDist = Math.sqrt(delta.x * delta.x + delta.y * delta.y)
 
-		let tangentLen = Math.max(50, Math.min(curveDist * .6, 300))
+		let tangentLen = Math.max(10, Math.min(curveDist * .6, 300))
 
 
 		var ret = `M ${src.x} ${src.y} `
 
-		if (srcDir) ret += `L ${curveStart.x} ${curveStart.y} `
+		// if (srcDir) ret += `L ${curveStart.x} ${curveStart.y} `
 
 		ret += `C ${curveStart.x + (srcDir.x || 0) * tangentLen} ${curveStart.y + (srcDir.y || 0) * tangentLen} ` +
 			`${curveEnd.x + (dstDir.x || 0) * tangentLen} ${curveEnd.y + (dstDir.y || 0) * tangentLen} ` +
 			`${curveEnd.x} ${curveEnd.y} `
 
-		if (dstDir) ret += `L ${dst.x} ${dst.y} `
+		// if (dstDir) ret += `L ${dst.x} ${dst.y} `
 
 		return ret
 	}

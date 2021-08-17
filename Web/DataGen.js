@@ -162,13 +162,13 @@ class DataGen {
 }
 
 class RoomNode {
-	doors = {}//map of door id => {x, y} that leave this room
+	doors = {}//map of door id => {x, y, ...parseDoorId()} that leave this room
 	numDoors = 0
 	island = null
 	islandDistance = 0//0 = hub, 1 = adjacent to hub, 2 = adjacent to that, etc.
 	graphParent = null//an adjacent room on our island that's closer to the hub than us
-	/** Bounding box, in local coordinates, center of that, width and height of that. */
-	aabb = {x1: Infinity, y1: Infinity, x2: -Infinity, y2: -Infinity, cx: null, cy: null, width: null, height: null}
+	/** Bounding box, in local coordinates, center of that, width and height of that, radius of a circle that touches the rectangle edges. */
+	aabb = {x1: Infinity, y1: Infinity, x2: -Infinity, y2: -Infinity, cx: null, cy: null, width: null, height: null, radius: null}
 
 	constructor(id, dataSource) {
 		this.id = id
@@ -176,7 +176,7 @@ class RoomNode {
 	}
 
 	addDoor(doorId) {
-		this.doors[doorId] = {}
+		this.doors[doorId] = DataGen.parseDoorId(doorId)
 		this.numDoors = Object.keys(this.doors).length
 	}
 
@@ -193,19 +193,21 @@ class RoomNode {
 		}
 
 		var b = this.aabb
-		let sidesArray = Object.keys(this.doors).map(x => DataGen.parseDoorId(x).side)
+		let sidesArray = Object.keys(this.doors).map(x => x.side)
 
 		//Check for door positions we know about
 		var unknownDoorCount = 0
 		for (let doorId in this.doors) {
-			let doorInfo = DataGen.parseDoorId(doorId)
-			try {
-				var door = this.doors[doorId] = window.doorData[doorInfo.roomId][doorInfo.doorName]
-				door.y *= -1
-				this._expandAABB(door.x, door.y)
-			} catch {
+			let door = this.doors[doorId]
+
+			if (!window.doorData[door.roomId] || !window.doorData[door.roomId][door.doorName]) {
 				++unknownDoorCount
+				continue
 			}
+			var info = window.doorData[door.roomId][door.doorName]
+			this.doors[doorId].x = info.x
+			this.doors[doorId].y = -info.y
+			this._expandAABB(info.x, -info.y)
 		}
 
 		//make room big enough for unknown doors
@@ -265,11 +267,10 @@ class RoomNode {
 			for (let doorId in this.doors) {
 				let door = this.doors[doorId]
 				if (typeof door.x === "number") continue
-				let parts = DataGen.parseDoorId(doorId)
 
-				let numThatSide = sidesArray.filter(x => x === parts.side).length
-				let posNorm = numThatSide === 1 ? .5 : (parts.number - 1) / (numThatSide - 1)
-				switch (parts.side) {
+				let numThatSide = sidesArray.filter(x => x === door.side).length
+				let posNorm = numThatSide === 1 ? .5 : (door.number - 1) / (numThatSide - 1)
+				switch (door.side) {
 					case "top": door.x = b.x1 + posNorm * b.width, door.y = b.y1; break
 					case "bot": door.x = b.x1 + posNorm * b.width, door.y = b.y2; break
 					case "left": door.y = b.y1 + posNorm * b.height, door.x = b.x1; break
@@ -299,6 +300,8 @@ class RoomNode {
 		b.height = b.y2 - b.y1
 		b.cx = b.x1 + b.width / 2
 		b.cy = b.y1 + b.height / 2
+		let x = b.width / 2, y = b.height / 2
+		b.radius = Math.sqrt(x * x + y * y)
 	}
 
 	get isStartRoom() {
