@@ -17,11 +17,11 @@
 	- maybe collapse 1 entrace/1 exit rooms "straight through"? or inline them a lot?
 	- not stopping server causes hang on quit?
 
-- object sizes match room size
+- xx object sizes match room size
 
 - Button to rearrange to be user-centric
 
-- Button to enable following the user
+- xx Button to enable following the user
 
 - Show real room sizes and door positions
 	- need to prebuild position metadata

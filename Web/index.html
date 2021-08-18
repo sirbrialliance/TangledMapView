@@ -14,8 +14,12 @@
 <body>
 	<svg width="100%" height="100%"></svg>
 	<div id="controlPanel">
-		<button onclick="data.showAll = !data.showAll; app.dataRender.update()">Toggle Spoilers</button>
-		<button onclick="app.debugReveal('distant')">Debug Reval Most Distant</button>
+		<button onclick="d3.select(this).classed('enabled', data.showAll = !data.showAll); app.dataRender.update()">Show Spoilers</button><br>
+		<button
+			onclick="d3.select(this).classed('enabled', app.followPlayer = !app.followPlayer); app.dataRender.update()"
+			class="enabled"
+		>Follow Player</button><br>
+		<!-- <button onclick="app.debugReveal('distant')">Debug Reval Most Distant</button> -->
 	</div>
 	<div id="blockingMessage"></div>
 </body>
