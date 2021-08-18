@@ -20,6 +20,9 @@ class DataGen {
 	/** set of doors we've used including src and dst door, door id => true */
 	visitedDoors = {}
 
+	currentPlayerRoom = "Tutorial_01"
+	startRoom = "Tutorial_01"
+
 	/** Show everything? If false just what we've visited. */
 	showAll = false
 
@@ -38,6 +41,9 @@ class DataGen {
 
 		var visitedDoorIdsRaw = JSON.parse(this.randomizerData["StringValues"]["_obtainedTransitions"])
 //visitedDoorIdsRaw._keys = ["Town[left1]"]
+
+		this.startRoom = this.randomizerData.StringValues.StartSceneName
+		this.currentPlayerRoom = this.startRoom //if we wanted to send more data could read from save file, but nah
 
 		this.transitions = {}
 		this.visitedDoors = {}
@@ -305,7 +311,7 @@ class RoomNode {
 	}
 
 	get isStartRoom() {
-		return this.id === this.dataSource.randomizerData.StringValues.StartSceneName
+		return this.id === this.dataSource.startRoom
 	}
 
 	get isEveryTransitionVisited() {

@@ -1,7 +1,11 @@
 
 class App {
 	ws = null
-	followPlayer = true
+	prefs = {
+		spoilers: false,
+		followPlayer: true,
+		layout: "islands",
+	}
 
 	constructor() {
 		this.data = window.data = new DataGen()
@@ -21,6 +25,8 @@ class App {
 
 	async start() {
 		this._setBlockingMessage("Loading...")
+
+		this._setupPrefs()
 
 		var svg = this.svg = d3.select("svg")
 
@@ -56,6 +62,8 @@ class App {
 
 		updateSize()
 
+		this._ready = true
+
 		if (location.protocol === "file:") {
 			await this.loadTestData()
 			this._render()
@@ -63,6 +71,40 @@ class App {
 			this.wsConnect()
 			setInterval(this.wsConnect.bind(this), 10 * 1000)
 		}
+	}
+
+	_setupPrefs() {
+		for (let k in this.prefs) {
+			let defaultValue = this.prefs[k]
+			let v = localStorage.getItem("pref-" + k)
+			if (v === null) v = defaultValue
+			else v = JSON.parse(v)
+
+			this.updatePref(k, v)
+		}
+	}
+
+	updatePref(k, v) {
+		let el = document.getElementById("pref-" + k)
+		if (el.tagName === "BUTTON") {
+			d3.select(el).classed("enabled", v)
+		} else if (el.tagName === "SELECT") {
+			el.value = v
+		}
+
+		switch (k) {
+			case "spoilers": this.data.showAll = v; break
+			case "layout": this.cluster.layout = v; break
+		}
+		this.prefs[k] = v
+		localStorage.setItem("pref-" + k, JSON.stringify(v))
+
+		if (!this._ready) return
+
+		switch (k) {
+			case "layout": this.cluster.fullRebuild(); break
+		}
+		this.dataRender.update()
 	}
 
 	_render() {
@@ -111,9 +153,10 @@ class App {
 	handleMessage(msg) {
 		switch (msg.type) {
 			case "playerMove":
+				this.data.currentPlayerRoom = msg.newRoom
 				d3.select(".currentRoom").classed("currentRoom", false)
 				let el = d3.select("#room-" + msg.newRoom).classed("currentRoom", true)
-				if (this.followPlayer && el.node()) {
+				if (this.prefs.followPlayer && el.node()) {
 					// let t0 = d3.zoomTransform(this.svg)
 					// let t0 = this.svg.node().__zoom
 					// let rect = el.node().getBoundingClientRect()
@@ -130,6 +173,7 @@ class App {
 					let y = room.y + (room.island?.y || 0)
 					this.svg.transition().duration(800).call(this.zoom.translateTo, x, y)
 				}
+				this.dataRender.update()
 				break
 			case "loadSave":
 				this.data.load(msg.data)

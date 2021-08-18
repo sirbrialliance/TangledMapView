@@ -5,6 +5,7 @@ const breakOffThreshold = 20
 
 class ClusterHandler {
 
+	layout = "islands"
 	islands = []
 	crossIslandLinks = []
 	macroSimulation = null
@@ -29,7 +30,10 @@ class ClusterHandler {
 			room.y += room.island.y
 		}
 
-		this._pickIslands()
+		if (this.layout === "islands") this._setupIslands()
+		else if (this.layout === "player") this._setupPlayerIsland()
+		else this._setupUglyIsland()
+
 		this._measureDistances()
 		for (let island of this.islands) this._buildIslandData(island)
 		this._buildMacroData()
@@ -47,8 +51,8 @@ class ClusterHandler {
 
 	fullRebuild() {
 		for (let room of Object.values(this.data.rooms)) {
-			delete room.x
-			delete room.y
+			// delete room.x
+			// delete room.y
 			delete room.fx
 			delete room.fy
 			delete room.island
@@ -58,7 +62,7 @@ class ClusterHandler {
 		this.buildIslands()
 	}
 
-	_pickIslands() {
+	_setupIslands() {
 		var numRooms = Object.keys(this._visibleRooms).length
 		if (numRooms === 0) return
 
@@ -113,6 +117,38 @@ class ClusterHandler {
 		}
 	}
 
+	_setupPlayerIsland() {
+		let playerRoom = this.data.rooms[this.data.currentPlayerRoom] || this.data.rooms[this.data.startRoom]
+		if (!playerRoom) return
+
+		if (this.islands.length !== 1) {
+			this.islands = []
+			this._addIsland(playerRoom)
+		}
+
+		let island = this.islands[0]
+		if (island.hub) {
+			delete island.hub.fx
+			delete island.hub.fy
+			island.hub.x += 1e-16
+		}
+		island.hub = playerRoom
+		island.hub.fx = 0
+		island.hub.fy = 0
+		island.x = island.fx = 0
+		island.y = island.fy = 0
+	}
+
+	_setupUglyIsland() {
+		let hub = this.data.rooms[this.data.startRoom]
+		if (!hub) return
+
+		if (this.islands.length !== 1) {
+			this.islands = []
+			this._addIsland(this.data.rooms[this.data.startRoom])
+		}
+	}
+
 	_addIsland(room) {
 		let island = room.island = new Island(room)
 		room.islandDistance = 0
@@ -140,15 +176,26 @@ class ClusterHandler {
 		}
 
 		//collect island members
-		for (let roomId in this._visibleRooms) {
-			let room = rooms[roomId]
-			if (!room.island) {
-				//isolated, make an island for it
-				console.log(roomId + " is isolated, make it an island")
-				this._addIsland(room)
-				this._crawlDistances(room, room.island, 0)
+		if (this.layout === "player") {
+			for (let roomId in this._visibleRooms) {
+				let room = rooms[roomId]
+				if (room.islandDistance > 4 || !room.island) {
+					room.island = null
+					continue
+				}
+				room.island.rooms.push(room)
 			}
-			room.island.rooms.push(room)
+		} else {
+			for (let roomId in this._visibleRooms) {
+				let room = rooms[roomId]
+				if (!room.island) {
+					//isolated, make an island for it
+					console.log(roomId + " is isolated, make it an island")
+					this._addIsland(room)
+					this._crawlDistances(room, room.island, 0)
+				}
+				room.island.rooms.push(room)
+			}
 		}
 	}
 
@@ -178,20 +225,6 @@ class ClusterHandler {
 		}
 	}
 
-	_buildMacroData() {
-		if (!this.macroSimulation) this.macroSimulation = d3.forceSimulation([])
-
-		this.macroSimulation
-			.nodes(this.islands)
-			// .force("group", d3.forceManyBody())
-			.force("group", d3.forceCollide().radius(island => island.radius).strength(.5))
-			.force("center", d3.forceCenter())
-			.force("x", d3.forceX().strength(.05))
-			.force("y", d3.forceY().strength(.05))
-
-		if (this.macroSimulation.alpha() < .2) this.macroSimulation.alpha(.2).restart()
-	}
-
 	_buildIslandData(island) {
 		let links = island.links = []//just fully rebuilding links each time (for now?)
 
@@ -214,6 +247,7 @@ class ClusterHandler {
 			let link = new RoomLink(transitionA, transitionB)
 
 			if (transitionA.srcRoom.island !== transitionA.dstRoom.island) {
+				if (this.layout === "player") continue
 				//different islands
 				let existing = this.crossIslandLinks.find(x => x. id === link.id)
 				if (existing) {
@@ -228,46 +262,6 @@ class ClusterHandler {
 				handledDoors[transitionA.dstDoor] = true
 			}
 		}
-
-		/*
-		const positionDistance = 300
-		//Picks relative positions and parent for parent-relative positioning mode
-		const positionRooms = (room, depth) => {
-			var levelDistance = positionDistance / Math.pow(1.5, depth)
-			// var levelDistance = positionDistance * (1 - depth / 5)
-			let i = 0, doors = Object.keys(room.doors)
-			for (let doorId of doors) {
-				let transition = this.data.doorTransitions[doorId]
-				let [cRoom, side] = transition.dstRoom === room ? [transition.srcRoom, transition.dstSide] : [transition.dstRoom, transition.srcSide]
-
-				if (cRoom === room) continue//room links to self
-				if (cRoom.island !== island) continue//leaving the island
-				if (cRoom.islandDistance <= depth) continue//would be handled at a higher level already
-
-				cRoom.graphParent = room
-
-				cRoom.parentDeltaX = 0
-				cRoom.parentDeltaY = 0
-
-				switch (side) {
-					case "top": cRoom.parentDeltaY += -levelDistance; break
-					case "bot": cRoom.parentDeltaY += levelDistance; break
-					case "right": cRoom.parentDeltaX += levelDistance; break
-					case "left": cRoom.parentDeltaX += -levelDistance; break
-					default: {
-						let angle = i / doors.length * 2 * Math.PI + Math.PI / 8
-						cRoom.parentDeltaX += levelDistance * Math.cos(angle)
-						cRoom.parentDeltaY += levelDistance * Math.sin(angle)
-						break
-					}
-				}
-
-				positionRooms(cRoom, depth + 1)
-				++i
-			}
-		}
-		positionRooms(island.hub, 0)
-		*/
 
 		island.radius = 80 * Math.sqrt(island.rooms.length)
 
@@ -300,10 +294,47 @@ class ClusterHandler {
 			// .force("placement", ClusterHandler.forceParentRelative().strength(.03))
 			.force("noExplode", ClusterHandler.forcePreventExplosions())
 			.force("doorAlign", ClusterHandler.forceDoorAlignment(island.links).strengths(.5, .6))
-			.force("keepAway", ClusterHandler.forceKeepInsideCircle(island.radius))
 			.alphaDecay(.005)
 			.alphaMin(.09)
+
+			if (this.layout === "islands") {
+				island.simulation
+				.force("keepInside", ClusterHandler.forceKeepInsideCircle(island.radius))
+				.force("playerDistance", null)
+			} else if (this.layout === "player") {
+				island.simulation
+				.force("doorAlign", ClusterHandler.forceDoorAlignment(island.links).strengths(.8, 1))
+				.force("keepInside", null)
+				// .force("playerDistance", d3.forceRadial().radius(x => x.islandDistance * 150).strength(.05))
+				// .force("playerDistance", ClusterHandler.forceMinDist().radius(x => x.islandDistance * 50).strength(.4))
+				.force("playerDistance", null)
+		} else {
+			island.simulation
+				.force("keepInside", null)
+				.force("playerDistance", null)
+		}
+
 		if (island.simulation.alpha() < .5) island.simulation.alpha(.5).restart()
+	}
+
+	_buildMacroData() {
+		if (!this.macroSimulation) this.macroSimulation = d3.forceSimulation([])
+
+		this.macroSimulation
+			.nodes(this.islands)
+			.force("center", d3.forceCenter())
+			.force("x", d3.forceX().strength(.05))
+			.force("y", d3.forceY().strength(.05))
+			// .force("group", d3.forceManyBody())
+			.force("group", d3.forceCollide().radius(island => island.radius).strength(.5))
+
+		// if (this.layout === "islands") {
+		// 	this.macroSimulation.force("group", d3.forceCollide().radius(island => island.radius).strength(.5))
+		// } else {
+		// 	this.macroSimulation.force("group", null)
+		// }
+
+		if (this.macroSimulation.alpha() < .2) this.macroSimulation.alpha(.2).restart()
 	}
 
 	static forceKeepInsideCircle(radius) {
@@ -420,6 +451,29 @@ class ClusterHandler {
 
 		//ret.initialize = nodes_ => nodes = nodes_
 		ret.strengths = (alignStr, sideStr) => (alignStrength = alignStr, sideShiftStrength = sideStr, ret)
+
+		return ret
+	}
+
+	static forceMinDist() {
+		var strength = 1, nodes, radiusFn = n => 20
+
+		var ret = alpha => {
+			for (let i = 0, len = nodes.length; i < len; i++) {
+				let node = nodes[i]
+				let dist = Math.sqrt(node.x * node.x + node.y * node.y)
+				let radius = radiusFn(node)
+				if (dist > radius) continue
+
+				var force = (radius - dist) * strength * alpha
+				node.vx += force * node.x / dist
+				node.vy += force * node.y / dist
+			}
+		}
+
+		ret.initialize = nodes_ => nodes = nodes_
+		ret.strength = str => (strength = str, ret)
+		ret.radius = fn => (radiusFn = fn, ret)
 
 		return ret
 	}

@@ -132,6 +132,8 @@ class DataRender {
 
 						this.classList.add("area-" + area)
 					})
+				els.append("rect")
+				els
 					.each(function(room) {
 						//edge stubs
 						let c = {x: room.aabb.cx * roomScale, y: room.aabb.cy * roomScale}
@@ -158,7 +160,6 @@ class DataRender {
 							.attr("y1", d => d.y1)
 							.attr("y2", d => d.y2)
 					})
-				els.append("rect")
 				els.each(function(room) {
 					//door dots
 					let doorDoors = Object.keys(room.doors).filter(x => x.indexOf("[door") >= 0)

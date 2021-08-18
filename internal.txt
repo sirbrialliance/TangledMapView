@@ -17,16 +17,9 @@
 	- maybe collapse 1 entrace/1 exit rooms "straight through"? or inline them a lot?
 	- not stopping server causes hang on quit?
 
-- xx object sizes match room size
 
 - Button to rearrange to be user-centric
 
-- xx Button to enable following the user
-
-- Show real room sizes and door positions
-	- need to prebuild position metadata
-		- script guid for door: 1c941bf77e19ad542aaf2777b2c75f81
-		- don't know if we need to find real bounds, just use the doors?
 
 - click to select,
 	- pathfinding to selected room, https://github.com/anvaka/ngraph.path looks like good lib for helping
