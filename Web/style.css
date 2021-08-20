@@ -15,8 +15,11 @@ svg { user-select: none; }
 .roomLeadOut {
 	fill: none;
 	stroke-width: 2px;
-	stroke: black;
+	stroke: white;
 	stroke-linecap: round;
+}
+.roomLeadOut.visitedDoor {
+	stroke: black;
 }
 .crossIslandLink .roomLink {
 	stroke-width: 1.5px;
@@ -75,8 +78,11 @@ svg { user-select: none; }
 circle.door {
 	r: 3px;
 	stroke: none;
-	fill: black;
+	fill: white;
 	stroke-width: 1px;
+}
+circle.door.visitedDoor {
+	fill: black;
 }
 
 

@@ -176,9 +176,9 @@ class RoomNode {
 	/** Bounding box, in local coordinates, center of that, width and height of that, radius of a circle that touches the rectangle edges. */
 	aabb = {x1: Infinity, y1: Infinity, x2: -Infinity, y2: -Infinity, cx: null, cy: null, width: null, height: null, radius: null}
 
-	constructor(id, dataSource) {
+	constructor(id, data) {
 		this.id = id
-		this.dataSource = dataSource
+		this.data = data
 	}
 
 	addDoor(doorId) {
@@ -311,11 +311,11 @@ class RoomNode {
 	}
 
 	get isStartRoom() {
-		return this.id === this.dataSource.startRoom
+		return this.id === this.data.startRoom
 	}
 
 	get isEveryTransitionVisited() {
-		let visitedDoors = this.dataSource.visitedDoors
+		let visitedDoors = this.data.visitedDoors
 		for (let k in this.doors) {
 			if (!visitedDoors[k]) return false
 		}
@@ -323,20 +323,20 @@ class RoomNode {
 	}
 
 	get visitedDoors() {
-		let allVisited = this.dataSource.visitedDoors
+		let allVisited = this.data.visitedDoors
 		let ret = []
 		for (let k in this.doors) if (allVisited[k]) ret.push(k)
 		return ret
 	}
 	get unvisitedDoors() {
-		let allVisited = this.dataSource.visitedDoors
+		let allVisited = this.data.visitedDoors
 		let ret = []
 		for (let k in this.doors) if (!allVisited[k]) ret.push(k)
 		return ret
 	}
 
 	get numTransitionsVisited() {
-		let visitedDoors = this.dataSource.visitedDoors
+		let visitedDoors = this.data.visitedDoors
 		let ret = 0
 		for (let k in this.doors) {
 			if (visitedDoors[k]) ++ret
@@ -348,7 +348,7 @@ class RoomNode {
 		//(aside: rooms can link to themselves, FYI)
 		var ret = []
 		for (let doorId in this.doors) {
-			let transition = this.dataSource.doorTransitions[doorId]
+			let transition = this.data.doorTransitions[doorId]
 			if (transition.srcRoom !== this && ret.indexOf(transition.srcRoom) < 0) ret.push(transition.srcRoom)
 			if (transition.dstRoom !== this && ret.indexOf(transition.dstRoom) < 0) ret.push(transition.dstRoom)
 		}

@@ -151,6 +151,11 @@ class App {
 	}
 
 	enterRoom(roomId) {
+		console.log("Got enterRoom to " + roomId)
+
+		//Ignore non-room scenes
+		if (!roomId || roomId.startsWith("Cinematic_") || roomId === "Fungus1_04_Boss") return
+
 		this.data.currentPlayerRoom = roomId
 		d3.select(".currentRoom").classed("currentRoom", false)
 		let el = d3.select("#room-" + roomId).classed("currentRoom", true)

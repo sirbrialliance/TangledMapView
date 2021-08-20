@@ -9,6 +9,8 @@ const roomDirections = {
 }
 
 class DataRender {
+	static debugEnable = false
+
 	constructor(cluster) {
 		this.cluster = cluster
 		this.data = cluster.data
@@ -36,8 +38,9 @@ class DataRender {
 
 			//Target simulation can very based on the node, we want to drag the room in the macro simulation if you grab an island hub
 			function getTargets(room) {
-				if (room.isHub) return [this_.cluster.macroSimulation, room.island]
-				else return [island.simulation, room]
+				return [island.simulation, room]
+				// if (room.isHub) return [this_.cluster.macroSimulation, room.island]
+				// else return [island.simulation, room]
 			}
 
 			var ret = d3.drag()
@@ -87,16 +90,18 @@ class DataRender {
 						target.fy = null
 					}
 
-					// //debug reveal
-					// var doors = room.unvisitedDoors
-					// if (doors.length) {
-					// 	var door = doors[Math.floor(Math.random() * doors.length)]
-					// 	console.log("debug reveal " + door)
-					// 	this_.data.addVisit(door)
-					// 	this_.update()
-					// }
-					// debug "enter" room
-					window.app.enterRoom(room.id)
+					if (DataRender.debugEnable) {
+						// //debug reveal
+						// var doors = room.unvisitedDoors
+						// if (doors.length) {
+						// 	var door = doors[Math.floor(Math.random() * doors.length)]
+						// 	console.log("debug reveal " + door)
+						// 	this_.data.addVisit(door)
+						// 	this_.update()
+						// }
+						// debug "enter" room
+						window.app.enterRoom(room.id)
+					}
 				})
 			if (isHub) return ret.container(holder)
 			else return ret
@@ -150,6 +155,7 @@ class DataRender {
 									y1: door.y * roomScale - c.y,
 									x2: door.x * roomScale + roomLeadOutLen * dir.x - c.x,
 									y2: door.y * roomScale + roomLeadOutLen * dir.y - c.y,
+									door
 								}
 							})
 
@@ -162,18 +168,20 @@ class DataRender {
 							.attr("x2", d => d.x2)
 							.attr("y1", d => d.y1)
 							.attr("y2", d => d.y2)
+							.each(function(d) { d.door.__el = this })
 					})
 				els.each(function(room) {
 					//door dots
-					let doorDoors = Object.keys(room.doors).filter(x => x.indexOf("[door") >= 0)
+					let doorDoors = Object.keys(room.doors).filter(x => x.indexOf("[door") >= 0).map(x => room.doors[x])
 
 					d3.select(this)
 						.selectAll("circle.door")
-						.data(doorDoors.map(x => ({doorId: x})))
+						.data(doorDoors)
 						.join("circle")
 						.classed("door", true)
-						.attr("cx", d => room.doors[d.doorId].x * roomScale - room.aabb.cx * roomScale)
-						.attr("cy", d => room.doors[d.doorId].y * roomScale - room.aabb.cy * roomScale)
+						.attr("cx", d => d.x * roomScale - room.aabb.cx * roomScale)
+						.attr("cy", d => d.y * roomScale - room.aabb.cy * roomScale)
+						.each(function(door) { door.__el = this })
 				})
 				els.append("text")
 					.classed("mapNodeLabel shadow", true)
@@ -189,6 +197,16 @@ class DataRender {
 
 		node.filter(x => x.isHub).call(setupDrag(true))
 		node.filter(x => !x.isHub).call(setupDrag(false))
+
+		let visibleTransitions = this.data.visibleTransitions
+		node.each(function(room) {
+			for (let doorId in room.doors) {
+				let door = room.doors[doorId]
+				if (!door.__el) continue
+				if (visibleTransitions[doorId]) door.__el.classList.add("visitedDoor")
+				else door.__el.classList.remove("visitedDoor")
+			}
+		})
 
 		node.select("rect")
 			.attr("x", node => -node.aabb.width / 2 * roomScale)

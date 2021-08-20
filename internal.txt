@@ -1,5 +1,11 @@
 
 
+- xx Fungus1_* is greenpath, fix coloring
+- xx Special rooms:
+	- Cinematic_Stag_travel is not a real room...
+	- Fungus1_04 vs Fungus1_04_Boss weirdness?
+
+
 
 - Room position stability:
 	- dampen room moevement if it didn't just join?
@@ -35,10 +41,6 @@
 
 - times visited room?
 
-- Fungus1_* is greenpath, fix coloring
-- Special rooms:
-	- Cinematic_Stag_travel is not a real room...
-	- Fungus1_04 vs Fungus1_04_Boss weirdness?
 
 - tangled mess: nbody negative force
 
