@@ -484,6 +484,7 @@ class ClusterHandler {
 	static forceHubTweaks(hub) {
 		let dampen = .01, strength = .8 / dampen
 		var ret = alpha => {
+			if (!hub.island) return
 			var range = hub.island.radius * .2
 			var dist = Math.sqrt(hub.x * hub.x + hub.y * hub.y)
 			if (dist > range) {

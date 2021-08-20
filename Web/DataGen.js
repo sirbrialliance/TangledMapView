@@ -141,7 +141,7 @@ class DataGen {
 	/** Returns a map of visible transitions (srcDoor (or maybe dstDoor) => transition) */
 	get visibleTransitions() {
 		if (this.showAll) {
-			return this.transitions
+			return this.doorTransitions
 		} else {
 			var ret = {}
 			for (let doorId in this.visitedDoors) {
@@ -349,6 +349,19 @@ class RoomNode {
 		var ret = []
 		for (let doorId in this.doors) {
 			let transition = this.data.doorTransitions[doorId]
+			if (transition.srcRoom !== this && ret.indexOf(transition.srcRoom) < 0) ret.push(transition.srcRoom)
+			if (transition.dstRoom !== this && ret.indexOf(transition.dstRoom) < 0) ret.push(transition.dstRoom)
+		}
+		return ret
+	}
+
+	get adjacentVisibleRooms() {
+		//(aside: rooms can link to themselves, FYI)
+		var visibleTransitions = this.data.visibleTransitions
+		var ret = []
+		for (let doorId in this.doors) {
+			let transition = visibleTransitions[doorId]
+			if (!transition) continue
 			if (transition.srcRoom !== this && ret.indexOf(transition.srcRoom) < 0) ret.push(transition.srcRoom)
 			if (transition.dstRoom !== this && ret.indexOf(transition.dstRoom) < 0) ret.push(transition.dstRoom)
 		}

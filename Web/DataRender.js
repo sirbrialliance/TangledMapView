@@ -116,7 +116,7 @@ class DataRender {
 
 		const relatedElements = room => {
 			return [
-				...room.adjacentRooms.map(x => document.getElementById(`room-${x.id}`)),
+				...room.adjacentVisibleRooms.map(x => document.getElementById(`room-${x.id}`)),
 				...Object.keys(room.doors).map(doorId => {
 					var elId = RoomLink.getId(this.data.doorTransitions[doorId])
 					return document.getElementById(elId)
@@ -200,12 +200,13 @@ class DataRender {
 		// node.filter(x => !x.isHub).call(setupDrag(false))
 		node.call(setupDrag(false))
 
-		let visibleTransitions = this.data.visibleTransitions
+		//update door colors
+		let visitedDoors = this.data.visitedDoors
 		node.each(function(room) {
 			for (let doorId in room.doors) {
 				let door = room.doors[doorId]
 				if (!door.__el) continue
-				if (visibleTransitions[doorId]) door.__el.classList.add("visitedDoor")
+				if (visitedDoors[doorId]) door.__el.classList.add("visitedDoor")
 				else door.__el.classList.remove("visitedDoor")
 			}
 		})
@@ -225,7 +226,7 @@ class DataRender {
 
 		node.selectAll("text")
 			// .text(x => x.displayText)
-			.text(x => `${x.displayText}, dist ${x.islandDistance} on ${x.island.id} with ${x.numDoors - x.numTransitionsVisited} unvisited`)
+			.text(x => `${x.displayText}, dist ${x.islandDistance} with ${x.numDoors - x.numTransitionsVisited} unvisited`)
 
 		island.simulation.on("tick", () => {
 			linkEls.attr("d", link => {
