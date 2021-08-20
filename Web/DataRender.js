@@ -95,6 +95,8 @@ class DataRender {
 					// 	this_.data.addVisit(door)
 					// 	this_.update()
 					// }
+					// debug "enter" room
+					window.app.enterRoom(room.id)
 				})
 			if (isHub) return ret.container(holder)
 			else return ret
@@ -122,6 +124,7 @@ class DataRender {
 				var els = enter.append("g")
 					.classed("mapNode", true)
 					.attr("id", x => "room-" + x.id)
+					.classed("currentRoom", room => room.id === this.data.currentPlayerRoom)
 					.each(function(room) {
 						//Set class for room (original) area
 						var area = "Unknown"

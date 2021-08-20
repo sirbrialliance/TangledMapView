@@ -57,7 +57,7 @@ svg { user-select: none; }
 .area-Crossroads > rect { stroke: #cbdbea; fill: #2f363c; }
 .area-Deepnest > rect { stroke: #c0c3d4; fill: #272c32; }
 .area-Deepnest_East > rect { stroke: #ddd9d0; fill: #35322d; }
-.area-Fungus1 > rect { stroke: #fcfcfc; fill: #3d3d3d; }
+.area-Fungus1 > rect /* Greenpath */{ stroke: #c4e9bc; fill: #333c30; }
 .area-Fungus2 > rect { stroke: #fafde8; fill: #3c3d35; }
 .area-Fungus3 > rect { stroke: #a3a88a; fill: #2d2f21; }
 .area-GG > rect, .area-Waterways > rect { stroke: #b3edee; fill: #223f3d; }
@@ -117,9 +117,9 @@ circle.door {
 }
 
 .currentRoom > rect {
-	fill: rgb(42, 98, 255);
+	/* fill: rgb(42, 98, 255); */
 	stroke-width: 3px;
-	animation: pulseStroke 2s infinite alternate;
+	animation: pulseStroke 1s infinite alternate linear;
 }
 
 @keyframes pulseStroke {

@@ -133,8 +133,8 @@ class ClusterHandler {
 			island.hub.x += 1e-16
 		}
 		island.hub = playerRoom
-		island.hub.fx = 0
-		island.hub.fy = 0
+		// island.hub.fx = 0
+		// island.hub.fy = 0
 		island.x = island.fx = 0
 		island.y = island.fy = 0
 	}
@@ -155,8 +155,8 @@ class ClusterHandler {
 		this.islands.push(island)
 
 		//pin to local origin
-		room.x = room.fx = 0
-		room.y = room.fy = 0
+		// room.x = room.fx = 0
+		// room.y = room.fy = 0
 	}
 
 	/** Marks each room with the closest island */
@@ -294,24 +294,27 @@ class ClusterHandler {
 			// .force("placement", ClusterHandler.forceParentRelative().strength(.03))
 			.force("noExplode", ClusterHandler.forcePreventExplosions())
 			.force("doorAlign", ClusterHandler.forceDoorAlignment(island.links).strengths(.5, .6))
+			.force("keepInside", ClusterHandler.forceKeepInsideCircle(island.radius))
+			.force("a1", null)
+			.force("keepCentered", d3.forceCenter().strength(.01))
+			.force("slowHub", ClusterHandler.forceResistMovement(island.hub, .01))
 			.alphaDecay(.005)
 			.alphaMin(.09)
 
-			if (this.layout === "islands") {
-				island.simulation
-				.force("keepInside", ClusterHandler.forceKeepInsideCircle(island.radius))
-				.force("playerDistance", null)
-			} else if (this.layout === "player") {
-				island.simulation
-				.force("doorAlign", ClusterHandler.forceDoorAlignment(island.links).strengths(.8, 1))
-				.force("keepInside", null)
-				// .force("playerDistance", d3.forceRadial().radius(x => x.islandDistance * 150).strength(.05))
-				// .force("playerDistance", ClusterHandler.forceMinDist().radius(x => x.islandDistance * 50).strength(.4))
-				.force("playerDistance", null)
-		} else {
+		if (this.layout === "islands") {
+			//island.simulation
+		} else if (this.layout === "player") {
 			island.simulation
-				.force("keepInside", null)
-				.force("playerDistance", null)
+				.force("doorAlign", ClusterHandler.forceDoorAlignment(island.links).strengths(.8, 1))
+				// .force("a1", d3.forceRadial().radius(x => x.islandDistance * 150).strength(.05))
+				// .force("a1", ClusterHandler.forceMinDist().radius(x => x.islandDistance * 50).strength(.4))
+		} else {
+			island.simulation.force("a1", d3.forceManyBody()
+				.strength(-60)
+				.distanceMin(30)
+				.distanceMax(600)
+			)
+			island.simulation.force("link").distance(x => (x.source.aabb.radius + x.target.aabb.radius) * 3)
 		}
 
 		if (island.simulation.alpha() < .5) island.simulation.alpha(.5).restart()
@@ -475,6 +478,14 @@ class ClusterHandler {
 		ret.strength = str => (strength = str, ret)
 		ret.radius = fn => (radiusFn = fn, ret)
 
+		return ret
+	}
+
+	static forceResistMovement(node, ratio=.3) {
+		var ret = alpha => {
+			node.vx *= ratio
+			node.vy *= ratio
+		}
 		return ret
 	}
 

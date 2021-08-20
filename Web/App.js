@@ -150,30 +150,23 @@ class App {
 		})
 	}
 
+	enterRoom(roomId) {
+		this.data.currentPlayerRoom = roomId
+		d3.select(".currentRoom").classed("currentRoom", false)
+		let el = d3.select("#room-" + roomId).classed("currentRoom", true)
+		if (this.prefs.followPlayer && el.node() && this.cluster.layout !== "player") {
+			let room = el.data()[0]
+			let x = room.x + (room.island?.x || 0)
+			let y = room.y + (room.island?.y || 0)
+			this.svg.transition().duration(800).call(this.zoom.translateTo, x, y)
+		}
+		this.dataRender.update()
+	}
+
 	handleMessage(msg) {
 		switch (msg.type) {
 			case "playerMove":
-				this.data.currentPlayerRoom = msg.newRoom
-				d3.select(".currentRoom").classed("currentRoom", false)
-				let el = d3.select("#room-" + msg.newRoom).classed("currentRoom", true)
-				if (this.prefs.followPlayer && el.node()) {
-					// let t0 = d3.zoomTransform(this.svg)
-					// let t0 = this.svg.node().__zoom
-					// let rect = el.node().getBoundingClientRect()
-					// let parentRect = document.getElementById("mainMap").getBoundingClientRect()
-					// let x = rect.left + rect.width / 2 - parentRect.left
-					// let y = rect.top + rect.height / 2 - parentRect.top
-					// x = x / t0.k
-					// y = y / t0.k
-					// let t1 = new d3.ZoomTransform(t0.k, rect.left + rect.width / 2, rect.top + rect.height / 2)
-					// this.svg.transition().duration(800).call(this.zoom.transform, t1)
-
-					let room = el.data()[0]
-					let x = room.x + (room.island?.x || 0)
-					let y = room.y + (room.island?.y || 0)
-					this.svg.transition().duration(800).call(this.zoom.translateTo, x, y)
-				}
-				this.dataRender.update()
+				this.enterRoom(msg.newRoom)
 				break
 			case "loadSave":
 				this.data.load(msg.data)

@@ -1,36 +1,48 @@
 
 
-- playtest:
-	- xx main game performance issues
-		- seems to be caused mostly by showing the map on a non-primary-GPU display
 
-	- user-centric would be very useful, plus pick a room to route
-		- maybe arrange nodes in circualr pattern radius is based on "distance" from user
-	- hands-free follow me
-	- some rooms show connected, but internally are divided (e.g. A-B and C-D okay, but A-C is never possible)
-		- Ruins1_18
-		- Fungus3_48
-		- Maybe just have an in-game shortcut to add pins/tags to rooms and let the user deal with it how they'd like
-	- hard to track rooms when they jitter on transition
-	- xx it'd be nice to know which transitinos go to waht on a room
-	- show what rooms you missed items in
-	- maybe collapse 1 entrace/1 exit rooms "straight through"? or inline them a lot?
-	- not stopping server causes hang on quit?
+- Room position stability:
+	- dampen room moevement if it didn't just join?
+	- the inward jutter some nodes experience when we add data. What's causing that?
+	- stronger realtive positions next to user's room
+	- other fixes?
+
+- let rooms wanter in bubble
+	- xx don't set room.fx/fy
+	- need to deal with special drag stuff, maybe just have a different icon in the center of the island
+	- use a force to still keep it somewhat centered
 
 
-- Button to rearrange to be user-centric
+- why does Mines_34 only appear with spoilers off?! (With room-centric on Waterways_04)
+	- might be glowing anything connected, even if transition not visible
+- also, appears one-way transitions aren't being included going outward in player-centric view
 
+- color unvisited doors
+- missed item flag/icon
+
+- where I died
+
+- color recently taken transitions/rooms
 
 - click to select,
 	- pathfinding to selected room, https://github.com/anvaka/ngraph.path looks like good lib for helping
 
 - icons for rooms:
+	- automatically mark: stations, benches, darkness, shops
 	- user-applied icons
 	- all doors used
 	- all items collected
 
-- the inward jutter some nodes experience when we add data. What's causing that?
+- times visited room?
 
+- Fungus1_* is greenpath, fix coloring
+- Special rooms:
+	- Cinematic_Stag_travel is not a real room...
+	- Fungus1_04 vs Fungus1_04_Boss weirdness?
+
+- tangled mess: nbody negative force
+
+- not stopping server causes hang on quit?
 
 
 
