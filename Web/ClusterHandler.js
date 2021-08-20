@@ -297,7 +297,7 @@ class ClusterHandler {
 			.force("keepInside", ClusterHandler.forceKeepInsideCircle(island.radius))
 			.force("a1", null)
 			.force("keepCentered", d3.forceCenter().strength(.01))
-			.force("slowHub", ClusterHandler.forceResistMovement(island.hub, .01))
+			.force("hubTweaks", ClusterHandler.forceHubTweaks(island.hub))
 			.alphaDecay(.005)
 			.alphaMin(.09)
 
@@ -481,10 +481,19 @@ class ClusterHandler {
 		return ret
 	}
 
-	static forceResistMovement(node, ratio=.3) {
+	static forceHubTweaks(hub) {
+		let dampen = .01, strength = .8 / dampen
 		var ret = alpha => {
-			node.vx *= ratio
-			node.vy *= ratio
+			var range = hub.island.radius * .2
+			var dist = Math.sqrt(hub.x * hub.x + hub.y * hub.y)
+			if (dist > range) {
+				var force = (dist - range) * strength * alpha
+				hub.vx += -force * hub.x / dist
+				hub.vy += -force * hub.y / dist
+			}
+
+			hub.vx *= dampen
+			hub.vy *= dampen
 		}
 		return ret
 	}

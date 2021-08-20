@@ -1,11 +1,5 @@
 
 
-- xx Fungus1_* is greenpath, fix coloring
-- xx Special rooms:
-	- Cinematic_Stag_travel is not a real room...
-	- Fungus1_04 vs Fungus1_04_Boss weirdness?
-
-
 
 - Room position stability:
 	- dampen room moevement if it didn't just join?
@@ -15,7 +9,7 @@
 
 - let rooms wanter in bubble
 	- xx don't set room.fx/fy
-	- need to deal with special drag stuff, maybe just have a different icon in the center of the island
+	- xx need to deal with special drag stuff, maybe just have a different icon in the center of the island
 	- use a force to still keep it somewhat centered
 
 
@@ -23,7 +17,6 @@
 	- might be glowing anything connected, even if transition not visible
 - also, appears one-way transitions aren't being included going outward in player-centric view
 
-- color unvisited doors
 - missed item flag/icon
 
 - where I died

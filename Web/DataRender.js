@@ -9,8 +9,6 @@ const roomDirections = {
 }
 
 class DataRender {
-	static debugEnable = false
-
 	constructor(cluster) {
 		this.cluster = cluster
 		this.data = cluster.data
@@ -44,8 +42,8 @@ class DataRender {
 			}
 
 			var ret = d3.drag()
-				.on("start", (event) => {
-					let room = event.subject; note(event)
+				.on("start", ev => {
+					let room = ev.subject; note(ev)
 					let [simulation, target] = getTargets(room)
 
 					console.log(
@@ -61,6 +59,21 @@ class DataRender {
 					if (isHub) target.__eventOffset = [target.x, target.y]
 					target.fx = target.x
 					target.fy = target.y
+
+
+					if (ev.sourceEvent.shiftKey) {
+						window.app.enterRoom(room.id)
+
+						// //debug reveal
+						// var doors = room.unvisitedDoors
+						// if (doors.length) {
+						// 	var door = doors[Math.floor(Math.random() * doors.length)]
+						// 	console.log("debug reveal " + door)
+						// 	this_.data.addVisit(door)
+						// 	this_.update()
+						// }
+						// debug "enter" room
+					}
 				})
 				.on("drag", (event) => {
 					let room = event.subject; note(event)
@@ -90,18 +103,6 @@ class DataRender {
 						target.fy = null
 					}
 
-					if (DataRender.debugEnable) {
-						// //debug reveal
-						// var doors = room.unvisitedDoors
-						// if (doors.length) {
-						// 	var door = doors[Math.floor(Math.random() * doors.length)]
-						// 	console.log("debug reveal " + door)
-						// 	this_.data.addVisit(door)
-						// 	this_.update()
-						// }
-						// debug "enter" room
-						window.app.enterRoom(room.id)
-					}
 				})
 			if (isHub) return ret.container(holder)
 			else return ret
@@ -195,8 +196,9 @@ class DataRender {
 				d3.selectAll(relatedElements(room)).classed("hoverRelated", false)
 			})
 
-		node.filter(x => x.isHub).call(setupDrag(true))
-		node.filter(x => !x.isHub).call(setupDrag(false))
+		// node.filter(x => x.isHub).call(setupDrag(true))
+		// node.filter(x => !x.isHub).call(setupDrag(false))
+		node.call(setupDrag(false))
 
 		let visibleTransitions = this.data.visibleTransitions
 		node.each(function(room) {

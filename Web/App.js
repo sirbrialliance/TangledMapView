@@ -118,7 +118,7 @@ class App {
 	}
 
 	async loadTestData() {
-		this.data.load(testSaveData)
+		this.data.load(testSaveData[localStorage.testSaveId || "a3"])
 	}
 
 	unloadSave() {

@@ -1,7 +1,7 @@
 :root {
 	--highlight-color: #BBB;
 }
-body, html { margin: 0; padding: 0; height: 100%; width: 100%; background: #555; }
+body, html {margin: 0;padding: 0;height: 100%;width: 100%;background: #4e4e4e;}
 
 svg { user-select: none; }
 
@@ -109,9 +109,20 @@ circle.door.visitedDoor {
 
 #controlPanel {
 	position: fixed;
-	top: 0; left: 0;
-	margin: 15px;
+	top: 0;
+	left: 0;
+	max-height: 100%;
+	overflow: auto;
+	color: white;
+	/* text-shadow: 0 0 6px black; */
+	font-family: sans-serif;
+	opacity: .5;
 }
+#controlPanel:hover {
+	opacity: 1;
+	background: #444444CC;
+}
+
 #blockingMessage {
 	position: fixed;
 	top: calc(50% - 35px); left: 0; right: 0;
@@ -146,4 +157,13 @@ button.enabled {
 	border-style: inset;
 	color: #DDD;
 	background: #000;
+}
+
+fieldset {
+	margin: 5px;
+	border-color: #BBB;
+}
+
+legend {
+
 }

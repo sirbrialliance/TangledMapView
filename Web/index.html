@@ -15,15 +15,29 @@
 	<svg width="100%" height="100%"></svg>
 	<div id="controlPanel">
 		<div id="prefs">
-			<button id="pref-spoilers" onclick="app.updatePref('spoilers', !app.prefs['spoilers'])">Show Spoilers</button><br>
-			<button id="pref-followPlayer" onclick="app.updatePref('followPlayer', !app.prefs['followPlayer'])">Follow Player</button><br>
-			<label>Layout:
-				<select id="pref-layout" onchange="app.updatePref('layout', this.value)">
-					<option value="islands">Islands</option>
-					<option value="player">Player-centric</option>
-					<option value="tangled">Tangled Mess</option>
-				</select>
-			</label>
+			<fieldset>
+				<legend>Spoilers</legend>
+				<label>Show all rooms:
+					<button id="pref-spoilers" onclick="app.updatePref('spoilers', !app.prefs['spoilers'])">On</button><br>
+				</label>
+			</fieldset>
+			<fieldset>
+				<legend>Display</legend>
+				<label>Follow player:
+					<button id="pref-followPlayer" onclick="app.updatePref('followPlayer', !app.prefs['followPlayer'])">On</button><br>
+				</label>
+				<label>Layout:
+					<select id="pref-layout" onchange="app.updatePref('layout', this.value)">
+						<option value="islands">Islands</option>
+						<option value="player">Player-centric</option>
+						<option value="tangled">Tangled Mess</option>
+					</select>
+				</label>
+			</fieldset>
+			<fieldset>
+				<legend>Search</legend>
+
+			</fieldset>
 		</div>
 		<!-- <button onclick="app.debugReveal('distant')">Debug Reval Most Distant</button> -->
 	</div>
