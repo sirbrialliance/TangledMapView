@@ -8,34 +8,16 @@
 	- other fixes?
 
 
-- why does Mines_34 only appear with spoilers off?! (With room-centric on Waterways_04)
-	- might be glowing anything connected, even if transition not visible
-	- delete data.visitedDoors["Crossroads_09[right1]"]; delete data.visitedDoors["Waterways_04[left1]"]; app.enterRoom("Deepnest_East_06")
-		hover Crossroads_09, observe Waterways_04 glow
-	- see Deepnest_01b top center transition in b4 file
-- xx also, appears one-way transitions aren't being included going outward in player-centric view
-	- see Deepnest_01b top center transition in b4 file
-
 - metadata
 	- missed item flag/icon
 	- times visited room?
 	- maybe only after you have map for the area?
-
-- reset zoom when choosing player zcenteric
 
 - where I died
 	- and automatically draw a route to shade
 
 - color door we used to enter
 - color recently taken transitions/rooms
-
-- select another room
-	- click to select
-	- or use search
-		- error if not seen
-	- highlight it
-	- pathfinding to selected room, https://github.com/anvaka/ngraph.path looks like good lib for helping
-		- or no route found
 
 - icons for rooms:
 	- automatically mark: transport (elevators, stations, tram, dram connection), benches, darkness, shops
@@ -45,13 +27,10 @@
 
 
 
-- tangled mess: nbody negative force
-
 - not stopping server causes hang on quit?
 	- maybe need to nuke websocket connections?
 
 - Ruins2_03_boss isn't real (maybe anytime it's load additive?)
-
 
 
 

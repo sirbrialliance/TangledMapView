@@ -152,6 +152,7 @@ class App {
 		this.zoom.translateTo(this.svg, 0, 0)
 
 		this._setupSearch()
+		this._updateView()
 
 		if (this.data.saveData) this._setBlockingMessage(null)
 		else this._setBlockingMessage("No save loaded")

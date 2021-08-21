@@ -350,6 +350,7 @@ class ClusterHandler {
 				if (dist2 > radius2) {
 					var dist = Math.sqrt(dist2)
 					var force = (dist - radius) * strength * alpha
+					force = Math.min(force, 500)
 					node.vx += -force * node.x / dist
 					node.vy += -force * node.y / dist
 				}
@@ -362,7 +363,7 @@ class ClusterHandler {
 		return ret
 	}
 
-	static forcePreventExplosions(maxDistance_ = 1000) {
+	static forcePreventExplosions(maxDistance_ = 3000) {
 		const maxDistance = maxDistance_
 		const maxDistance2 = maxDistance * maxDistance
 		var nodes
