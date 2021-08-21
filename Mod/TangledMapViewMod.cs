@@ -99,6 +99,7 @@ public class TangledMapViewMod : Mod {
 internal class TangledMapManager : MonoBehaviour {
 	public TangledMapViewMod mod;
 	public void Start() => StartCoroutine(StartServer());
+	public void OnDisable() => mod?.server.Stop();
 
 	private IEnumerator StartServer() {
 		//game crashes if we start server right away
