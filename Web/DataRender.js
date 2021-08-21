@@ -73,6 +73,8 @@ class DataRender {
 						// 	this_.update()
 						// }
 						// debug "enter" room
+					} else {
+						window.app.selectRoom(room.id)
 					}
 				})
 				.on("drag", (event) => {
@@ -112,14 +114,14 @@ class DataRender {
 			.data(island.links, x => x.id)
 			.join(enter => enter.append("path").lower())
 				.classed("roomLink", true)
-				.attr("id", link => link.id)
+				.attr("id", link => "link-" + link.id)
 
 		const relatedElements = room => {
 			return [
 				...room.adjacentVisibleRooms.map(x => document.getElementById(`room-${x.id}`)),
 				...Object.keys(room.doors).map(doorId => {
 					var elId = RoomLink.getId(this.data.doorTransitions[doorId])
-					return document.getElementById(elId)
+					return document.getElementById("link-" + elId)
 				}),
 			]
 		}
@@ -216,13 +218,6 @@ class DataRender {
 			.attr("y", node => -node.aabb.height / 2 * roomScale)
 			.attr("width", node => node.aabb.width * roomScale)
 			.attr("height", node => node.aabb.height * roomScale)
-			// .attr("fill", room => {
-			// 	if (room.isStartRoom) return "orange"
-			// 	else if (room.island.hub === room) return "red"
-			// 	else if (room.numTransitionsVisited === 0) return "gray"
-			// 	else if (room.isEveryTransitionVisited) return "green"
-			// 	else return "#BB0"
-			// })
 
 		node.selectAll("text")
 			// .text(x => x.displayText)
@@ -327,16 +322,55 @@ class DataRender {
 		this._islandEls.select("circle.islandBackdrop").attr("r", island => island.radius)
 
 
-		var crossIslandLinks = this._crossIslandHolder.selectAll("g.crossIslandLink")
+		var crossIslandLinks = this._crossIslandHolder.selectAll("path.crossIslandLink")
 			.data(this.cluster.crossIslandLinks, x => x.id)
 			.join(enter => {
-				var els = enter.append("g").classed("crossIslandLink", true)
-				els.append("path").classed("roomLink", true)
+				var els = enter.append("path")
+					.classed("crossIslandLink", true)
+					.classed("roomLink", true)
 				return els
 			})
-			.attr("id", link => link.id)
+			.attr("id", link => "link-" + link.id)
 
-		this._crossLinkLines = crossIslandLinks.select("path")
+		this._crossLinkLines = crossIslandLinks
+	}
+
+	highlightPath(rooms) {
+		d3.selectAll(".currentRoute")
+			.style("animation-delay", null)
+			.classed("currentRoute", false)
+			.each(function() { this.getClientRects() })//force reflow to reset any animation timing
+
+		if (!rooms) return
+
+		let pulseElements = []
+
+		for (let i = 0; i < rooms.length; ++i) {
+			let room = rooms[i]
+			let el = document.getElementById("room-" + room.id)?.querySelector(":scope > rect")
+			if (i > 0) pulseElements.push(el)
+
+			if (i < rooms.length - 1) {
+				//find a link (hopefully there's exactly one)
+				let nextRoom = rooms[i + 1]
+				for (let doorId in room.doors) {
+					//should only have forward transitions, never reverse
+					let transition = this.data.transitions[doorId]
+					if (transition && transition.dstRoom.id === nextRoom.id) {
+						let el = document.getElementById("link-" + RoomLink.getId(transition))
+						pulseElements.push(el)
+					}
+				}
+			}
+		}
+
+		for (let i = 0; i < pulseElements.length; ++i) {
+			let el = pulseElements[i]
+			if (!el) continue
+			el.classList.add("currentRoute")
+			// el.style.animationDelay = (i / pulseElements.length * 3) + "s"
+			el.style.animationDelay = (i * .2) + "s"
+		}
 	}
 
 }

@@ -21,6 +21,7 @@ class DataGen {
 	visitedDoors = {}
 
 	currentPlayerRoom = "Tutorial_01"
+	selectedRoom = null
 	startRoom = "Tutorial_01"
 
 	/** Show everything? If false just what we've visited. */
@@ -105,6 +106,20 @@ class DataGen {
 			this.rooms[roomId].finishSetup()
 		}
 	}
+
+	get visibleRoomGraph() {
+		let ret = window.createGraph()
+
+		//for (let roomId in this.rooms) ret.addNode(roomId, this.rooms[roomId])
+		let vt = this.visibleTransitions
+		for (let doorId in vt) {
+			let transition = vt[doorId]
+			ret.addLink(transition.srcRoom.id, transition.dstRoom.id, transition)
+		}
+
+		return ret
+	}
+
 
 	static parseDoorId(doorId) {
 		var parts = doorId.match(/^(\w+)\[(([a-zA-Z_]+)(\d*))\]$/);

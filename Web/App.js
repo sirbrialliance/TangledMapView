@@ -84,6 +84,41 @@ class App {
 		}
 	}
 
+	_setupSearch() {
+		var rooms = Object.values(this.data.rooms)
+		rooms.sort((a, b) => a.id < b.id ? -1 : 1)
+		rooms.unshift({id: ""})
+		var roomSearch = d3.select("#search-room")
+		roomSearch
+			.selectAll("option")
+			.data(rooms, x => x.id)
+			.join("option")
+			.attr("value", x => x.id)
+			.text(x => x.id)
+		roomSearch.node().value = ""
+		roomSearch.on("change", ev => this.selectRoom(ev.target.value))
+	}
+
+	selectRoom(roomId) {
+		this.data.selectedRoom = roomId
+		d3.select("#search-room").node().value = roomId
+		this.updateRoute()
+	}
+
+	updateRoute() {
+		let path = window.ngraphPath.aStar(this.data.visibleRoomGraph)
+
+		try {
+			var route = path.find(this.data.currentPlayerRoom, this.data.selectedRoom)
+		} catch {
+			route = []
+		}
+		route.reverse()//pathfinder gives it to us backwards
+		console.log(route)
+
+		this.dataRender.highlightPath(route.map(x => this.data.rooms[x.id]))
+	}
+
 	updatePref(k, v) {
 		let el = document.getElementById("pref-" + k)
 		if (el.tagName === "BUTTON") {
@@ -102,19 +137,29 @@ class App {
 		if (!this._ready) return
 
 		switch (k) {
-			case "layout": this.cluster.fullRebuild(); break
+			case "layout":
+				this.cluster.fullRebuild()
+				if (this.prefs.followPlayer) {
+					this.svg.transition().duration(800).call(this.zoom.translateTo, 0, 0)
+				}
+				break
 		}
-		this.dataRender.update()
+		this._updateView()
 	}
 
 	_render() {
 		this.zoom.scaleTo(this.svg, .3)
 		this.zoom.translateTo(this.svg, 0, 0)
 
-		this.dataRender.update()
+		this._setupSearch()
 
 		if (this.data.saveData) this._setBlockingMessage(null)
 		else this._setBlockingMessage("No save loaded")
+	}
+
+	_updateView() {
+		this.dataRender.update()
+		this.updateRoute()
 	}
 
 	async loadTestData() {
@@ -165,7 +210,7 @@ class App {
 			let y = room.y + (room.island?.y || 0)
 			this.svg.transition().duration(800).call(this.zoom.translateTo, x, y)
 		}
-		this.dataRender.update()
+		this._updateView()
 	}
 
 	handleMessage(msg) {
@@ -183,7 +228,7 @@ class App {
 			case "revealTransition":
 				this.data.addVisit(msg.from)
 				this.data.addVisit(msg.to)
-				this.dataRender.update()
+				this._updateView()
 				break
 			default:
 				console.warn("Unknown message: ", msg)
@@ -205,7 +250,7 @@ class App {
 			var door = doors[Math.floor(Math.random() * doors.length)]
 			console.log("debug reveal " + door)
 			this.data.addVisit(door)
-			this.dataRender.update()
+			this._updateView()
 		}
 	}
 }

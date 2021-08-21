@@ -3,7 +3,8 @@
 - Room position stability:
 	- dampen room moevement if it didn't just join?
 	- the inward jutter some nodes experience when we add data. What's causing that?
-	- stronger realtive positions next to user's room
+	- stronger relative positions next to user's room
+	- stronger relative positions on "many connection" rooms
 	- other fixes?
 
 
@@ -11,6 +12,7 @@
 	- might be glowing anything connected, even if transition not visible
 	- delete data.visitedDoors["Crossroads_09[right1]"]; delete data.visitedDoors["Waterways_04[left1]"]; app.enterRoom("Deepnest_East_06")
 		hover Crossroads_09, observe Waterways_04 glow
+	- see Deepnest_01b top center transition in b4 file
 - xx also, appears one-way transitions aren't being included going outward in player-centric view
 	- see Deepnest_01b top center transition in b4 file
 

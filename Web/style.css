@@ -21,7 +21,7 @@ svg { user-select: none; }
 .roomLeadOut.visitedDoor {
 	stroke: black;
 }
-.crossIslandLink .roomLink {
+.crossIslandLink.roomLink {
 	stroke-width: 1.5px;
 	stroke: rgba(0, 0, 0, 0.5);
 }
@@ -31,7 +31,7 @@ svg { user-select: none; }
 .crossIslandLink:nth-child(6n + 3) {stroke-dasharray: 7, 3, 16, 3;}
 .crossIslandLink:nth-child(6n + 4) {stroke-dasharray: 2, 7;}
 .crossIslandLink:nth-child(6n + 5) {stroke-dasharray: 7, 2;}
-.roomLink.hoverRelated, .hoverRelated .roomLink {
+.roomLink.hoverRelated {
 	stroke: var(--highlight-color);
 	stroke-width: 6px;
 	stroke-opacity: 1;
@@ -107,6 +107,22 @@ circle.door.visitedDoor {
 	stroke-width: 1px;
 }
 
+/* .mapNode.currentRoute:not(.currentRoom) > rect, .roomLink.currentRoute { */
+.mapNode > rect.currentRoute, .roomLink.currentRoute {
+	stroke: rgb(196, 6, 6);
+	animation-name: routePulse;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;;
+	animation-duration: 4s;
+}
+
+@keyframes routePulse {
+	0% { stroke: rgb(196, 6, 6); }
+	10% { stroke: yellow; stroke-width: 3px; }
+	20% { stroke: rgb(196, 6, 6); }
+	100% { stroke: rgb(196, 6, 6); }
+}
+
 #controlPanel {
 	position: fixed;
 	top: 0;
@@ -164,6 +180,3 @@ fieldset {
 	border-color: #BBB;
 }
 
-legend {
-
-}

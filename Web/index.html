@@ -3,6 +3,8 @@
 	<meta charset="UTF-8">
 	<title>Hollow Knight Randomized Map Visualizer</title>
 	<script src="d3.js"></script>
+	<script src="ngraph.graph.min.js"></script>
+	<script src="ngraph.path.min.js"></script>
 	<script src="testSaveData.js"></script>
 	<script src="doorData.js"></script>
 	<script src="DataRender.js"></script>
@@ -36,6 +38,15 @@
 			</fieldset>
 			<fieldset>
 				<legend>Search</legend>
+
+				<label>
+					Selected room:<br>
+					<select id="search-room"></select>
+				</label>
+				<!-- <label>
+					Find item:<br>
+					<select id="search-item"></select>
+				</label> -->
 
 			</fieldset>
 		</div>
