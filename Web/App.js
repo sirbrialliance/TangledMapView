@@ -115,7 +115,7 @@ class App {
 			route = []
 		}
 		route.reverse()//pathfinder gives it to us backwards
-		console.log(route)
+		//console.log(route)
 
 		this.dataRender.highlightPath(route.map(x => this.data.rooms[x.id]))
 	}
@@ -205,7 +205,7 @@ class App {
 		console.log("Got enterRoom to " + roomId)
 
 		//Ignore non-room scenes
-		if (!roomId || roomId.startsWith("Cinematic_") || roomId === "Fungus1_04_Boss") return
+		if (!roomId || !this.data.rooms[roomId]) return
 
 		this.data.currentPlayerRoom = roomId
 		d3.select(".currentRoom").classed("currentRoom", false)
