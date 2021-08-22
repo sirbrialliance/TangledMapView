@@ -156,8 +156,8 @@ class ClusterHandler {
 	}
 
 	_setupCluster() {
+		this.islands = []
 		if (Object.keys(this._visibleRooms).length === 0) {
-			this.islands = []
 			return
 		}
 		let graph = this.data.clusterBasedOnAll ? this.data.allRoomGraph : this.data.visibleRoomGraph
