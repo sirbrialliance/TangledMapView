@@ -2,15 +2,19 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Hollow Knight Randomized Map Visualizer</title>
+
 	<script src="d3.js"></script>
 	<script src="ngraph.graph.min.js"></script>
 	<script src="ngraph.path.min.js"></script>
+	<script src="ngraph.cw.js"></script>
+
 	<script src="testSaveData.js"></script>
 	<script src="doorData.js"></script>
 	<script src="DataRender.js"></script>
 	<script src="DataGen.js"></script>
 	<script src="ClusterHandler.js"></script>
 	<script src="App.js"></script>
+
 	<link href="style.css" rel="stylesheet">
 </head>
 <body>
@@ -22,6 +26,9 @@
 				<label>Show all rooms:
 					<button id="pref-spoilers" onclick="app.updatePref('spoilers', !app.prefs['spoilers'])">On</button><br>
 				</label>
+				<label>Cluster based on all rooms:
+					<button id="pref-clusterBasedOnAll" onclick="app.updatePref('clusterBasedOnAll', !app.prefs['clusterBasedOnAll'])">On</button><br>
+				</label>
 			</fieldset>
 			<fieldset>
 				<legend>Display</legend>
@@ -30,7 +37,8 @@
 				</label>
 				<label>Layout:
 					<select id="pref-layout" onchange="app.updatePref('layout', this.value)">
-						<option value="islands">Islands</option>
+						<option value="islandsCluster">Islands (cluster)</option>
+						<option value="islands">Islands (hub &amp; distance)</option>
 						<option value="player">Player-centric</option>
 						<option value="tangled">Tangled Mess</option>
 					</select>
@@ -40,8 +48,11 @@
 				<legend>Search</legend>
 
 				<label>
-					Selected room:<br>
-					<select id="search-room"></select>
+					<label>
+						Selected room:<br>
+						<select id="search-room"></select>
+					</label>
+					<button onclick="app.selectRoom(null)">Clear</button>
 				</label>
 				<!-- <label>
 					Find item:<br>

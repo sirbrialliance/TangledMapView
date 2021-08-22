@@ -31,10 +31,13 @@ class ClusterHandler {
 		}
 
 		if (this.layout === "islands") this._setupIslands()
+		else if (this.layout === "islandsCluster") this._setupCluster()
 		else if (this.layout === "player") this._setupPlayerIsland()
 		else this._setupUglyIsland()
 
-		this._measureDistances()
+		if (this.layout !== "islandsCluster") {
+			this._measureDistances()
+		}
 		for (let island of this.islands) this._buildIslandData(island)
 		this._buildMacroData()
 
@@ -105,7 +108,10 @@ class ClusterHandler {
 			}
 		}
 
+		this._setInitialIslandPositions()
+	}
 
+	_setInitialIslandPositions() {
 		//give islands initial positions
 		let i = -1
 		for (let island of this.islands) {
@@ -149,14 +155,75 @@ class ClusterHandler {
 		}
 	}
 
+	_setupCluster() {
+		if (Object.keys(this._visibleRooms).length === 0) {
+			this.islands = []
+			return
+		}
+		let graph = this.data.clusterBasedOnAll ? this.data.allRoomGraph : this.data.visibleRoomGraph
+
+		function mkRndIter(ids) {
+			let rng = d3.randomLcg(.59556736066)
+			ids = [...ids]//copy list
+
+			return {
+				forEach: cb => {
+					// https://stackoverflow.com/a/2450976/710714
+
+					for (let i = ids.length - 1; i >= 0; --i) {
+						let rIdx = d3.randomInt.source(rng)(i)()
+						// [ids[rIdx], ids[i]] = [ids[i], ids[rIdx]]
+						let t = ids[i]
+						ids[i] = ids[rIdx]
+						ids[rIdx] = t
+					}
+					for (let id of ids) cb(id)
+				}
+			}
+		}
+
+		let clusterer = window.createChineseWhisper(graph, null, mkRndIter)
+		for (let i = 0; i < 30; ++i) {
+			clusterer.step()
+			//console.log("iter of " + i + " rate is " + clusterer.getChangeRate())
+			if (clusterer.getChangeRate() === 0) break
+		}
+
+		let islandMap = {}
+
+		graph.forEachNode(n => {
+			islandMap[clusterer.getClass(n.id)] = n.id
+		})
+
+		console.log(islandMap)
+
+		for (let islandClass in islandMap) {
+			let aRoomId = islandMap[islandClass]
+			let island = this._addIsland(this.data.rooms[aRoomId])
+			islandMap[islandClass] = island
+		}
+
+		graph.forEachNode(n => {
+			let island = islandMap[clusterer.getClass(n.id)]
+			let room = this._visibleRooms[n.id]
+			if (!room) return //not visible
+			island.rooms.push(room)
+			room.island = island
+			room.islandDistance = 1
+		})
+
+		//prune empty islands (no visible rooms)
+		this.islands = this.islands.filter(x => x.rooms.length)
+
+		this._setInitialIslandPositions()
+	}
+
 	_addIsland(room) {
 		let island = room.island = new Island(room)
 		room.islandDistance = 0
 		this.islands.push(island)
 
-		//pin to local origin
-		// room.x = room.fx = 0
-		// room.y = room.fy = 0
+		return island
 	}
 
 	/** Marks each room with the closest island */
@@ -268,12 +335,13 @@ class ClusterHandler {
 		//initial positions (helps start expanded instead of growing out as it relaxes)
 		let i = 0
 		for (let room of island.rooms) {
-			if (typeof room.x !== "number") {
+			if (typeof room.x !== "number" || isNaN(room.x)) {
 				var angle = i / island.rooms.length * 2 * Math.PI
 				//(room coordinates are absolute, not relative, right now)
 				room.x = island.radius * Math.cos(angle) + island.x
 				room.y = island.radius * Math.sin(angle) + island.y
 			}
+			if (isNaN(room.x) || isNaN(room.y)) throw Error("bad data")
 			++i
 		}
 
@@ -282,7 +350,7 @@ class ClusterHandler {
 		island.simulation
 			.nodes(island.rooms)
 			.force("link", d3.forceLink(island.links)
-				.strength(x => x.strength)
+				.strength(x => x.strength * .2)
 				.distance(x => x.source.aabb.radius + x.target.aabb.radius)
 			)
 			.force("keepApart", d3.forceCollide().radius(x => x.aabb.radius).strength(.3))
@@ -308,7 +376,7 @@ class ClusterHandler {
 				.force("doorAlign", ClusterHandler.forceDoorAlignment(island.links).strengths(.8, 1))
 				// .force("a1", d3.forceRadial().radius(x => x.islandDistance * 150).strength(.05))
 				// .force("a1", ClusterHandler.forceMinDist().radius(x => x.islandDistance * 50).strength(.4))
-		} else {
+		} else if (this.layout === "tangled") {
 			island.simulation.force("a1", d3.forceManyBody()
 				.strength(-60)
 				.distanceMin(30)

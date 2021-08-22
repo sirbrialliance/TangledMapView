@@ -26,6 +26,7 @@ class DataGen {
 
 	/** Show everything? If false just what we've visited. */
 	showAll = false
+	clusterBasedOnAll = true
 
 	clear() {
 		this.saveData = null
@@ -110,10 +111,20 @@ class DataGen {
 	get visibleRoomGraph() {
 		let ret = window.createGraph()
 
-		//for (let roomId in this.rooms) ret.addNode(roomId, this.rooms[roomId])
 		let vt = this.visibleTransitions
 		for (let doorId in vt) {
 			let transition = vt[doorId]
+			ret.addLink(transition.srcRoom.id, transition.dstRoom.id, transition)
+		}
+
+		return ret
+	}
+
+	get allRoomGraph() {
+		let ret = window.createGraph()
+
+		for (let doorId in this.transitions) {
+			let transition = this.transitions[doorId]
 			ret.addLink(transition.srcRoom.id, transition.dstRoom.id, transition)
 		}
 

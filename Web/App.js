@@ -3,8 +3,9 @@ class App {
 	ws = null
 	prefs = {
 		spoilers: false,
+		clusterBasedOnAll: true,
 		followPlayer: true,
-		layout: "islands",
+		layout: "islandsCluster",
 	}
 
 	constructor() {
@@ -128,6 +129,7 @@ class App {
 		}
 
 		switch (k) {
+			case "clusterBasedOnAll": this.data.clusterBasedOnAll = v; break
 			case "spoilers": this.data.showAll = v; break
 			case "layout": this.cluster.layout = v; break
 		}
@@ -137,6 +139,9 @@ class App {
 		if (!this._ready) return
 
 		switch (k) {
+			case "clusterBasedOnAll":
+				this.cluster.fullRebuild()
+				break
 			case "layout":
 				this.cluster.fullRebuild()
 				if (this.prefs.followPlayer) {

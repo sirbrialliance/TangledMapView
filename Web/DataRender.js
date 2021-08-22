@@ -22,6 +22,7 @@ class DataRender {
 		this.update()
 
 		this.cluster.macroSimulation.on("tick", () => {
+			// for (let island of this.cluster.islands) if (isNaN(island.x) || isNaN(island.y)) throw new Error("bad data")
 			this._islandEls.attr("transform", d => `translate(${d.x},${d.y})`)
 
 			this._updateCrossLinks()
@@ -224,6 +225,7 @@ class DataRender {
 			.text(x => `${x.displayText}, dist ${x.islandDistance} with ${x.numDoors - x.numTransitionsVisited} unvisited`)
 
 		island.simulation.on("tick", () => {
+			// for (let room of island.rooms) if (isNaN(room.x) || isNaN(room.y)) throw new Error("bad data")
 			linkEls.attr("d", link => {
 				var pos = this._getDoorPositions(link)
 				return DataRender.buildLinkPath(link.transitionA, pos.src, pos.dst)
@@ -242,7 +244,7 @@ class DataRender {
 		let srcDir = roomDirections[srcDoor.side] || {x: 0, y: 0}
 		let dstDir = roomDirections[dstDoor.side] || {x: 0, y: 0}
 
-		return {
+		let ret = {
 			src: {
 				x: link.source.x + (srcDoor.x - link.source.aabb.cx) * roomScale + srcDir.x * roomLeadOutLen,
 				y: link.source.y + (srcDoor.y - link.source.aabb.cy) * roomScale + srcDir.y * roomLeadOutLen,
@@ -252,6 +254,10 @@ class DataRender {
 				y: link.target.y + (dstDoor.y - link.target.aabb.cy) * roomScale + dstDir.y * roomLeadOutLen,
 			},
 		}
+
+		// if (isNaN(ret.src.x) || isNaN(ret.src.y) || isNaN(ret.dst.x) || isNaN(ret.dst.y)) throw new Error("bad data")
+
+		return ret
 	}
 
 	_updateCrossLinks() {
@@ -274,6 +280,7 @@ class DataRender {
 
 	/** Returns the path bit to use with a <path d=XXYY /> */
 	static buildLinkPath(transition, src, dst) {
+		// if (isNaN(src.x) || isNaN(src.y) || isNaN(dst.x) || isNaN(dst.y)) throw Error("bad data")
 		let srcSide = transition.srcSide, dstSide = transition.dstSide
 		//Unit (or zero) vector for the direction we want to head towards (use zero influence on doors)
 		let srcDir = roomDirections[srcSide] || false, dstDir = roomDirections[dstSide] || false
