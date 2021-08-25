@@ -5,7 +5,9 @@
 	- the inward jutter some nodes experience when we add data. What's causing that?
 	- stronger relative positions next to user's room
 	- stronger relative positions on "many connection" rooms
+	- stronger/more distant repulsion to things we aren't graph close to
 	- other fixes?
+
 
 
 - metadata
@@ -24,7 +26,19 @@
 	- user-applied icons
 	- all doors used
 	- all items collected
+	- shade
+	- dream warp
 
+- kill target room when we enter it
+
+- routing 2.0:
+	- add transport to map linkage
+		- available stag stations
+		- elevators
+		- trams
+		- current dream warp
+		- dream warps to/from white palace
+	- use randomizer's logic to plan routes
 
 
 - not stopping server causes hang on quit?
