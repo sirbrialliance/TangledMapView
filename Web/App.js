@@ -207,6 +207,9 @@ class App {
 		//Ignore non-room scenes
 		if (!roomId || !this.data.rooms[roomId]) return
 
+		//Clear selection when we enter our target
+		if (this.data.selectedRoom === roomId) this.selectRoom(null)
+
 		this.data.currentPlayerRoom = roomId
 		d3.select(".currentRoom").classed("currentRoom", false)
 		let el = d3.select("#room-" + roomId).classed("currentRoom", true)

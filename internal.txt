@@ -29,7 +29,7 @@
 	- shade
 	- dream warp
 
-- kill target room when we enter it
+- xx kill target room when we enter it
 
 - routing 2.0:
 	- add transport to map linkage
