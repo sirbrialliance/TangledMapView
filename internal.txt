@@ -38,6 +38,8 @@ Unsorted
 
 - common rooms in room list by easy description (shops, black egg, grubs, mantis village, traitor's child grave, etc.)
 
+- Little "?" next to items that explain what they do?
+
 - metadata
 	- missed item flag/icon
 	- times visited room?
