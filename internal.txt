@@ -1,25 +1,48 @@
 
+-------------------------------------------------------------------------
+Next
+-------------------------------------------------------------------------
+
+- xx websocket-sharp dependency
+
+- stronger relative positions next to user's room
+- things that aren't "close" to our current room shouldn't appear close visually
+
+- color door we used to enter
+- color recently taken transitions/rooms
+
+- icons for rooms
+
+- search rooms by name
+- search rooms by icon
+
+- mark shade room
+
+- logic-based routing
+
+-------------------------------------------------------------------------
+Unsorted
+-------------------------------------------------------------------------
+
+
+- where I died
+	- and automatically draw a route to shade
 
 - Room position stability:
 	- dampen room moevement if it didn't just join?
 	- the inward jutter some nodes experience when we add data. What's causing that?
-	- stronger relative positions next to user's room
 	- stronger relative positions on "many connection" rooms
 	- stronger/more distant repulsion to things we aren't graph close to
-	- other fixes?
+	- stay close to src room if dead end
+	- align with doors instead of centers
 
-
+- common rooms in room list by easy description (shops, black egg, grubs, mantis village, traitor's child grave, etc.)
 
 - metadata
 	- missed item flag/icon
 	- times visited room?
 	- maybe only after you have map for the area?
 
-- where I died
-	- and automatically draw a route to shade
-
-- color door we used to enter
-- color recently taken transitions/rooms
 
 - icons for rooms:
 	- automatically mark: transport (elevators, stations, tram, dram connection), benches, darkness, shops
@@ -29,9 +52,8 @@
 	- shade
 	- dream warp
 
-- xx kill target room when we enter it
-
 - routing 2.0:
+	- one-way paths
 	- add transport to map linkage
 		- available stag stations
 		- elevators
@@ -40,23 +62,38 @@
 		- dream warps to/from white palace
 	- use randomizer's logic to plan routes
 
+- Spoilers: give hint
+	- next in progression or specific item, save to a log
+
+- travel history?
+
+- In-game maps reveal info
+	- Show grub locations when you have the collector's map
+	- Area maps: show all rooms for area, and transitions between rooms that we have maps for)
+	- bonus: show where you are in a room when you have wayward compass equipped
+
+- pathfind to nearest mark of given type
+
+- based on route, could show an in-game arrow pointing to the target transition in question
 
 - not stopping server causes hang on quit?
 	- maybe need to nuke websocket connections?
 
-- Ruins2_03_boss isn't real (maybe anytime it's load additive?)
+
+- put the options in a "hamburger" menu if we are on a small display device?
 
 
-
-- Room link joints try to position to center of other room instead of its corresponding door
 - Pathfinding to item in spoiler mode?
 - Select room for name and stats (num transitions visited/unvisited, items found/not found (or count of not found if no spoilers))
 - as you reveal the map, things end up in funny places, the hub isn't cenetered in island
 - Sliders to adjust room align forces/radii
 
-- zz Show real room icons
+- is falling out of the blue heart challenge room to warp considered by logic?
 
 - show one-way transitions?
+
+- works with not-full-room-rando modes
+
 - Jumbled mess
 	- tune door constraint, much stronger repulsion if inline on the wrong side, less force if off-axis at a distance
 	- try turning off "keep apart" constraints for a warmup period then turn them back on
@@ -64,7 +101,20 @@
 	- constrain islands to circles with dynamic and cross-simulation influenced radii?
 		- copy forces to keep objects inside to push on the circle radius, counteract it with forces from the inter-island interactions
 
+- "this direction dead-ends soonest" hints?
+
+
+
+-------------------------------------------------------------------------
+Wishes
+-------------------------------------------------------------------------
+
+
 
 - Bugs
 	- Doesn't work with fresh save file, have to exit and reload
 	- reload page while save data is stale gives...stale save data  - seems to happen even if I pull data directly from the randomizer mod settings
+
+- User feedback:
+	- forgot dependency for websockets
+	- one user: hit the new save file bug, and found it to kill game performance on another monitor
