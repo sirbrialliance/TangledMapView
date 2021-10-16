@@ -2,6 +2,10 @@
 
 A work in progress, a browser-based map visualizer for Hollow Knight room-randomized runs.
 
+Assuming you hav ea perfect knowledge of the base game, the goal is to have a system that perfectly remembers and cleanly presents anything you've seen in your current randomized playthrough without spoiling anything (unless you turn on a spoiler option).
+
+Because remembering where anything is with room randomization on is really hard.
+
 ## Install
 
 - This depends on [RandomizerMod3](https://github.com/homothetyhk/HollowKnight.RandomizerMod), install that.
@@ -22,6 +26,7 @@ A work in progress, a browser-based map visualizer for Hollow Knight room-random
 
 - The current room is highlighted
 - Hover a room to see connections
+- Transitions you have taken are colored black. Those you have not are white.
 - Drag to pan (right drag to pan even if you are hovering a room)
 - Scroll to zoom
 - Fiddle with the various options on the side to taste
@@ -44,8 +49,7 @@ And options:
 - **Spoilers -> Show all rooms**: Turn this on to see all rooms, be that you have visited them or not. When disabled, only places you've been to are shown.
 - **Spoilers -> Cluster based on all rooms**: When using an island-based layout, clustering/island-picking is done considering all rooms and connections. This causes rooms to stay where they would finally end up if you visited every room, but also can leak information about how some of the rooms relate to each other (hench it's a spoilers option).
 
-
-# Misc
+# Dev Misc
 
 Rebuild door metadata: `python builddata.py "path\to\hollow_knight_ripped_Data\hollow_knight\Assets\Scene"` (slow, takes hours)
 
