@@ -2,7 +2,7 @@
 
 A work in progress, a browser-based map visualizer for Hollow Knight room-randomized runs.
 
-Assuming you hav ea perfect knowledge of the base game, the goal is to have a system that perfectly remembers and cleanly presents anything you've seen in your current randomized playthrough without spoiling anything (unless you turn on a spoiler option).
+Assuming you have a perfect knowledge of the base game, the goal is to have a system that perfectly remembers and cleanly presents anything you've seen in your current randomized playthrough without spoiling anything (unless you turn on a spoiler option).
 
 Because remembering where anything is with room randomization on is really hard.
 

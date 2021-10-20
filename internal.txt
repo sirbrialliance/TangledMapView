@@ -3,26 +3,24 @@
 Next
 -------------------------------------------------------------------------
 
-- xx websocket-sharp dependency
-
-- stronger relative positions next to user's room
-- things that aren't "close" to our current room shouldn't appear close visually
-
-- color door we used to enter
-- color recently taken transitions/rooms
-
-- icons for rooms
-
-- search rooms by name
-- search rooms by icon
-
-- mark shade room
-
-- logic-based routing
+- FPS saver
+- @routing 2.0
 
 -------------------------------------------------------------------------
 Unsorted
 -------------------------------------------------------------------------
+
+- icons for rooms
+- mark shade room
+- color door we used to enter
+- color recently taken transitions/rooms
+- stronger relative positions next to user's room
+- things that aren't "close" to our current room shouldn't appear close visually
+
+- search rooms by name
+- search rooms by icon
+
+- show checks/possibleChecks save completion percentage
 
 - remove "dist X, Y unvisted"
 
@@ -124,6 +122,13 @@ Unsorted
 	- that one in the city
 	- Fungus3_44
 
+- goals
+	- checkboxes for common goals: any%, grubs, pantheon, 112%, moth evaportaion
+	- show status toward each goal (e.g. 5/46 grubs, 2/3 dreamers, boss count and which you do/don't have)
+		- maybe just always show that stuff?
+		- can show "randomizer percent" too (num checks/cleared checks)
+	- give hint button skips things that aren't in your goals
+
 -------------------------------------------------------------------------
 Wishes
 -------------------------------------------------------------------------
@@ -151,4 +156,8 @@ Wishes
 	- ** "it's lagging my computer" "this is pretty awful" - enough so I can see the framerate drop at 2x speed...
 	- Confusion from elevators not being linked
 	- somehow map stopped recording new transitions? Might be because they were reloading the map and the save data is stale bug.
-
+	- room <-> bench routing
+	- room icons
+	- room search:
+		- only show visible rooms in dropdown (but maybe we just make it easy to see in selection)
+		- name search

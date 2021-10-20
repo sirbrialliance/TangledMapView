@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using Newtonsoft.Json;
@@ -101,7 +102,13 @@ public class MapServer {
 	}
 
 	public void Stop() {
+		if (server == null) return;
+		Modding.Logger.Log("Stopping web server");
+		foreach (var sessionId in sessions.IDs.ToArray()) {
+			sessions.CloseSession(sessionId, CloseStatusCode.Away, "GameShutdown");
+		}
 		server.Stop();
+		server = null;
 	}
 }
 

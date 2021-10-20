@@ -39,6 +39,8 @@ public class TangledMapViewMod : Mod {
 		ModHooks.Instance.AfterSavegameLoadHook += OnSaveLoaded;
 	}
 
+
+
 	private void OnSaveLoaded(SaveGameData data) {
 		activeSaveData = data;
 		server.Send(PrepareSaveDataMessage());
@@ -99,6 +101,7 @@ public class TangledMapViewMod : Mod {
 internal class TangledMapManager : MonoBehaviour {
 	public TangledMapViewMod mod;
 	public void Start() => StartCoroutine(StartServer());
+	public void OnApplicationQuit() => mod?.server.Stop();
 	public void OnDisable() => mod?.server.Stop();
 
 	private IEnumerator StartServer() {
