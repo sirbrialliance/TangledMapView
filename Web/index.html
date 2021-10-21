@@ -50,6 +50,11 @@
 			<fieldset>
 				<legend>Search</legend>
 
+				<button id="framePlayer"
+					title="Center the current player room in the view."
+					onclick="app.zoomToRoom(app.data.currentPlayerRoom)"
+				>Frame Player</button><br>
+
 				<label>
 					<label>
 						Selected room:<br>
@@ -57,6 +62,12 @@
 					</label>
 					<button onclick="app.selectRoom(null)">Clear</button>
 				</label>
+				<br>
+
+				<button id="frameSelection"
+					title="Center the currently selected room in the view, if any."
+					onclick="app.zoomToRoom(app.data.selectedRoom)"
+				>Frame Selection</button><br>
 				<!-- <label>
 					Find item:<br>
 					<select id="search-item"></select>

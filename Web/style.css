@@ -182,6 +182,11 @@ button.enabled {
 	color: #DDD;
 	background: #000;
 }
+button:active {
+	border-style: solid;
+	color: rgb(255, 255, 255);
+	background: rgb(70, 70, 70);
+}
 
 fieldset {
 	margin: 5px;
