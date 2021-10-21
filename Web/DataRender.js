@@ -209,8 +209,15 @@ class DataRender {
 			for (let doorId in room.doors) {
 				let door = room.doors[doorId]
 				if (!door.__el) continue
-				if (visitedDoors[doorId]) door.__el.classList.add("visitedDoor")
-				else door.__el.classList.remove("visitedDoor")
+
+				if (!this_.data.transitions[doorId]) {
+					//one-way door
+					door.__el.classList.add("noEntry")
+				} else if (visitedDoors[doorId]) {
+					door.__el.classList.add("visitedDoor")
+				} else {
+					door.__el.classList.remove("visitedDoor")
+				}
 			}
 		})
 

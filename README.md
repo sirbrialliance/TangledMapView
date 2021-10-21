@@ -26,7 +26,7 @@ Because remembering where anything is with room randomization on is really hard.
 
 - The current room is highlighted
 - Hover a room to see connections
-- Transitions you have taken are colored black. Those you have not are white.
+- Transitions you have taken are colored black. Those you have not are white. A dotted black transition indicates one that you can never enter (e.g. falling into Dirtmouth from the above).
 - Drag to pan (right drag to pan even if you are hovering a room)
 - Scroll to zoom
 - Fiddle with the various options on the side to taste

@@ -21,6 +21,10 @@ svg { user-select: none; }
 .roomLeadOut.visitedDoor {
 	stroke: black;
 }
+.roomLeadOut.noEntry {
+	stroke: black;
+	stroke-dasharray: 0 3;
+}
 .crossIslandLink.roomLink {
 	stroke-width: 1.5px;
 	stroke: rgba(0, 0, 0, 0.5);
