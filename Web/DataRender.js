@@ -64,16 +64,6 @@ class DataRender {
 
 					if (ev.sourceEvent.shiftKey) {
 						window.app.enterRoom(room.id)
-
-						// //debug reveal
-						// var doors = room.unvisitedDoors
-						// if (doors.length) {
-						// 	var door = doors[Math.floor(Math.random() * doors.length)]
-						// 	console.log("debug reveal " + door)
-						// 	this_.data.addVisit(door)
-						// 	this_.update()
-						// }
-						// debug "enter" room
 					} else {
 						window.app.selectRoom(room.id)
 					}

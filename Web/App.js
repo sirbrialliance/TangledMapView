@@ -156,7 +156,7 @@ class App {
 	}
 
 	updateRoute() {
-		let path = window.ngraphPath.aStar(this.data.visibleRoomGraph)
+		let path = window.ngraphPath.aStar(this.data.visibleRoomGraph, {oriented: true})
 
 		try {
 			var route = path.find(this.data.currentPlayerRoom, this.data.selectedRoom)

@@ -25,12 +25,13 @@ Because remembering where anything is with room randomization on is really hard.
 ### General Usage
 
 - The current room is highlighted
+- Click a room to select it and get a route to it (but it might be wrong, it doesn't take into account your equipment or game state)
+- Shift-click a room to tell the map to act like you are in that room.
 - Hover a room to see connections
 - Transitions you have taken are colored black. Those you have not are white. A dotted black transition indicates one that you can never enter (e.g. falling into Dirtmouth from the above).
 - Drag to pan (right drag to pan even if you are hovering a room)
 - Scroll to zoom
 - Fiddle with the various options on the side to taste
-- Click a room to select it and get a route to it (but it might be wrong, it doesn't take into account your equipment or one-way transitions)
 - Drag rooms to influence how they are arranged at the moment
 
 ### Room Arrangements
