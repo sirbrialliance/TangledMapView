@@ -35,6 +35,9 @@
 				<label>Follow player:
 					<button id="pref-followPlayer" onclick="app.updatePref('followPlayer', !app.prefs['followPlayer'])">On</button><br>
 				</label>
+				<label title="Stop animating/updating when not focused. Turn on if you have performance issues with the game.">FPS Saver:
+					<button id="pref-fpsSaver" onclick="app.updatePref('fpsSaver', !app.prefs['fpsSaver'])">On</button><br>
+				</label>
 				<label>Layout:
 					<select id="pref-layout" onchange="app.updatePref('layout', this.value)">
 						<option value="islandsCluster">Islands (cluster)</option>

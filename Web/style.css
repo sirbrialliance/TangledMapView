@@ -108,15 +108,19 @@ circle.door.visitedDoor {
 }
 
 /* .mapNode.currentRoute:not(.currentRoom) > rect, .roomLink.currentRoute { */
-.mapNode > rect.currentRoute, .roomLink.currentRoute {
-	stroke: rgb(196, 6, 6);
-	animation-name: routePulse;
-	animation-iteration-count: infinite;
-	animation-timing-function: linear;;
-	animation-duration: 4s;
-}
+	.mapNode > rect.currentRoute, .roomLink.currentRoute {
+		stroke: rgb(196, 6, 6);
+		animation-name: routePulse;
+		animation-iteration-count: infinite;
+		animation-timing-function: linear;;
+		animation-duration: 4s;
+	}
 
-@keyframes routePulse {
+	body.noAnimate .mapNode > rect.currentRoute, body.noAnimate .roomLink.currentRoute {
+		animation: none;
+	}
+
+	@keyframes routePulse {
 	0% { stroke: rgb(196, 6, 6); }
 	10% { stroke: yellow; stroke-width: 3px; }
 	20% { stroke: rgb(196, 6, 6); }
@@ -153,6 +157,10 @@ circle.door.visitedDoor {
 	/* fill: rgb(42, 98, 255); */
 	stroke-width: 3px;
 	animation: pulseStroke 1s infinite alternate linear;
+}
+body.noAnimate .currentRoom > rect {
+	animation: none;
+	stroke: black;
 }
 
 @keyframes pulseStroke {

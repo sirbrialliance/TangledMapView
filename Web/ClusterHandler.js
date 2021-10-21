@@ -9,6 +9,7 @@ class ClusterHandler {
 	islands = []
 	crossIslandLinks = []
 	macroSimulation = null
+	_frameUpdateEnabled = true
 
 	constructor(data) {
 		this.data = data
@@ -50,6 +51,18 @@ class ClusterHandler {
 
 		//delete links that weren't renewed
 		this.crossIslandLinks = this.crossIslandLinks.filter(x => !x.dead)
+	}
+
+	enableFrameUpdate(enabled) {
+		if (enabled) this.macroSimulation.restart()
+		else this.macroSimulation.stop()
+
+		for (let island of this.islands) {
+			if (enabled) island.simulation.restart()
+			else island.simulation.stop()
+		}
+
+		this._frameUpdateEnabled = enabled
 	}
 
 	fullRebuild() {
@@ -385,7 +398,10 @@ class ClusterHandler {
 			island.simulation.force("link").distance(x => (x.source.aabb.radius + x.target.aabb.radius) * 3)
 		}
 
-		if (island.simulation.alpha() < .5) island.simulation.alpha(.5).restart()
+		if (island.simulation.alpha() < .5) island.simulation.alpha(.5)
+
+		if (this._frameUpdateEnabled) island.simulation.restart()
+		else island.simulation.stop()
 	}
 
 	_buildMacroData() {
@@ -405,7 +421,10 @@ class ClusterHandler {
 		// 	this.macroSimulation.force("group", null)
 		// }
 
-		if (this.macroSimulation.alpha() < .2) this.macroSimulation.alpha(.2).restart()
+		if (this.macroSimulation.alpha() < .2) this.macroSimulation.alpha(.2)
+
+		if (this._frameUpdateEnabled) this.macroSimulation.restart()
+		else this.macroSimulation.stop()
 	}
 
 	static forceKeepInsideCircle(radius) {

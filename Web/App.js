@@ -3,16 +3,39 @@ class App {
 	ws = null
 	prefs = {
 		spoilers: false,
-		clusterBasedOnAll: true,
+		clusterBasedOnAll: false,
 		followPlayer: true,
-		layout: "islandsCluster",
+		fpsSaver: true,
+		layout: "islands",
 	}
+	/** Should we render/update/animate? We can pause that to help with resource consumption. */
+	_frameUpdateEnabled = true
+	_pendingZoomTarget = null
 
 	constructor() {
 		this.data = window.data = new DataGen()
 
 		this.cluster = new ClusterHandler(this.data)
 		this.dataRender = new DataRender(this.cluster)
+
+
+		var focused = true
+		window.addEventListener("focus", () => {
+			focused = true
+			this._resumeFrameUpdate()
+		})
+		window.addEventListener("blur", () => {
+			focused = false
+			if (this.prefs["fpsSaver"]) this._pauseFrameUpdate()
+		})
+		window.addEventListener("visibilitychange", () => {
+			if (document.visibilityState === "visible") {
+				if (focused) this._resumeFrameUpdate()
+				else if (!this.prefs["fpsSaver"]) this._resumeFrameUpdate()
+			} else {//not visible
+				this._pauseFrameUpdate()
+			}
+		})
 	}
 
 	_setBlockingMessage(msg) {
@@ -100,6 +123,32 @@ class App {
 		roomSearch.on("change", ev => this.selectRoom(ev.target.value))
 	}
 
+	_resumeFrameUpdate() {
+		if (this._frameUpdateEnabled) return
+
+		this.cluster.enableFrameUpdate(true)
+		document.body.classList.remove("noAnimate")
+
+		this._frameUpdateEnabled = true
+
+		if (this._pendingZoomTarget) {
+			//the transition doesn't appear to get triggered if we call it directly, so fire from a timeout
+			setTimeout(() => {
+				this.zoomToRoom(this._pendingZoomTarget)
+				this._pendingZoomTarget = null
+			}, 0)
+		}
+	}
+
+	_pauseFrameUpdate() {
+		if (!this._frameUpdateEnabled) return
+
+		this.cluster.enableFrameUpdate(false)
+		document.body.classList.add("noAnimate")
+
+		this._frameUpdateEnabled = false
+	}
+
 	selectRoom(roomId) {
 		this.data.selectedRoom = roomId
 		d3.select("#search-room").node().value = roomId
@@ -153,7 +202,7 @@ class App {
 	}
 
 	_render() {
-		this.zoom.scaleTo(this.svg, .3)
+		this.zoom.scaleTo(this.svg, .5)
 		this.zoom.translateTo(this.svg, 0, 0)
 
 		this._setupSearch()
@@ -213,13 +262,26 @@ class App {
 		this.data.currentPlayerRoom = roomId
 		d3.select(".currentRoom").classed("currentRoom", false)
 		let el = d3.select("#room-" + roomId).classed("currentRoom", true)
-		if (this.prefs.followPlayer && el.node() && this.cluster.layout !== "player") {
-			let room = el.data()[0]
-			let x = room.x + (room.island?.x || 0)
-			let y = room.y + (room.island?.y || 0)
-			this.svg.transition().duration(800).call(this.zoom.translateTo, x, y)
+		if (this.prefs.followPlayer && this.cluster.layout !== "player") {
+			this.zoomToRoom(roomId)
 		}
 		this._updateView()
+	}
+
+	zoomToRoom(roomId) {
+		if (!roomId || !this.data.rooms[roomId]) return
+		let el = d3.select("#room-" + roomId)
+		if (!el.node()) return //not visible
+
+		if (!this._frameUpdateEnabled) {
+			this._pendingZoomTarget = roomId
+			return
+		}
+
+		let room = el.data()[0]
+		let x = room.x + (room.island?.x || 0)
+		let y = room.y + (room.island?.y || 0)
+		this.svg.transition().duration(800).call(this.zoom.translateTo, x, y)
 	}
 
 	handleMessage(msg) {
