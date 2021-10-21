@@ -52,5 +52,10 @@ And options:
 
 # Dev Misc
 
-Rebuild door metadata: `python builddata.py "path\to\hollow_knight_ripped_Data\hollow_knight\Assets\Scene"` (slow, takes hours)
+Rebuild door metadata:
+
+- You'll need the .unity scenes ([see here](https://radiance.host/apidocs/EditScene.html)) and the [RandomizerMod sources](https://github.com/homothetyhk/HollowKnight.RandomizerMod).
+- `cd Metadata`
+- Edit `config.py`
+- `python builddata.py` (slow, takes hours)
 

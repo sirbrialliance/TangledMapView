@@ -218,8 +218,8 @@ class DataRender {
 			.attr("height", node => node.aabb.height * roomScale)
 
 		node.selectAll("text")
-			// .text(x => x.displayText)
-			.text(x => `${x.displayText}, dist ${x.islandDistance} with ${x.numDoors - x.numTransitionsVisited} unvisited`)
+			.text(x => x.displayText)
+			// .text(x => `${x.displayText}, dist ${x.islandDistance} with ${x.numDoors - x.numTransitionsVisited} unvisited`)
 
 		island.simulation.on("tick", () => {
 			// for (let room of island.rooms) if (isNaN(room.x) || isNaN(room.y)) throw new Error("bad data")
