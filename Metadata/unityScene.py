@@ -1,5 +1,5 @@
 import yaml # pip install pyyaml
-import io
+import io, re
 
 import config
 
@@ -11,7 +11,7 @@ Loader.add_constructor("tag:unity3d.com,2011:104", Loader.load104)
 yaml.parser.Parser.DEFAULT_TAGS[u'!u!'] = u'tag:unity3d.com,2011:'
 
 def loadYAML(stringData):
-	data = yaml.parse(io.BytesIO(stringData))
+	data = yaml.parse(stringData)
 	i = iter(data)
 	token = next(i)
 	def consume(type = None):
@@ -108,64 +108,102 @@ def loadYAML(stringData):
 class SceneHandler:
 	def __init__(self):
 		self.roomId = None
-		self.sceneData = None
 
 	def loadFile(self, name, path):
-		print("Read " + name)
+		# print("Read " + name)
 
-		with open(path, "rb") as f:
-			fileData = f.read()
+		idMatch = re.compile(b"^\d+\s+&(\d+)")
+		nameMatch = re.compile(b"^\s+m_Name: (.*)$", re.M)
+
 		self.roomId = name
-		self.sceneData = loadYAML(fileData)
+		with open(path, "rb") as f:
+			self.rawSceneData = f.read()
 
+		binaryDoorTypeGUID = config.doorTypeGUID.encode()
+
+		#instead of parsing the whole YAML document (really slow wih our parser)
+		#do some string manipulation to get the individual sections and note things for later
+		#We'll parse things when we actually need the real data.
+		self.objects = {}
+		self.sceneObjectStrings = {}
+		self.namesToObjectIds = {}
+		self.probablyDoorObjectIds = set()
+		for segment in self.rawSceneData.split(b"--- !u!")[1:]:
+			objId = idMatch.match(segment).group(1).decode()
+			self.sceneObjectStrings[objId] = segment
+
+			if segment.startswith(b"1 "): # GameObject
+				match = nameMatch.search(segment)
+				if match is None:
+					print("No name match on", segment.decode('utf-8'))
+				name = match.group(1).decode()
+				self.namesToObjectIds[name] = objId
+
+			if segment.startswith(b"114 ") and binaryDoorTypeGUID in segment: # MonoBehaviour with GUID in it
+				self.probablyDoorObjectIds.add(objId)
+
+
+	def getObject(self, id):
+		if id in self.objects: return self.objects[id]
+
+		data = loadYAML(b"--- !u!" + self.sceneObjectStrings[id])
+		# unwrap
+		ret = self.objects[id] = data[id]
+		return ret
+
+	def getGameObject(self, object):
+		return self.getObject(object["m_GameObject"]["fileID"])
+
+	def getComponent(self, gameObject, type):
+		for comp in gameObject["m_Component"]:
+			compObj = self.getObject(comp["component"]["fileID"])
+			if compObj["type"] == type: return compObj
+		raise ValueError("Found no " + type + " on " + str(gameObject))
+
+	def getParent(self, transform):
+		father = transform["m_Father"]["fileID"]
+		if father != '0': return self.getObject(father)
+		else: return None
+
+	def getPosition(self, gameObject):
+		transform = self.getComponent(gameObject, "Transform")
+
+		# print("Pos is " + repr(transform["m_LocalPosition"]))
+		x = float(transform["m_LocalPosition"]["x"])
+		y = float(transform["m_LocalPosition"]["y"])
+		parent = self.getParent(transform)
+		while parent:
+			# print("has a parent! " + repr(transform["m_LocalPosition"]) + " scale " + repr(transform["m_LocalScale"]))
+			x *= float(parent["m_LocalScale"]["x"])
+			y *= float(parent["m_LocalScale"]["y"])
+			x += float(parent["m_LocalPosition"]["x"])
+			y += float(parent["m_LocalPosition"]["y"])
+			parent = self.getParent(parent)
+
+		return (x, y)
 
 	def addInfo(self, roomData):
 		global doorData
-		print("Scene " + self.roomId)
-		sceneData = self.sceneData
-
-		def getGameObject(object):
-			return sceneData[object["m_GameObject"]["fileID"]]
-
-		def getComponent(go, type):
-			for comp in go["m_Component"]:
-				compObj = sceneData[comp["component"]["fileID"]]
-				if compObj["type"] == type: return compObj
-			raise ValueError("Found no " + type + " on " + str(go))
-
-		def getParent(transform):
-			father = transform["m_Father"]["fileID"]
-			if father != '0': return sceneData[father]
-			else: return None
+		# print("Scene " + self.roomId)
 
 		doors = roomData["transitions"]
 
-		for id, object in sceneData.items():
+		for id in self.probablyDoorObjectIds:
+			object = self.getObject(id)
+			# print("obj is", repr(object))
 			if object["type"] != "MonoBehaviour": continue
 			if object["m_Script"]["guid"] != config.doorTypeGUID: continue
-			print("Found a door on " + id)
+			# print("Found a door on " + id)
 
-			go = getGameObject(object)
-			transform = getComponent(go, "Transform")
-
-			print("Pos is " + repr(transform["m_LocalPosition"]))
-			x = float(transform["m_LocalPosition"]["x"])
-			y = float(transform["m_LocalPosition"]["y"])
-			parent = getParent(transform)
-			while parent:
-				print("has a parent! " + repr(transform["m_LocalPosition"]) + " scale " + repr(transform["m_LocalScale"]))
-				x *= float(parent["m_LocalScale"]["x"])
-				y *= float(parent["m_LocalScale"]["y"])
-				x += float(parent["m_LocalPosition"]["x"])
-				y += float(parent["m_LocalPosition"]["y"])
-				parent = getParent(parent)
+			go = self.getGameObject(object)
+			x, y = self.getPosition(go)
 
 			targetDoorId = f"{object['targetScene']}[{object['entryPoint']}]"
 			if targetDoorId == "[]": targetDoorId = None
 			doors[go["m_Name"]] = {"x": x, "y": y, "to": targetDoorId}
 
-		if len(doors):
-			print("Add for scene " + repr(doors))
+		# if len(doors):
+		# 	print("  Doors: " + repr(doors))
 
 		# print(sceneData.entries)
 		# print(sceneData.dump_yaml())

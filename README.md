@@ -57,5 +57,5 @@ Rebuild door metadata:
 - You'll need the .unity scenes ([see here](https://radiance.host/apidocs/EditScene.html)) and the [RandomizerMod sources](https://github.com/homothetyhk/HollowKnight.RandomizerMod).
 - `cd Metadata`
 - Edit `config.py`
-- `python builddata.py` (slow, takes hours)
+- `python builddata.py`
 

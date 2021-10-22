@@ -11,6 +11,8 @@ Including:
 import sys, os, io
 import json
 
+import yaml
+
 # local modules:
 import config, unityScene, roomInfo
 
@@ -20,7 +22,7 @@ handler = unityScene.SceneHandler()
 
 def _test():
 	testScenes = [
-		# "Town",
+		"Town",
 		"Room_Bretta",
 		# "Tutorial_01",
 	]
@@ -32,7 +34,7 @@ def _test():
 	exit(0)
 
 if __name__ == "__main__":
-	_test()
+	# _test()
 	# import cProfile; cProfile.run('_test()'); exit(0)
 	# python -m cProfile -s tottime [script and args]
 	# python -m cProfile -s cumulative [script and args]
@@ -47,9 +49,16 @@ if __name__ == "__main__":
 			if file.startswith("Menu"): continue
 			if root.endswith("Bosses") and file.startswith("GG_"): continue
 
-			room = file[:-6]
-			roomData[room] = unityScene.handleSceneFile(room, root + "/" + file)
 
-	print(repr(roomData))
-	with open("roomData.json", "w") as f:
-		json.dump(roomData, f)
+			roomId = file[:-6]
+			print("Room " + roomId)
+			roomData = roomInfo.getRoom(roomId)
+
+			handler.loadFile(roomId, root + "/" + file)
+			handler.addInfo(roomData)
+
+			# print(yaml.dump(roomData))
+
+	print(repr(roomInfo.roomData))
+	with open("metaData.json", "w") as f:
+		json.dump(roomInfo.metaData, f)

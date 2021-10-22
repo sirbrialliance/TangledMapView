@@ -7,6 +7,17 @@ import config
 metaData = None
 roomData = None
 
+def getRoom(roomId):
+	if roomId not in roomData or roomData[roomId] is None:
+		data = roomData[roomId] = {}
+	else:
+		data = roomData[roomId]
+
+	if "items" not in data: data["items"] = []
+	if "transitions" not in data: data["transitions"] = {}
+
+	return data
+
 def loadData():
 	global metaData, roomData
 	with open("roomMeta.yaml", "rb") as f:
@@ -16,14 +27,14 @@ def loadData():
 
 	# print(repr(roomData))
 
-	for roomId, data in roomData.items():
-		if data is None: roomData[roomId] = data = {}
-		if "items" not in data: data["items"] = []
-		if "transitions" not in data: data["transitions"] = {}
+	# for roomId, data in roomData.items():
+	# 	if data is None: roomData[roomId] = data = {}
+	# 	if "items" not in data: data["items"] = []
+	# 	if "transitions" not in data: data["transitions"] = {}
 
 	loadRandomizerData()
 	print("Loaded room info")
-	print(repr(roomData["Room_Bretta"]))
+	# print(repr(roomData["Room_Bretta"]))
 	# print(repr(metaData))
 
 def loadRandomizerData():
@@ -42,27 +53,27 @@ def loadRandomizerData():
 			else: return None
 		else: return None
 
-	skipRooms = (
-		"Dream_Nailcollection",
-		"Room_Colosseum_Bronze", "Room_Colosseum_Silver", "Room_Colosseum_Gold",
-		"Ruins1_24_boss_defeated", #todo
-	)
+	# skipRooms = (
+	# 	"Dream_Nailcollection",
+	# 	"Room_Colosseum_Bronze", "Room_Colosseum_Silver", "Room_Colosseum_Gold",
+	# 	"Ruins1_24_boss_defeated", #todo
+	# )
 
 	for doc in items:
 		for item in doc.getElementsByTagName("item"):
 			try:
 				roomId = prop(item, "sceneName")
-				if roomId is None:
-					# not originally in the game
-					continue
-				elif roomId in skipRooms:
-					# not a room ew handle, but one that has item(s)
-					continue
-				elif roomId.endswith("_boss"):
-					# todo.
-					continue
+				# if roomId is None:
+				# 	# not originally in the game
+				# 	continue
+				# elif roomId in skipRooms:
+				# 	# not a room ew handle, but one that has item(s)
+				# 	continue
+				# elif roomId.endswith("_boss"):
+				# 	# todo.
+				# 	continue
 
-				itemList = roomData[roomId]["items"]
+				itemList = getRoom(roomId)["items"]
 
 				if prop(item, "newShiny") == "true":
 					itemInfo = {
@@ -81,17 +92,3 @@ def loadRandomizerData():
 				raise
 
 
-
-
-
-
-
-
-
-
-
-
-
-class RoomInfo():
-	def __init__(self, roomId):
-		self.roomId = roomId
