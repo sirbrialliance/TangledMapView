@@ -75,42 +75,46 @@ rooms:
   Abyss_03_b:
     name: Basin Tram (West)
     transitions:
-      - x: 32.4
+      tram:
+        x: 32.4
         y: 10.4
-        to: Abyss_03
+        to: Abyss_03[tram_west]
   Abyss_03:
     name: Basin Tram (Center)
     transitions:
-      - x: 74.5
+      tram_west:
+        x: 74.5
         y: 10.4
-        to: Abyss_03b
-      - x: 92.6
+        to: Abyss_03b[tram]
+      tram_east:
+        x: 92.6
         y: 10.4
-        to: Abyss_03_c
+        to: Abyss_03_c[tram]
   Abyss_03_c:
     name: Basin Tram (East)
-     transitions:
-      - x: 44.4
+    transitions:
+      tram:
+        x: 44.4
         y: 10.4
-        to: Abyss_03
+        to: Abyss_03[tram_east]
   Abyss_04:
     name: Ancient Basin
   Abyss_05:
     name: Old White Palace Location
     transitions:
-      - x: 129
+      dream:
+        x: 129
         y: 17.4
         to: White_Palace_03_hub
-        oneWay: true
   Abyss_06_Core:
     name: Abyss Core
   Abyss_08:
     name: Lifeblood Core
     transitions:
-      - x: 63
+      magic_circle:
+        x: 63
         y: 3
         to: Abyss_06_Core
-        oneWay: true
   Abyss_09:
     name: Abyss Lake
     splitRoom:
@@ -212,30 +216,34 @@ rooms:
   Crossroads_46:
     name: Crossroads Tram (West)
     transitions:
-      - x: 18.5
+      tram:
+        x: 18.5
         y: 10.4
-        to: Crossroads_46b
+        to: Crossroads_46b[tram]
   Crossroads_46b:
     name: Crossroads Tram (East)
     transitions:
-      - x: 33
+      tram:
+        x: 33
         y: 10.4
-        to: Crossroads_46
+        to: Crossroads_46[tram]
   Crossroads_47:
     name: Stag
   Crossroads_48:
   Crossroads_49:
     name: West Elevator (Upper)
     transitions:
-      - x: 15
+      elevator:
+        x: 15
         y: 159
-        to: Crossroads_49b
+        to: Crossroads_49b[elevator]
   Crossroads_49b:
     name: West Elevator (Lower)
     transitions:
-      - x: 15
+      elevator:
+        x: 15
         y: 5.4
-        to: Crossroads_49
+        to: Crossroads_49[elevator]
   Crossroads_50:
     name: Blue Lake
   Crossroads_52:
@@ -693,6 +701,8 @@ rooms:
     name: Dirtmouth Stag
   Room_Wyrm:
     name: Cast off Shell
+  Room_Final_Boss_Atrium:
+    name: Outside Hollow Knight
   Room_mapper:
     name: Conifer's Shop
   Room_nailmaster:
@@ -793,15 +803,17 @@ rooms:
   Ruins2_10:
     name: East Elevator (Upper)
     transitions:
-      - x: 15
+      elevator:
+        x: 15
         y: 159
-        to: Ruins2_10b
+        to: Ruins2_10b[elevator]
   Ruins2_10b:
     name: East Elevator (Lower)
     transitions:
-      - x: 15
+      elevator:
+        x: 15
         y: 10
-        to: Ruins2_10
+        to: Ruins2_10[elevator]
   Ruins2_11:
     name: The Collector
     boss: The Collector
@@ -860,10 +872,10 @@ rooms:
   White_Palace_03_hub:
     name: Hub
     transitions:
-      - x: 11.1
+      magic_circle:
+        x: 11.1
         y: 43.4
-        to: Abyss_05
-        oneWay: true
+        to: Abyss_05[dream]
   White_Palace_04:
   White_Palace_05:
     splitRoom:
@@ -881,9 +893,10 @@ rooms:
   White_Palace_11:
     name: Entrance
     transitions:
-      - x: 16.5
+      magic_circle:
+        x: 16.5
         y: 17.4
-        to: Abyss_05
+        to: Abyss_05[dream]
         oneWay: true
   White_Palace_12:
   White_Palace_13:

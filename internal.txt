@@ -56,7 +56,8 @@ Unsorted
 - routing 2.0:
 	- xx one-way paths
 	- re-parse scenes:
-		- xx include door destinations
+		- include door destinations
+			- which door on the destination?
 		- positions of all items the randomizer may fiddle with
 		- benches and locations
 		- which randomizer area a room is in

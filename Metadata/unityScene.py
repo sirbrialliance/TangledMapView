@@ -1,4 +1,5 @@
 import yaml # pip install pyyaml
+import io
 
 import config
 
@@ -9,8 +10,8 @@ class Loader(yaml.SafeLoader):
 Loader.add_constructor("tag:unity3d.com,2011:104", Loader.load104)
 yaml.parser.Parser.DEFAULT_TAGS[u'!u!'] = u'tag:unity3d.com,2011:'
 
-
-def loadYAML(data):
+def loadYAML(stringData):
+	data = yaml.parse(io.BytesIO(stringData))
 	i = iter(data)
 	token = next(i)
 	def consume(type = None):
@@ -69,7 +70,7 @@ def loadYAML(data):
 
 	keyWhitelist = set((
 		"m_Component", "m_LocalPosition", "m_Name", "m_Script", "m_GameObject", "m_Father", "m_LocalScale",
-		"targetScene",
+		"targetScene", "entryPoint",
 	))
 
 	while nextIs(yaml.DocumentStartEvent):
@@ -104,76 +105,81 @@ def loadYAML(data):
 	# print(repr(objects))
 	return objects
 
+class SceneHandler:
+	def __init__(self):
+		self.roomId = None
+		self.sceneData = None
 
-def handleScene(roomName, sceneData):
-	global doorData
-	print("Scene " + roomName)
-	ret = {
-		'room': roomName,
-	}
+	def loadFile(self, name, path):
+		print("Read " + name)
 
-	def getGameObject(object):
-		return sceneData[object["m_GameObject"]["fileID"]]
+		with open(path, "rb") as f:
+			fileData = f.read()
+		self.roomId = name
+		self.sceneData = loadYAML(fileData)
 
-	def getComponent(go, type):
-		for comp in go["m_Component"]:
-			compObj = sceneData[comp["component"]["fileID"]]
-			if compObj["type"] == type: return compObj
-		raise ValueError("Found no " + type + " on " + str(go))
 
-	def getParent(transform):
-		father = transform["m_Father"]["fileID"]
-		if father != '0': return sceneData[father]
-		else: return None
+	def addInfo(self, roomData):
+		global doorData
+		print("Scene " + self.roomId)
+		sceneData = self.sceneData
 
-	doors = {}
-	ret['doors'] = doors
+		def getGameObject(object):
+			return sceneData[object["m_GameObject"]["fileID"]]
 
-	for id, object in sceneData.items():
-		if object["type"] != "MonoBehaviour": continue
-		if object["m_Script"]["guid"] != config.doorTypeGUID: continue
-		print("Found a door on " + id)
+		def getComponent(go, type):
+			for comp in go["m_Component"]:
+				compObj = sceneData[comp["component"]["fileID"]]
+				if compObj["type"] == type: return compObj
+			raise ValueError("Found no " + type + " on " + str(go))
 
-		go = getGameObject(object)
-		transform = getComponent(go, "Transform")
+		def getParent(transform):
+			father = transform["m_Father"]["fileID"]
+			if father != '0': return sceneData[father]
+			else: return None
 
-		print("Pos is " + repr(transform["m_LocalPosition"]))
-		x = float(transform["m_LocalPosition"]["x"])
-		y = float(transform["m_LocalPosition"]["y"])
-		parent = getParent(transform)
-		while parent:
-			print("has a parent! " + repr(transform["m_LocalPosition"]) + " scale " + repr(transform["m_LocalScale"]))
-			x *= float(parent["m_LocalScale"]["x"])
-			y *= float(parent["m_LocalScale"]["y"])
-			x += float(parent["m_LocalPosition"]["x"])
-			y += float(parent["m_LocalPosition"]["y"])
-			parent = getParent(parent)
+		doors = roomData["transitions"]
 
-		doors[go["m_Name"]] = {"x": x, "y": y, "to": object["targetScene"]}
+		for id, object in sceneData.items():
+			if object["type"] != "MonoBehaviour": continue
+			if object["m_Script"]["guid"] != config.doorTypeGUID: continue
+			print("Found a door on " + id)
 
-	if len(doors):
-		print("Add for scene " + repr(doors))
+			go = getGameObject(object)
+			transform = getComponent(go, "Transform")
 
-	# print(sceneData.entries)
-	# print(sceneData.dump_yaml())
-	# doors = sceneData.filter(class_names=("MonoBehaviour",), attributes=("isADoor",))
-	# print(repr(sceneData))
+			print("Pos is " + repr(transform["m_LocalPosition"]))
+			x = float(transform["m_LocalPosition"]["x"])
+			y = float(transform["m_LocalPosition"]["y"])
+			parent = getParent(transform)
+			while parent:
+				print("has a parent! " + repr(transform["m_LocalPosition"]) + " scale " + repr(transform["m_LocalScale"]))
+				x *= float(parent["m_LocalScale"]["x"])
+				y *= float(parent["m_LocalScale"]["y"])
+				x += float(parent["m_LocalPosition"]["x"])
+				y += float(parent["m_LocalPosition"]["y"])
+				parent = getParent(parent)
 
-	# doors = []
-	# for doc in sceneData:
-	# 	print(repr(doc.value))
-	# 	if "MonoBehaviour" not in doc.value: continue
-	# 	if "isADoor" not in doc['MonoBehaviour']: continue
-	# 	doors.append(doc)
-	# if not len(doors): return
+			targetDoorId = f"{object['targetScene']}[{object['entryPoint']}]"
+			if targetDoorId == "[]": targetDoorId = None
+			doors[go["m_Name"]] = {"x": x, "y": y, "to": targetDoorId}
 
-	# print("Has " + str(len(doors)) + " doors")
+		if len(doors):
+			print("Add for scene " + repr(doors))
 
-	return ret
+		# print(sceneData.entries)
+		# print(sceneData.dump_yaml())
+		# doors = sceneData.filter(class_names=("MonoBehaviour",), attributes=("isADoor",))
+		# print(repr(sceneData))
 
-def handleSceneFile(name, path):
-	print("Read " + name)
-	with open(path, "rb") as f:
-		# for ev in yaml.parse(f): print(repr(ev))
-		sceneData = loadYAML(yaml.parse(f))
-	return handleScene(name, sceneData)
+		# doors = []
+		# for doc in sceneData:
+		# 	print(repr(doc.value))
+		# 	if "MonoBehaviour" not in doc.value: continue
+		# 	if "isADoor" not in doc['MonoBehaviour']: continue
+		# 	doors.append(doc)
+		# if not len(doors): return
+
+		# print("Has " + str(len(doors)) + " doors")
+
+

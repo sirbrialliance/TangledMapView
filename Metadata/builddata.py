@@ -12,18 +12,23 @@ import sys, os, io
 import json
 
 # local modules:
-import config, unityScene
+import config, unityScene, roomInfo
 
-roomData = {}
+roomInfo.loadData()
+
+handler = unityScene.SceneHandler()
 
 def _test():
 	testScenes = [
 		# "Town",
 		"Room_Bretta",
+		# "Tutorial_01",
 	]
 	for scene in testScenes:
-		roomData[scene] = unityScene.handleSceneFile(scene, config.scenesPath + "/" + scene + ".unity")
-	print(repr(roomData))
+		handler.loadFile(scene, config.scenesPath + "/" + scene + ".unity")
+		handler.addInfo(roomInfo.roomData[scene])
+		print(repr(roomInfo.roomData[scene]))
+	# print(repr(roomInfo.roomData))
 	exit(0)
 
 if __name__ == "__main__":
