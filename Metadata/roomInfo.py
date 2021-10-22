@@ -13,8 +13,9 @@ def getRoom(roomId):
 	else:
 		data = roomData[roomId]
 
-	if "items" not in data: data["items"] = []
+	if "items" not in data: data["items"] = {}
 	if "transitions" not in data: data["transitions"] = {}
+	if "area" not in data: data["area"] = roomId.split("_")[0]
 
 	return data
 
@@ -63,6 +64,8 @@ def loadRandomizerData():
 		for item in doc.getElementsByTagName("item"):
 			try:
 				roomId = prop(item, "sceneName")
+				if not roomId: continue
+
 				# if roomId is None:
 				# 	# not originally in the game
 				# 	continue
@@ -73,20 +76,18 @@ def loadRandomizerData():
 				# 	# todo.
 				# 	continue
 
-				itemList = getRoom(roomId)["items"]
+				items = getRoom(roomId)["items"]
 
 				if prop(item, "newShiny") == "true":
 					itemInfo = {
-						'name': item.getAttribute("name"),
 						'x': float(prop(item, 'x')),
 						'y': float(prop(item, 'y')),
 					}
 				else:
 					itemInfo = {
-						'name': item.getAttribute("name"),
 						'objectName': prop(item, 'objectName'),
 					}
-				itemList.append(itemInfo)
+				items[item.getAttribute("name")] = itemInfo
 			except:
 				print("Issue handling " + item.toxml())
 				raise

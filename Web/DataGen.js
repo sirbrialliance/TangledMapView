@@ -229,14 +229,15 @@ class RoomNode {
 
 		//Check for door positions we know about
 		var unknownDoorCount = 0
+		var roomData = window.mapData.rooms
 		for (let doorId in this.doors) {
 			let door = this.doors[doorId]
 
-			if (!window.doorData[door.roomId] || !window.doorData[door.roomId][door.doorName]) {
+			if (!roomData[door.roomId] || !roomData[door.roomId].transitions[door.doorName]) {
 				++unknownDoorCount
 				continue
 			}
-			var info = window.doorData[door.roomId][door.doorName]
+			var info = roomData[door.roomId].transitions[door.doorName]
 			this.doors[doorId].x = info.x
 			this.doors[doorId].y = -info.y
 			this._expandAABB(info.x, -info.y)

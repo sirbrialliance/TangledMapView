@@ -121,9 +121,9 @@ class SceneHandler:
 
 		binaryDoorTypeGUID = config.doorTypeGUID.encode()
 
-		#instead of parsing the whole YAML document (really slow wih our parser)
-		#do some string manipulation to get the individual sections and note things for later
-		#We'll parse things when we actually need the real data.
+		# instead of parsing the whole YAML document (really slow wih our parser)
+		# do some string manipulation to get the individual sections and note things for later
+		# We'll parse things when we actually need the real data.
 		self.objects = {}
 		self.sceneObjectStrings = {}
 		self.namesToObjectIds = {}
@@ -137,7 +137,9 @@ class SceneHandler:
 				if match is None:
 					print("No name match on", segment.decode('utf-8'))
 				name = match.group(1).decode()
-				self.namesToObjectIds[name] = objId
+
+				idsWithName = self.namesToObjectIds.setdefault(name, [])
+				idsWithName.append(objId)
 
 			if segment.startswith(b"114 ") and binaryDoorTypeGUID in segment: # MonoBehaviour with GUID in it
 				self.probablyDoorObjectIds.add(objId)
@@ -151,8 +153,8 @@ class SceneHandler:
 		ret = self.objects[id] = data[id]
 		return ret
 
-	def getGameObject(self, object):
-		return self.getObject(object["m_GameObject"]["fileID"])
+	def getGameObject(self, component):
+		return self.getObject(component["m_GameObject"]["fileID"])
 
 	def getComponent(self, gameObject, type):
 		for comp in gameObject["m_Component"]:
@@ -160,34 +162,38 @@ class SceneHandler:
 			if compObj["type"] == type: return compObj
 		raise ValueError("Found no " + type + " on " + str(gameObject))
 
-	def getParent(self, transform):
+	def getTransformParent(self, transform):
 		father = transform["m_Father"]["fileID"]
 		if father != '0': return self.getObject(father)
 		else: return None
 
+	def getGOParent(self, go):
+		transform = self.getComponent(go, "Transform")
+		parent = self.getTransformParent(transform)
+		if parent: return self.getGameObject(parent)
+		else: return None
+
 	def getPosition(self, gameObject):
+		if not gameObject: raise ValueError("missing GameObject")
 		transform = self.getComponent(gameObject, "Transform")
 
 		# print("Pos is " + repr(transform["m_LocalPosition"]))
 		x = float(transform["m_LocalPosition"]["x"])
 		y = float(transform["m_LocalPosition"]["y"])
-		parent = self.getParent(transform)
+		parent = self.getTransformParent(transform)
 		while parent:
 			# print("has a parent! " + repr(transform["m_LocalPosition"]) + " scale " + repr(transform["m_LocalScale"]))
 			x *= float(parent["m_LocalScale"]["x"])
 			y *= float(parent["m_LocalScale"]["y"])
 			x += float(parent["m_LocalPosition"]["x"])
 			y += float(parent["m_LocalPosition"]["y"])
-			parent = self.getParent(parent)
+			parent = self.getTransformParent(parent)
 
 		return (x, y)
 
 	def addInfo(self, roomData):
-		global doorData
-		# print("Scene " + self.roomId)
-
+		# Doors
 		doors = roomData["transitions"]
-
 		for id in self.probablyDoorObjectIds:
 			object = self.getObject(id)
 			# print("obj is", repr(object))
@@ -201,6 +207,53 @@ class SceneHandler:
 			targetDoorId = f"{object['targetScene']}[{object['entryPoint']}]"
 			if targetDoorId == "[]": targetDoorId = None
 			doors[go["m_Name"]] = {"x": x, "y": y, "to": targetDoorId}
+
+
+		# Item locations
+		for itemId, item in roomData["items"].items():
+			if 'x' in item: continue
+
+			# try to find the object's position
+			nameParts = item['objectName'].split("\\")
+			objName = nameParts[-1]
+			possibleIds = self.namesToObjectIds[objName]
+
+			if itemId == "Charm_Notch-Shrumal_Ogres":
+				# There's two objects that match we'll...umm...just pick the first one
+				go = self.getObject(possibleIds[0])
+			elif len(possibleIds) > 1:
+				# Find based on parent's name too
+				parentName = nameParts[-2] if len(nameParts) >= 2 else None
+				print("Object " + itemId + " targets " + item['objectName'] + " and could be", repr(possibleIds), "parent name is", parentName)
+
+				go = None
+				for id in possibleIds:
+					if go: break
+
+					candidate = self.getObject(id)
+					candidateParent = self.getGOParent(candidate)
+
+					print("Candidate parent is", repr(candidateParent))
+
+					if candidateParent is None and parentName is None:
+						go = candidate
+						break
+					elif candidateParent:
+						if candidateParent['m_Name'] == parentName:
+							go = candidate
+							break
+				if not go: raise ValueError("Could not determine which object to use")
+			else:
+				go = self.getObject(possibleIds[0])
+
+			# print("Using this for object:", repr(go))
+
+			x, y = self.getPosition(go)
+			item["x"] = x
+			item["y"] = y
+			del item['objectName']
+
+
 
 		# if len(doors):
 		# 	print("  Doors: " + repr(doors))

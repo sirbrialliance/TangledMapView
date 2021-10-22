@@ -12,32 +12,8 @@
 # put in as many quotation marks as I do with JSON.
 ---
 
-stations: # stag stations:
-  Town:
-    room: Room_Town_Stag_Station
-  Crossroads:
-    room: Crossroads_47
-  Greenpath:
-    room: Fungus1_16_alt
-  Ruins1:
-    room: Ruins1_29
-  Ruins2:
-    room: Ruins2_08
-  FungalWastes:
-    room: Fungus2_02
-  RoyalGardens:
-    room: Fungus3_40
-  RestingGrounds:
-    room: RestingGrounds_09
-  Deepnest:
-    room: Deepnest_09
-  StagNest:
-    room: Cliffs_03
-  HiddenStation:
-    room: Abyss_22
-
 areas: # By level name prefix
-  Abyss: Anchient Basin
+  Abyss: Ancient Basin
   Cliffs: Howling Cliffs
   Crossroads: Forgotten Crossroads
   Deepnest: Deepnest
@@ -142,6 +118,7 @@ rooms:
     name: Monarch Wings
   Abyss_22:
     name: Stag
+    stag: HiddenStation
   Abyss_Lighthouse_room:
     name: Inside Lighthouse
 
@@ -152,6 +129,7 @@ rooms:
     boss: Gorb
   Cliffs_03:
     name: Stag Nest
+    stag: StagNest
   Cliffs_04:
     name: Joni's Dark and Spiky Path
   Cliffs_05:
@@ -229,6 +207,7 @@ rooms:
         to: Crossroads_46[tram]
   Crossroads_47:
     name: Stag
+    stag: Crossroads
   Crossroads_48:
   Crossroads_49:
     name: West Elevator (Upper)
@@ -257,6 +236,7 @@ rooms:
   Deepnest_03:
   Deepnest_09:
     name: Stag
+    stag: Deepnest
   Deepnest_10:
     name: Distant Village
   Deepnest_14:
@@ -371,6 +351,7 @@ rooms:
     name: Outside Sheo
   Fungus1_16_alt:
     name: Stag
+    stag: Greenpath
   Fungus1_17:
   Fungus1_19:
   Fungus1_20_v02:
@@ -410,6 +391,7 @@ rooms:
     name: Queen's Station
   Fungus2_02:
     name: Queen's Station Stag
+    stag: FungalWastes
   Fungus2_03:
   Fungus2_04:
   Fungus2_05:
@@ -488,6 +470,7 @@ rooms:
   Fungus3_40:
     name: Stag & Marmu
     boss: Marmu
+    stag: RoyalGardens
   Fungus3_44:
     name: Outside Howling Wraiths
   Fungus3_48:
@@ -657,6 +640,7 @@ rooms:
     name: Spirit's Glade
   RestingGrounds_09:
     name: Stag Station
+    stag: RestingGrounds
   RestingGrounds_10:
     name: Lower Resting Grounds
   RestingGrounds_12:
@@ -699,6 +683,7 @@ rooms:
     name: Sly's Basement
   Room_Town_Stag_Station:
     name: Dirtmouth Stag
+    stag: Town
   Room_Wyrm:
     name: Cast off Shell
   Room_Final_Boss_Atrium:
@@ -770,6 +755,7 @@ rooms:
     name: City Storerooms
   Ruins1_29:
     name: City Storerooms Stag
+    stag: Ruins1
   Ruins1_30:
   Ruins1_31:
     name: Conifer
@@ -798,6 +784,7 @@ rooms:
     name: Swim Bypass
   Ruins2_08:
     name: King's Station Stag
+    stag: Ruins2
   Ruins2_09:
     name: Vessel Fragment
   Ruins2_10:
