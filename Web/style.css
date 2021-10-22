@@ -1,5 +1,42 @@
 :root {
 	--highlight-color: #BBB;
+
+	--area-Abyss-border: #6b6d6c;
+	--area-Abyss-fill: #1d1d1d;
+	--area-Cliffs-border: #6d6d6d;
+	--area-Cliffs-fill: #1c1c1c;
+	--area-Crossroads-border: #cbdbea;
+	--area-Crossroads-fill: #2f363c;
+	--area-Deepnest-border: #c0c3d4;
+	--area-Deepnest-fill: #272c32;
+	--area-Deepnest_East-border: #ddd9d0;
+	--area-Deepnest_East-fill: #35322d;
+	--area-Fungus1-border: #c4e9bc;
+	--area-Fungus1-fill: #333c30;
+	--area-Fungus2-border: #fafde8;
+	--area-Fungus2-fill: #3c3d35;
+	--area-Fungus3-border: #a3a88a;
+	--area-Fungus3-fill: #2d2f21;
+	--area-Waterways-border: #b3edee;
+	--area-Waterways-fill: #223f3d;
+	--area-Hive-border: #e7e1af;
+	--area-Hive-fill: #3c3926;
+	--area-Mines-border: #cebdd0;
+	--area-Mines-fill: #373038;
+	--area-RestingGrounds-border: #dbbfb3;
+	--area-RestingGrounds-fill: #3c2f26;
+	--area-Room-border: #b2b7dd;
+	--area-Room-fill: #232136;
+	--area-Ruins1-border: #a5a3cb;
+	--area-Ruins1-fill: #2a2d3e;
+	--area-Ruins2-border: #8c8dc5;
+	--area-Ruins2-fill: #202038;
+	--area-Town-border: #a7a6a2;
+	--area-Town-fill: #2f2f2d;
+	--area-White_Palace-border: #e4e4e4;
+	--area-White_Palace-fill: #757575;
+	--area-FogCanyon-border: #a48fa0;
+	--area-FogCanyon-fill: #1f191d;
 }
 body, html {margin: 0;padding: 0;height: 100%;width: 100%;background: #4e4e4e;}
 
@@ -59,24 +96,25 @@ svg { user-select: none; }
 	stroke-width: 3px;
 }
 
-.area-Abyss > rect { stroke: #6b6d6c; fill: #1d1d1d; }
-.area-Cliffs > rect, .area-Tutorial > rect { stroke: #6d6d6d; fill: #1c1c1c; }
-.area-Crossroads > rect { stroke: #cbdbea; fill: #2f363c; }
-.area-Deepnest > rect { stroke: #c0c3d4; fill: #272c32; }
-.area-Deepnest_East > rect { stroke: #ddd9d0; fill: #35322d; }
-.area-Fungus1 > rect /* Greenpath */{ stroke: #c4e9bc; fill: #333c30; }
-.area-Fungus2 > rect { stroke: #fafde8; fill: #3c3d35; }
-.area-Fungus3 > rect { stroke: #a3a88a; fill: #2d2f21; }
-.area-GG > rect, .area-Waterways > rect { stroke: #b3edee; fill: #223f3d; }
-.area-Grimm > rect { stroke: #e28383; fill: #421f1f; }
-.area-Hive > rect { stroke: #e7e1af; fill: #3c3926; }
-.area-Mines > rect { stroke: #cebdd0; fill: #373038; }
-.area-RestingGrounds > rect { stroke: #dbbfb3; fill: #3c2f26; }
-.area-Room > rect { stroke: #b2b7dd; fill: #232136; }
-.area-Ruins > rect, .area-Ruins1 > rect { stroke: #a5a3cb; fill: #2a2d3e; }
-.area-Ruins2 > rect { stroke: #8c8dc5; fill: #202038; }
-.area-Town > rect { stroke: #a7a6a2; fill: #2f2f2d; }
-.area-White_Palace > rect { stroke: #e4e4e4; fill: #757575; }
+
+.area-Abyss > rect { stroke: var(--area-Abyss-border); fill: var(--area-Abyss-fill); }
+.area-Cliffs > rect { stroke: var(--area-Cliffs-border); fill: var(--area-Cliffs-fill); }
+.area-Crossroads > rect { stroke: var(--area-Crossroads-border); fill: var(--area-Crossroads-fill); }
+.area-Deepnest > rect { stroke: var(--area-Deepnest-border); fill: var(--area-Deepnest-fill); }
+.area-Deepnest_East > rect { stroke: var(--area-Deepnest_East-border); fill: var(--area-Deepnest_East-fill); }
+.area-Fungus1 > rect { stroke: var(--area-Fungus1-border); fill: var(--area-Fungus1-fill); }
+.area-Fungus2 > rect { stroke: var(--area-Fungus2-border); fill: var(--area-Fungus2-fill); }
+.area-Fungus3 > rect { stroke: var(--area-Fungus3-border); fill: var(--area-Fungus3-fill); }
+.area-Waterways > rect { stroke: var(--area-Waterways-border); fill: var(--area-Waterways-fill); }
+.area-Hive > rect { stroke: var(--area-Hive-border); fill: var(--area-Hive-fill); }
+.area-Mines > rect { stroke: var(--area-Mines-border); fill: var(--area-Mines-fill); }
+.area-RestingGrounds > rect { stroke: var(--area-RestingGrounds-border); fill: var(--area-RestingGrounds-fill); }
+.area-Room > rect { stroke: var(--area-Room-border); fill: var(--area-Room-fill); }
+.area-Ruins1 > rect { stroke: var(--area-Ruins1-border); fill: var(--area-Ruins1-fill); }
+.area-Ruins2 > rect { stroke: var(--area-Ruins2-border); fill: var(--area-Ruins2-fill); }
+.area-Town > rect { stroke: var(--area-Town-border); fill: var(--area-Town-fill); }
+.area-White_Palace > rect { stroke: var(--area-White_Palace-border); fill: var(--area-White_Palace-fill); }
+.area-FogCanyon > rect { stroke: var(--area-FogCanyon-border); fill: var(--area-FogCanyon-fill); }
 
 
 circle.door {
@@ -89,21 +127,6 @@ circle.door.visitedDoor {
 	fill: black;
 }
 
-
-.mapNodeLabel {
-	display: none;
-	opacity: 1;
-	font-size: 11px;
-	stroke: none;
-	font-family: sans-serif;
-	fill: white;
-	transform: translate(0, .5em);
-	text-anchor: middle;
-}
-.mapNodeLabel.shadow {stroke: rgba(0, 0, 0, 0.548); stroke-width: 3px;}
-.mapNode:hover .mapNodeLabel {
-	display: block;
-}
 
 .islandBackdrop {
 	fill: none;
@@ -156,6 +179,58 @@ circle.door.visitedDoor {
 	color: white;
 	text-shadow: 0px 3px 5px black;
 }
+
+#roomInfo {
+	display: none;
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	color: white;
+	text-shadow: 2px 2px 0 black;
+	font-family: sans-serif;
+	text-align: center;
+	font-size: 20px;
+	background: rgba(0, 0, 0, .5);
+	border-top: 1px solid #BBB;
+	padding: 15px;
+}
+
+#roomInfo .areaName {
+	display: inline-block;
+	border-width: 1px;
+	border-style: solid;
+	border-radius: 5px;
+	padding: 2px 4px;
+	text-shadow: none;
+	margin: 0 4px;
+}
+
+#roomInfo .roomId {
+	display: inline-block;
+	opacity: .5;
+	margin: 0 5px;
+}
+
+[data-area=Abyss] { border-color: var(--area-Abyss-border); background-color: var(--area-Abyss-fill); color: var(--area-Abyss-border);}
+[data-area=Cliffs] { border-color: var(--area-Cliffs-border); background-color: var(--area-Cliffs-fill); color: var(--area-Cliffs-border);}
+[data-area=Crossroads] { border-color: var(--area-Crossroads-border); background-color: var(--area-Crossroads-fill); color: var(--area-Crossroads-border);}
+[data-area=Deepnest] { border-color: var(--area-Deepnest-border); background-color: var(--area-Deepnest-fill); color: var(--area-Deepnest-border);}
+[data-area=Deepnest_East] { border-color: var(--area-Deepnest_East-border); background-color: var(--area-Deepnest_East-fill); color: var(--area-Deepnest_East-border);}
+[data-area=FogCanyon] { border-color: var(--area-FogCanyon-border); background-color: var(--area-FogCanyon-fill); color: var(--area-FogCanyon-border);}
+[data-area=Fungus1] { border-color: var(--area-Fungus1-border); background-color: var(--area-Fungus1-fill); color: var(--area-Fungus1-border);}
+[data-area=Fungus2] { border-color: var(--area-Fungus2-border); background-color: var(--area-Fungus2-fill); color: var(--area-Fungus2-border);}
+[data-area=Fungus3] { border-color: var(--area-Fungus3-border); background-color: var(--area-Fungus3-fill); color: var(--area-Fungus3-border);}
+[data-area=Hive] { border-color: var(--area-Hive-border); background-color: var(--area-Hive-fill); color: var(--area-Hive-border);}
+[data-area=Mines] { border-color: var(--area-Mines-border); background-color: var(--area-Mines-fill); color: var(--area-Mines-border);}
+[data-area=RestingGrounds] { border-color: var(--area-RestingGrounds-border); background-color: var(--area-RestingGrounds-fill); color: var(--area-RestingGrounds-border);}
+[data-area=Room] { border-color: var(--area-Room-border); background-color: var(--area-Room-fill); color: var(--area-Room-border);}
+[data-area=Ruins1] { border-color: var(--area-Ruins1-border); background-color: var(--area-Ruins1-fill); color: var(--area-Ruins1-border);}
+[data-area=Ruins2] { border-color: var(--area-Ruins2-border); background-color: var(--area-Ruins2-fill); color: var(--area-Ruins2-border);}
+[data-area=Town] { border-color: var(--area-Town-border); background-color: var(--area-Town-fill); color: var(--area-Town-border);}
+[data-area=Waterways] { border-color: var(--area-Waterways-border); background-color: var(--area-Waterways-fill); color: var(--area-Waterways-border);}
+[data-area=White_Palace] { border-color: var(--area-White_Palace-border); background-color: var(--area-White_Palace-fill); color: var(--area-White_Palace-border);}
+
 
 .currentRoom > rect {
 	/* fill: rgb(42, 98, 255); */

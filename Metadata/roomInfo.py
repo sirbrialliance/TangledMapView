@@ -15,7 +15,12 @@ def getRoom(roomId):
 
 	if "items" not in data: data["items"] = {}
 	if "transitions" not in data: data["transitions"] = {}
-	if "area" not in data: data["area"] = roomId.split("_")[0]
+	if "area" not in data:
+		# usually the name before the first underscore, unless the area has an underscore in it or has none
+		if roomId.startswith("White_Palace"): data["area"] = "White_Palace"
+		elif roomId.startswith("Deepnest_East"): data["area"] = "Deepnest_East"
+		elif roomId == "Town": data["area"] = "Town"
+		else: data["area"] = roomId.split("_")[0]
 
 	return data
 
@@ -54,12 +59,13 @@ def loadRandomizerData():
 			else: return None
 		else: return None
 
-	# skipRooms = (
-	# 	"Dream_Nailcollection",
-	# 	"Room_Colosseum_Bronze", "Room_Colosseum_Silver", "Room_Colosseum_Gold",
-	# 	"Ruins1_24_boss_defeated", #todo
-	# )
+	# Note what area the randomizer considers each room to be in
+	for transition in areas.getElementsByTagName("transition"):
+		roomId = prop(transition, "sceneName")
+		room = getRoom(roomId)
+		room["randomizerArea"] = prop(transition, "areaName")
 
+	# note what items/checks are in each room
 	for doc in items:
 		for item in doc.getElementsByTagName("item"):
 			try:

@@ -32,6 +32,8 @@ class DataRender {
 	_renderIsland(island, holder) {
 		var this_ = this
 
+		var roomInfoEl = document.getElementById("roomInfo")
+
 		function setupDrag(isHub) {
 			function note(ev) {}// console.log(ev.active, ev.subject, simulation.alpha(), simulation.alphaTarget(), simulation.alphaMin())}
 
@@ -126,12 +128,7 @@ class DataRender {
 					.classed("currentRoom", room => room.id === this.data.currentPlayerRoom)
 					.each(function(room) {
 						//Set class for room (original) area
-						var area = "Unknown"
-						if (room.id.startsWith("Deepnest_East")) area = "Deepnest_East"
-						else if (room.id.startsWith("White_Palace")) area = "White_Palace"
-						else if (room.id === "Town") area = "Town"
-						else area = room.id.substring(0, room.id.indexOf("_"))
-
+						var area = window.mapData.rooms[room.id].area || "Unknown"
 						this.classList.add("area-" + area)
 					})
 				els.append("rect")
@@ -177,16 +174,22 @@ class DataRender {
 						.attr("cy", d => d.y * roomScale - room.aabb.cy * roomScale)
 						.each(function(door) { door.__el = this })
 				})
-				els.append("text")
-					.classed("mapNodeLabel shadow", true)
-					.clone(true).classed("shadow", false)
 				return els
 			})
 			.on("pointerover", (ev, room) => {
 				d3.selectAll(relatedElements(room)).classed("hoverRelated", true)
+
+				let roomInfo = window.mapData.rooms[room.id]
+				roomInfoEl.style.display = "block"
+				let areaEl = roomInfoEl.querySelector(".areaName")
+				areaEl.setAttribute("data-area", roomInfo.area)
+				areaEl.textContent =  window.mapData.areas[roomInfo.area]
+				roomInfoEl.querySelector(".roomName").textContent = roomInfo.name
+				roomInfoEl.querySelector(".roomId").textContent = room.id
 			})
 			.on("pointerleave", (ev, room) => {
 				d3.selectAll(relatedElements(room)).classed("hoverRelated", false)
+				roomInfoEl.style.display = ""
 			})
 
 		// node.filter(x => x.isHub).call(setupDrag(true))
@@ -216,10 +219,6 @@ class DataRender {
 			.attr("y", node => -node.aabb.height / 2 * roomScale)
 			.attr("width", node => node.aabb.width * roomScale)
 			.attr("height", node => node.aabb.height * roomScale)
-
-		node.selectAll("text")
-			.text(x => x.displayText)
-			// .text(x => `${x.displayText}, dist ${x.islandDistance} with ${x.numDoors - x.numTransitionsVisited} unvisited`)
 
 		island.simulation.on("tick", () => {
 			// for (let room of island.rooms) if (isNaN(room.x) || isNaN(room.y)) throw new Error("bad data")

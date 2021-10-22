@@ -26,7 +26,8 @@
 				<label>Show all rooms:
 					<button id="pref-spoilers" onclick="app.updatePref('spoilers', !app.prefs['spoilers'])">On</button><br>
 				</label>
-				<label>Cluster based on all rooms:
+				<label title="Allow layouts to use all data to determine grouping. This should reduce how often a room switches groups, but can leak hints about room topology.">
+					Cluster based on all rooms:
 					<button id="pref-clusterBasedOnAll" onclick="app.updatePref('clusterBasedOnAll', !app.prefs['clusterBasedOnAll'])">On</button><br>
 				</label>
 			</fieldset>
@@ -78,6 +79,11 @@
 		<!-- <button onclick="app.debugReveal('distant')">Debug Reval Most Distant</button> -->
 	</div>
 	<div id="blockingMessage"></div>
+	<div id="roomInfo">
+		<span class="areaName"></span>
+		<span class="roomName"></span>
+		<span class="roomId"></span>
+	</div>
 </body>
 <script>
 	var app = new App()

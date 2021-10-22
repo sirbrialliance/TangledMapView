@@ -18,25 +18,28 @@ areas: # By level name prefix
   Crossroads: Forgotten Crossroads
   Deepnest: Deepnest
   Deepnest_East: Kingdom's Edge
+  # Dream: Dream
+  FogCanyon: Fog Canyon # fake prefix, all the Fog Canyon rooms start with "Fungus3_" so we reassign the area
   Fungus1: Greenpath
   Fungus2: Fungal Wastes
   Fungus3: Queen's Gardens
-  FogCanyon: Fog Canyon # fake prefix, all the Fog Canyon rooms start with "Fungus3_" so we reassign the area
-  GG: Godhome # GG = God's Glory, BTW
-  Grimm: Grimm
+  # GG: Godhome # GG = God's Glory, BTW
+  # Grimm: mapped to Dirtmouth (Town)
   Hive: The Hive
   Mines: Crystal Peak
   RestingGrounds: Resting Grounds
   Room: Room # assorted
-  Ruins: City of Tears
+  Ruins1: City of Tears
   Ruins2: City of Tears
   Town: Dirtmouth
+  Waterways: Royal Waterways
   White_Palace: White Palace
 
 rooms:
   # Normally we don't want Cinematic_* scenes, but we use this one as a hub for routing.
   Cinematic_Stag_travel:
     name: Stag Travel
+    area: Room
 
   Abyss_01:
     name: Broken Elevator Shaft
@@ -535,16 +538,17 @@ rooms:
   GG_Lurker:
     name: Pale Lurker
     boss: Pale Lurker
+    area: Deepnest_East
   # GG_Mage_Knight:
   #   name:
   # GG_Mage_Knight_V:
   #   name:
   GG_Pipeway:
     name: Flukemungas
-  GG_Unn:
-    name:
+    area: Waterways
   GG_Waterways:
     name: Junk Pit
+    area: Waterways
   # GG_Workshop:
   #   name:
   # GG_Wyrm:
@@ -552,9 +556,11 @@ rooms:
 
   Grimm_Divine:
     name: Divine
+    area: Town
   Grimm_Main_Tent:
     name: Grimm
     boss: Grimm, Nightmare King Grimm
+    area: Town
 
   Hive_01:
     splitRoom:
@@ -810,14 +816,19 @@ rooms:
     name: Lurien's Tower
   Ruins_Bathhouse:
     name: Bathhouse
+    area: Ruins2
   Ruins_Elevator:
     name: Elevator to Bathhouse
+    area: Ruins2
   Ruins_House_01:
-    name: Great Husk Sentry Miniboss for Grub
+    name: Husk Sentry Miniboss Room
+    area: Ruins2
   Ruins_House_02:
     name: Gorgeous Husk
+    area: Ruins2
   Ruins_House_03:
     name: Eternal Emilitia
+    area: Ruins2
 
   Town:
     name: Dirtmouth
