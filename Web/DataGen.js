@@ -195,6 +195,7 @@ class DataGen {
 
 class RoomNode {
 	doors = {}//map of door id => {x, y, ...parseDoorId()} that leave this room
+	items = {}//map of item id => item info or items in this room
 	numDoors = 0
 	island = null
 	islandDistance = 0//0 = hub, 1 = adjacent to hub, 2 = adjacent to that, etc.
@@ -229,15 +230,15 @@ class RoomNode {
 
 		//Check for door positions we know about
 		var unknownDoorCount = 0
-		var roomData = window.mapData.rooms
+		var allRoomData = window.mapData.rooms
 		for (let doorId in this.doors) {
 			let door = this.doors[doorId]
 
-			if (!roomData[door.roomId] || !roomData[door.roomId].transitions[door.doorName]) {
+			if (!allRoomData[door.roomId] || !allRoomData[door.roomId].transitions[door.doorName]) {
 				++unknownDoorCount
 				continue
 			}
-			var info = roomData[door.roomId].transitions[door.doorName]
+			var info = allRoomData[door.roomId].transitions[door.doorName]
 			this.doors[doorId].x = info.x
 			this.doors[doorId].y = -info.y
 			this._expandAABB(info.x, -info.y)
@@ -255,6 +256,15 @@ class RoomNode {
 				this._expandAABB(-defaultSize2 * vCount, NaN)
 				this._expandAABB(defaultSize2 * vCount, NaN)
 			}
+		}
+
+		//include items
+		this.items = {...allRoomData[this.id].items}
+		for (let itemId in this.items) {
+			let item = this.items[itemId]
+			item.y *= -1
+			item.id = itemId
+			this._expandAABB(item.x, item.y)
 		}
 
 		this._calcAABBData()

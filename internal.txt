@@ -56,19 +56,26 @@ Unsorted
 - routing 2.0:
 	- xx one-way paths
 	- re-parse scenes:
-		- include door destinations
-			- which door on the destination?
-		- positions of all items the randomizer may fiddle with
-		- benches and locations
-		- which randomizer area a room is in
+		- xx include door destinations
+			- xx which door on the destination?
+		- xx positions of all items the randomizer may fiddle with
+		- xx which randomizer area a room is in
 
+		- benches and locations
 		- some doors don't have directly set destinations, just add hardcoded overrides
+
+	- render map w/out randomization
+
+	- show check instead of rotated square when you get an item?
+
 	- add transport to map linkage
 		- available stag stations
 		- elevators
 		- trams
 		- current dream warp
 		- dream warps to/from white palace
+	- how to handle "Boss_Essence-Marmu" and friends that have their item in a different scene in the same room?
+		- maybe just detect and shunt read data to roomId?
 	- use randomizer's logic to plan routes
 	- option
 		- to do benchwarp from current pos

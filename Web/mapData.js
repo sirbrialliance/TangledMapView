@@ -25,18 +25,30 @@ window.mapData = {
 			"area": "Abyss",
 			"items": {
 				"Geo_Rock-Broken_Elevator_1": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 6.074166,
 					"y": 53.81757
 				},
 				"Geo_Rock-Broken_Elevator_2": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 24.89054,
 					"y": 91.70493
 				},
 				"Geo_Rock-Broken_Elevator_3": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 26.66,
 					"y": 98.61
 				},
 				"Whispering_Root-Waterways": {
+					"randAction": "Essence",
+					"randPool": "Root",
+					"randType": "Trinket",
 					"x": 37.9,
 					"y": 10.4
 				}
@@ -86,22 +98,37 @@ window.mapData = {
 			"area": "Abyss",
 			"items": {
 				"Geo_Rock-Broken_Bridge_Lower": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 41.09491,
 					"y": 4.926064
 				},
 				"Geo_Rock-Broken_Bridge_Lower_Dupe": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 43.53579,
 					"y": 4.990069
 				},
 				"Geo_Rock-Broken_Bridge_Upper": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 65.07578,
 					"y": 34.83622
 				},
 				"Grimmkin_Flame-Ancient_Basin": {
+					"randAction": "Int",
+					"randPool": "Flame",
+					"randType": "Flame",
 					"x": 100.37,
 					"y": 17.94
 				},
 				"Wanderer's_Journal-Ancient_Basin": {
+					"randAction": "WanderersJournal",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 160.6613,
 					"y": 5.26
 				}
@@ -226,14 +253,23 @@ window.mapData = {
 			"area": "Abyss",
 			"items": {
 				"Ancient_Basin_Map": {
+					"randAction": "Map",
+					"randPool": "Map",
+					"randType": "Trinket",
 					"x": 68.3,
 					"y": 41.4
 				},
 				"Soul_Totem-Basin": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 5.597937,
 					"y": 53.26731
 				},
 				"Vessel_Fragment-Basin": {
+					"randAction": "VesselFragment",
+					"randPool": "Vessel",
+					"randType": "Trinket",
 					"x": 64.32000000000001,
 					"y": 61.90992
 				}
@@ -300,18 +336,30 @@ window.mapData = {
 			"area": "Abyss",
 			"items": {
 				"Geo_Rock-Abyss_1": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 76.03484,
 					"y": 184.8635
 				},
 				"Geo_Rock-Abyss_2": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 63.74,
 					"y": 170.09
 				},
 				"Geo_Rock-Abyss_3": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 42.01,
 					"y": 76.26
 				},
 				"Lore_Tablet-Ancient_Basin": {
+					"randAction": "Lore",
+					"randPool": "Lore",
+					"randType": "Lore",
 					"x": 60.8,
 					"y": 232.6
 				}
@@ -360,10 +408,16 @@ window.mapData = {
 			"area": "Abyss",
 			"items": {
 				"Arcane_Egg-Lifeblood_Core": {
+					"randAction": "ArcaneEgg",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 81.09,
 					"y": 4.47
 				},
 				"Lifeblood_Core": {
+					"randAction": "Charm",
+					"randPool": "Charm",
+					"randType": "Charm",
 					"x": 78.61,
 					"y": 24.10472
 				}
@@ -423,18 +477,30 @@ window.mapData = {
 			"area": "Abyss",
 			"items": {
 				"Arcane_Egg-Shade_Cloak": {
+					"randAction": "ArcaneEgg",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 70.01193,
 					"y": 9.092091
 				},
 				"Left_Shade_Cloak": {
+					"randAction": "Additive",
+					"randPool": "SplitCloak",
+					"randType": "Big",
 					"x": 102.13,
 					"y": 17.07
 				},
 				"Right_Shade_Cloak": {
+					"randAction": "Additive",
+					"randPool": "SplitCloak",
+					"randType": "Big",
 					"x": 102.13,
 					"y": 17.07
 				},
 				"Shade_Cloak": {
+					"randAction": "Additive",
+					"randPool": "Skill",
+					"randType": "Big",
 					"x": 102.13,
 					"y": 17.07
 				}
@@ -457,6 +523,9 @@ window.mapData = {
 			"area": "Abyss",
 			"items": {
 				"Abyss_Shriek": {
+					"randAction": "Additive",
+					"randPool": "Skill",
+					"randType": "Spell",
 					"x": 47.48,
 					"y": 9.24
 				}
@@ -474,10 +543,16 @@ window.mapData = {
 			"area": "Abyss",
 			"items": {
 				"Arcane_Egg-Birthplace": {
+					"randAction": "ArcaneEgg",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 16.91,
 					"y": 4.26
 				},
 				"Void_Heart": {
+					"randAction": "Kingsoul",
+					"randPool": "Charm",
+					"randType": "Big",
 					"x": 141.0,
 					"y": 11.0
 				}
@@ -516,10 +591,16 @@ window.mapData = {
 			"area": "Abyss",
 			"items": {
 				"Grub-Basin_Requires_Dive": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 152.45,
 					"y": 4.52
 				},
 				"Pale_Ore-Basin": {
+					"randAction": "Int",
+					"randPool": "Ore",
+					"randType": "Trinket",
 					"x": 14.82673,
 					"y": 15.18
 				}
@@ -537,6 +618,9 @@ window.mapData = {
 			"area": "Abyss",
 			"items": {
 				"Geo_Rock-Basin_Tunnel": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 58.12402,
 					"y": 12.63
 				}
@@ -560,18 +644,30 @@ window.mapData = {
 			"boss": "Broken Vessel, Lost Kin",
 			"items": {
 				"Boss_Essence-Lost_Kin": {
+					"randAction": "Essence",
+					"randPool": "Essence_Boss",
+					"randType": "Trinket",
 					"x": 23.25784,
 					"y": 28.189
 				},
 				"Geo_Rock-Basin_Before_Broken_Vessel": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 117.73,
 					"y": 9.925488
 				},
 				"Geo_Rock-Basin_Grub": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 143.6396,
 					"y": 69.91467
 				},
 				"Grub-Basin_Requires_Wings": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 82.51846,
 					"y": 85.47667
 				}
@@ -609,6 +705,9 @@ window.mapData = {
 			"area": "Abyss",
 			"items": {
 				"Simple_Key-Basin": {
+					"randAction": "Int",
+					"randPool": "Key",
+					"randType": "Trinket",
 					"x": 57.04813,
 					"y": 8.194823
 				}
@@ -631,6 +730,9 @@ window.mapData = {
 			"area": "Abyss",
 			"items": {
 				"Monarch_Wings": {
+					"randAction": null,
+					"randPool": "Skill",
+					"randType": "Big",
 					"x": 66.31,
 					"y": 232.8
 				}
@@ -648,6 +750,9 @@ window.mapData = {
 			"area": "Abyss",
 			"items": {
 				"Hidden_Station_Stag": {
+					"randAction": "Stag",
+					"randPool": "Stag",
+					"randType": "Trinket",
 					"x": 28.0,
 					"y": 6.4
 				}
@@ -687,42 +792,72 @@ window.mapData = {
 			"area": "Cliffs",
 			"items": {
 				"Geo_Rock-Cliffs_Main_1": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 44.35408,
 					"y": 108.5035
 				},
 				"Geo_Rock-Cliffs_Main_2": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 50.76541,
 					"y": 68.01698
 				},
 				"Geo_Rock-Cliffs_Main_3": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 124.2772,
 					"y": 72.82372
 				},
 				"Geo_Rock-Cliffs_Main_4": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 74.04561,
 					"y": 36.77761
 				},
 				"Howling_Cliffs_Map": {
+					"randAction": "Map",
+					"randPool": "Map",
+					"randType": "Trinket",
 					"x": 125.8,
 					"y": 91.6
 				},
 				"King's_Idol-Cliffs": {
+					"randAction": "KingsIdol",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 36.15,
 					"y": 3.23
 				},
 				"Lore_Tablet-Howling_Cliffs": {
+					"randAction": "Lore",
+					"randPool": "Lore",
+					"randType": "Lore",
 					"x": 127.3,
 					"y": 57.7
 				},
 				"Soul_Totem-Cliffs_Main": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 115.73,
 					"y": 23.5
 				},
 				"Wanderer's_Journal-Cliffs": {
+					"randAction": "WanderersJournal",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 120.42,
 					"y": 30.31
 				},
 				"Whispering_Root-Howling_Cliffs": {
+					"randAction": "Essence",
+					"randPool": "Root",
+					"randType": "Trinket",
 					"x": 83.7,
 					"y": 15.3
 				}
@@ -756,14 +891,23 @@ window.mapData = {
 			"boss": "Gorb",
 			"items": {
 				"Geo_Rock-Below_Gorb": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 62.94,
 					"y": 16.57438
 				},
 				"Geo_Rock-Below_Gorb_Dupe": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 50.38511,
 					"y": 16.57438
 				},
 				"Soul_Totem-Cliffs_Gorb": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 12.88,
 					"y": 3.85
 				}
@@ -807,6 +951,9 @@ window.mapData = {
 			"area": "Cliffs",
 			"items": {
 				"Boss_Essence-Gorb": {
+					"randAction": "Essence",
+					"randPool": "Essence_Boss",
+					"randType": "Trinket",
 					"x": 55.19,
 					"y": 33.37
 				}
@@ -817,10 +964,16 @@ window.mapData = {
 			"area": "Cliffs",
 			"items": {
 				"Stag_Nest_Stag": {
+					"randAction": "Bool",
+					"randPool": "Stag",
+					"randType": "Trinket",
 					"x": 19.3,
 					"y": 6.3
 				},
 				"Vessel_Fragment-Stag_Nest": {
+					"randAction": "VesselFragment",
+					"randPool": "Vessel",
+					"randType": "Trinket",
 					"x": 80.57,
 					"y": 7.7
 				}
@@ -845,6 +998,9 @@ window.mapData = {
 			"area": "Cliffs",
 			"items": {
 				"Soul_Totem-Cliffs_Joni's": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 55.73,
 					"y": 52.46
 				}
@@ -867,6 +1023,9 @@ window.mapData = {
 			"area": "Cliffs",
 			"items": {
 				"Joni's_Blessing": {
+					"randAction": "Charm",
+					"randPool": "Charm",
+					"randType": "Charm",
 					"x": 68.199,
 					"y": 6.462356
 				}
@@ -896,10 +1055,16 @@ window.mapData = {
 			"area": "Crossroads",
 			"items": {
 				"Geo_Rock-Crossroads_Well": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 46.83,
 					"y": 1.57
 				},
 				"Hallownest_Seal-Crossroads_Well": {
+					"randAction": "HallownestSeal",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 40.6,
 					"y": 30.19
 				}
@@ -961,6 +1126,9 @@ window.mapData = {
 			"area": "Crossroads",
 			"items": {
 				"Grub-Crossroads_Stag": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 4.34,
 					"y": 41.56556
 				}
@@ -1004,6 +1172,9 @@ window.mapData = {
 			"boss": "GruzMother",
 			"items": {
 				"Boss_Geo-Gruz_Mother": {
+					"randAction": "SpawnGeo",
+					"randPool": "Boss_Geo",
+					"randType": "Geo",
 					"x": 92.5,
 					"y": 15.5
 				}
@@ -1047,10 +1218,16 @@ window.mapData = {
 			"area": "Crossroads",
 			"items": {
 				"Geo_Rock-Crossroads_Center_Grub": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 25.55792,
 					"y": 15.58733
 				},
 				"Grub-Crossroads_Center": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 56.17426,
 					"y": 16.60266
 				}
@@ -1095,18 +1272,30 @@ window.mapData = {
 			"area": "Crossroads",
 			"items": {
 				"Geo_Rock-Crossroads_Root": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 22.29,
 					"y": 107.71
 				},
 				"Geo_Rock-Crossroads_Root_Dupe_1": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 18.94,
 					"y": 102.63
 				},
 				"Geo_Rock-Crossroads_Root_Dupe_2": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 21.2,
 					"y": 102.66
 				},
 				"Whispering_Root-Crossroads": {
+					"randAction": "Essence",
+					"randPool": "Root",
+					"randType": "Trinket",
 					"x": 6.8,
 					"y": 103.2
 				}
@@ -1149,18 +1338,30 @@ window.mapData = {
 			"area": "Crossroads",
 			"items": {
 				"Geo_Rock-Crossroads_Aspid_Arena": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 9.07,
 					"y": 38.7
 				},
 				"Geo_Rock-Crossroads_Aspid_Arena_Dupe_1": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 12.3835,
 					"y": 37.81936
 				},
 				"Geo_Rock-Crossroads_Aspid_Arena_Dupe_2": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 16.02,
 					"y": 32.62
 				},
 				"Geo_Rock-Crossroads_Aspid_Arena_Hidden": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 38.52,
 					"y": 33.62
 				}
@@ -1194,6 +1395,9 @@ window.mapData = {
 			"boss": "Brooding Mawlek",
 			"items": {
 				"Mask_Shard-Brooding_Mawlek": {
+					"randAction": "MaskShard",
+					"randPool": "Mask",
+					"randType": "Trinket",
 					"x": 61.44,
 					"y": 9.49
 				}
@@ -1217,18 +1421,30 @@ window.mapData = {
 			"boss": "False Knight, Failed Champion",
 			"items": {
 				"200_Geo-False_Knight_Chest": {
+					"randAction": "SpawnGeo",
+					"randPool": "Geo",
+					"randType": "Geo",
 					"x": 6.7,
 					"y": 12.77539
 				},
 				"Boss_Essence-Failed_Champion": {
+					"randAction": "Essence",
+					"randPool": "Essence_Boss",
+					"randType": "Trinket",
 					"x": 33.17814,
 					"y": 48.26121
 				},
 				"City_Crest": {
+					"randAction": null,
+					"randPool": "Key",
+					"randType": "Trinket",
 					"x": 38.660000000000004,
 					"y": 2.94
 				},
 				"Geo_Rock-Crossroads_Above_False_Knight": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 64.67644,
 					"y": 59.53819
 				}
@@ -1271,6 +1487,9 @@ window.mapData = {
 			"area": "Crossroads",
 			"items": {
 				"Lore_Tablet-Pilgrim's_Way_1": {
+					"randAction": "Lore",
+					"randPool": "Lore",
+					"randType": "Lore",
 					"x": 106.0,
 					"y": 14.7
 				}
@@ -1294,6 +1513,9 @@ window.mapData = {
 			"area": "Crossroads",
 			"items": {
 				"Geo_Rock-Crossroads_Before_Acid_Grub": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 41.12111,
 					"y": 14.67542
 				}
@@ -1315,14 +1537,23 @@ window.mapData = {
 			"area": "Crossroads",
 			"items": {
 				"Geo_Rock-Crossroads_After_Goam_Mask_Shard": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 69.68784,
 					"y": 2.554631
 				},
 				"Geo_Rock-Crossroads_Below_Goam_Mask_Shard": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 20.27,
 					"y": 2.62
 				},
 				"Mask_Shard-Crossroads_Goam": {
+					"randAction": "MaskShard",
+					"randPool": "Mask",
+					"randType": "Trinket",
 					"x": 6.38,
 					"y": 24.18
 				}
@@ -1386,6 +1617,9 @@ window.mapData = {
 			"area": "Crossroads",
 			"items": {
 				"Geo_Rock-Crossroads_Above_Lever": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 56.97402,
 					"y": 14.58
 				}
@@ -1412,18 +1646,30 @@ window.mapData = {
 			"area": "Crossroads",
 			"items": {
 				"Geo_Rock-Crossroads_Before_Fungal": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 34.226,
 					"y": 19.288
 				},
 				"Geo_Rock-Crossroads_Before_Fungal_Dupe_1": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 32.09,
 					"y": 18.62
 				},
 				"Geo_Rock-Crossroads_Before_Fungal_Dupe_2": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 35.99,
 					"y": 23.3
 				},
 				"Soul_Totem-Crossroads_Goam_Journal": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 22.93833,
 					"y": 11.36868
 				}
@@ -1451,10 +1697,16 @@ window.mapData = {
 			"area": "Crossroads",
 			"items": {
 				"Geo_Rock-Crossroads_Before_Shops": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 39.58519,
 					"y": 39.63505
 				},
 				"Soul_Totem-Crossroads_Shops": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 45.675,
 					"y": 14.366
 				}
@@ -1486,6 +1738,9 @@ window.mapData = {
 			"area": "Crossroads",
 			"items": {
 				"Geo_Rock-Crossroads_Before_Glowing_Womb": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 28.69,
 					"y": 13.57083
 				}
@@ -1517,6 +1772,9 @@ window.mapData = {
 			"area": "Crossroads",
 			"items": {
 				"Glowing_Womb": {
+					"randAction": "Charm",
+					"randPool": "Charm",
+					"randType": "Charm",
 					"x": 93.83,
 					"y": 20.24
 				}
@@ -1534,6 +1792,9 @@ window.mapData = {
 			"area": "Crossroads",
 			"items": {
 				"Soul_Totem-Crossroads_Mawlek_Upper": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 25.87,
 					"y": 17.606
 				}
@@ -1555,6 +1816,9 @@ window.mapData = {
 			"area": "Crossroads",
 			"items": {
 				"Geo_Rock-Crossroads_Above_Tram": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 24.52,
 					"y": 64.6
 				}
@@ -1599,6 +1863,9 @@ window.mapData = {
 			"area": "Crossroads",
 			"items": {
 				"Grub-Crossroads_Spike": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 19.34,
 					"y": 13.54
 				}
@@ -1616,6 +1883,9 @@ window.mapData = {
 			"area": "Crossroads",
 			"items": {
 				"Crossroads_Map": {
+					"randAction": "Map",
+					"randPool": "Map",
+					"randType": "Trinket",
 					"x": 36.5,
 					"y": 34.0
 				}
@@ -1653,10 +1923,16 @@ window.mapData = {
 			"area": "Crossroads",
 			"items": {
 				"Grub-Crossroads_Acid": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 3.988001,
 					"y": 44.47979
 				},
 				"Soul_Totem-Crossroads_Acid": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 52.028,
 					"y": 11.64
 				}
@@ -1679,10 +1955,16 @@ window.mapData = {
 			"area": "Crossroads",
 			"items": {
 				"Geo_Rock-Crossroads_Above_Mawlek": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 53.34,
 					"y": 52.59
 				},
 				"Soul_Totem-Crossroads_Mawlek_Lower": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 6.84,
 					"y": 32.69
 				}
@@ -1704,10 +1986,16 @@ window.mapData = {
 			"area": "Crossroads",
 			"items": {
 				"Geo_Rock-Crossroads_Vessel_Fragment": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 90.10766,
 					"y": 26.35221
 				},
 				"Vessel_Fragment-Crossroads": {
+					"randAction": "VesselFragment",
+					"randPool": "Vessel",
+					"randType": "Trinket",
 					"x": 14.97,
 					"y": 5.7
 				}
@@ -1724,30 +2012,51 @@ window.mapData = {
 			"area": "Crossroads",
 			"items": {
 				"Grubberfly's_Elegy": {
+					"randAction": "Charm",
+					"randPool": "Charm",
+					"randType": "Charm",
 					"x": 36.0,
 					"y": 4.0
 				},
 				"Grubsong": {
+					"randAction": "Charm",
+					"randPool": "Charm",
+					"randType": "Charm",
 					"x": 51.0,
 					"y": 4.0
 				},
 				"Hallownest_Seal-Grubs": {
+					"randAction": "HallownestSeal",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 45.0,
 					"y": 4.0
 				},
 				"King's_Idol-Grubs": {
+					"randAction": "KingsIdol",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 39.0,
 					"y": 4.0
 				},
 				"Mask_Shard-5_Grubs": {
+					"randAction": "MaskShard",
+					"randPool": "Mask",
+					"randType": "Trinket",
 					"x": 54.0,
 					"y": 4.0
 				},
 				"Pale_Ore-Grubs": {
+					"randAction": "Int",
+					"randPool": "Ore",
+					"randType": "Trinket",
 					"x": 42.0,
 					"y": 4.0
 				},
 				"Rancid_Egg-Grubs": {
+					"randAction": "Int",
+					"randPool": "Egg",
+					"randType": "Trinket",
 					"x": 48.0,
 					"y": 4.0
 				}
@@ -1797,10 +2106,16 @@ window.mapData = {
 			"area": "Crossroads",
 			"items": {
 				"Geo_Rock-Crossroads_Goam_Alcove": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 101.0564,
 					"y": 18.92869
 				},
 				"Geo_Rock-Crossroads_Goam_Damage_Boost": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 52.79,
 					"y": 10.6
 				}
@@ -1838,6 +2153,9 @@ window.mapData = {
 			"area": "Crossroads",
 			"items": {
 				"Soul_Totem-Crossroads_Myla": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 29.77,
 					"y": 25.85
 				}
@@ -1861,6 +2179,9 @@ window.mapData = {
 			"area": "Crossroads",
 			"items": {
 				"Geo_Rock-Crossroads_Tram": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 19.32,
 					"y": 3.45
 				}
@@ -1910,6 +2231,9 @@ window.mapData = {
 			"area": "Crossroads",
 			"items": {
 				"Crossroads_Stag": {
+					"randAction": "Stag",
+					"randPool": "Stag",
+					"randType": "Trinket",
 					"x": 19.7,
 					"y": 6.4
 				}
@@ -1933,6 +2257,9 @@ window.mapData = {
 			"area": "Crossroads",
 			"items": {
 				"Grub-Crossroads_Guarded": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 49.81957,
 					"y": 3.477612
 				}
@@ -2003,6 +2330,9 @@ window.mapData = {
 			"area": "Crossroads",
 			"items": {
 				"Rancid_Egg-Blue_Lake": {
+					"randAction": "Int",
+					"randPool": "Egg",
+					"randType": "Trinket",
 					"x": 117.71,
 					"y": 43.31
 				}
@@ -2026,10 +2356,16 @@ window.mapData = {
 			"area": "Crossroads",
 			"items": {
 				"Geo_Rock-Crossroads_Goam_Journal": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 36.23855,
 					"y": 32.60709
 				},
 				"Geo_Rock-Crossroads_Goam_Journal_Dupe": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 35.24823,
 					"y": 36.74561
 				}
@@ -2046,38 +2382,65 @@ window.mapData = {
 			"area": "Crossroads",
 			"items": {
 				"Geo_Rock-Ancestral_Mound": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 29.28835,
 					"y": 45.51902
 				},
 				"Geo_Rock-Ancestral_Mound_Dupe": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 34.41465,
 					"y": 45.6059
 				},
 				"Geo_Rock-Ancestral_Mound_Tree": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 28.22,
 					"y": 59.67
 				},
 				"Geo_Rock-Ancestral_Mound_Tree_Dupe": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 25.85,
 					"y": 59.64
 				},
 				"Lifeblood_Cocoon-Ancestral_Mound": {
+					"randAction": "Lifeblood",
+					"randPool": "Cocoon",
+					"randType": "Lifeblood",
 					"x": 39.21193,
 					"y": 48.29829
 				},
 				"Soul_Catcher": {
+					"randAction": "Charm",
+					"randPool": "Charm",
+					"randType": "Charm",
 					"x": 37.81,
 					"y": 20.32
 				},
 				"Soul_Totem-Ancestral_Mound": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 35.01,
 					"y": 35.16
 				},
 				"Vengeful_Spirit": {
+					"randAction": "Additive",
+					"randPool": "Skill",
+					"randType": "Spell",
 					"x": 23.95003,
 					"y": 8.933798
 				},
 				"Whispering_Root-Ancestral_Mound": {
+					"randAction": "Essence",
+					"randPool": "Root",
+					"randType": "Trinket",
 					"x": 20.4,
 					"y": 60.4
 				}
@@ -2096,10 +2459,16 @@ window.mapData = {
 			"area": "Deepnest",
 			"items": {
 				"Geo_Rock-Moss_Prophet": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 22.48,
 					"y": 8.66
 				},
 				"Geo_Rock-Moss_Prophet_Dupe": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 21.77924,
 					"y": 5.69
 				}
@@ -2133,6 +2502,9 @@ window.mapData = {
 			"area": "Deepnest",
 			"items": {
 				"Deepnest_Map-Upper": {
+					"randAction": "Map",
+					"randPool": "Map",
+					"randType": "Trinket",
 					"x": 7.8,
 					"y": 4.5
 				}
@@ -2170,10 +2542,16 @@ window.mapData = {
 			"area": "Deepnest",
 			"items": {
 				"Geo_Rock-Deepnest_Below_Mimics": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 19.48,
 					"y": 13.82
 				},
 				"Geo_Rock-Deepnest_Below_Mimics_Dupe": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 17.34,
 					"y": 13.85
 				}
@@ -2200,18 +2578,30 @@ window.mapData = {
 			"area": "Deepnest",
 			"items": {
 				"Geo_Rock-Deepnest_Below_Spike_Grub": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 4.52,
 					"y": 76.72
 				},
 				"Geo_Rock-Deepnest_Below_Spike_Grub_Dupe": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 4.62826,
 					"y": 73.81636
 				},
 				"Geo_Rock-Deepnest_Spike_Grub_Right": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 54.2,
 					"y": 107.32
 				},
 				"Grub-Deepnest_Spike": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 14.22518,
 					"y": 103.5133
 				}
@@ -2243,6 +2633,9 @@ window.mapData = {
 			"area": "Deepnest",
 			"items": {
 				"Distant_Village_Stag": {
+					"randAction": "Stag",
+					"randPool": "Stag",
+					"randType": "Trinket",
 					"x": 27.6,
 					"y": 6.4
 				}
@@ -2266,6 +2659,9 @@ window.mapData = {
 			"area": "Deepnest",
 			"items": {
 				"Soul_Totem-Distant_Village": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 6.338395,
 					"y": 34.73291
 				}
@@ -2347,26 +2743,44 @@ window.mapData = {
 			"area": "Deepnest",
 			"items": {
 				"Geo_Rock-Deepnest_By_Mantis_Lords_Garpede_Pogo": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 81.16,
 					"y": 23.96
 				},
 				"Geo_Rock-Deepnest_By_Mantis_Lords_Garpede_Pogo_Dupe": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 84.064,
 					"y": 23.921
 				},
 				"Geo_Rock-Deepnest_By_Mantis_Lords_Requires_Claw_1": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 60.6,
 					"y": 34.92909
 				},
 				"Geo_Rock-Deepnest_By_Mantis_Lords_Requires_Claw_2": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 32.87276,
 					"y": 11.76504
 				},
 				"Geo_Rock-Deepnest_By_Mantis_Lords_Requires_Claw_3": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 19.35206,
 					"y": 5.775943
 				},
 				"Hallownest_Seal-Deepnest_By_Mantis_Lords": {
+					"randAction": "HallownestSeal",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 77.29805,
 					"y": 30.21
 				}
@@ -2415,6 +2829,9 @@ window.mapData = {
 			"area": "Deepnest",
 			"items": {
 				"Lifeblood_Cocoon-Failed_Tramway": {
+					"randAction": "Lifeblood",
+					"randPool": "Cocoon",
+					"randType": "Lifeblood",
 					"x": 139.07,
 					"y": 38.68
 				}
@@ -2448,6 +2865,9 @@ window.mapData = {
 			"area": "Deepnest",
 			"items": {
 				"Tram_Pass": {
+					"randAction": null,
+					"randPool": "Key",
+					"randType": "Trinket",
 					"x": 28.6,
 					"y": 3.337032
 				}
@@ -2492,18 +2912,30 @@ window.mapData = {
 			"area": "Deepnest",
 			"items": {
 				"Geo_Rock-Deepnest_Nosk_1": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 45.68001,
 					"y": 29.82047
 				},
 				"Geo_Rock-Deepnest_Nosk_2": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 49.45,
 					"y": 15.87
 				},
 				"Geo_Rock-Deepnest_Nosk_3": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 30.02,
 					"y": 2.87
 				},
 				"Grub-Deepnest_Nosk": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 100.17,
 					"y": 36.5
 				}
@@ -2527,6 +2959,9 @@ window.mapData = {
 			"boss": "Nosk",
 			"items": {
 				"Pale_Ore-Nosk": {
+					"randAction": "Int",
+					"randPool": "Ore",
+					"randType": "Trinket",
 					"x": 165.4571,
 					"y": 3.244924
 				}
@@ -2544,6 +2979,9 @@ window.mapData = {
 			"area": "Deepnest",
 			"items": {
 				"King's_Idol-Deepnest": {
+					"randAction": "KingsIdol",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 5.439302,
 					"y": 9.332907
 				}
@@ -2593,10 +3031,16 @@ window.mapData = {
 			"area": "Deepnest",
 			"items": {
 				"Geo_Rock-Deepnest_Above_Galien": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 4.450053,
 					"y": 78.93091
 				},
 				"Geo_Rock-Deepnest_Galien_Spike": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 27.32206,
 					"y": 29.89369
 				}
@@ -2625,6 +3069,9 @@ window.mapData = {
 			"area": "Deepnest",
 			"items": {
 				"Grub-Deepnest_Mimic": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 65.83134,
 					"y": 4.5
 				}
@@ -2642,10 +3089,16 @@ window.mapData = {
 			"area": "Deepnest",
 			"items": {
 				"Geo_Rock-Deepnest_Garpede_1": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 48.36,
 					"y": 15.85
 				},
 				"Geo_Rock-Deepnest_Garpede_2": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 32.79752,
 					"y": 26.79321
 				}
@@ -2677,10 +3130,16 @@ window.mapData = {
 			"area": "Deepnest",
 			"items": {
 				"Soul_Totem-Deepnest_Vessel": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 195.362,
 					"y": 11.6
 				},
 				"Vessel_Fragment-Deepnest": {
+					"randAction": "VesselFragment",
+					"randPool": "Vessel",
+					"randType": "Trinket",
 					"x": 134.4872,
 					"y": 27.27806
 				}
@@ -2698,26 +3157,44 @@ window.mapData = {
 			"area": "Deepnest",
 			"items": {
 				"Geo_Rock-Dark_Deepnest_Above_Grub_1": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 129.8224,
 					"y": 60.87048
 				},
 				"Geo_Rock-Dark_Deepnest_Above_Grub_2": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 99.62,
 					"y": 49.79
 				},
 				"Geo_Rock-Dark_Deepnest_Bottom_Left": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 72.08,
 					"y": 4.95
 				},
 				"Grub-Dark_Deepnest": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 122.549,
 					"y": 46.57456
 				},
 				"Rancid_Egg-Dark_Deepnest": {
+					"randAction": "Int",
+					"randPool": "Egg",
+					"randType": "Trinket",
 					"x": 41.85,
 					"y": 5.39
 				},
 				"Whispering_Root-Deepnest": {
+					"randAction": "Essence",
+					"randPool": "Root",
+					"randType": "Trinket",
 					"x": 13.4,
 					"y": 36.3
 				}
@@ -2752,10 +3229,16 @@ window.mapData = {
 			"boss": "Galien",
 			"items": {
 				"Boss_Essence-Galien": {
+					"randAction": "Essence",
+					"randPool": "Essence_Boss",
+					"randType": "Trinket",
 					"x": 52.12,
 					"y": 14.32
 				},
 				"Lifeblood_Cocoon-Galien": {
+					"randAction": "Lifeblood",
+					"randPool": "Cocoon",
+					"randType": "Lifeblood",
 					"x": 72.47,
 					"y": 50.37
 				}
@@ -2796,6 +3279,9 @@ window.mapData = {
 			"area": "Deepnest",
 			"items": {
 				"Soul_Totem-Mask_Maker": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 8.55,
 					"y": 8.48
 				}
@@ -2824,10 +3310,16 @@ window.mapData = {
 			"area": "Deepnest",
 			"items": {
 				"Geo_Rock-Above_Mask_Maker_1": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 5.602245,
 					"y": 49.8466
 				},
 				"Geo_Rock-Above_Mask_Maker_2": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 22.28,
 					"y": 42.01
 				}
@@ -2855,6 +3347,9 @@ window.mapData = {
 			"area": "Deepnest",
 			"items": {
 				"Sharp_Shadow": {
+					"randAction": "Charm",
+					"randPool": "Charm",
+					"randType": "Charm",
 					"x": 60.92,
 					"y": 5.35
 				}
@@ -2872,14 +3367,23 @@ window.mapData = {
 			"area": "Deepnest",
 			"items": {
 				"160_Geo-Weavers_Den_Chest": {
+					"randAction": "SpawnGeo",
+					"randPool": "Geo",
+					"randType": "Geo",
 					"x": 46.59,
 					"y": 46.71
 				},
 				"Rancid_Egg-Weaver's_Den": {
+					"randAction": "Int",
+					"randPool": "Egg",
+					"randType": "Trinket",
 					"x": 11.34,
 					"y": 3.25
 				},
 				"Weaversong": {
+					"randAction": "Charm",
+					"randPool": "Charm",
+					"randType": "Charm",
 					"x": 87.4,
 					"y": 29.71
 				}
@@ -2898,14 +3402,23 @@ window.mapData = {
 			"area": "Deepnest_East",
 			"items": {
 				"Geo_Rock-Lower_Kingdom's_Edge_1": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 9.626259,
 					"y": 23.95179
 				},
 				"Geo_Rock-Lower_Kingdom's_Edge_2": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 7.927063,
 					"y": 67.8373
 				},
 				"Soul_Totem-Lower_Kingdom's_Edge_1": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 6.06,
 					"y": 10.33
 				}
@@ -2933,14 +3446,23 @@ window.mapData = {
 			"area": "Deepnest_East",
 			"items": {
 				"Geo_Rock-Lower_Kingdom's_Edge_3": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 16.27298,
 					"y": 11.78421
 				},
 				"Geo_Rock-Lower_Kingdom's_Edge_Dive": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 104.0468,
 					"y": 5.83525
 				},
 				"Soul_Totem-Lower_Kingdom's_Edge_2": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 51.04,
 					"y": 3.53
 				}
@@ -2973,10 +3495,16 @@ window.mapData = {
 			"area": "Deepnest_East",
 			"items": {
 				"Grimmkin_Flame-Kingdom's_Edge": {
+					"randAction": "Int",
+					"randPool": "Flame",
+					"randType": "Flame",
 					"x": 41.51081,
 					"y": 72.61646
 				},
 				"Kingdom's_Edge_Map": {
+					"randAction": "Map",
+					"randPool": "Map",
+					"randType": "Trinket",
 					"x": 7.5,
 					"y": 60.1
 				}
@@ -3020,6 +3548,9 @@ window.mapData = {
 			"area": "Deepnest_East",
 			"items": {
 				"Geo_Rock-Kingdom's_Edge_Below_Bardoon": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 8.1596,
 					"y": 44.54
 				}
@@ -3052,10 +3583,16 @@ window.mapData = {
 			"area": "Deepnest_East",
 			"items": {
 				"Geo_Rock-Kingdom's_Edge_Oro_Far_Left": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 14.42,
 					"y": 32.5
 				},
 				"Geo_Rock-Kingdom's_Edge_Oro_Middle_Left": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 123.3728,
 					"y": 30.6146
 				}
@@ -3093,26 +3630,44 @@ window.mapData = {
 			"area": "Deepnest_East",
 			"items": {
 				"Geo_Rock-Kingdom's_Edge_Above_Root": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 77.7,
 					"y": 29.63
 				},
 				"Geo_Rock-Kingdom's_Edge_Above_Tower": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 6.76,
 					"y": 57.63944
 				},
 				"Rancid_Egg-Upper_Kingdom's_Edge": {
+					"randAction": "Int",
+					"randPool": "Egg",
+					"randType": "Trinket",
 					"x": 61.71,
 					"y": 140.25
 				},
 				"Soul_Totem-Upper_Kingdom's_Edge": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 83.22,
 					"y": 135.55
 				},
 				"Wanderer's_Journal-Kingdom's_Edge_Entrance": {
+					"randAction": "WanderersJournal",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 14.74,
 					"y": 2.32
 				},
 				"Whispering_Root-Kingdoms_Edge": {
+					"randAction": "Essence",
+					"randPool": "Root",
+					"randType": "Trinket",
 					"x": 59.6,
 					"y": 10.2
 				}
@@ -3162,10 +3717,16 @@ window.mapData = {
 			"area": "Deepnest_East",
 			"items": {
 				"Geo_Rock-Kingdom's_Edge_Below_Colosseum": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 108.55,
 					"y": 30.5442
 				},
 				"King's_Idol-Great_Hopper": {
+					"randAction": "KingsIdol",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 6.69,
 					"y": 4.22
 				}
@@ -3211,6 +3772,9 @@ window.mapData = {
 			"boss": "Markoth",
 			"items": {
 				"Boss_Essence-Markoth": {
+					"randAction": "Essence",
+					"randPool": "Essence_Boss",
+					"randType": "Trinket",
 					"x": 25.34,
 					"y": 3.299605
 				}
@@ -3228,10 +3792,16 @@ window.mapData = {
 			"area": "Deepnest_East",
 			"items": {
 				"Grub-Kingdom's_Edge_Camp": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 62.85,
 					"y": 63.59
 				},
 				"Soul_Totem-Kingdom's_Edge_Camp": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 7.48,
 					"y": 100.09
 				}
@@ -3286,6 +3856,9 @@ window.mapData = {
 			"area": "Deepnest_East",
 			"items": {
 				"Wanderer's_Journal-Kingdom's_Edge_Camp": {
+					"randAction": "WanderersJournal",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 27.2885,
 					"y": 2.226762
 				}
@@ -3303,18 +3876,30 @@ window.mapData = {
 			"area": "Deepnest_East",
 			"items": {
 				"Grub-Kingdom's_Edge_Oro": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 154.35,
 					"y": 22.6
 				},
 				"Rancid_Egg-Near_Quick_Slash": {
+					"randAction": "Int",
+					"randPool": "Egg",
+					"randType": "Trinket",
 					"x": 75.54,
 					"y": 24.35837
 				},
 				"Soul_Totem-Oro_Dive_1": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 131.55,
 					"y": 53.44
 				},
 				"Soul_Totem-Oro_Dive_2": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 113.89,
 					"y": 56.38
 				}
@@ -3341,6 +3926,9 @@ window.mapData = {
 			"area": "Deepnest_East",
 			"items": {
 				"Quick_Slash": {
+					"randAction": "Charm",
+					"randPool": "Charm",
+					"randType": "Charm",
 					"x": 61.07,
 					"y": 47.55
 				}
@@ -3363,6 +3951,9 @@ window.mapData = {
 			"area": "Deepnest_East",
 			"items": {
 				"Lifeblood_Cocoon-Kingdom's_Edge": {
+					"randAction": "Lifeblood",
+					"randPool": "Cocoon",
+					"randType": "Lifeblood",
 					"x": 30.03,
 					"y": 16.5
 				}
@@ -3380,6 +3971,9 @@ window.mapData = {
 			"area": "Deepnest_East",
 			"items": {
 				"Soul_Totem-Oro": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 56.23,
 					"y": 4.94
 				}
@@ -3401,18 +3995,30 @@ window.mapData = {
 			"area": "Deepnest_East",
 			"items": {
 				"Geo_Rock-Kingdom's_Edge_420_Geo_Rock": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 22.21,
 					"y": 9.26
 				},
 				"Geo_Rock-Kingdom's_Edge_Above_420_Geo_Rock": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 31.17385,
 					"y": 263.5738
 				},
 				"Lore_Tablet-Kingdom's_Edge": {
+					"randAction": "Lore",
+					"randPool": "Lore",
+					"randType": "Lore",
 					"x": 32.6,
 					"y": 210.5
 				},
 				"Soul_Totem-420_Geo_Rock": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 36.16,
 					"y": 116.55
 				}
@@ -3430,6 +4036,9 @@ window.mapData = {
 			"area": "Deepnest_East",
 			"items": {
 				"Wanderer's_Journal-Kingdom's_Edge_Requires_Dive": {
+					"randAction": "WanderersJournal",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 57.07,
 					"y": 25.3
 				}
@@ -3480,54 +4089,93 @@ window.mapData = {
 			"area": "Deepnest",
 			"items": {
 				"Geo_Rock-Beast's_Den_Above_Trilobite": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 28.48,
 					"y": 120.85
 				},
 				"Geo_Rock-Beast's_Den_Above_Trilobite_Dupe": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 25.92,
 					"y": 120.85
 				},
 				"Geo_Rock-Beast's_Den_After_Herrah": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 94.07,
 					"y": 151.88
 				},
 				"Geo_Rock-Beast's_Den_Below_Egg": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 107.0695,
 					"y": 69.82217
 				},
 				"Geo_Rock-Beast's_Den_Below_Egg_Dupe": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 109.01,
 					"y": 69.76
 				},
 				"Geo_Rock-Beast's_Den_Below_Herrah": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 95.25016,
 					"y": 143.681
 				},
 				"Geo_Rock-Beast's_Den_Bottom": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 102.0259,
 					"y": 3.914551
 				},
 				"Geo_Rock-Beast's_Den_Bottom_Dupe": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 104.8039,
 					"y": 3.795931
 				},
 				"Grub-Beast's_Den": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 99.98,
 					"y": 119.41
 				},
 				"Hallownest_Seal-Beast's_Den": {
+					"randAction": "HallownestSeal",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 38.91,
 					"y": 5.39
 				},
 				"Herrah": {
+					"randAction": "Dreamer",
+					"randPool": "Dreamer",
+					"randType": "Big",
 					"x": 68.0,
 					"y": 154.0
 				},
 				"Rancid_Egg-Beast's_Den": {
+					"randAction": "Int",
+					"randPool": "Egg",
+					"randType": "Trinket",
 					"x": 112.28,
 					"y": 80.45
 				},
 				"Soul_Totem-Beast's_Den": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 57.63425,
 					"y": 43.2505
 				}
@@ -3677,6 +4325,9 @@ window.mapData = {
 			"area": "Dream",
 			"items": {
 				"Dream_Nail": {
+					"randAction": "Additive",
+					"randPool": "Skill",
+					"randType": "Big",
 					"x": 264.7,
 					"y": 52.15
 				}
@@ -3719,6 +4370,9 @@ window.mapData = {
 			"area": "Fungus1",
 			"items": {
 				"Geo_Rock-Greenpath_Entrance": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 42.69797,
 					"y": 20.73907
 				}
@@ -3741,6 +4395,9 @@ window.mapData = {
 			"area": "Fungus1",
 			"items": {
 				"Geo_Rock-Greenpath_Waterfall": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 4.62,
 					"y": 22.16
 				}
@@ -3763,10 +4420,16 @@ window.mapData = {
 			"area": "Fungus1",
 			"items": {
 				"Geo_Rock-Greenpath_Below_Skip_Squit": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 28.91,
 					"y": 21.88
 				},
 				"Geo_Rock-Greenpath_Skip_Squit": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 41.21,
 					"y": 44.76
 				}
@@ -3794,14 +4457,23 @@ window.mapData = {
 			"area": "Fungus1",
 			"items": {
 				"Geo_Rock-Greenpath_Second_Skip_Fool_Eater": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 70.91,
 					"y": 25.67
 				},
 				"Geo_Rock-Greenpath_Second_Skip_Fool_Eater_Dupe": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 67.83,
 					"y": 25.67
 				},
 				"Geo_Rock-Greenpath_Second_Skip_Lower": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 62.23048,
 					"y": 2.854536
 				}
@@ -3829,14 +4501,23 @@ window.mapData = {
 			"boss": "Hornet Protector",
 			"items": {
 				"Geo_Rock-Greenpath_Below_Hornet": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 40.29,
 					"y": 20.75
 				},
 				"Mothwing_Cloak": {
+					"randAction": "Additive",
+					"randPool": "Skill",
+					"randType": "Big",
 					"x": 23.22,
 					"y": 27.23
 				},
 				"Split_Mothwing_Cloak": {
+					"randAction": null,
+					"randPool": "SplitCloakLocation",
+					"randType": null,
 					"x": 29.5,
 					"y": 28.4
 				}
@@ -3864,6 +4545,9 @@ window.mapData = {
 			"area": "Fungus1",
 			"items": {
 				"Geo_Rock-Greenpath_Above_Thorns": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 9.93,
 					"y": 64.88
 				}
@@ -3890,10 +4574,16 @@ window.mapData = {
 			"area": "Fungus1",
 			"items": {
 				"Greenpath_Map": {
+					"randAction": "Map",
+					"randPool": "Map",
+					"randType": "Trinket",
 					"x": 160.0,
 					"y": 3.3
 				},
 				"Grub-Greenpath_Cornifer": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 157.5174,
 					"y": 21.55728
 				}
@@ -3916,14 +4606,23 @@ window.mapData = {
 			"area": "Fungus1",
 			"items": {
 				"Geo_Rock-Greenpath_Hunter's_Journal": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 2.64,
 					"y": 34.95
 				},
 				"Grub-Greenpath_Journal": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 55.06,
 					"y": 12.46981
 				},
 				"Soul_Totem-Greenpath_Hunter's_Journal": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 23.68,
 					"y": 28.33
 				}
@@ -3979,14 +4678,23 @@ window.mapData = {
 			"area": "Fungus1",
 			"items": {
 				"Geo_Rock-Greenpath_Acid_Bridge": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 136.3295,
 					"y": 22.08
 				},
 				"Grimmkin_Flame-Greenpath": {
+					"randAction": "Int",
+					"randPool": "Flame",
+					"randType": "Flame",
 					"x": 70.39,
 					"y": 8.9
 				},
 				"Hallownest_Seal-Greenpath": {
+					"randAction": "HallownestSeal",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 3.89,
 					"y": 5.26
 				}
@@ -4014,6 +4722,9 @@ window.mapData = {
 			"area": "Fungus1",
 			"items": {
 				"Wanderer's_Journal-Greenpath_Lower": {
+					"randAction": "WanderersJournal",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 44.39,
 					"y": 31.21
 				}
@@ -4052,14 +4763,23 @@ window.mapData = {
 			"area": "Fungus1",
 			"items": {
 				"Geo_Rock-Greenpath_After_MMC": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 19.23623,
 					"y": 19.83935
 				},
 				"Geo_Rock-Greenpath_After_MMC_Dupe": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 16.86,
 					"y": 21.8
 				},
 				"Geo_Rock-Greenpath_After_MMC_Hidden": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 24.23,
 					"y": 57.72
 				}
@@ -4081,22 +4801,37 @@ window.mapData = {
 			"area": "Fungus1",
 			"items": {
 				"85_Geo-Greenpath_Chest": {
+					"randAction": "SpawnGeo",
+					"randPool": "Geo",
+					"randType": "Geo",
 					"x": 175.85,
 					"y": 27.83
 				},
 				"Grub-Greenpath_MMC": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 135.62,
 					"y": 24.41
 				},
 				"Lore_Tablet-Greenpath_QG": {
+					"randAction": "Lore",
+					"randPool": "Lore",
+					"randType": "Lore",
 					"x": 54.5,
 					"y": 10.6
 				},
 				"Vessel_Fragment-Greenpath": {
+					"randAction": "VesselFragment",
+					"randPool": "Vessel",
+					"randType": "Trinket",
 					"x": 100.95,
 					"y": 38.58
 				},
 				"Whispering_Root-Greenpath": {
+					"randAction": "Essence",
+					"randPool": "Root",
+					"randType": "Trinket",
 					"x": 28.7,
 					"y": 23.3
 				}
@@ -4120,6 +4855,9 @@ window.mapData = {
 			"area": "Fungus1",
 			"items": {
 				"Thorns_of_Agony": {
+					"randAction": "Charm",
+					"randPool": "Charm",
+					"randType": "Charm",
 					"x": 85.01,
 					"y": 12.11
 				}
@@ -4137,6 +4875,9 @@ window.mapData = {
 			"area": "Fungus1",
 			"items": {
 				"Rancid_Egg-Sheo": {
+					"randAction": "Int",
+					"randPool": "Egg",
+					"randType": "Trinket",
 					"x": 2.986076,
 					"y": 6.283915
 				}
@@ -4159,6 +4900,9 @@ window.mapData = {
 			"area": "Fungus1",
 			"items": {
 				"Greenpath_Stag": {
+					"randAction": "Stag",
+					"randPool": "Stag",
+					"randType": "Trinket",
 					"x": 19.7,
 					"y": 6.4
 				}
@@ -4182,6 +4926,9 @@ window.mapData = {
 			"area": "Fungus1",
 			"items": {
 				"Lore_Tablet-Greenpath_Upper_Hidden": {
+					"randAction": "Lore",
+					"randPool": "Lore",
+					"randType": "Lore",
 					"x": 67.3,
 					"y": 26.3
 				}
@@ -4203,10 +4950,16 @@ window.mapData = {
 			"area": "Fungus1",
 			"items": {
 				"Geo_Rock-Greenpath_Obbles_Fool_Eater": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 9.554276,
 					"y": 7.817104
 				},
 				"Lore_Tablet-Greenpath_Lower_Hidden": {
+					"randAction": "Lore",
+					"randPool": "Lore",
+					"randType": "Lore",
 					"x": 86.6,
 					"y": 3.8
 				}
@@ -4234,6 +4987,9 @@ window.mapData = {
 			"boss": "Vengefly King",
 			"items": {
 				"Boss_Geo-Vengefly_King": {
+					"randAction": "SpawnGeo",
+					"randPool": "Boss_Geo",
+					"randType": "Geo",
 					"x": 45.0,
 					"y": 13.5
 				}
@@ -4262,22 +5018,37 @@ window.mapData = {
 			"area": "Fungus1",
 			"items": {
 				"Geo_Rock-Greenpath_Moss_Knights": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 12.13,
 					"y": 24.76
 				},
 				"Geo_Rock-Greenpath_Moss_Knights_Dupe_1": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 4.59,
 					"y": 29.39
 				},
 				"Geo_Rock-Greenpath_Moss_Knights_Dupe_2": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 2.892456,
 					"y": 24.89392
 				},
 				"Grub-Greenpath_Stag": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 85.65975,
 					"y": 24.49149
 				},
 				"Lore_Tablet-Greenpath_Stag": {
+					"randAction": "Lore",
+					"randPool": "Lore",
+					"randType": "Lore",
 					"x": 78.1,
 					"y": 36.7
 				}
@@ -4310,14 +5081,23 @@ window.mapData = {
 			"area": "Fungus1",
 			"items": {
 				"Geo_Rock-Greenpath_Below_Stag": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 13.21,
 					"y": 56.7
 				},
 				"Geo_Rock-Greenpath_Below_Stag_Fool_Eater": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 3.79,
 					"y": 4.95
 				},
 				"Wanderer's_Journal-Greenpath_Stag": {
+					"randAction": "WanderersJournal",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 21.89149,
 					"y": 108.35
 				}
@@ -4361,6 +5141,9 @@ window.mapData = {
 			"area": "Fungus3",
 			"items": {
 				"Queen's_Gardens_Map": {
+					"randAction": "Map",
+					"randPool": "Map",
+					"randType": "Trinket",
 					"x": 53.7,
 					"y": 22.3
 				}
@@ -4418,18 +5201,30 @@ window.mapData = {
 			"area": "Fungus1",
 			"items": {
 				"Baldur_Shell": {
+					"randAction": "Charm",
+					"randPool": "Charm",
+					"randType": "Charm",
 					"x": 126.98,
 					"y": 2.11
 				},
 				"Geo_Rock-Baldur_Shell_Alcove": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 6.199969,
 					"y": 34.27
 				},
 				"Geo_Rock-Baldur_Shell_Top_Left": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 40.24,
 					"y": 22.13
 				},
 				"Grub-Howling_Cliffs": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 87.01,
 					"y": 52.53999
 				}
@@ -4454,14 +5249,23 @@ window.mapData = {
 			"boss": "Moss Charger",
 			"items": {
 				"Boss_Geo-Massive_Moss_Charger": {
+					"randAction": "SpawnGeo",
+					"randPool": "Boss_Geo",
+					"randType": "Geo",
 					"x": 49.0,
 					"y": 7.8
 				},
 				"Geo_Rock-Greenpath_MMC": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 5.025553,
 					"y": 6.880451
 				},
 				"Soul_Totem-Greenpath_MMC": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 3.863886,
 					"y": 26.44501
 				}
@@ -4484,10 +5288,16 @@ window.mapData = {
 			"area": "Fungus1",
 			"items": {
 				"Lore_Tablet-Greenpath_Below_Toll": {
+					"randAction": "Lore",
+					"randPool": "Lore",
+					"randType": "Lore",
 					"x": 42.1,
 					"y": 3.6
 				},
 				"Soul_Totem-Greenpath_Below_Toll": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 95.84,
 					"y": 3.627
 				}
@@ -4519,14 +5329,23 @@ window.mapData = {
 			"area": "Fungus1",
 			"items": {
 				"Geo_Rock-Greenpath_Below_Toll": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 9.3,
 					"y": 9.68
 				},
 				"Geo_Rock-Greenpath_Toll_Hidden": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 6.85,
 					"y": 86.61
 				},
 				"Geo_Rock-Greenpath_Toll_Hidden_Dupe": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 3.711337,
 					"y": 82.74818
 				}
@@ -4554,10 +5373,16 @@ window.mapData = {
 			"area": "Fungus1",
 			"items": {
 				"Lifeblood_Cocoon-Greenpath": {
+					"randAction": "Lifeblood",
+					"randPool": "Cocoon",
+					"randType": "Lifeblood",
 					"x": 32.86,
 					"y": 26.95
 				},
 				"Lore_Tablet-Greenpath_Lifeblood": {
+					"randAction": "Lore",
+					"randPool": "Lore",
+					"randType": "Lore",
 					"x": 9.7,
 					"y": 34.8
 				}
@@ -4604,6 +5429,9 @@ window.mapData = {
 			"boss": "No Eyes",
 			"items": {
 				"Boss_Essence-No_Eyes": {
+					"randAction": "Essence",
+					"randPool": "Essence_Boss",
+					"randType": "Trinket",
 					"x": 49.72,
 					"y": 3.211941
 				}
@@ -4627,6 +5455,9 @@ window.mapData = {
 			"area": "Fungus1",
 			"items": {
 				"Mask_Shard-Stone_Sanctuary": {
+					"randAction": "MaskShard",
+					"randPool": "Mask",
+					"randType": "Trinket",
 					"x": 18.07,
 					"y": 8.02
 				}
@@ -4655,6 +5486,9 @@ window.mapData = {
 			"area": "Fungus1",
 			"items": {
 				"Shape_of_Unn": {
+					"randAction": "Charm",
+					"randPool": "Charm",
+					"randType": "Charm",
 					"x": 26.40081856,
 					"y": 16.58584624
 				}
@@ -4672,6 +5506,9 @@ window.mapData = {
 			"area": "Fungus2",
 			"items": {
 				"Mask_Shard-Queen's_Station": {
+					"randAction": "MaskShard",
+					"randPool": "Mask",
+					"randType": "Trinket",
 					"x": 44.50854,
 					"y": 30.56531
 				}
@@ -4705,6 +5542,9 @@ window.mapData = {
 			"area": "Fungus2",
 			"items": {
 				"Queen's_Station_Stag": {
+					"randAction": "Stag",
+					"randPool": "Stag",
+					"randType": "Trinket",
 					"x": 20.3,
 					"y": 6.4
 				}
@@ -4728,6 +5568,9 @@ window.mapData = {
 			"area": "Fungus2",
 			"items": {
 				"Hallownest_Seal-Fungal_Wastes_Sporgs": {
+					"randAction": "HallownestSeal",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 104.6584,
 					"y": 70.27618
 				}
@@ -4755,14 +5598,23 @@ window.mapData = {
 			"area": "Fungus2",
 			"items": {
 				"Geo_Rock-Fungal_Below_Shrumal_Ogres": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 29.71,
 					"y": 63.18
 				},
 				"Lore_Tablet-Fungal_Wastes_Below_Shrumal_Ogres": {
+					"randAction": "Lore",
+					"randPool": "Lore",
+					"randType": "Lore",
 					"x": 32.4,
 					"y": 11.7
 				},
 				"Wanderer's_Journal-Fungal_Wastes_Thorns_Gauntlet": {
+					"randAction": "WanderersJournal",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 21.95,
 					"y": 31.28
 				}
@@ -4794,6 +5646,9 @@ window.mapData = {
 			"area": "Fungus2",
 			"items": {
 				"Charm_Notch-Shrumal_Ogres": {
+					"randAction": "Int",
+					"randPool": "Notch",
+					"randType": "Trinket",
 					"x": 37.47,
 					"y": 12.16
 				}
@@ -4849,6 +5704,9 @@ window.mapData = {
 			"area": "Fungus2",
 			"items": {
 				"Lore_Tablet-Fungal_Wastes_Hidden": {
+					"randAction": "Lore",
+					"randPool": "Lore",
+					"randType": "Lore",
 					"x": 19.9,
 					"y": 30.2
 				}
@@ -4870,6 +5728,9 @@ window.mapData = {
 			"area": "Fungus2",
 			"items": {
 				"Geo_Rock-Fungal_Above_Cloth": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 3.679914,
 					"y": 32.79153
 				}
@@ -4913,10 +5774,16 @@ window.mapData = {
 			"area": "Fungus2",
 			"items": {
 				"Geo_Rock-Fungal_After_Cloth": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 66.455,
 					"y": 66.825
 				},
 				"Soul_Totem-Before_Pilgrim's_Way": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 55.06,
 					"y": 24.26
 				}
@@ -4944,10 +5811,16 @@ window.mapData = {
 			"area": "Fungus2",
 			"items": {
 				"Geo_Rock-Fungal_Below_Pilgrim's_Way": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 26.56508,
 					"y": 61.9495
 				},
 				"Geo_Rock-Fungal_Below_Pilgrim's_Way_Dupe": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 24.17,
 					"y": 61.91726
 				}
@@ -4981,6 +5854,9 @@ window.mapData = {
 			"area": "Fungus2",
 			"items": {
 				"Lore_Tablet-Mantis_Outskirts": {
+					"randAction": "Lore",
+					"randPool": "Lore",
+					"randType": "Lore",
 					"x": 158.6,
 					"y": 11.7
 				}
@@ -5003,14 +5879,23 @@ window.mapData = {
 			"area": "Fungus2",
 			"items": {
 				"Geo_Rock-Mantis_Outskirts_Alcove": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 21.31,
 					"y": 35.79
 				},
 				"Geo_Rock-Mantis_Outskirts_Guarded": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 5.865558,
 					"y": 44.83987
 				},
 				"Geo_Rock-Mantis_Outskirts_Guarded_Dupe": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 7.85,
 					"y": 44.75
 				}
@@ -5038,38 +5923,65 @@ window.mapData = {
 			"area": "Fungus2",
 			"items": {
 				"Geo_Rock-Mantis_Village_Above_Claw": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 29.43,
 					"y": 33.68
 				},
 				"Geo_Rock-Mantis_Village_Above_Claw_Dupe": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 19.34,
 					"y": 33.7
 				},
 				"Geo_Rock-Mantis_Village_Above_Lever": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 83.04,
 					"y": 31.60717
 				},
 				"Geo_Rock-Mantis_Village_After_Lever": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 62.70118,
 					"y": 21.5454
 				},
 				"Geo_Rock-Mantis_Village_Below_Lore": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 43.58721,
 					"y": 21.61446
 				},
 				"Left_Mantis_Claw": {
+					"randAction": null,
+					"randPool": "SplitClaw",
+					"randType": "Big",
 					"x": 13.5,
 					"y": 20.4
 				},
 				"Lore_Tablet-Mantis_Village": {
+					"randAction": "Lore",
+					"randPool": "Lore",
+					"randType": "Lore",
 					"x": 47.2,
 					"y": 26.9
 				},
 				"Mantis_Claw": {
+					"randAction": null,
+					"randPool": "Skill",
+					"randType": "Big",
 					"x": 18.3963,
 					"y": 20.29
 				},
 				"Right_Mantis_Claw": {
+					"randAction": null,
+					"randPool": "SplitClaw",
+					"randType": "Big",
 					"x": 18.5,
 					"y": 20.4
 				}
@@ -5109,14 +6021,23 @@ window.mapData = {
 			"boss": "Mantis Lords",
 			"items": {
 				"Geo_Rock-Above_Mantis_Lords_1": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 25.64955,
 					"y": 50.58035
 				},
 				"Geo_Rock-Above_Mantis_Lords_2": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 2.09,
 					"y": 36.48
 				},
 				"Lifeblood_Cocoon-Mantis_Village": {
+					"randAction": "Lifeblood",
+					"randPool": "Cocoon",
+					"randType": "Lifeblood",
 					"x": 4.21,
 					"y": 25.92
 				}
@@ -5165,10 +6086,16 @@ window.mapData = {
 			"area": "Fungus2",
 			"items": {
 				"Wanderer's_Journal-Above_Mantis_Village": {
+					"randAction": "WanderersJournal",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 33.52,
 					"y": 25.19
 				},
 				"Whispering_Root-Mantis_Village": {
+					"randAction": "Essence",
+					"randPool": "Root",
+					"randType": "Trinket",
 					"x": 27.7,
 					"y": 3.4
 				}
@@ -5196,26 +6123,44 @@ window.mapData = {
 			"area": "Fungus2",
 			"items": {
 				"Fungal_Wastes_Map": {
+					"randAction": "Map",
+					"randPool": "Map",
+					"randType": "Trinket",
 					"x": 11.0,
 					"y": 35.0
 				},
 				"Geo_Rock-Fungal_After_Bouncy_Grub": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 92.42778,
 					"y": 34.88834
 				},
 				"Geo_Rock-Fungal_After_Bouncy_Grub_Dupe": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 94.41,
 					"y": 34.78756
 				},
 				"Geo_Rock-Fungal_After_Cornifer": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 74.9469,
 					"y": 46.87639
 				},
 				"Geo_Rock-Fungal_Bouncy_Grub_Lever": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 65.55877,
 					"y": 5.008116
 				},
 				"Grub-Fungal_Bouncy": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 142.77,
 					"y": 50.66
 				}
@@ -5259,14 +6204,23 @@ window.mapData = {
 			"area": "Fungus2",
 			"items": {
 				"Grub-Fungal_Spore_Shroom": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 7.81961,
 					"y": 42.50548
 				},
 				"Lore_Tablet-Spore_Shroom": {
+					"randAction": "Lore",
+					"randPool": "Lore",
+					"randType": "Lore",
 					"x": 56.9,
 					"y": 41.5
 				},
 				"Spore_Shroom": {
+					"randAction": "Charm",
+					"randPool": "Charm",
+					"randType": "Charm",
 					"x": 48.18093,
 					"y": 7.93
 				}
@@ -5289,14 +6243,23 @@ window.mapData = {
 			"area": "Fungus2",
 			"items": {
 				"Geo_Rock-Fungal_Above_City_Entrance": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 100.47,
 					"y": 40.79
 				},
 				"Lore_Tablet-Pilgrim's_Way_2": {
+					"randAction": "Lore",
+					"randPool": "Lore",
+					"randType": "Lore",
 					"x": 21.5,
 					"y": 15.2
 				},
 				"Soul_Totem-Pilgrim's_Way": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 71.11,
 					"y": 37.23
 				}
@@ -5320,6 +6283,9 @@ window.mapData = {
 			"area": "Fungus2",
 			"items": {
 				"Dashmaster": {
+					"randAction": "Charm",
+					"randPool": "Charm",
+					"randType": "Charm",
 					"x": 54.08734,
 					"y": 3.95
 				}
@@ -5343,22 +6309,37 @@ window.mapData = {
 			"area": "Fungus2",
 			"items": {
 				"Deepnest_Map-Right_[Gives_Quill]": {
+					"randAction": "Map",
+					"randPool": "Map",
+					"randType": "Trinket",
 					"x": 49.5,
 					"y": 23.2
 				},
 				"Geo_Rock-Deepnest_By_Mantis_Lords_1": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 4.29,
 					"y": 24.845
 				},
 				"Geo_Rock-Deepnest_By_Mantis_Lords_2": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 34.71,
 					"y": 24.89
 				},
 				"Geo_Rock-Depenest_Lower_Cornifer": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 72.12656,
 					"y": 17.94206
 				},
 				"Mask_Shard-Deepnest": {
+					"randAction": "MaskShard",
+					"randPool": "Mask",
+					"randType": "Trinket",
 					"x": 91.67,
 					"y": 14.57
 				}
@@ -5392,14 +6373,23 @@ window.mapData = {
 			"area": "Fungus2",
 			"items": {
 				"Fragile_Greed": {
+					"randAction": "Charm",
+					"randPool": "Charm",
+					"randType": "Shop",
 					"x": 8.53,
 					"y": 0.54
 				},
 				"Fragile_Heart": {
+					"randAction": "Charm",
+					"randPool": "Charm",
+					"randType": "Shop",
 					"x": 8.53,
 					"y": 0.54
 				},
 				"Fragile_Strength": {
+					"randAction": "Charm",
+					"randPool": "Charm",
+					"randType": "Shop",
 					"x": 8.53,
 					"y": 0.54
 				}
@@ -5433,14 +6423,23 @@ window.mapData = {
 			"area": "Fungus2",
 			"items": {
 				"Geo_Rock-Fungal_Core_Entrance": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 61.63,
 					"y": 36.89
 				},
 				"Rancid_Egg-Fungal_Core": {
+					"randAction": "Int",
+					"randPool": "Egg",
+					"randType": "Trinket",
 					"x": 13.39,
 					"y": 36.37
 				},
 				"Soul_Totem-Fungal_Core": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 9.753107,
 					"y": 56.45001
 				}
@@ -5464,18 +6463,30 @@ window.mapData = {
 			"area": "Fungus2",
 			"items": {
 				"Geo_Rock-Fungal_Core_Above_Elder": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 54.806,
 					"y": 46.99926
 				},
 				"Geo_Rock-Fungal_Core_Hidden": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 46.09,
 					"y": 102.0
 				},
 				"Grimmkin_Flame-Fungal_Core": {
+					"randAction": "Int",
+					"randPool": "Flame",
+					"randType": "Flame",
 					"x": 27.65,
 					"y": 34.01
 				},
 				"Lore_Tablet-Fungal_Core": {
+					"randAction": "Lore",
+					"randPool": "Lore",
+					"randType": "Lore",
 					"x": 51.8,
 					"y": 98.6
 				}
@@ -5499,14 +6510,23 @@ window.mapData = {
 			"area": "Fungus2",
 			"items": {
 				"620_Geo-Mantis_Lords_Chest": {
+					"randAction": "SpawnGeo",
+					"randPool": "Geo",
+					"randType": "Geo",
 					"x": 68.89,
 					"y": 19.79
 				},
 				"Hallownest_Seal-Mantis_Lords": {
+					"randAction": "HallownestSeal",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 35.8100006,
 					"y": 28.2899993
 				},
 				"Mark_of_Pride": {
+					"randAction": "Charm",
+					"randPool": "Charm",
+					"randType": "Charm",
 					"x": 39.3600006,
 					"y": 18.269999300000002
 				}
@@ -5525,6 +6545,9 @@ window.mapData = {
 			"boss": "Elder Hu",
 			"items": {
 				"Boss_Essence-Elder_Hu": {
+					"randAction": "Essence",
+					"randPool": "Essence_Boss",
+					"randType": "Trinket",
 					"x": 52.29,
 					"y": 3.26
 				}
@@ -5542,6 +6565,9 @@ window.mapData = {
 			"area": "Fungus2",
 			"items": {
 				"Whispering_Root-Leg_Eater": {
+					"randAction": "Essence",
+					"randPool": "Root",
+					"randType": "Trinket",
 					"x": 34.7,
 					"y": 7.4
 				}
@@ -5564,6 +6590,9 @@ window.mapData = {
 			"area": "Fungus2",
 			"items": {
 				"Hallownest_Seal-Queen's_Station": {
+					"randAction": "HallownestSeal",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 35.16,
 					"y": 14.35783
 				}
@@ -5640,6 +6669,9 @@ window.mapData = {
 			"area": "Fungus3",
 			"items": {
 				"Geo_Rock-Queen's_Gardens_Acid_Entrance": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 94.66969,
 					"y": 16.87
 				}
@@ -5732,10 +6764,16 @@ window.mapData = {
 			"area": "Fungus3",
 			"items": {
 				"Geo_Rock-Queen's_Gardens_Below_Stag": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 30.41,
 					"y": 34.8
 				},
 				"Grub-Queen's_Gardens_Stag": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 11.82825,
 					"y": 35.49953
 				}
@@ -5758,6 +6796,9 @@ window.mapData = {
 			"area": "Fungus3",
 			"items": {
 				"Whispering_Root-Queens_Gardens": {
+					"randAction": "Essence",
+					"randPool": "Root",
+					"randType": "Trinket",
 					"x": 34.0,
 					"y": 8.5
 				}
@@ -5816,6 +6857,9 @@ window.mapData = {
 			"area": "Fungus3",
 			"items": {
 				"Soul_Totem-Top_Left_Queen's_Gardens": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 67.84,
 					"y": 16.71
 				}
@@ -5838,6 +6882,9 @@ window.mapData = {
 			"area": "Fungus3",
 			"items": {
 				"Grub-Queen's_Gardens_Top": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 21.28756,
 					"y": 134.4546
 				}
@@ -5910,6 +6957,9 @@ window.mapData = {
 			"area": "FogCanyon",
 			"items": {
 				"Fog_Canyon_Map": {
+					"randAction": "Map",
+					"randPool": "Map",
+					"randType": "Trinket",
 					"x": 36.4,
 					"y": 32.0
 				}
@@ -5948,10 +6998,16 @@ window.mapData = {
 			"area": "FogCanyon",
 			"items": {
 				"Geo_Rock-Fog_Canyon_East": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 27.9938,
 					"y": 58.87676
 				},
 				"Hallownest_Seal-Fog_Canyon_East": {
+					"randAction": "HallownestSeal",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 7.96,
 					"y": 80.56
 				}
@@ -6006,6 +7062,9 @@ window.mapData = {
 			"area": "FogCanyon",
 			"items": {
 				"Charm_Notch-Fog_Canyon": {
+					"randAction": "Int",
+					"randPool": "Notch",
+					"randType": "Trinket",
 					"x": 13.05876156,
 					"y": 8.90247688
 				}
@@ -6023,10 +7082,16 @@ window.mapData = {
 			"area": "FogCanyon",
 			"items": {
 				"Hallownest_Seal-Fog_Canyon_West": {
+					"randAction": "HallownestSeal",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 21.47,
 					"y": 15.23
 				},
 				"Lifeblood_Cocoon-Fog_Canyon_West": {
+					"randAction": "Lifeblood",
+					"randPool": "Cocoon",
+					"randType": "Lifeblood",
 					"x": 4.85,
 					"y": 13.61
 				}
@@ -6044,6 +7109,9 @@ window.mapData = {
 			"area": "Fungus3",
 			"items": {
 				"Rancid_Egg-Queen's_Gardens": {
+					"randAction": "Int",
+					"randPool": "Egg",
+					"randType": "Trinket",
 					"x": 48.61173,
 					"y": 18.38
 				}
@@ -6083,14 +7151,23 @@ window.mapData = {
 			"area": "Fungus3",
 			"items": {
 				"Geo_Rock-Love_Key": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 34.74,
 					"y": 31.02
 				},
 				"Geo_Rock-Love_Key_Dupe": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 3.51,
 					"y": 5.838402
 				},
 				"Love_Key": {
+					"randAction": null,
+					"randPool": "Key",
+					"randType": "Trinket",
 					"x": 103.827,
 					"y": 35.89954
 				}
@@ -6115,10 +7192,16 @@ window.mapData = {
 			"boss": "Marmu",
 			"items": {
 				"Queen's_Gardens_Stag": {
+					"randAction": "Stag",
+					"randPool": "Stag",
+					"randType": "Trinket",
 					"x": 159.8,
 					"y": 13.4
 				},
 				"Soul_Totem-Below_Marmu": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 59.47,
 					"y": 3.43
 				}
@@ -6147,6 +7230,9 @@ window.mapData = {
 			"area": "Fungus3",
 			"items": {
 				"Boss_Essence-Marmu": {
+					"randAction": "Essence",
+					"randPool": "Essence_Boss",
+					"randType": "Trinket",
 					"x": 73.42,
 					"y": 10.31
 				}
@@ -6180,6 +7266,9 @@ window.mapData = {
 			"area": "FogCanyon",
 			"items": {
 				"Grub-Fog_Canyon": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 6.11,
 					"y": 22.53
 				}
@@ -6208,14 +7297,23 @@ window.mapData = {
 			"area": "Fungus3",
 			"items": {
 				"Geo_Rock-Queen's_Gardens_Above_Marmu": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 41.88,
 					"y": 16.6701
 				},
 				"Grub-Queen's_Gardens_Marmu": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 16.17832,
 					"y": 94.46994
 				},
 				"Hallownest_Seal-Queen's_Gardens": {
+					"randAction": "HallownestSeal",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 6.148664,
 					"y": 23.28
 				}
@@ -6301,18 +7399,30 @@ window.mapData = {
 			"boss": "Uumuu",
 			"items": {
 				"Lore_Tablet-Archives_Left": {
+					"randAction": "Lore",
+					"randPool": "Lore",
+					"randType": "Lore",
 					"x": 20.6,
 					"y": 88.7
 				},
 				"Lore_Tablet-Archives_Right": {
+					"randAction": "Lore",
+					"randPool": "Lore",
+					"randType": "Lore",
 					"x": 97.8,
 					"y": 78.8
 				},
 				"Lore_Tablet-Archives_Upper": {
+					"randAction": "Lore",
+					"randPool": "Lore",
+					"randType": "Lore",
 					"x": 97.0,
 					"y": 162.8
 				},
 				"Monomon": {
+					"randAction": "Dreamer",
+					"randPool": "Dreamer",
+					"randType": "Big",
 					"x": 54.0,
 					"y": 89.0
 				}
@@ -6363,7 +7473,7 @@ window.mapData = {
 				},
 				"door_dreamReturnGG": {
 					"to": null,
-					"x": 121.25000336,
+					"x": 109.50000336,
 					"y": 34.5458064
 				},
 				"top1": {
@@ -6504,18 +7614,30 @@ window.mapData = {
 			"boss": "Pale Lurker",
 			"items": {
 				"Geo_Rock-Pale_Lurker": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 123.32,
 					"y": 72.52
 				},
 				"King's_Idol-Pale_Lurker": {
+					"randAction": "KingsIdol",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 222.92,
 					"y": 51.17
 				},
 				"Simple_Key-Lurker": {
+					"randAction": "Int",
+					"randPool": "Key",
+					"randType": "Trinket",
 					"x": 169.5,
 					"y": 52.4
 				},
 				"Soul_Totem-Pale_Lurker": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 65.76,
 					"y": 79.58321
 				}
@@ -6578,6 +7700,9 @@ window.mapData = {
 			"area": "Waterways",
 			"items": {
 				"Geo_Rock-Godhome_Pipeway": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 27.99,
 					"y": 5.46
 				}
@@ -6660,6 +7785,9 @@ window.mapData = {
 			"area": "Waterways",
 			"items": {
 				"Godtuner": {
+					"randAction": null,
+					"randPool": "Key",
+					"randType": "Big",
 					"x": 45.769999999999996,
 					"y": 15.1
 				}
@@ -6690,8 +7818,8 @@ window.mapData = {
 			"transitions": {
 				"door_dreamReturnGG": {
 					"to": null,
-					"x": 193.379,
-					"y": 36.160000000000004
+					"x": 92.49,
+					"y": 5.96
 				},
 				"left1": {
 					"to": "GG_Atrium[Door_Workshop]",
@@ -6733,10 +7861,16 @@ window.mapData = {
 			"boss": "Grimm, Nightmare King Grimm",
 			"items": {
 				"Charm_Notch-Grimm": {
+					"randAction": "Int",
+					"randPool": "Notch",
+					"randType": "Trinket",
 					"x": 79.05,
 					"y": 6.873710000000001
 				},
 				"Grimmchild": {
+					"randAction": "Grimmchild",
+					"randPool": "Charm",
+					"randType": "Charm",
 					"x": 75.0,
 					"y": 7.0
 				}
@@ -6775,6 +7909,9 @@ window.mapData = {
 			"area": "Hive",
 			"items": {
 				"Geo_Rock-Hive_Entrance": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 99.64955,
 					"y": 36.20964
 				}
@@ -6811,18 +7948,30 @@ window.mapData = {
 			"area": "Hive",
 			"items": {
 				"Geo_Rock-Hive_After_Root": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 138.29,
 					"y": 74.04
 				},
 				"Geo_Rock-Hive_Below_Root": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 191.32,
 					"y": 18.04
 				},
 				"Geo_Rock-Hive_Outside_Bench": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 125.2619,
 					"y": 26.20369
 				},
 				"Whispering_Root-Hive": {
+					"randAction": "Essence",
+					"randPool": "Root",
+					"randType": "Trinket",
 					"x": 168.7,
 					"y": 24.1
 				}
@@ -6849,22 +7998,37 @@ window.mapData = {
 			"area": "Hive",
 			"items": {
 				"Geo_Rock-Hive_Below_Stash": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 105.8294,
 					"y": 112.1796
 				},
 				"Geo_Rock-Hive_Stash": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 58.57,
 					"y": 130.06
 				},
 				"Geo_Rock-Hive_Stash_Dupe": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 51.0,
 					"y": 131.14
 				},
 				"Grimmkin_Flame-Hive": {
+					"randAction": "Int",
+					"randPool": "Flame",
+					"randType": "Flame",
 					"x": 86.0804,
 					"y": 123.6802
 				},
 				"Grub-Hive_External": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 20.37036,
 					"y": 139.4681
 				}
@@ -6928,18 +8092,30 @@ window.mapData = {
 			"area": "Hive",
 			"items": {
 				"Geo_Rock-Hive_Above_Mask": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 120.1783,
 					"y": 120.0663
 				},
 				"Geo_Rock-Hive_Below_Grub": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 173.16,
 					"y": 121.11
 				},
 				"Grub-Hive_Internal": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 209.39,
 					"y": 126.47
 				},
 				"Mask_Shard-Hive": {
+					"randAction": "MaskShard",
+					"randPool": "Mask",
+					"randType": "Trinket",
 					"x": 130.99,
 					"y": 96.33
 				}
@@ -6967,6 +8143,9 @@ window.mapData = {
 			"boss": "Hive Knight",
 			"items": {
 				"Hiveblood": {
+					"randAction": "Charm",
+					"randPool": "Charm",
+					"randType": "Charm",
 					"x": 37.8,
 					"y": 12.97
 				}
@@ -6989,6 +8168,9 @@ window.mapData = {
 			"area": "Mines",
 			"items": {
 				"Rancid_Egg-Crystal_Peak_Dive_Entrance": {
+					"randAction": "Int",
+					"randPool": "Egg",
+					"randType": "Trinket",
 					"x": 28.15,
 					"y": 35.28588
 				}
@@ -7012,14 +8194,23 @@ window.mapData = {
 			"area": "Mines",
 			"items": {
 				"Geo_Rock-Crystal_Peak_Lower_Conveyer_1": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 67.78553,
 					"y": 9.56019
 				},
 				"Geo_Rock-Crystal_Peak_Lower_Conveyer_2": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 90.02763,
 					"y": 5.635585
 				},
 				"Geo_Rock-Crystal_Peak_Lower_Middle": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 132.7479,
 					"y": 25.77
 				}
@@ -7053,6 +8244,9 @@ window.mapData = {
 			"area": "Mines",
 			"items": {
 				"Grub-Crystal_Peak_Spike": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 24.47,
 					"y": 75.45
 				}
@@ -7079,14 +8273,23 @@ window.mapData = {
 			"area": "Mines",
 			"items": {
 				"Geo_Rock-Crystal_Peak_Before_Dark_Room": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 29.70548,
 					"y": 33.439
 				},
 				"Geo_Rock-Crystal_Peak_Before_Dark_Room_Dupe": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 31.82,
 					"y": 34.47
 				},
 				"Grub-Crystal_Peak_Below_Chest": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 15.14,
 					"y": 77.56
 				}
@@ -7123,6 +8326,9 @@ window.mapData = {
 			"area": "Mines",
 			"items": {
 				"Geo_Rock-Crystal_Peak_Above_Spike_Grub": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 8.510585,
 					"y": 13.58
 				}
@@ -7193,6 +8399,9 @@ window.mapData = {
 			"area": "Mines",
 			"items": {
 				"Grimmkin_Flame-Crystal_Peak": {
+					"randAction": "Int",
+					"randPool": "Flame",
+					"randType": "Flame",
 					"x": 110.63,
 					"y": 6.9
 				}
@@ -7220,6 +8429,9 @@ window.mapData = {
 			"area": "Mines",
 			"items": {
 				"Shopkeeper's_Key": {
+					"randAction": null,
+					"randPool": "Key",
+					"randType": "Trinket",
 					"x": 34.8,
 					"y": 40.47
 				}
@@ -7270,10 +8482,16 @@ window.mapData = {
 			"area": "Mines",
 			"items": {
 				"Geo_Rock-Crystal_Peak_Mimic_Grub": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 37.44095,
 					"y": 20.31845
 				},
 				"Grub-Crystal_Peak_Mimic": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 54.57355,
 					"y": 22.58792
 				}
@@ -7308,6 +8526,9 @@ window.mapData = {
 			"boss": "Crystal Guradian",
 			"items": {
 				"Boss_Geo-Crystal_Guardian": {
+					"randAction": "SpawnGeo",
+					"randPool": "Boss_Geo",
+					"randType": "Geo",
 					"x": 34.0,
 					"y": 11.5
 				}
@@ -7340,6 +8561,9 @@ window.mapData = {
 			"area": "Mines",
 			"items": {
 				"Grub-Crystal_Peak_Crushers": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 38.85,
 					"y": 26.51163
 				}
@@ -7362,26 +8586,44 @@ window.mapData = {
 			"area": "Mines",
 			"items": {
 				"Geo_Rock-Crystal_Peak_Conga_Line": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 59.93,
 					"y": 163.48
 				},
 				"Geo_Rock-Crystal_Peak_Dive_Egg": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 8.27,
 					"y": 149.22
 				},
 				"Geo_Rock-Crystal_Peak_Dive_Egg_Dupe": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 23.68,
 					"y": 157.0
 				},
 				"Rancid_Egg-Crystal_Peak_Tall_Room": {
+					"randAction": "Int",
+					"randPool": "Egg",
+					"randType": "Trinket",
 					"x": 30.87,
 					"y": 149.33
 				},
 				"Soul_Totem-Upper_Crystal_Peak": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 31.26292,
 					"y": 76.11015
 				},
 				"Wanderer's_Journal-Crystal_Peak_Crawlers": {
+					"randAction": "WanderersJournal",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 47.07985,
 					"y": 174.26
 				}
@@ -7423,6 +8665,9 @@ window.mapData = {
 			"area": "Mines",
 			"items": {
 				"Whispering_Root-Crystal_Peak": {
+					"randAction": "Essence",
+					"randPool": "Root",
+					"randType": "Trinket",
 					"x": 91.6,
 					"y": 8.0
 				}
@@ -7455,6 +8700,9 @@ window.mapData = {
 			"area": "Mines",
 			"items": {
 				"Grub-Hallownest_Crown": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 51.14,
 					"y": 6.61
 				}
@@ -7472,26 +8720,44 @@ window.mapData = {
 			"area": "Mines",
 			"items": {
 				"Geo_Rock-Hallownest_Crown_Dive": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 14.03,
 					"y": 52.63
 				},
 				"Geo_Rock-Hallownest_Crown_Dive_Dupe": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 16.30236,
 					"y": 51.62914
 				},
 				"Geo_Rock-Hallownest_Crown_Hidden": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 22.24,
 					"y": 100.14
 				},
 				"Geo_Rock-Hallownest_Crown_Hidden_Dupe_1": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 25.68,
 					"y": 95.57
 				},
 				"Geo_Rock-Hallownest_Crown_Hidden_Dupe_2": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 35.54,
 					"y": 95.6
 				},
 				"Soul_Totem-Hallownest_Crown": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 52.87,
 					"y": 35.7
 				}
@@ -7515,6 +8781,9 @@ window.mapData = {
 			"area": "Mines",
 			"items": {
 				"Soul_Totem-Outside_Crystallized_Mound": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 90.93,
 					"y": 49.31011
 				}
@@ -7543,6 +8812,9 @@ window.mapData = {
 			"area": "Mines",
 			"items": {
 				"Rancid_Egg-Crystal_Peak_Dark_Room": {
+					"randAction": "Int",
+					"randPool": "Egg",
+					"randType": "Trinket",
 					"x": 5.45,
 					"y": 58.31
 				}
@@ -7570,10 +8842,16 @@ window.mapData = {
 			"area": "Mines",
 			"items": {
 				"Crystal_Peak_Map": {
+					"randAction": "Map",
+					"randPool": "Map",
+					"randType": "Trinket",
 					"x": 157.0,
 					"y": 8.4
 				},
 				"King's_Idol-Crystal_Peak": {
+					"randAction": "KingsIdol",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 160.68,
 					"y": 16.83706
 				}
@@ -7596,22 +8874,37 @@ window.mapData = {
 			"area": "Mines",
 			"items": {
 				"Crystal_Heart": {
+					"randAction": null,
+					"randPool": "Skill",
+					"randType": "Big",
 					"x": 243.63,
 					"y": 9.29
 				},
 				"Geo_Rock-Crystal_Peak_Before_Crystal_Heart": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 38.1,
 					"y": 11.38
 				},
 				"Grub-Crystal_Heart": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 29.48,
 					"y": 33.60351
 				},
 				"Soul_Totem-Crystal_Heart_1": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 81.141,
 					"y": 51.512
 				},
 				"Soul_Totem-Crystal_Heart_2": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 240.6007,
 					"y": 41.33
 				}
@@ -7630,10 +8923,16 @@ window.mapData = {
 			"boss": "Enraged Guardian",
 			"items": {
 				"Boss_Geo-Enraged_Guardian": {
+					"randAction": "SpawnGeo",
+					"randPool": "Boss_Geo",
+					"randType": "Geo",
 					"x": 30.0,
 					"y": 11.5
 				},
 				"Mask_Shard-Enraged_Guardian": {
+					"randAction": "MaskShard",
+					"randPool": "Mask",
+					"randType": "Trinket",
 					"x": 8.8,
 					"y": 13.11
 				}
@@ -7651,14 +8950,23 @@ window.mapData = {
 			"area": "Mines",
 			"items": {
 				"Geo_Rock-Crystal_Peak_Entrance": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 42.5,
 					"y": 2.6
 				},
 				"Geo_Rock-Crystal_Peak_Entrance_Dupe_1": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 39.22,
 					"y": 2.6
 				},
 				"Geo_Rock-Crystal_Peak_Entrance_Dupe_2": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 70.65,
 					"y": 2.6
 				}
@@ -7682,6 +8990,9 @@ window.mapData = {
 			"area": "Mines",
 			"items": {
 				"Pale_Ore-Crystal_Peak": {
+					"randAction": "Int",
+					"randPool": "Ore",
+					"randType": "Trinket",
 					"x": 43.67134,
 					"y": 53.9633
 				}
@@ -7715,14 +9026,23 @@ window.mapData = {
 			"area": "Mines",
 			"items": {
 				"Descending_Dark": {
+					"randAction": "Additive",
+					"randPool": "Skill",
+					"randType": "Spell",
 					"x": 59.62053,
 					"y": 51.4621
 				},
 				"Grub-Crystallized_Mound": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 107.0188,
 					"y": 69.4743
 				},
 				"Soul_Totem-Crystallized_Mound": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 52.74961,
 					"y": 35.24077
 				}
@@ -7741,6 +9061,9 @@ window.mapData = {
 			"area": "Mines",
 			"items": {
 				"Deep_Focus": {
+					"randAction": "Charm",
+					"randPool": "Charm",
+					"randType": "Charm",
 					"x": 23.86,
 					"y": 9.27
 				}
@@ -7758,14 +9081,23 @@ window.mapData = {
 			"area": "Mines",
 			"items": {
 				"80_Geo-Crystal_Peak_Chest": {
+					"randAction": "SpawnGeo",
+					"randPool": "Geo",
+					"randType": "Geo",
 					"x": 28.89,
 					"y": 15.79
 				},
 				"Geo_Rock-Crystal_Peak_Above_Crushers_Higher": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 21.35,
 					"y": 46.39
 				},
 				"Geo_Rock-Crystal_Peak_Above_Crushers_Lower": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 20.62,
 					"y": 23.64
 				}
@@ -7822,6 +9154,9 @@ window.mapData = {
 			"area": "RestingGrounds",
 			"items": {
 				"Boss_Essence-Xero": {
+					"randAction": "Essence",
+					"randPool": "Essence_Boss",
+					"randType": "Trinket",
 					"x": 98.13,
 					"y": 11.51
 				}
@@ -7849,10 +9184,16 @@ window.mapData = {
 			"area": "RestingGrounds",
 			"items": {
 				"Soul_Totem-Resting_Grounds": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 34.48,
 					"y": 35.78
 				},
 				"Whispering_Root-Resting_Grounds": {
+					"randAction": "Essence",
+					"randPool": "Root",
+					"randType": "Trinket",
 					"x": 15.7,
 					"y": 69.4
 				}
@@ -7896,10 +9237,16 @@ window.mapData = {
 			"area": "RestingGrounds",
 			"items": {
 				"Grimmkin_Flame-Resting_Grounds": {
+					"randAction": "Int",
+					"randPool": "Flame",
+					"randType": "Flame",
 					"x": 31.05,
 					"y": 19.96
 				},
 				"Soul_Totem-Below_Xero": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 5.221,
 					"y": 15.346
 				}
@@ -7928,34 +9275,58 @@ window.mapData = {
 			"area": "RestingGrounds",
 			"items": {
 				"Arcane_Egg-Seer": {
+					"randAction": "ArcaneEgg",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 27.0,
 					"y": 10.0
 				},
 				"Awoken_Dream_Nail": {
+					"randAction": "Additive",
+					"randPool": "Skill",
+					"randType": "Big",
 					"x": 21.0,
 					"y": 10.0
 				},
 				"Dream_Gate": {
+					"randAction": "Additive",
+					"randPool": "Skill",
+					"randType": "Big",
 					"x": 30.0,
 					"y": 10.0
 				},
 				"Dream_Wielder": {
+					"randAction": "Charm",
+					"randPool": "Charm",
+					"randType": "Charm",
 					"x": 36.0,
 					"y": 10.0
 				},
 				"Hallownest_Seal-Seer": {
+					"randAction": "HallownestSeal",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 42.0,
 					"y": 10.0
 				},
 				"Mask_Shard-Seer": {
+					"randAction": "MaskShard",
+					"randPool": "Mask",
+					"randType": "Trinket",
 					"x": 24.0,
 					"y": 10.0
 				},
 				"Pale_Ore-Seer": {
+					"randAction": "Int",
+					"randPool": "Ore",
+					"randType": "Trinket",
 					"x": 39.0,
 					"y": 10.0
 				},
 				"Vessel_Fragment-Seer": {
+					"randAction": "VesselFragment",
+					"randPool": "Vessel",
+					"randType": "Trinket",
 					"x": 33.0,
 					"y": 10.0
 				}
@@ -7978,10 +9349,16 @@ window.mapData = {
 			"area": "RestingGrounds",
 			"items": {
 				"King's_Idol-Glade_of_Hope": {
+					"randAction": "KingsIdol",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 196.51,
 					"y": 26.2981
 				},
 				"Whispering_Root-Spirits_Glade": {
+					"randAction": "Essence",
+					"randPool": "Root",
+					"randType": "Trinket",
 					"x": 153.4,
 					"y": 56.5
 				}
@@ -8005,10 +9382,16 @@ window.mapData = {
 			"area": "RestingGrounds",
 			"items": {
 				"Resting_Grounds_Map": {
+					"randAction": "Map",
+					"randPool": "Map",
+					"randType": "Trinket",
 					"x": 8.2,
 					"y": 6.1
 				},
 				"Resting_Grounds_Stag": {
+					"randAction": "Stag",
+					"randPool": "Stag",
+					"randType": "Trinket",
 					"x": 27.6,
 					"y": 6.4
 				}
@@ -8032,34 +9415,58 @@ window.mapData = {
 			"area": "RestingGrounds",
 			"items": {
 				"150_Geo-Resting_Grounds_Chest": {
+					"randAction": "SpawnGeo",
+					"randPool": "Geo",
+					"randType": "Geo",
 					"x": 142.97,
 					"y": 8.822608
 				},
 				"Geo_Rock-Resting_Grounds_Catacombs_Grub": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 96.92,
 					"y": 17.64
 				},
 				"Geo_Rock-Resting_Grounds_Catacombs_Left": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 46.55,
 					"y": 14.6
 				},
 				"Geo_Rock-Resting_Grounds_Catacombs_Left_Dupe": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 33.63,
 					"y": 14.61942
 				},
 				"Grub-Resting_Grounds": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 117.5218,
 					"y": 17.44987
 				},
 				"Hallownest_Seal-Resting_Grounds_Catacombs": {
+					"randAction": "HallownestSeal",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 62.42,
 					"y": 13.18
 				},
 				"Soul_Eater": {
+					"randAction": "Charm",
+					"randPool": "Charm",
+					"randType": "Charm",
 					"x": 216.01,
 					"y": 18.13
 				},
 				"Wanderer's_Journal-Resting_Grounds_Catacombs": {
+					"randAction": "WanderersJournal",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 220.8222,
 					"y": 3.300061
 				}
@@ -8104,6 +9511,9 @@ window.mapData = {
 			"area": "RestingGrounds",
 			"items": {
 				"Dreamshield": {
+					"randAction": "Charm",
+					"randPool": "Charm",
+					"randType": "Charm",
 					"x": 15.77643,
 					"y": 7.513873
 				}
@@ -8121,6 +9531,9 @@ window.mapData = {
 			"area": "Room",
 			"items": {
 				"Mask_Shard-Bretta": {
+					"randAction": "MaskShard",
+					"randPool": "Mask",
+					"randType": "Trinket",
 					"x": 19.79,
 					"y": 7.674447
 				}
@@ -8144,6 +9557,9 @@ window.mapData = {
 			"boss": "Grey Prince Zote",
 			"items": {
 				"Boss_Essence-Grey_Prince_Zote": {
+					"randAction": "Essence",
+					"randPool": "Essence_Boss",
+					"randType": "Trinket",
 					"x": 16.29,
 					"y": 7.03
 				}
@@ -8171,22 +9587,37 @@ window.mapData = {
 			"area": "Room",
 			"items": {
 				"Lifeblood_Heart": {
+					"randAction": "Charm",
+					"randPool": "Charm",
+					"randType": "Shop",
 					"x": 8.53,
 					"y": 0.54
 				},
 				"Longnail": {
+					"randAction": "Charm",
+					"randPool": "Charm",
+					"randType": "Shop",
 					"x": 8.53,
 					"y": 0.54
 				},
 				"Quick_Focus": {
+					"randAction": "Charm",
+					"randPool": "Charm",
+					"randType": "Shop",
 					"x": 8.53,
 					"y": 0.54
 				},
 				"Shaman_Stone": {
+					"randAction": "Charm",
+					"randPool": "Charm",
+					"randType": "Shop",
 					"x": 8.53,
 					"y": 0.54
 				},
 				"Steady_Body": {
+					"randAction": "Charm",
+					"randPool": "Charm",
+					"randType": "Shop",
 					"x": 8.53,
 					"y": 0.54
 				}
@@ -8244,6 +9675,9 @@ window.mapData = {
 			"area": "Room",
 			"items": {
 				"Charm_Notch-Colosseum": {
+					"randAction": "Int",
+					"randPool": "Notch",
+					"randType": "Trinket",
 					"x": 103.2545,
 					"y": 23.77254
 				}
@@ -8281,6 +9715,9 @@ window.mapData = {
 			"area": "Room",
 			"items": {
 				"Pale_Ore-Colosseum": {
+					"randAction": "Int",
+					"randPool": "Ore",
+					"randType": "Trinket",
 					"x": 103.2544,
 					"y": 23.77254
 				}
@@ -8320,10 +9757,16 @@ window.mapData = {
 			"area": "Room",
 			"items": {
 				"Lore_Tablet-World_Sense": {
+					"randAction": "Lore",
+					"randPool": "Lore",
+					"randType": "Lore",
 					"x": 202.3,
 					"y": 7.6
 				},
 				"World_Sense": {
+					"randAction": null,
+					"randPool": "Dreamer",
+					"randType": "Big",
 					"x": 202.0,
 					"y": 7.0
 				}
@@ -8357,10 +9800,16 @@ window.mapData = {
 			"area": "Room",
 			"items": {
 				"Geo_Rock-Overgrown_Mound": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 126.85,
 					"y": 29.64
 				},
 				"Howling_Wraiths": {
+					"randAction": "Additive",
+					"randPool": "Skill",
+					"randType": "Spell",
 					"x": 132.99,
 					"y": 11.83
 				}
@@ -8379,10 +9828,16 @@ window.mapData = {
 			"area": "Room",
 			"items": {
 				"Geo_Rock-Fluke_Hermit": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 8.394572,
 					"y": 85.12244
 				},
 				"Geo_Rock-Fluke_Hermit_Dupe": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 8.93,
 					"y": 74.08
 				}
@@ -8418,6 +9873,9 @@ window.mapData = {
 			"area": "Room",
 			"items": {
 				"Mask_Shard-Grey_Mourner": {
+					"randAction": "MaskShard",
+					"randPool": "Mask",
+					"randType": "Trinket",
 					"x": 22.21745,
 					"y": 8.223626
 				}
@@ -8471,6 +9929,9 @@ window.mapData = {
 			"area": "Room",
 			"items": {
 				"Queen_Fragment": {
+					"randAction": "Kingsoul",
+					"randPool": "Charm",
+					"randType": "Big",
 					"x": 70.44,
 					"y": 12.33
 				}
@@ -8500,6 +9961,9 @@ window.mapData = {
 			"area": "Room",
 			"items": {
 				"Nailmaster's_Glory": {
+					"randAction": "Charm",
+					"randPool": "Charm",
+					"randType": "Charm",
 					"x": 75.77,
 					"y": 4.093942
 				}
@@ -8522,6 +9986,9 @@ window.mapData = {
 			"area": "Room",
 			"items": {
 				"Dirtmouth_Stag": {
+					"randAction": "DirtmouthStag",
+					"randPool": "Stag",
+					"randType": "Trinket",
 					"x": 39.4,
 					"y": 20.4
 				}
@@ -8567,6 +10034,9 @@ window.mapData = {
 			"area": "Room",
 			"items": {
 				"King's_Brand": {
+					"randAction": null,
+					"randPool": "Key",
+					"randType": "Big",
 					"x": 15.59,
 					"y": 7.92
 				}
@@ -8584,6 +10054,9 @@ window.mapData = {
 			"area": "Room",
 			"items": {
 				"Wayward_Compass": {
+					"randAction": "Charm",
+					"randPool": "Charm",
+					"randType": "Shop",
 					"x": 8.53,
 					"y": 0.54
 				}
@@ -8601,6 +10074,9 @@ window.mapData = {
 			"area": "Room",
 			"items": {
 				"Cyclone_Slash": {
+					"randAction": null,
+					"randPool": "Skill",
+					"randType": "Big",
 					"x": 68.33,
 					"y": 5.88
 				}
@@ -8618,6 +10094,9 @@ window.mapData = {
 			"area": "Room",
 			"items": {
 				"Great_Slash": {
+					"randAction": null,
+					"randPool": "Skill",
+					"randType": "Big",
 					"x": 33.83,
 					"y": 5.89
 				}
@@ -8635,6 +10114,9 @@ window.mapData = {
 			"area": "Room",
 			"items": {
 				"Dash_Slash": {
+					"randAction": null,
+					"randPool": "Skill",
+					"randType": "Big",
 					"x": 30.71,
 					"y": 5.86
 				}
@@ -8676,58 +10158,100 @@ window.mapData = {
 			"area": "Room",
 			"items": {
 				"Elegant_Key": {
+					"randAction": null,
+					"randPool": "Key",
+					"randType": "Shop",
 					"x": 8.53,
 					"y": 0.54
 				},
 				"Gathering_Swarm": {
+					"randAction": "Charm",
+					"randPool": "Charm",
+					"randType": "Shop",
 					"x": 8.53,
 					"y": 0.54
 				},
 				"Heavy_Blow": {
+					"randAction": "Charm",
+					"randPool": "Charm",
+					"randType": "Shop",
 					"x": 8.53,
 					"y": 0.54
 				},
 				"Lumafly_Lantern": {
+					"randAction": null,
+					"randPool": "Key",
+					"randType": "Shop",
 					"x": 8.53,
 					"y": 0.54
 				},
 				"Mask_Shard-Sly1": {
+					"randAction": "MaskShard",
+					"randPool": "Mask",
+					"randType": "Shop",
 					"x": 8.53,
 					"y": 0.54
 				},
 				"Mask_Shard-Sly2": {
+					"randAction": "MaskShard",
+					"randPool": "Mask",
+					"randType": "Shop",
 					"x": 8.53,
 					"y": 0.54
 				},
 				"Mask_Shard-Sly3": {
+					"randAction": "MaskShard",
+					"randPool": "Mask",
+					"randType": "Shop",
 					"x": 8.53,
 					"y": 0.54
 				},
 				"Mask_Shard-Sly4": {
+					"randAction": "MaskShard",
+					"randPool": "Mask",
+					"randType": "Shop",
 					"x": 8.53,
 					"y": 0.54
 				},
 				"Rancid_Egg-Sly": {
+					"randAction": "Int",
+					"randPool": "Egg",
+					"randType": "Shop",
 					"x": 8.53,
 					"y": 0.54
 				},
 				"Simple_Key-Sly": {
+					"randAction": "Int",
+					"randPool": "Key",
+					"randType": "Shop",
 					"x": 8.53,
 					"y": 0.54
 				},
 				"Sprintmaster": {
+					"randAction": "Charm",
+					"randPool": "Charm",
+					"randType": "Shop",
 					"x": 8.53,
 					"y": 0.54
 				},
 				"Stalwart_Shell": {
+					"randAction": "Charm",
+					"randPool": "Charm",
+					"randType": "Shop",
 					"x": 8.53,
 					"y": 0.54
 				},
 				"Vessel_Fragment-Sly1": {
+					"randAction": "VesselFragment",
+					"randPool": "Vessel",
+					"randType": "Shop",
 					"x": 8.53,
 					"y": 0.54
 				},
 				"Vessel_Fragment-Sly2": {
+					"randAction": "VesselFragment",
+					"randPool": "Vessel",
+					"randType": "Shop",
 					"x": 8.53,
 					"y": 0.54
 				}
@@ -8750,6 +10274,9 @@ window.mapData = {
 			"area": "Room",
 			"items": {
 				"Grimmkin_Flame-Brumm": {
+					"randAction": "Int",
+					"randPool": "Flame",
+					"randType": "Flame",
 					"x": 25.48,
 					"y": 14.58036
 				}
@@ -8807,6 +10334,9 @@ window.mapData = {
 			"area": "Ruins1",
 			"items": {
 				"Lore_Tablet-City_Entrance": {
+					"randAction": "Lore",
+					"randPool": "Lore",
+					"randType": "Lore",
 					"x": 24.6,
 					"y": 27.7
 				}
@@ -8829,10 +10359,16 @@ window.mapData = {
 			"area": "Ruins1",
 			"items": {
 				"Geo_Rock-City_of_Tears_Quirrel": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 36.75154,
 					"y": 42.44101
 				},
 				"Hallownest_Seal-City_Rafters": {
+					"randAction": "HallownestSeal",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 80.63922,
 					"y": 57.23
 				}
@@ -8887,6 +10423,9 @@ window.mapData = {
 			"area": "Ruins1",
 			"items": {
 				"Grub-City_of_Tears_Left": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 50.89,
 					"y": 142.4444
 				}
@@ -8941,6 +10480,9 @@ window.mapData = {
 			"area": "Ruins1",
 			"items": {
 				"Geo_Rock-City_of_Tears_Lemm": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 8.906898,
 					"y": 29.40452
 				}
@@ -8974,10 +10516,16 @@ window.mapData = {
 			"area": "Ruins1",
 			"items": {
 				"Geo_Rock-City_of_Tears_Above_Lemm": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 34.15294,
 					"y": 69.40981
 				},
 				"Rancid_Egg-City_of_Tears_Left": {
+					"randAction": "Int",
+					"randPool": "Egg",
+					"randType": "Trinket",
 					"x": 33.99,
 					"y": 92.15
 				}
@@ -9049,10 +10597,16 @@ window.mapData = {
 			"area": "Ruins1",
 			"items": {
 				"Simple_Key-City": {
+					"randAction": "Int",
+					"randPool": "Key",
+					"randType": "Trinket",
 					"x": 79.14,
 					"y": 49.12
 				},
 				"Whispering_Root-City": {
+					"randAction": "Essence",
+					"randPool": "Root",
+					"randType": "Trinket",
 					"x": 78.0,
 					"y": 22.0
 				}
@@ -9112,10 +10666,16 @@ window.mapData = {
 			"boss": "Soul Warrior",
 			"items": {
 				"Boss_Geo-Sanctum_Soul_Warrior": {
+					"randAction": "SpawnGeo",
+					"randPool": "Boss_Geo",
+					"randType": "Geo",
 					"x": 30.0,
 					"y": 75.0
 				},
 				"Lore_Tablet-Sanctum_Entrance": {
+					"randAction": "Lore",
+					"randPool": "Lore",
+					"randType": "Lore",
 					"x": 41.1,
 					"y": 67.9
 				}
@@ -9155,10 +10715,16 @@ window.mapData = {
 			"boss": "Soul Master, Soul Tyrant",
 			"items": {
 				"Desolate_Dive": {
+					"randAction": "Additive",
+					"randPool": "Skill",
+					"randType": "Spell",
 					"x": 24.550002,
 					"y": 13.53999885
 				},
 				"Soul_Totem-Sanctum_Below_Soul_Master": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 56.9,
 					"y": 5.0
 				}
@@ -9211,6 +10777,9 @@ window.mapData = {
 			"area": "Ruins1",
 			"items": {
 				"Boss_Essence-Soul_Tyrant": {
+					"randAction": "Essence",
+					"randPool": "Essence_Boss",
+					"randType": "Trinket",
 					"x": 36.09,
 					"y": 10.45
 				}
@@ -9259,10 +10828,16 @@ window.mapData = {
 			"area": "Ruins1",
 			"items": {
 				"Grimmkin_Flame-City_Storerooms": {
+					"randAction": "Int",
+					"randPool": "Flame",
+					"randType": "Flame",
 					"x": 71.09,
 					"y": 22.22
 				},
 				"Wanderer's_Journal-City_Storerooms": {
+					"randAction": "WanderersJournal",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 60.17,
 					"y": 2.19
 				}
@@ -9290,6 +10865,9 @@ window.mapData = {
 			"area": "Ruins1",
 			"items": {
 				"City_Storerooms_Stag": {
+					"randAction": "Stag",
+					"randPool": "Stag",
+					"randType": "Trinket",
 					"x": 28.1,
 					"y": 6.4
 				}
@@ -9313,6 +10891,9 @@ window.mapData = {
 			"area": "Ruins1",
 			"items": {
 				"Spell_Twister": {
+					"randAction": "Charm",
+					"randPool": "Charm",
+					"randType": "Charm",
 					"x": 71.56,
 					"y": 50.26
 				}
@@ -9344,6 +10925,9 @@ window.mapData = {
 			"area": "Ruins1",
 			"items": {
 				"City_of_Tears_Map": {
+					"randAction": "Map",
+					"randPool": "Map",
+					"randType": "Trinket",
 					"x": 35.1,
 					"y": 15.3
 				}
@@ -9382,10 +10966,16 @@ window.mapData = {
 			"area": "Ruins1",
 			"items": {
 				"Boss_Geo-Elegant_Soul_Warrior": {
+					"randAction": "SpawnGeo",
+					"randPool": "Boss_Geo",
+					"randType": "Geo",
 					"x": 32.0,
 					"y": 40.0
 				},
 				"Shade_Soul": {
+					"randAction": "Additive",
+					"randPool": "Skill",
+					"randType": "Spell",
 					"x": 34.75476,
 					"y": 57.22618
 				}
@@ -9408,30 +10998,51 @@ window.mapData = {
 			"area": "Ruins1",
 			"items": {
 				"380_Geo-Soul_Master_Chest": {
+					"randAction": "SpawnGeo",
+					"randPool": "Geo",
+					"randType": "Geo",
 					"x": 9.298597,
 					"y": 108.8161
 				},
 				"Geo_Rock-Soul_Sanctum": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 32.28,
 					"y": 96.44418
 				},
 				"Grub-Soul_Sanctum": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 5.403263,
 					"y": 24.52
 				},
 				"Hallownest_Seal-Soul_Sanctum": {
+					"randAction": "HallownestSeal",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 33.23,
 					"y": 35.209
 				},
 				"Lore_Tablet-Sanctum_Past_Soul_Master": {
+					"randAction": "Lore",
+					"randPool": "Lore",
+					"randType": "Lore",
 					"x": 36.0,
 					"y": 99.2
 				},
 				"Soul_Totem-Sanctum_Above_Grub": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 7.63,
 					"y": 48.61
 				},
 				"Soul_Totem-Sanctum_Below_Chest": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 9.69,
 					"y": 97.31
 				}
@@ -9454,6 +11065,9 @@ window.mapData = {
 			"area": "Ruins2",
 			"items": {
 				"Geo_Rock-Watcher's_Spire": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 5.117435,
 					"y": 73.46977
 				}
@@ -9503,14 +11117,23 @@ window.mapData = {
 			"boss": "Watcher Knight",
 			"items": {
 				"655_Geo-Watcher_Knights_Chest": {
+					"randAction": "SpawnGeo",
+					"randPool": "Geo",
+					"randType": "Geo",
 					"x": 11.85,
 					"y": 106.72
 				},
 				"Grub-Watcher's_Spire": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 23.18028,
 					"y": 50.563011
 				},
 				"Hallownest_Seal-Watcher_Knight": {
+					"randAction": "HallownestSeal",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 26.15,
 					"y": 113.18
 				}
@@ -9626,10 +11249,16 @@ window.mapData = {
 			"area": "Ruins2",
 			"items": {
 				"Geo_Rock-Above_King's_Station": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 31.35165,
 					"y": 44.43226
 				},
 				"Wanderer's_Journal-King's_Station": {
+					"randAction": "WanderersJournal",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 46.09779,
 					"y": 20.24224
 				}
@@ -9656,6 +11285,9 @@ window.mapData = {
 			"area": "Ruins2",
 			"items": {
 				"Geo_Rock-King's_Station": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 43.45423,
 					"y": 24.44513
 				}
@@ -9694,6 +11326,9 @@ window.mapData = {
 			"area": "Ruins2",
 			"items": {
 				"Grub-King's_Station": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 70.29,
 					"y": 5.547497
 				}
@@ -9722,10 +11357,16 @@ window.mapData = {
 			"area": "Ruins2",
 			"items": {
 				"Hallownest_Seal-King's_Station": {
+					"randAction": "HallownestSeal",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 5.14,
 					"y": 24.3
 				},
 				"King's_Station_Stag": {
+					"randAction": "Stag",
+					"randPool": "Stag",
+					"randType": "Trinket",
 					"x": 28.1,
 					"y": 6.4
 				}
@@ -9749,6 +11390,9 @@ window.mapData = {
 			"area": "Ruins2",
 			"items": {
 				"Vessel_Fragment-City": {
+					"randAction": "VesselFragment",
+					"randPool": "Vessel",
+					"randType": "Trinket",
 					"x": 70.71581,
 					"y": 4.643608
 				}
@@ -9827,18 +11471,30 @@ window.mapData = {
 			"boss": "The Collector",
 			"items": {
 				"Collector's_Map": {
+					"randAction": null,
+					"randPool": "Key",
+					"randType": "Big",
 					"x": 23.13,
 					"y": 115.34
 				},
 				"Grub-Collector_1": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 64.2,
 					"y": 115.4
 				},
 				"Grub-Collector_2": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 55.3,
 					"y": 115.4
 				},
 				"Grub-Collector_3": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 38.5,
 					"y": 115.4
 				}
@@ -9884,10 +11540,16 @@ window.mapData = {
 			"area": "Ruins2",
 			"items": {
 				"Lore_Tablet-Watcher's_Spire": {
+					"randAction": "Lore",
+					"randPool": "Lore",
+					"randType": "Lore",
 					"x": 46.0,
 					"y": 118.2
 				},
 				"Lurien": {
+					"randAction": "Dreamer",
+					"randPool": "Dreamer",
+					"randType": "Big",
 					"x": 58.0,
 					"y": 136.0
 				}
@@ -9928,18 +11590,30 @@ window.mapData = {
 			"area": "Ruins2",
 			"items": {
 				"Geo_Rock-Pleasure_House": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 23.6,
 					"y": 52.38
 				},
 				"Lore_Tablet-Pleasure_House": {
+					"randAction": "Lore",
+					"randPool": "Lore",
+					"randType": "Lore",
 					"x": 22.7,
 					"y": 7.4
 				},
 				"Rancid_Egg-City_of_Tears_Pleasure_House": {
+					"randAction": "Int",
+					"randPool": "Egg",
+					"randType": "Trinket",
 					"x": 56.0,
 					"y": 95.1
 				},
 				"Wanderer's_Journal-Pleasure_House": {
+					"randAction": "WanderersJournal",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 46.28352,
 					"y": 5.184328
 				}
@@ -9963,6 +11637,9 @@ window.mapData = {
 			"area": "Ruins2",
 			"items": {
 				"Grub-City_of_Tears_Guarded": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 32.50457,
 					"y": 6.593936
 				}
@@ -9980,6 +11657,9 @@ window.mapData = {
 			"area": "Ruins2",
 			"items": {
 				"Boss_Geo-Gorgeous_Husk": {
+					"randAction": "SpawnGeo",
+					"randPool": "Boss_Geo",
+					"randType": "Geo",
 					"x": 54.5,
 					"y": 6.5
 				}
@@ -10083,62 +11763,107 @@ window.mapData = {
 			"area": "Cliffs",
 			"items": {
 				"Focus": {
+					"randAction": "SettingsBool",
+					"randPool": "Cursed",
+					"randType": "Big",
 					"x": 111.5,
 					"y": 31.4
 				},
 				"Fury_of_the_Fallen": {
+					"randAction": "Charm",
+					"randPool": "Charm",
+					"randType": "Charm",
 					"x": 179.44,
 					"y": 16.97
 				},
 				"Geo_Rock-King's_Pass_Above_Fury": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 164.51,
 					"y": 35.71
 				},
 				"Geo_Rock-King's_Pass_Below_Fury": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 162.75,
 					"y": 5.67
 				},
 				"Geo_Rock-King's_Pass_Collapse": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 108.0178,
 					"y": 54.70111
 				},
 				"Geo_Rock-King's_Pass_Hidden": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 59.5337,
 					"y": 45.58482
 				},
 				"Geo_Rock-King's_Pass_Left": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 9.26,
 					"y": 10.577
 				},
 				"Grimmkin_Flame-King's_Pass": {
+					"randAction": "Int",
+					"randPool": "Flame",
+					"randType": "Flame",
 					"x": 146.47,
 					"y": 5.97
 				},
 				"Leftslash": {
+					"randAction": "SettingsBool",
+					"randPool": "CursedNail",
+					"randType": "Trinket",
 					"x": 33.0,
 					"y": 11.4
 				},
 				"Lifeblood_Cocoon-King's_Pass": {
+					"randAction": "Lifeblood",
+					"randPool": "Cocoon",
+					"randType": "Lifeblood",
 					"x": 56.97487,
 					"y": 62.09032
 				},
 				"Lore_Tablet-King's_Pass_Exit": {
+					"randAction": "Lore",
+					"randPool": "Lore",
+					"randType": "Lore",
 					"x": 170.5,
 					"y": 64.6
 				},
 				"Lore_Tablet-King's_Pass_Focus": {
+					"randAction": "Lore",
+					"randPool": "Lore",
+					"randType": "Lore",
 					"x": 111.5,
 					"y": 34.7
 				},
 				"Lore_Tablet-King's_Pass_Fury": {
+					"randAction": "Lore",
+					"randPool": "Lore",
+					"randType": "Lore",
 					"x": 192.0,
 					"y": 24.5
 				},
 				"Rightslash": {
+					"randAction": "SettingsBool",
+					"randPool": "CursedNail",
+					"randType": "Trinket",
 					"x": 38.0,
 					"y": 11.4
 				},
 				"Upslash": {
+					"randAction": "SettingsBool",
+					"randPool": "CursedNail",
+					"randType": "Trinket",
 					"x": 50.0,
 					"y": 11.4
 				}
@@ -10167,14 +11892,23 @@ window.mapData = {
 			"area": "Waterways",
 			"items": {
 				"Geo_Rock-Waterways_Tuk": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 147.4247,
 					"y": 40.401
 				},
 				"Geo_Rock-Waterways_Tuk_Alcove": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 108.84,
 					"y": 21.46
 				},
 				"Soul_Totem-Waterways_Entrance": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 14.21,
 					"y": 34.321
 				}
@@ -10208,6 +11942,9 @@ window.mapData = {
 			"area": "Waterways",
 			"items": {
 				"Rancid_Egg-Waterways_Main": {
+					"randAction": "Int",
+					"randPool": "Egg",
+					"randType": "Trinket",
 					"x": 65.34,
 					"y": 18.16
 				}
@@ -10257,10 +11994,16 @@ window.mapData = {
 			"area": "Waterways",
 			"items": {
 				"Grub-Waterways_Main": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 126.39,
 					"y": 8.487976
 				},
 				"Rancid_Egg-Waterways_West_Bluggsac": {
+					"randAction": "Int",
+					"randPool": "Egg",
+					"randType": "Trinket",
 					"x": 31.59,
 					"y": 16.42
 				}
@@ -10292,18 +12035,30 @@ window.mapData = {
 			"area": "Waterways",
 			"items": {
 				"Geo_Rock-Waterways_Left": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 45.02925,
 					"y": 25.36001
 				},
 				"Mask_Shard-Waterways": {
+					"randAction": "MaskShard",
+					"randPool": "Mask",
+					"randType": "Trinket",
 					"x": 11.59,
 					"y": 11.27
 				},
 				"Rancid_Egg-Waterways_West_Pickup": {
+					"randAction": "Int",
+					"randPool": "Egg",
+					"randType": "Trinket",
 					"x": 39.1,
 					"y": 43.2
 				},
 				"Soul_Totem-Top_Left_Waterways": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 10.62,
 					"y": 41.5429
 				}
@@ -10331,6 +12086,9 @@ window.mapData = {
 			"boss": "Dung Defender",
 			"items": {
 				"Defender's_Crest": {
+					"randAction": "Charm",
+					"randPool": "Charm",
+					"randType": "Charm",
 					"x": 82.744444,
 					"y": 20.703757
 				}
@@ -10379,18 +12137,30 @@ window.mapData = {
 			"area": "Waterways",
 			"items": {
 				"Geo_Rock-Waterways_East": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 15.31712,
 					"y": 59.63828
 				},
 				"Lore_Tablet-Dung_Defender": {
+					"randAction": "Lore",
+					"randPool": "Lore",
+					"randType": "Lore",
 					"x": 91.5,
 					"y": 56.6
 				},
 				"Rancid_Egg-Waterways_East": {
+					"randAction": "Int",
+					"randPool": "Egg",
+					"randType": "Trinket",
 					"x": 61.83,
 					"y": 30.4
 				},
 				"Soul_Totem-Waterways_East": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 28.76,
 					"y": 38.51
 				}
@@ -10428,10 +12198,16 @@ window.mapData = {
 			"area": "Waterways",
 			"items": {
 				"Geo_Rock-Waterways_Flukemarm": {
+					"randAction": "SpawnGeo",
+					"randPool": "Rock",
+					"randType": "Geo",
 					"x": 29.25,
 					"y": 19.43
 				},
 				"Soul_Totem-Waterways_Flukemarm": {
+					"randAction": "AddSoul",
+					"randPool": "Soul",
+					"randType": "Soul",
 					"x": 135.14,
 					"y": 7.37
 				}
@@ -10459,6 +12235,9 @@ window.mapData = {
 			"area": "Waterways",
 			"items": {
 				"Royal_Waterways_Map": {
+					"randAction": "Map",
+					"randPool": "Map",
+					"randType": "Trinket",
 					"x": 25.4,
 					"y": 30.5
 				}
@@ -10483,6 +12262,9 @@ window.mapData = {
 			"boss": "Flukemarm",
 			"items": {
 				"Flukenest": {
+					"randAction": "Charm",
+					"randPool": "Charm",
+					"randType": "Charm",
 					"x": 12.553375999999998,
 					"y": 30.19773
 				}
@@ -10505,10 +12287,16 @@ window.mapData = {
 			"area": "Waterways",
 			"items": {
 				"Grub-Waterways_East": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 108.8202,
 					"y": 53.51968
 				},
 				"Isma's_Tear": {
+					"randAction": null,
+					"randPool": "Skill",
+					"randType": "Big",
 					"x": 94.01,
 					"y": 17.88
 				}
@@ -10532,6 +12320,9 @@ window.mapData = {
 			"area": "Waterways",
 			"items": {
 				"Grub-Waterways_Requires_Tram": {
+					"randAction": "Grub",
+					"randPool": "Grub",
+					"randType": "Trinket",
 					"x": 186.67,
 					"y": 37.51
 				}
@@ -10555,10 +12346,16 @@ window.mapData = {
 			"boss": "White Defender",
 			"items": {
 				"Boss_Essence-White_Defender": {
+					"randAction": "Essence",
+					"randPool": "Essence_Boss",
+					"randType": "Trinket",
 					"x": 13.53,
 					"y": 4.0
 				},
 				"King's_Idol-Dung_Defender": {
+					"randAction": "KingsIdol",
+					"randPool": "Relic",
+					"randType": "Trinket",
 					"x": 52.51466,
 					"y": 3.808519
 				}
@@ -10602,6 +12399,9 @@ window.mapData = {
 			"area": "White_Palace",
 			"items": {
 				"Soul_Totem-White_Palace_Entrance": {
+					"randAction": "AddSoul",
+					"randPool": "PalaceSoul",
+					"randType": "Soul",
 					"x": 14.93283,
 					"y": 50.64687
 				}
@@ -10619,6 +12419,9 @@ window.mapData = {
 			"area": "White_Palace",
 			"items": {
 				"Soul_Totem-White_Palace_Hub": {
+					"randAction": "AddSoul",
+					"randPool": "PalaceSoul",
+					"randType": "Soul",
 					"x": 5.3,
 					"y": 55.67
 				}
@@ -10671,6 +12474,9 @@ window.mapData = {
 			"area": "White_Palace",
 			"items": {
 				"Soul_Totem-White_Palace_Left": {
+					"randAction": "AddSoul",
+					"randPool": "PalaceSoul",
+					"randType": "Soul",
 					"x": 68.91,
 					"y": 57.65
 				}
@@ -10771,6 +12577,9 @@ window.mapData = {
 			"area": "White_Palace",
 			"items": {
 				"Lore_Tablet-Palace_Workshop": {
+					"randAction": "Lore",
+					"randPool": "PalaceLore",
+					"randType": "Lore",
 					"x": 101.3,
 					"y": 21.6
 				}
@@ -10793,14 +12602,23 @@ window.mapData = {
 			"area": "White_Palace",
 			"items": {
 				"King_Fragment": {
+					"randAction": "Kingsoul",
+					"randPool": "Charm",
+					"randType": "Big",
 					"x": 60.78,
 					"y": 97.27999999999999
 				},
 				"Lore_Tablet-Palace_Throne": {
+					"randAction": "Lore",
+					"randPool": "PalaceLore",
+					"randType": "Lore",
 					"x": 111.7,
 					"y": 94.4
 				},
 				"Soul_Totem-White_Palace_Final": {
+					"randAction": "AddSoul",
+					"randPool": "PalaceSoul",
+					"randType": "Soul",
 					"x": 60.0,
 					"y": 40.89
 				}
@@ -10904,6 +12722,9 @@ window.mapData = {
 			"area": "White_Palace",
 			"items": {
 				"Soul_Totem-White_Palace_Right": {
+					"randAction": "AddSoul",
+					"randPool": "PalaceSoul",
+					"randType": "Soul",
 					"x": 13.90997,
 					"y": 115.7281
 				}
@@ -10946,10 +12767,16 @@ window.mapData = {
 			"area": "White_Palace",
 			"items": {
 				"Soul_Totem-Path_of_Pain_Below_Lever": {
+					"randAction": "AddSoul",
+					"randPool": "PalaceSoul",
+					"randType": "Soul",
 					"x": 77.33,
 					"y": 34.9
 				},
 				"Soul_Totem-Path_of_Pain_Left_of_Lever": {
+					"randAction": "AddSoul",
+					"randPool": "PalaceSoul",
+					"randType": "Soul",
 					"x": 53.81,
 					"y": 64.78
 				}
@@ -10972,14 +12799,23 @@ window.mapData = {
 			"area": "White_Palace",
 			"items": {
 				"Lore_Tablet-Path_of_Pain_Entrance": {
+					"randAction": "Lore",
+					"randPool": "PalaceLore",
+					"randType": "Lore",
 					"x": 263.4,
 					"y": 12.5
 				},
 				"Soul_Totem-Path_of_Pain_Entrance": {
+					"randAction": "AddSoul",
+					"randPool": "PalaceSoul",
+					"randType": "Soul",
 					"x": 230.95,
 					"y": 13.9
 				},
 				"Soul_Totem-Path_of_Pain_Second": {
+					"randAction": "AddSoul",
+					"randPool": "PalaceSoul",
+					"randType": "Soul",
 					"x": 161.97,
 					"y": 12.97879
 				}
@@ -11003,10 +12839,16 @@ window.mapData = {
 			"area": "White_Palace",
 			"items": {
 				"Soul_Totem-Path_of_Pain_Below_Thornskip": {
+					"randAction": "AddSoul",
+					"randPool": "PalaceSoul",
+					"randType": "Soul",
 					"x": 105.24,
 					"y": 34.89
 				},
 				"Soul_Totem-Path_of_Pain_Hidden": {
+					"randAction": "AddSoul",
+					"randPool": "PalaceSoul",
+					"randType": "Soul",
 					"x": 165.47,
 					"y": 120.82
 				}
@@ -11029,6 +12871,9 @@ window.mapData = {
 			"area": "White_Palace",
 			"items": {
 				"Soul_Totem-Path_of_Pain_Final": {
+					"randAction": "AddSoul",
+					"randPool": "PalaceSoul",
+					"randType": "Soul",
 					"x": 27.61,
 					"y": 170.92
 				}

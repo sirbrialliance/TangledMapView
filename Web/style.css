@@ -79,42 +79,51 @@ svg { user-select: none; }
 	stroke-dasharray: none;
 }
 
+.roomItem > rect {
+	stroke: white;
+	stroke-width: .5px;
+	fill: transparent;
+	width: 5px;
+	height: 5px;
+	transform: rotate(45deg) translate(-3px, -3px);
+}
+.roomItem:hover > rect {stroke-width: 1px;}
 
 
 .mapNode {
 	stroke: black;
 	cursor: pointer;
 }
-.mapNode > rect {
+.mapNode > rect.roomShape {
 	fill: magenta; /* "shouldn't happen" */
 	rx: 5px;
 	ry: 5px;
 	fill-opacity: .8;
 }
-.mapNode.hoverRelated > rect, .mapNode:hover > rect {
+.mapNode.hoverRelated > rect.roomShape, .mapNode:hover > rect.roomShape {
 	stroke: var(--highlight-color);
 	stroke-width: 3px;
 }
 
 
-.area-Abyss > rect { stroke: var(--area-Abyss-border); fill: var(--area-Abyss-fill); }
-.area-Cliffs > rect { stroke: var(--area-Cliffs-border); fill: var(--area-Cliffs-fill); }
-.area-Crossroads > rect { stroke: var(--area-Crossroads-border); fill: var(--area-Crossroads-fill); }
-.area-Deepnest > rect { stroke: var(--area-Deepnest-border); fill: var(--area-Deepnest-fill); }
-.area-Deepnest_East > rect { stroke: var(--area-Deepnest_East-border); fill: var(--area-Deepnest_East-fill); }
-.area-Fungus1 > rect { stroke: var(--area-Fungus1-border); fill: var(--area-Fungus1-fill); }
-.area-Fungus2 > rect { stroke: var(--area-Fungus2-border); fill: var(--area-Fungus2-fill); }
-.area-Fungus3 > rect { stroke: var(--area-Fungus3-border); fill: var(--area-Fungus3-fill); }
-.area-Waterways > rect { stroke: var(--area-Waterways-border); fill: var(--area-Waterways-fill); }
-.area-Hive > rect { stroke: var(--area-Hive-border); fill: var(--area-Hive-fill); }
-.area-Mines > rect { stroke: var(--area-Mines-border); fill: var(--area-Mines-fill); }
-.area-RestingGrounds > rect { stroke: var(--area-RestingGrounds-border); fill: var(--area-RestingGrounds-fill); }
-.area-Room > rect { stroke: var(--area-Room-border); fill: var(--area-Room-fill); }
-.area-Ruins1 > rect { stroke: var(--area-Ruins1-border); fill: var(--area-Ruins1-fill); }
-.area-Ruins2 > rect { stroke: var(--area-Ruins2-border); fill: var(--area-Ruins2-fill); }
-.area-Town > rect { stroke: var(--area-Town-border); fill: var(--area-Town-fill); }
-.area-White_Palace > rect { stroke: var(--area-White_Palace-border); fill: var(--area-White_Palace-fill); }
-.area-FogCanyon > rect { stroke: var(--area-FogCanyon-border); fill: var(--area-FogCanyon-fill); }
+.area-Abyss > rect.roomShape { stroke: var(--area-Abyss-border); fill: var(--area-Abyss-fill); }
+.area-Cliffs > rect.roomShape { stroke: var(--area-Cliffs-border); fill: var(--area-Cliffs-fill); }
+.area-Crossroads > rect.roomShape { stroke: var(--area-Crossroads-border); fill: var(--area-Crossroads-fill); }
+.area-Deepnest > rect.roomShape { stroke: var(--area-Deepnest-border); fill: var(--area-Deepnest-fill); }
+.area-Deepnest_East > rect.roomShape { stroke: var(--area-Deepnest_East-border); fill: var(--area-Deepnest_East-fill); }
+.area-Fungus1 > rect.roomShape { stroke: var(--area-Fungus1-border); fill: var(--area-Fungus1-fill); }
+.area-Fungus2 > rect.roomShape { stroke: var(--area-Fungus2-border); fill: var(--area-Fungus2-fill); }
+.area-Fungus3 > rect.roomShape { stroke: var(--area-Fungus3-border); fill: var(--area-Fungus3-fill); }
+.area-Waterways > rect.roomShape { stroke: var(--area-Waterways-border); fill: var(--area-Waterways-fill); }
+.area-Hive > rect.roomShape { stroke: var(--area-Hive-border); fill: var(--area-Hive-fill); }
+.area-Mines > rect.roomShape { stroke: var(--area-Mines-border); fill: var(--area-Mines-fill); }
+.area-RestingGrounds > rect.roomShape { stroke: var(--area-RestingGrounds-border); fill: var(--area-RestingGrounds-fill); }
+.area-Room > rect.roomShape { stroke: var(--area-Room-border); fill: var(--area-Room-fill); }
+.area-Ruins1 > rect.roomShape { stroke: var(--area-Ruins1-border); fill: var(--area-Ruins1-fill); }
+.area-Ruins2 > rect.roomShape { stroke: var(--area-Ruins2-border); fill: var(--area-Ruins2-fill); }
+.area-Town > rect.roomShape { stroke: var(--area-Town-border); fill: var(--area-Town-fill); }
+.area-White_Palace > rect.roomShape { stroke: var(--area-White_Palace-border); fill: var(--area-White_Palace-fill); }
+.area-FogCanyon > rect.roomShape { stroke: var(--area-FogCanyon-border); fill: var(--area-FogCanyon-fill); }
 
 
 circle.door {
@@ -135,19 +144,19 @@ circle.door.visitedDoor {
 }
 
 /* .mapNode.currentRoute:not(.currentRoom) > rect, .roomLink.currentRoute { */
-	.mapNode > rect.currentRoute, .roomLink.currentRoute {
-		stroke: rgb(196, 6, 6);
-		animation-name: routePulse;
-		animation-iteration-count: infinite;
-		animation-timing-function: linear;;
-		animation-duration: 4s;
-	}
+.mapNode > rect.currentRoute, .roomLink.currentRoute {
+	stroke: rgb(196, 6, 6);
+	animation-name: routePulse;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;;
+	animation-duration: 4s;
+}
 
-	body.noAnimate .mapNode > rect.currentRoute, body.noAnimate .roomLink.currentRoute {
-		animation: none;
-	}
+body.noAnimate .mapNode > rect.currentRoute, body.noAnimate .roomLink.currentRoute {
+	animation: none;
+}
 
-	@keyframes routePulse {
+@keyframes routePulse {
 	0% { stroke: rgb(196, 6, 6); }
 	10% { stroke: yellow; stroke-width: 3px; }
 	20% { stroke: rgb(196, 6, 6); }
@@ -231,13 +240,27 @@ circle.door.visitedDoor {
 [data-area=Waterways] { border-color: var(--area-Waterways-border); background-color: var(--area-Waterways-fill); color: var(--area-Waterways-border);}
 [data-area=White_Palace] { border-color: var(--area-White_Palace-border); background-color: var(--area-White_Palace-fill); color: var(--area-White_Palace-border);}
 
+#itemInfo {
+	font-size: 16px;
+	color: rgb(205 205 226);
+	border: 1px dashed rgb(119, 119, 119);
+	border-radius: 5px;
+	padding: 4px 5px;
+}
+#itemInfo:empty {
+	display: none;
+}
+#itemInfo:before {
+	content: "Item:";
+	margin-right: 5px;
+	opacity: .5;
+}
 
-.currentRoom > rect {
-	/* fill: rgb(42, 98, 255); */
+.currentRoom > rect.roomShape {
 	stroke-width: 3px;
 	animation: pulseStroke 1s infinite alternate linear;
 }
-body.noAnimate .currentRoom > rect {
+body.noAnimate .currentRoom > rect.roomShape {
 	animation: none;
 	stroke: black;
 }

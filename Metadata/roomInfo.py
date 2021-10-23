@@ -93,6 +93,9 @@ def loadRandomizerData():
 					itemInfo = {
 						'objectName': prop(item, 'objectName'),
 					}
+				itemInfo['randType'] = prop(item, "type")
+				itemInfo['randAction'] = prop(item, "action")
+				itemInfo['randPool'] = prop(item, "pool")
 				items[item.getAttribute("name")] = itemInfo
 			except:
 				print("Issue handling " + item.toxml())
