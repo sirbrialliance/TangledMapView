@@ -151,6 +151,7 @@ window.mapData = {
 			"area": "Abyss",
 			"items": {},
 			"name": "Basin Tram (Center)",
+			"randomizerArea": "Ancient_Basin",
 			"transitions": {
 				"bot1": {
 					"to": "Abyss_17[top1]",
@@ -183,7 +184,7 @@ window.mapData = {
 					"y": 10.4
 				},
 				"tram_west": {
-					"to": "Abyss_03b[tram]",
+					"to": "Abyss_03_b[tram]",
 					"x": 74.5,
 					"y": 10.4
 				}
@@ -193,6 +194,7 @@ window.mapData = {
 			"area": "Abyss",
 			"items": {},
 			"name": "Basin Tram (West)",
+			"randomizerArea": "Deepnest",
 			"transitions": {
 				"door_tram": {
 					"to": null,
@@ -303,7 +305,7 @@ window.mapData = {
 			"area": "Abyss",
 			"items": {},
 			"name": "Old White Palace Location",
-			"randomizerArea": "Palace_Grounds",
+			"randomizerArea": "White_Palace",
 			"transitions": {
 				"door_dreamReturn": {
 					"to": null,
@@ -316,7 +318,7 @@ window.mapData = {
 					"y": 16.87
 				},
 				"dream": {
-					"to": "White_Palace_03_hub",
+					"to": "White_Palace_03_hub[magic_circle]",
 					"x": 129,
 					"y": 17.4
 				},
@@ -382,11 +384,6 @@ window.mapData = {
 					"x": 0.5,
 					"y": 140.0
 				},
-				"left1 extra": {
-					"to": "Abyss_08[right1]",
-					"x": 0.5,
-					"y": 144.0
-				},
 				"left3": {
 					"to": "Abyss_12[right1]",
 					"x": -0.5,
@@ -423,9 +420,10 @@ window.mapData = {
 				}
 			},
 			"name": "Lifeblood Core",
+			"randomizerArea": "Abyss",
 			"transitions": {
 				"magic_circle": {
-					"to": "Abyss_06_Core",
+					"to": "Abyss_06_Core[door_dreamReturn]",
 					"x": 63,
 					"y": 3
 				},
@@ -440,6 +438,7 @@ window.mapData = {
 			"area": "Abyss",
 			"items": {},
 			"name": "Abyss Lake",
+			"randomizerArea": "Abyss",
 			"splitRoom": [
 				[
 					"right1"
@@ -506,6 +505,7 @@ window.mapData = {
 				}
 			},
 			"name": "Shade Cloak",
+			"randomizerArea": "Abyss",
 			"transitions": {
 				"left1": {
 					"to": "Abyss_09[right1]",
@@ -531,6 +531,7 @@ window.mapData = {
 				}
 			},
 			"name": "Abyss Shriek",
+			"randomizerArea": "Abyss",
 			"transitions": {
 				"right1": {
 					"to": "Abyss_06_Core[left3]",
@@ -558,6 +559,7 @@ window.mapData = {
 				}
 			},
 			"name": "Void Heart",
+			"randomizerArea": "Abyss",
 			"transitions": {
 				"door_dreamReturn": {
 					"to": null,
@@ -574,6 +576,7 @@ window.mapData = {
 		"Abyss_16": {
 			"area": "Abyss",
 			"items": {},
+			"randomizerArea": "Abyss",
 			"transitions": {
 				"left1": {
 					"to": "Abyss_06_Core[right2]",
@@ -606,6 +609,7 @@ window.mapData = {
 				}
 			},
 			"name": "Lesser Mawlek Miniboss for Ore",
+			"randomizerArea": "Ancient_Basin",
 			"transitions": {
 				"top1": {
 					"to": "Abyss_03[bot1]",
@@ -626,6 +630,7 @@ window.mapData = {
 				}
 			},
 			"name": "Superdash Over Spikes",
+			"randomizerArea": "Ancient_Basin",
 			"transitions": {
 				"left1": {
 					"to": "Abyss_19[right1]",
@@ -673,6 +678,7 @@ window.mapData = {
 				}
 			},
 			"name": "Broken Vessel",
+			"randomizerArea": "Ancient_Basin",
 			"transitions": {
 				"bot1": {
 					"to": "Abyss_20[top1]",
@@ -713,6 +719,7 @@ window.mapData = {
 				}
 			},
 			"name": "Mawlurks",
+			"randomizerArea": "Ancient_Basin",
 			"transitions": {
 				"top1": {
 					"to": "Abyss_19[bot1]",
@@ -738,6 +745,7 @@ window.mapData = {
 				}
 			},
 			"name": "Monarch Wings",
+			"randomizerArea": "Ancient_Basin",
 			"transitions": {
 				"right1": {
 					"to": "Abyss_19[left1]",
@@ -758,6 +766,7 @@ window.mapData = {
 				}
 			},
 			"name": "Stag",
+			"randomizerArea": "White_Palace",
 			"stag": "HiddenStation",
 			"transitions": {
 				"door_stagExit": {
@@ -776,6 +785,7 @@ window.mapData = {
 			"area": "Abyss",
 			"items": {},
 			"name": "Inside Lighthouse",
+			"randomizerArea": "Abyss",
 			"transitions": {
 				"left1": {
 					"to": "Abyss_09[right2]",
@@ -863,6 +873,7 @@ window.mapData = {
 				}
 			},
 			"name": "Cliffs West",
+			"randomizerArea": "Howling_Cliffs",
 			"transitions": {
 				"right1": {
 					"to": "Cliffs_02[left1]",
@@ -958,6 +969,7 @@ window.mapData = {
 					"y": 33.37
 				}
 			},
+			"randomizerArea": "Howling_Cliffs",
 			"transitions": {}
 		},
 		"Cliffs_03": {
@@ -1006,6 +1018,7 @@ window.mapData = {
 				}
 			},
 			"name": "Joni's Dark and Spiky Path",
+			"randomizerArea": "Howling_Cliffs",
 			"transitions": {
 				"left1": {
 					"to": "Cliffs_01[right2]",
@@ -1031,6 +1044,7 @@ window.mapData = {
 				}
 			},
 			"name": "Joni's Blessing",
+			"randomizerArea": "Howling_Cliffs",
 			"transitions": {
 				"left1": {
 					"to": "Cliffs_04[right1]",
@@ -1043,6 +1057,7 @@ window.mapData = {
 			"area": "Cliffs",
 			"items": {},
 			"name": "Grimm Summon",
+			"randomizerArea": "Howling_Cliffs",
 			"transitions": {
 				"left1": {
 					"to": "Cliffs_01[right4]",
@@ -1072,11 +1087,6 @@ window.mapData = {
 			"name": "Crossroads Entry",
 			"randomizerArea": "Forgotten_Crossroads",
 			"transitions": {
-				"door1": {
-					"to": "bot1[Town]",
-					"x": 52.61,
-					"y": 10.69
-				},
 				"left1": {
 					"to": "Crossroads_07[right1]",
 					"x": -0.5,
@@ -1134,6 +1144,7 @@ window.mapData = {
 				}
 			},
 			"name": "Outside Stag",
+			"randomizerArea": "Forgotten_Crossroads",
 			"transitions": {
 				"bot1": {
 					"to": "Crossroads_19[top1]",
@@ -1232,6 +1243,7 @@ window.mapData = {
 					"y": 16.60266
 				}
 			},
+			"randomizerArea": "Forgotten_Crossroads",
 			"transitions": {
 				"left1": {
 					"to": "Crossroads_07[right2]",
@@ -1301,6 +1313,7 @@ window.mapData = {
 				}
 			},
 			"name": "Platforms",
+			"randomizerArea": "Forgotten_Crossroads",
 			"transitions": {
 				"bot1": {
 					"to": "Crossroads_33[top1]",
@@ -1367,6 +1380,7 @@ window.mapData = {
 				}
 			},
 			"name": "Asipid Miniboss",
+			"randomizerArea": "Forgotten_Crossroads",
 			"transitions": {
 				"left1": {
 					"to": "Crossroads_33[right2]",
@@ -1403,6 +1417,7 @@ window.mapData = {
 				}
 			},
 			"name": "Brooding Mawlek",
+			"randomizerArea": "Forgotten_Crossroads",
 			"transitions": {
 				"left1": {
 					"to": "Crossroads_36[right2]",
@@ -1450,6 +1465,7 @@ window.mapData = {
 				}
 			},
 			"name": "False Knight",
+			"randomizerArea": "Forgotten_Crossroads",
 			"transitions": {
 				"door_dreamReturn": {
 					"to": null,
@@ -1520,6 +1536,7 @@ window.mapData = {
 					"y": 14.67542
 				}
 			},
+			"randomizerArea": "Forgotten_Crossroads",
 			"transitions": {
 				"left1": {
 					"to": "Crossroads_35[right1]",
@@ -1558,6 +1575,7 @@ window.mapData = {
 					"y": 24.18
 				}
 			},
+			"randomizerArea": "Forgotten_Crossroads",
 			"transitions": {
 				"left1": {
 					"to": "Crossroads_08[right2]",
@@ -1574,6 +1592,7 @@ window.mapData = {
 		"Crossroads_14": {
 			"area": "Crossroads",
 			"items": {},
+			"randomizerArea": "Forgotten_Crossroads",
 			"transitions": {
 				"left1": {
 					"to": "Crossroads_39[right1]",
@@ -1600,6 +1619,7 @@ window.mapData = {
 		"Crossroads_15": {
 			"area": "Crossroads",
 			"items": {},
+			"randomizerArea": "Forgotten_Crossroads",
 			"transitions": {
 				"left1": {
 					"to": "Crossroads_03[right1]",
@@ -1624,6 +1644,7 @@ window.mapData = {
 					"y": 14.58
 				}
 			},
+			"randomizerArea": "Forgotten_Crossroads",
 			"transitions": {
 				"bot1": {
 					"to": "Crossroads_03[top1]",
@@ -1711,6 +1732,7 @@ window.mapData = {
 					"y": 14.366
 				}
 			},
+			"randomizerArea": "Forgotten_Crossroads",
 			"transitions": {
 				"left1": {
 					"to": "Crossroads_42[right1]",
@@ -1745,6 +1767,7 @@ window.mapData = {
 					"y": 13.57083
 				}
 			},
+			"randomizerArea": "Forgotten_Crossroads",
 			"transitions": {
 				"left1": {
 					"to": "Crossroads_10[right1]",
@@ -1780,6 +1803,7 @@ window.mapData = {
 				}
 			},
 			"name": "Glowing Womb",
+			"randomizerArea": "Forgotten_Crossroads",
 			"transitions": {
 				"bot1": {
 					"to": "Crossroads_21[top1]",
@@ -1799,6 +1823,7 @@ window.mapData = {
 					"y": 17.606
 				}
 			},
+			"randomizerArea": "Forgotten_Crossroads",
 			"transitions": {
 				"left1": {
 					"to": "Crossroads_36[right1]",
@@ -1824,6 +1849,7 @@ window.mapData = {
 				}
 			},
 			"name": "Outside Tram",
+			"randomizerArea": "Forgotten_Crossroads",
 			"transitions": {
 				"bot1": {
 					"to": "Crossroads_04[top1]",
@@ -1851,6 +1877,7 @@ window.mapData = {
 			"area": "Crossroads",
 			"items": {},
 			"name": "Spa",
+			"randomizerArea": "Forgotten_Crossroads",
 			"transitions": {
 				"left1": {
 					"to": "Crossroads_08[right1]",
@@ -1871,6 +1898,7 @@ window.mapData = {
 				}
 			},
 			"name": "Spike Pogo Grub",
+			"randomizerArea": "Forgotten_Crossroads",
 			"transitions": {
 				"right1": {
 					"to": "Crossroads_27[left2]",
@@ -1891,6 +1919,7 @@ window.mapData = {
 				}
 			},
 			"name": "Conifer",
+			"randomizerArea": "Forgotten_Crossroads",
 			"transitions": {
 				"left1": {
 					"to": "Crossroads_09[right1]",
@@ -1969,6 +1998,7 @@ window.mapData = {
 					"y": 32.69
 				}
 			},
+			"randomizerArea": "Forgotten_Crossroads",
 			"transitions": {
 				"right1": {
 					"to": "Crossroads_25[left1]",
@@ -2000,6 +2030,7 @@ window.mapData = {
 					"y": 5.7
 				}
 			},
+			"randomizerArea": "Forgotten_Crossroads",
 			"transitions": {
 				"right1": {
 					"to": "Crossroads_49[left1]",
@@ -2062,6 +2093,7 @@ window.mapData = {
 				}
 			},
 			"name": "Grubfather",
+			"randomizerArea": "Forgotten_Crossroads",
 			"transitions": {
 				"right1": {
 					"to": "Crossroads_07[left1]",
@@ -2073,6 +2105,7 @@ window.mapData = {
 		"Crossroads_39": {
 			"area": "Crossroads",
 			"items": {},
+			"randomizerArea": "Forgotten_Crossroads",
 			"transitions": {
 				"left1": {
 					"to": "Crossroads_02[right1]",
@@ -2089,6 +2122,7 @@ window.mapData = {
 		"Crossroads_40": {
 			"area": "Crossroads",
 			"items": {},
+			"randomizerArea": "Forgotten_Crossroads",
 			"transitions": {
 				"left1": {
 					"to": "Crossroads_05[right1]",
@@ -2120,6 +2154,7 @@ window.mapData = {
 					"y": 10.6
 				}
 			},
+			"randomizerArea": "Forgotten_Crossroads",
 			"transitions": {
 				"left1": {
 					"to": "Crossroads_13[right1]",
@@ -2136,6 +2171,7 @@ window.mapData = {
 		"Crossroads_43": {
 			"area": "Crossroads",
 			"items": {},
+			"randomizerArea": "Forgotten_Crossroads",
 			"transitions": {
 				"left1": {
 					"to": "Crossroads_49[right1]",
@@ -2187,6 +2223,7 @@ window.mapData = {
 				}
 			},
 			"name": "Crossroads Tram (West)",
+			"randomizerArea": "Forgotten_Crossroads",
 			"transitions": {
 				"door_tram": {
 					"to": null,
@@ -2209,6 +2246,7 @@ window.mapData = {
 			"area": "Crossroads",
 			"items": {},
 			"name": "Crossroads Tram (East)",
+			"randomizerArea": "Resting_Grounds",
 			"transitions": {
 				"door_tram": {
 					"to": null,
@@ -2239,6 +2277,7 @@ window.mapData = {
 				}
 			},
 			"name": "Stag",
+			"randomizerArea": "Forgotten_Crossroads",
 			"stag": "Crossroads",
 			"transitions": {
 				"door_stagExit": {
@@ -2264,6 +2303,7 @@ window.mapData = {
 					"y": 3.477612
 				}
 			},
+			"randomizerArea": "Forgotten_Crossroads",
 			"transitions": {
 				"left1": {
 					"to": "Crossroads_14[right1]",
@@ -2276,6 +2316,7 @@ window.mapData = {
 			"area": "Crossroads",
 			"items": {},
 			"name": "West Elevator (Upper)",
+			"randomizerArea": "Forgotten_Crossroads",
 			"transitions": {
 				"elev_entrance": {
 					"to": null,
@@ -2303,6 +2344,7 @@ window.mapData = {
 			"area": "Crossroads",
 			"items": {},
 			"name": "West Elevator (Lower)",
+			"randomizerArea": "City_of_Tears",
 			"transitions": {
 				"elev_entrance": {
 					"to": null,
@@ -2315,7 +2357,7 @@ window.mapData = {
 					"y": 5.4
 				},
 				"left1": {
-					"to": "Fungus2_07[]",
+					"to": null,
 					"x": -0.5,
 					"y": 10.0
 				},
@@ -2370,6 +2412,7 @@ window.mapData = {
 					"y": 36.74561
 				}
 			},
+			"randomizerArea": "Forgotten_Crossroads",
 			"transitions": {
 				"left1": {
 					"to": "Crossroads_18[right2]",
@@ -2556,6 +2599,7 @@ window.mapData = {
 					"y": 13.85
 				}
 			},
+			"randomizerArea": "Deepnest",
 			"transitions": {
 				"left1": {
 					"to": "Deepnest_01b[right1]",
@@ -2606,6 +2650,7 @@ window.mapData = {
 					"y": 103.5133
 				}
 			},
+			"randomizerArea": "Deepnest",
 			"transitions": {
 				"left1": {
 					"to": "Deepnest_34[right1]",
@@ -2641,6 +2686,7 @@ window.mapData = {
 				}
 			},
 			"name": "Stag",
+			"randomizerArea": "Distant_Village",
 			"stag": "Deepnest",
 			"transitions": {
 				"door_stagExit": {
@@ -2717,21 +2763,6 @@ window.mapData = {
 					"x": 6.5,
 					"y": 42.0
 				},
-				"left1 (1)": {
-					"to": "Deepnest_26[right1]",
-					"x": 6.5,
-					"y": 46.0
-				},
-				"left1 (2)": {
-					"to": "Deepnest_26[right1]",
-					"x": 6.5,
-					"y": 50.0
-				},
-				"left1 (3)": {
-					"to": "Deepnest_26[right1]",
-					"x": 6.5,
-					"y": 54.0
-				},
 				"right1": {
 					"to": "Deepnest_17[left1]",
 					"x": 80.5,
@@ -2785,6 +2816,7 @@ window.mapData = {
 					"y": 30.21
 				}
 			},
+			"randomizerArea": "Deepnest",
 			"transitions": {
 				"bot1": {
 					"to": "Fungus2_25[top1]",
@@ -2873,6 +2905,7 @@ window.mapData = {
 				}
 			},
 			"name": "Failed Tramway (West)",
+			"randomizerArea": "Failed_Tramway",
 			"transitions": {
 				"right1": {
 					"to": "Deepnest_26[left1]",
@@ -2890,6 +2923,7 @@ window.mapData = {
 			"area": "Deepnest",
 			"items": {},
 			"name": "Hot Springs",
+			"randomizerArea": "Deepnest",
 			"transitions": {
 				"left1": {
 					"to": "Deepnest_03[right1]",
@@ -2941,6 +2975,7 @@ window.mapData = {
 				}
 			},
 			"name": "Path to Nosk",
+			"randomizerArea": "Deepnest",
 			"transitions": {
 				"right1": {
 					"to": "Deepnest_03[left2]",
@@ -2967,6 +3002,7 @@ window.mapData = {
 				}
 			},
 			"name": "Nosk",
+			"randomizerArea": "Deepnest",
 			"transitions": {
 				"left1": {
 					"to": "Deepnest_31[right2]",
@@ -3009,6 +3045,7 @@ window.mapData = {
 		"Deepnest_34": {
 			"area": "Deepnest",
 			"items": {},
+			"randomizerArea": "Deepnest",
 			"transitions": {
 				"left1": {
 					"to": "Deepnest_39[right1]",
@@ -3077,6 +3114,7 @@ window.mapData = {
 				}
 			},
 			"name": "Fake Grubs",
+			"randomizerArea": "Deepnest",
 			"transitions": {
 				"left1": {
 					"to": "Deepnest_02[right1]",
@@ -3103,6 +3141,7 @@ window.mapData = {
 					"y": 26.79321
 				}
 			},
+			"randomizerArea": "Deepnest",
 			"transitions": {
 				"bot1": {
 					"to": "Deepnest_44[top1]",
@@ -3145,6 +3184,7 @@ window.mapData = {
 				}
 			},
 			"name": "Garpede Pogo Party",
+			"randomizerArea": "Deepnest",
 			"transitions": {
 				"bot1": {
 					"to": "Deepnest_37[top1]",
@@ -3244,6 +3284,7 @@ window.mapData = {
 				}
 			},
 			"name": "Galien",
+			"randomizerArea": "Deepnest",
 			"transitions": {
 				"right1": {
 					"to": "Deepnest_35[left1]",
@@ -3355,6 +3396,7 @@ window.mapData = {
 				}
 			},
 			"name": "Sharp Shadow",
+			"randomizerArea": "Deepnest",
 			"transitions": {
 				"top1": {
 					"to": "Deepnest_37[bot1]",
@@ -3538,7 +3580,7 @@ window.mapData = {
 					"y": 150.5
 				},
 				"top2": {
-					"to": "Deepnest_east_07[bot2]",
+					"to": "Deepnest_East_07[bot2]",
 					"x": 35.5,
 					"y": 150.5
 				}
@@ -3556,6 +3598,7 @@ window.mapData = {
 				}
 			},
 			"name": "Bardoon",
+			"randomizerArea": "Kingdoms_Edge",
 			"transitions": {
 				"left1": {
 					"to": "Deepnest_East_03[right1]",
@@ -3598,6 +3641,7 @@ window.mapData = {
 				}
 			},
 			"name": "Path to Oro",
+			"randomizerArea": "Kingdoms_Edge",
 			"transitions": {
 				"bot1": {
 					"to": "Deepnest_East_14b[top1]",
@@ -3731,6 +3775,7 @@ window.mapData = {
 					"y": 4.22
 				}
 			},
+			"randomizerArea": "Kingdoms_Edge",
 			"transitions": {
 				"right1": {
 					"to": "Deepnest_East_07[left1]",
@@ -3780,6 +3825,7 @@ window.mapData = {
 				}
 			},
 			"name": "Markoth",
+			"randomizerArea": "Kingdoms_Edge",
 			"transitions": {
 				"left1": {
 					"to": "Deepnest_East_18[right2]",
@@ -3806,6 +3852,7 @@ window.mapData = {
 					"y": 100.09
 				}
 			},
+			"randomizerArea": "Kingdoms_Edge",
 			"transitions": {
 				"bot1": {
 					"to": "Deepnest_East_18[top1]",
@@ -3864,6 +3911,7 @@ window.mapData = {
 				}
 			},
 			"name": "Camp",
+			"randomizerArea": "Kingdoms_Edge",
 			"transitions": {
 				"bot1": {
 					"to": "Deepnest_East_11[top1]",
@@ -3904,6 +3952,7 @@ window.mapData = {
 					"y": 56.38
 				}
 			},
+			"randomizerArea": "Kingdoms_Edge",
 			"transitions": {
 				"door1": {
 					"to": "Deepnest_East_17[left1]",
@@ -3934,6 +3983,7 @@ window.mapData = {
 				}
 			},
 			"name": "Quick Slash",
+			"randomizerArea": "Kingdoms_Edge",
 			"transitions": {
 				"right1": {
 					"to": "Deepnest_East_14[left1]",
@@ -3959,6 +4009,7 @@ window.mapData = {
 				}
 			},
 			"name": "Lifeblood",
+			"randomizerArea": "Kingdoms_Edge",
 			"transitions": {
 				"left1": {
 					"to": "Deepnest_East_04[right2]",
@@ -3978,6 +4029,7 @@ window.mapData = {
 					"y": 4.94
 				}
 			},
+			"randomizerArea": "Kingdoms_Edge",
 			"transitions": {
 				"bot1": {
 					"to": "Deepnest_East_14[top2]",
@@ -4024,6 +4076,7 @@ window.mapData = {
 				}
 			},
 			"name": "Very Deep Dive",
+			"randomizerArea": "Kingdoms_Edge",
 			"transitions": {
 				"left1": {
 					"to": "Deepnest_East_14[door1]",
@@ -4043,6 +4096,7 @@ window.mapData = {
 					"y": 25.3
 				}
 			},
+			"randomizerArea": "Kingdoms_Edge",
 			"transitions": {
 				"bot1": {
 					"to": "Deepnest_East_06[top1]",
@@ -4250,22 +4304,6 @@ window.mapData = {
 				}
 			}
 		},
-		"Dream_Backer_Shrine": {
-			"area": "Dream",
-			"items": {},
-			"transitions": {
-				"door1": {
-					"to": null,
-					"x": 16.92,
-					"y": 45.72
-				},
-				"door2": {
-					"to": "0.[left1]",
-					"x": 76.227,
-					"y": 24.74
-				}
-			}
-		},
 		"Dream_Final_Boss": {
 			"area": "Dream",
 			"items": {},
@@ -4332,6 +4370,7 @@ window.mapData = {
 					"y": 52.15
 				}
 			},
+			"randomizerArea": "Resting_Grounds",
 			"transitions": {
 				"door_dreamReturn": {
 					"to": null,
@@ -4352,17 +4391,6 @@ window.mapData = {
 					"to": null,
 					"x": 184.7,
 					"y": 37.7
-				}
-			}
-		},
-		"Dream_Room_Believer_Shrine": {
-			"area": "Dream",
-			"items": {},
-			"transitions": {
-				"left1": {
-					"to": "Dream_Backer_Shrine[door2]",
-					"x": 5.0,
-					"y": 17.0
 				}
 			}
 		},
@@ -4403,6 +4431,7 @@ window.mapData = {
 				}
 			},
 			"name": "Bench",
+			"randomizerArea": "Greenpath",
 			"transitions": {
 				"left1": {
 					"to": "Fungus1_02[right1]",
@@ -4435,6 +4464,7 @@ window.mapData = {
 				}
 			},
 			"name": "Fireball Skip to Follow Hornet",
+			"randomizerArea": "Greenpath",
 			"transitions": {
 				"left1": {
 					"to": "Fungus1_17[right1]",
@@ -4478,6 +4508,7 @@ window.mapData = {
 					"y": 2.854536
 				}
 			},
+			"randomizerArea": "Greenpath",
 			"transitions": {
 				"bot1": {
 					"to": "Fungus1_05[top1]",
@@ -4523,6 +4554,7 @@ window.mapData = {
 				}
 			},
 			"name": "Hornet Fight 1",
+			"randomizerArea": "Greenpath",
 			"transitions": {
 				"left1": {
 					"to": "Fungus1_25[right1]",
@@ -4552,6 +4584,7 @@ window.mapData = {
 					"y": 64.88
 				}
 			},
+			"randomizerArea": "Greenpath",
 			"transitions": {
 				"bot1": {
 					"to": "Fungus1_10[top1]",
@@ -4589,6 +4622,7 @@ window.mapData = {
 				}
 			},
 			"name": "Conifer",
+			"randomizerArea": "Greenpath",
 			"transitions": {
 				"bot1": {
 					"to": "Fungus1_07[top1]",
@@ -4627,6 +4661,7 @@ window.mapData = {
 					"y": 28.33
 				}
 			},
+			"randomizerArea": "Greenpath",
 			"transitions": {
 				"left1": {
 					"to": "Fungus1_19[right1]",
@@ -4649,6 +4684,7 @@ window.mapData = {
 			"area": "Fungus1",
 			"items": {},
 			"name": "The Hunter",
+			"randomizerArea": "Greenpath",
 			"transitions": {
 				"left1": {
 					"to": "Fungus1_07[right1]",
@@ -4661,6 +4697,7 @@ window.mapData = {
 			"area": "Fungus1",
 			"items": {},
 			"name": "Route to Sheo",
+			"randomizerArea": "Greenpath",
 			"transitions": {
 				"left1": {
 					"to": "Fungus1_15[right1]",
@@ -4700,6 +4737,7 @@ window.mapData = {
 				}
 			},
 			"name": "Straightaway (Grimmchild)",
+			"randomizerArea": "Greenpath",
 			"transitions": {
 				"left1": {
 					"to": "Fungus1_30[right1]",
@@ -4784,6 +4822,7 @@ window.mapData = {
 					"y": 57.72
 				}
 			},
+			"randomizerArea": "Greenpath",
 			"transitions": {
 				"left1": {
 					"to": "Fungus1_13[right1]",
@@ -4863,6 +4902,7 @@ window.mapData = {
 				}
 			},
 			"name": "Thorns of Agony",
+			"randomizerArea": "Greenpath",
 			"transitions": {
 				"left1": {
 					"to": "Fungus1_05[right1]",
@@ -4883,6 +4923,7 @@ window.mapData = {
 				}
 			},
 			"name": "Outside Sheo",
+			"randomizerArea": "Greenpath",
 			"transitions": {
 				"door1": {
 					"to": "Room_nailmaster_02[left1]",
@@ -4908,6 +4949,7 @@ window.mapData = {
 				}
 			},
 			"name": "Stag",
+			"randomizerArea": "Greenpath",
 			"stag": "Greenpath",
 			"transitions": {
 				"door_stagExit": {
@@ -4933,6 +4975,7 @@ window.mapData = {
 					"y": 26.3
 				}
 			},
+			"randomizerArea": "Greenpath",
 			"transitions": {
 				"left1": {
 					"to": "Fungus1_03[right1]",
@@ -4964,6 +5007,7 @@ window.mapData = {
 					"y": 3.8
 				}
 			},
+			"randomizerArea": "Greenpath",
 			"transitions": {
 				"bot1": {
 					"to": "Fungus1_11[top1]",
@@ -5054,6 +5098,7 @@ window.mapData = {
 				}
 			},
 			"name": "Outside Hornet 1",
+			"randomizerArea": "Greenpath",
 			"transitions": {
 				"bot1": {
 					"to": "Fungus1_22[top1]",
@@ -5103,6 +5148,7 @@ window.mapData = {
 				}
 			},
 			"name": "Outside Stag",
+			"randomizerArea": "Greenpath",
 			"transitions": {
 				"bot1": {
 					"to": "Fungus1_30[top1]",
@@ -5124,6 +5170,7 @@ window.mapData = {
 		"Fungus1_23": {
 			"area": "Fungus3",
 			"items": {},
+			"randomizerArea": "Queens_Gardens",
 			"transitions": {
 				"left1": {
 					"to": "Fungus3_48[right2]",
@@ -5149,6 +5196,7 @@ window.mapData = {
 				}
 			},
 			"name": "Conifer",
+			"randomizerArea": "Queens_Gardens",
 			"transitions": {
 				"left1": {
 					"to": "Fungus3_05[right1]",
@@ -5271,6 +5319,7 @@ window.mapData = {
 				}
 			},
 			"name": "Moss Charger",
+			"randomizerArea": "Greenpath",
 			"transitions": {
 				"left1": {
 					"to": "Fungus1_12[right1]",
@@ -5302,6 +5351,7 @@ window.mapData = {
 					"y": 3.627
 				}
 			},
+			"randomizerArea": "Greenpath",
 			"transitions": {
 				"left1": {
 					"to": "Fungus1_09[right1]",
@@ -5351,6 +5401,7 @@ window.mapData = {
 				}
 			},
 			"name": "Toll Bench",
+			"randomizerArea": "Greenpath",
 			"transitions": {
 				"bot1": {
 					"to": "Fungus1_30[top3]",
@@ -5388,6 +5439,7 @@ window.mapData = {
 				}
 			},
 			"name": "Moss Knight Miniboss",
+			"randomizerArea": "Greenpath",
 			"transitions": {
 				"bot1": {
 					"to": "Fungus1_31[top1]",
@@ -5462,6 +5514,7 @@ window.mapData = {
 					"y": 8.02
 				}
 			},
+			"randomizerArea": "Stone_Sanctuary",
 			"transitions": {
 				"left1": {
 					"to": "Fungus1_35[right1]",
@@ -5474,6 +5527,7 @@ window.mapData = {
 			"area": "Fungus1",
 			"items": {},
 			"name": "Dead End Bench",
+			"randomizerArea": "Greenpath",
 			"transitions": {
 				"left1": {
 					"to": "Fungus1_11[right2]",
@@ -5494,6 +5548,7 @@ window.mapData = {
 				}
 			},
 			"name": "Unn",
+			"randomizerArea": "Lake_of_Unn",
 			"transitions": {
 				"right1": {
 					"to": "Fungus1_26[left1]",
@@ -5550,6 +5605,7 @@ window.mapData = {
 				}
 			},
 			"name": "Queen's Station Stag",
+			"randomizerArea": "Queens_Station",
 			"stag": "FungalWastes",
 			"transitions": {
 				"door_stagExit": {
@@ -5619,6 +5675,7 @@ window.mapData = {
 					"y": 31.28
 				}
 			},
+			"randomizerArea": "Fungal_Wastes",
 			"transitions": {
 				"left1": {
 					"to": "Fungus2_03[right1]",
@@ -5642,6 +5699,12 @@ window.mapData = {
 				}
 			}
 		},
+		"Fungus2_04-upper": {
+			"area": "Fungus2",
+			"items": {},
+			"randomizerArea": "Fungal_Wastes",
+			"transitions": {}
+		},
 		"Fungus2_05": {
 			"area": "Fungus2",
 			"items": {
@@ -5654,6 +5717,7 @@ window.mapData = {
 				}
 			},
 			"name": "Shrumal Ogre Miniboss",
+			"randomizerArea": "Fungal_Wastes",
 			"transitions": {
 				"bot1": {
 					"to": "Fungus2_04[top1]",
@@ -5711,6 +5775,7 @@ window.mapData = {
 					"y": 30.2
 				}
 			},
+			"randomizerArea": "Fungal_Wastes",
 			"transitions": {
 				"left1": {
 					"to": "Fungus2_06[right2]",
@@ -5735,6 +5800,7 @@ window.mapData = {
 					"y": 32.79153
 				}
 			},
+			"randomizerArea": "Fungal_Wastes",
 			"transitions": {
 				"left1": {
 					"to": "Fungus2_07[right1]",
@@ -5757,6 +5823,7 @@ window.mapData = {
 			"area": "Fungus2",
 			"items": {},
 			"name": "Meet Cloth",
+			"randomizerArea": "Fungal_Wastes",
 			"transitions": {
 				"left1": {
 					"to": "Fungus2_10[right1]",
@@ -5789,6 +5856,7 @@ window.mapData = {
 				}
 			},
 			"name": "Outside City",
+			"randomizerArea": "Fungal_Wastes",
 			"transitions": {
 				"bot1": {
 					"to": "Fungus2_11[top1]",
@@ -5901,6 +5969,7 @@ window.mapData = {
 				}
 			},
 			"name": "Outside Mantis Village",
+			"randomizerArea": "Mantis_Village",
 			"transitions": {
 				"left2": {
 					"to": "Fungus2_14[right1]",
@@ -6166,6 +6235,7 @@ window.mapData = {
 				}
 			},
 			"name": "Conifer",
+			"randomizerArea": "Fungal_Wastes",
 			"transitions": {
 				"bot1": {
 					"to": "Fungus2_19[top1]",
@@ -6187,6 +6257,7 @@ window.mapData = {
 		"Fungus2_19": {
 			"area": "Fungus2",
 			"items": {},
+			"randomizerArea": "Fungal_Wastes",
 			"transitions": {
 				"left1": {
 					"to": "Fungus2_20[right1]",
@@ -6226,6 +6297,7 @@ window.mapData = {
 				}
 			},
 			"name": "Room of Three Things",
+			"randomizerArea": "Fungal_Wastes",
 			"transitions": {
 				"left1": {
 					"to": "Deepnest_01[right1]",
@@ -6352,11 +6424,6 @@ window.mapData = {
 					"x": 168.5,
 					"y": 6.0
 				},
-				"right1 (1)": {
-					"to": "Fungus2_15[left1]",
-					"x": 168.5,
-					"y": 10.0
-				},
 				"top1": {
 					"to": "Deepnest_16[bot1]",
 					"x": 12.0,
@@ -6395,6 +6462,7 @@ window.mapData = {
 				}
 			},
 			"name": "Leg Eater",
+			"randomizerArea": "Fungal_Wastes",
 			"transitions": {
 				"left1": {
 					"to": "Fungus2_06[right1]",
@@ -6406,6 +6474,7 @@ window.mapData = {
 		"Fungus2_28": {
 			"area": "Fungus2",
 			"items": {},
+			"randomizerArea": "Fungal_Wastes",
 			"transitions": {
 				"left1": {
 					"to": "Fungus2_04[right1]",
@@ -6532,6 +6601,7 @@ window.mapData = {
 				}
 			},
 			"name": "Mantis Village (Loot)",
+			"randomizerArea": "Mantis_Village",
 			"transitions": {
 				"left1": {
 					"to": "Fungus2_15[right1]",
@@ -6553,6 +6623,7 @@ window.mapData = {
 				}
 			},
 			"name": "Elder Hu",
+			"randomizerArea": "Fungal_Wastes",
 			"transitions": {
 				"left1": {
 					"to": "Fungus2_08[right1]",
@@ -6598,6 +6669,7 @@ window.mapData = {
 				}
 			},
 			"name": "Willoh",
+			"randomizerArea": "Queens_Station",
 			"transitions": {
 				"right1": {
 					"to": "Fungus2_01[left3]",
@@ -6694,6 +6766,7 @@ window.mapData = {
 		"Fungus3_04": {
 			"area": "Fungus3",
 			"items": {},
+			"randomizerArea": "Queens_Gardens",
 			"transitions": {
 				"left1": {
 					"to": "Fungus3_21[right1]",
@@ -6717,10 +6790,17 @@ window.mapData = {
 				}
 			}
 		},
+		"Fungus3_04-upper": {
+			"area": "Fungus3",
+			"items": {},
+			"randomizerArea": "Queens_Gardens",
+			"transitions": {}
+		},
 		"Fungus3_05": {
 			"area": "Fungus3",
 			"items": {},
 			"name": "Mantis Petra Miniboss",
+			"randomizerArea": "Queens_Gardens",
 			"transitions": {
 				"left1": {
 					"to": "Fungus3_04[right2]",
@@ -6742,6 +6822,7 @@ window.mapData = {
 		"Fungus3_08": {
 			"area": "Fungus3",
 			"items": {},
+			"randomizerArea": "Queens_Gardens",
 			"transitions": {
 				"left1": {
 					"to": "Deepnest_43[right1]",
@@ -6779,6 +6860,7 @@ window.mapData = {
 				}
 			},
 			"name": "Mantis Traitor Miniboss",
+			"randomizerArea": "Queens_Gardens",
 			"transitions": {
 				"bot1": {
 					"to": "Fungus3_08[top1]",
@@ -6803,6 +6885,7 @@ window.mapData = {
 					"y": 8.5
 				}
 			},
+			"randomizerArea": "Queens_Gardens",
 			"transitions": {
 				"left1": {
 					"to": "Fungus3_05[right2]",
@@ -6825,6 +6908,7 @@ window.mapData = {
 			"area": "Fungus3",
 			"items": {},
 			"name": "Outside Stag Station",
+			"randomizerArea": "Queens_Gardens",
 			"transitions": {
 				"bot1": {
 					"to": "Fungus3_10[top1]",
@@ -6865,6 +6949,7 @@ window.mapData = {
 				}
 			},
 			"name": "Path to the Traitor",
+			"randomizerArea": "Queens_Gardens",
 			"transitions": {
 				"right1": {
 					"to": "Fungus3_04[left1]",
@@ -6914,6 +6999,7 @@ window.mapData = {
 			"boss": "Traitor Lord",
 			"items": {},
 			"name": "Traitor Lord",
+			"randomizerArea": "Queens_Gardens",
 			"transitions": {
 				"left1": {
 					"to": "Fungus3_48[right1]",
@@ -6935,6 +7021,7 @@ window.mapData = {
 		"Fungus3_24": {
 			"area": "FogCanyon",
 			"items": {},
+			"randomizerArea": "Fog_Canyon",
 			"transitions": {
 				"left1": {
 					"to": "Fungus3_44[right1]",
@@ -6965,6 +7052,7 @@ window.mapData = {
 				}
 			},
 			"name": "Conifer",
+			"randomizerArea": "Fog_Canyon",
 			"transitions": {
 				"left1": {
 					"to": "Fungus3_01[right1]",
@@ -6981,6 +7069,7 @@ window.mapData = {
 		"Fungus3_25b": {
 			"area": "FogCanyon",
 			"items": {},
+			"randomizerArea": "Fog_Canyon",
 			"transitions": {
 				"left1": {
 					"to": "Fungus3_25[right1]",
@@ -7045,6 +7134,7 @@ window.mapData = {
 		"Fungus3_27": {
 			"area": "FogCanyon",
 			"items": {},
+			"randomizerArea": "Fog_Canyon",
 			"transitions": {
 				"left1": {
 					"to": "Fungus3_47[right1]",
@@ -7070,6 +7160,7 @@ window.mapData = {
 				}
 			},
 			"name": "Spicy Charm Notch",
+			"randomizerArea": "Fog_Canyon",
 			"transitions": {
 				"right1": {
 					"to": "Fungus3_26[left1]",
@@ -7097,6 +7188,7 @@ window.mapData = {
 				}
 			},
 			"name": "Life Blood & Seal",
+			"randomizerArea": "Fog_Canyon",
 			"transitions": {
 				"bot1": {
 					"to": "Fungus3_24[top1]",
@@ -7139,6 +7231,7 @@ window.mapData = {
 			"area": "FogCanyon",
 			"items": {},
 			"name": "Millibelle the \"Banker\"",
+			"randomizerArea": "Fog_Canyon",
 			"transitions": {
 				"right1": {
 					"to": "Fungus3_02[left3]",
@@ -7207,6 +7300,7 @@ window.mapData = {
 				}
 			},
 			"name": "Stag & Marmu",
+			"randomizerArea": "Queens_Gardens",
 			"stag": "RoyalGardens",
 			"transitions": {
 				"door_stagExit": {
@@ -7237,6 +7331,7 @@ window.mapData = {
 					"y": 10.31
 				}
 			},
+			"randomizerArea": "Queens_Gardens",
 			"transitions": {}
 		},
 		"Fungus3_44": {
@@ -7251,7 +7346,7 @@ window.mapData = {
 					"y": -0.5
 				},
 				"door1": {
-					"to": "Room_Fung_Shaman[left1]",
+					"to": "Room_Fungus_Shaman[left1]",
 					"x": 21.74,
 					"y": 37.82
 				},
@@ -7319,6 +7414,7 @@ window.mapData = {
 				}
 			},
 			"name": "Outside White Lady",
+			"randomizerArea": "Queens_Gardens",
 			"splitRoom": [
 				[
 					"right2",
@@ -7352,10 +7448,17 @@ window.mapData = {
 				}
 			}
 		},
+		"Fungus3_48-upper": {
+			"area": "Fungus3",
+			"items": {},
+			"randomizerArea": "Queens_Gardens",
+			"transitions": {}
+		},
 		"Fungus3_49": {
 			"area": "Fungus3",
 			"items": {},
 			"name": "Traitor's Child's Grave",
+			"randomizerArea": "Queens_Gardens",
 			"transitions": {
 				"right1": {
 					"to": "Fungus3_13[left3]",
@@ -7368,6 +7471,7 @@ window.mapData = {
 			"area": "Fungus3",
 			"items": {},
 			"name": "Toll Bench",
+			"randomizerArea": "Queens_Gardens",
 			"transitions": {
 				"right1": {
 					"to": "Deepnest_43[left1]",
@@ -7428,6 +7532,7 @@ window.mapData = {
 				}
 			},
 			"name": "Uumuu & Monomon",
+			"randomizerArea": "Teachers_Archives",
 			"transitions": {
 				"door_dreamReturn": {
 					"to": null,
@@ -7447,167 +7552,7 @@ window.mapData = {
 			"transitions": {}
 		},
 		"GG_Atrium": {
-			"area": "GG",
-			"items": {},
-			"name": "Godhome",
-			"transitions": {
-				"Door_Workshop": {
-					"to": "GG_Workshop[left1]",
-					"x": 111.33,
-					"y": 13.76
-				},
-				"door1_blueRoom": {
-					"to": "GG_Blue_Room[left1]",
-					"x": 89.84,
-					"y": 13.76
-				},
-				"door_dreamEnter": {
-					"to": null,
-					"x": 14.64,
-					"y": 35.1
-				},
-				"door_dreamEnter_ReturnGGMode": {
-					"to": null,
-					"x": 14.64,
-					"y": 35.1
-				},
-				"door_dreamReturnGG": {
-					"to": null,
-					"x": 109.50000336,
-					"y": 34.5458064
-				},
-				"top1": {
-					"to": "GG_Atrium_Roof[bot1]",
-					"x": 80.5,
-					"y": 85.0
-				},
-				"top2": {
-					"to": "GG_Atrium_Roof[bot2]",
-					"x": 132.0,
-					"y": 85.0
-				}
-			}
-		},
-		"GG_Atrium_Roof": {
-			"area": "GG",
-			"items": {},
-			"transitions": {
-				"bot1": {
-					"to": "GG_Atrium[top1]",
-					"x": 47.5,
-					"y": 6.0
-				},
-				"bot2": {
-					"to": "GG_Atrium[top2]",
-					"x": 148.0,
-					"y": 6.0
-				},
-				"door_Land_of_Storms": {
-					"to": "GG_Land_of_Storms[door1]",
-					"x": 68.82924519,
-					"y": 18.858484800000003
-				},
-				"door_Land_of_Storms_return": {
-					"to": null,
-					"x": 68.82924146673079,
-					"y": 18.858484800000003
-				},
-				"door_dreamReturnGG": {
-					"to": null,
-					"x": 97.41100336,
-					"y": 72.635807
-				}
-			}
-		},
-		"GG_Blue_Room": {
-			"area": "GG",
-			"items": {},
-			"transitions": {
-				"left1": {
-					"to": "GG_Atrium[door1_blueRoom]",
-					"x": 82.0,
-					"y": 18.0
-				}
-			}
-		},
-		"GG_Boss_Door_Entrance": {
-			"area": "GG",
-			"items": {},
-			"transitions": {}
-		},
-		"GG_Door_5_Finale": {
-			"area": "GG",
-			"items": {},
-			"transitions": {}
-		},
-		"GG_End_Sequence": {
-			"area": "GG",
-			"items": {},
-			"transitions": {}
-		},
-		"GG_Engine": {
-			"area": "GG",
-			"items": {},
-			"transitions": {
-				"door_dreamEnter": {
-					"to": null,
-					"x": 89.27,
-					"y": 15.12
-				},
-				"right1": {
-					"to": "[door_dreamEnter]",
-					"x": 106.0,
-					"y": 18.0
-				}
-			}
-		},
-		"GG_Engine_Prime": {
-			"area": "GG",
-			"items": {},
-			"transitions": {
-				"door_dreamEnter": {
-					"to": null,
-					"x": 89.27,
-					"y": 15.12
-				},
-				"right1": {
-					"to": "[door_dreamEnter]",
-					"x": 106.0,
-					"y": 18.0
-				}
-			}
-		},
-		"GG_Engine_Root": {
-			"area": "GG",
-			"items": {},
-			"transitions": {
-				"door_dreamEnter": {
-					"to": null,
-					"x": 65.67,
-					"y": 14.78
-				},
-				"right1": {
-					"to": "[door_dreamEnter]",
-					"x": 106.0,
-					"y": 18.0
-				}
-			}
-		},
-		"GG_Entrance_Cutscene": {
-			"area": "GG",
-			"items": {},
-			"transitions": {}
-		},
-		"GG_Land_of_Storms": {
-			"area": "GG",
-			"items": {},
-			"transitions": {
-				"door1": {
-					"to": "GG_Atrium_Roof[door_Land_of_Storms]",
-					"x": 64.97,
-					"y": 13.82
-				}
-			}
+			"name": "Godhome"
 		},
 		"GG_Lurker": {
 			"area": "Deepnest_East",
@@ -7652,50 +7597,6 @@ window.mapData = {
 				}
 			}
 		},
-		"GG_Mage_Knight": {
-			"area": "GG",
-			"items": {},
-			"transitions": {
-				"door_dreamEnter": {
-					"to": null,
-					"x": 41.56,
-					"y": 5.19
-				}
-			}
-		},
-		"GG_Mage_Knight_V": {
-			"area": "GG",
-			"items": {},
-			"transitions": {
-				"door_dreamEnter": {
-					"to": null,
-					"x": 41.56,
-					"y": 5.19
-				}
-			}
-		},
-		"GG_Nailmasters": {
-			"area": "GG",
-			"items": {},
-			"transitions": {
-				"door_dreamEnter": {
-					"to": null,
-					"x": 41.61,
-					"y": 4.88
-				}
-			}
-		},
-		"GG_Painter": {
-			"area": "GG",
-			"items": {},
-			"transitions": {
-				"door_dreamEnter": {
-					"to": null,
-					"x": 41.85,
-					"y": 4.83
-				}
-			}
-		},
 		"GG_Pipeway": {
 			"area": "Waterways",
 			"items": {
@@ -7719,65 +7620,6 @@ window.mapData = {
 					"to": "Waterways_08[left2]",
 					"x": 149.0,
 					"y": 5.0
-				}
-			}
-		},
-		"GG_Sly": {
-			"area": "GG",
-			"items": {},
-			"transitions": {
-				"door_dreamEnter": {
-					"to": null,
-					"x": 42.26,
-					"y": 4.9
-				}
-			}
-		},
-		"GG_Spa": {
-			"area": "GG",
-			"items": {},
-			"transitions": {
-				"door_dreamEnter": {
-					"to": null,
-					"x": 87.55,
-					"y": 15.69
-				},
-				"right1": {
-					"to": "[door_dreamEnter]",
-					"x": 122.5,
-					"y": 18.0
-				}
-			}
-		},
-		"GG_Unlock": {
-			"area": "GG",
-			"items": {},
-			"transitions": {}
-		},
-		"GG_Unlock_Wastes": {
-			"area": "GG",
-			"items": {},
-			"transitions": {
-				"door_dreamEnter": {
-					"to": null,
-					"x": 57.31,
-					"y": 4.9
-				}
-			}
-		},
-		"GG_Unn": {
-			"area": "GG",
-			"items": {},
-			"transitions": {
-				"door_dreamEnter": {
-					"to": null,
-					"x": 64.58,
-					"y": 15.12
-				},
-				"right1": {
-					"to": "[door_dreamEnter]",
-					"x": 106.0,
-					"y": 18.0
 				}
 			}
 		},
@@ -7812,42 +7654,11 @@ window.mapData = {
 				}
 			}
 		},
-		"GG_Workshop": {
-			"area": "GG",
-			"items": {},
-			"transitions": {
-				"door_dreamReturnGG": {
-					"to": null,
-					"x": 92.49,
-					"y": 5.96
-				},
-				"left1": {
-					"to": "GG_Atrium[Door_Workshop]",
-					"x": 2.0,
-					"y": 9.0
-				}
-			}
-		},
-		"GG_Wyrm": {
-			"area": "GG",
-			"items": {},
-			"transitions": {
-				"door_dreamEnter": {
-					"to": null,
-					"x": 76.53,
-					"y": 15.12
-				},
-				"right1": {
-					"to": "[door_dreamEnter]",
-					"x": 106.0,
-					"y": 18.0
-				}
-			}
-		},
 		"Grimm_Divine": {
 			"area": "Town",
 			"items": {},
 			"name": "Divine",
+			"randomizerArea": "Dirtmouth",
 			"transitions": {
 				"left1": {
 					"to": "Town[room_divine]",
@@ -7876,6 +7687,7 @@ window.mapData = {
 				}
 			},
 			"name": "Grimm",
+			"randomizerArea": "Dirtmouth",
 			"transitions": {
 				"door_dreamReturn": {
 					"to": null,
@@ -7976,6 +7788,7 @@ window.mapData = {
 					"y": 24.1
 				}
 			},
+			"randomizerArea": "Hive",
 			"transitions": {
 				"left1": {
 					"to": "Hive_03_c[right3]",
@@ -8120,6 +7933,7 @@ window.mapData = {
 					"y": 96.33
 				}
 			},
+			"randomizerArea": "Hive",
 			"transitions": {
 				"left1": {
 					"to": "Hive_03[right1]",
@@ -8151,6 +7965,7 @@ window.mapData = {
 				}
 			},
 			"name": "Hive Knight",
+			"randomizerArea": "Hive",
 			"transitions": {
 				"left1": {
 					"to": "Hive_04[right1]",
@@ -8251,6 +8066,7 @@ window.mapData = {
 					"y": 75.45
 				}
 			},
+			"randomizerArea": "Crystal_Peak",
 			"transitions": {
 				"bot1": {
 					"to": "Mines_02[top2]",
@@ -8294,6 +8110,7 @@ window.mapData = {
 					"y": 77.56
 				}
 			},
+			"randomizerArea": "Crystal_Peak",
 			"transitions": {
 				"left1": {
 					"to": "Mines_17[right1]",
@@ -8333,6 +8150,7 @@ window.mapData = {
 					"y": 13.58
 				}
 			},
+			"randomizerArea": "Crystal_Peak",
 			"transitions": {
 				"bot1": {
 					"to": "Mines_03[top1]",
@@ -8365,6 +8183,7 @@ window.mapData = {
 			"area": "Mines",
 			"items": {},
 			"name": "Path to Deep Focus",
+			"randomizerArea": "Crystal_Peak",
 			"transitions": {
 				"left1": {
 					"to": "Mines_36[right1]",
@@ -8382,6 +8201,7 @@ window.mapData = {
 			"area": "Mines",
 			"items": {},
 			"name": "Dark Path East",
+			"randomizerArea": "Crystal_Peak",
 			"transitions": {
 				"left1": {
 					"to": "Mines_04[right1]",
@@ -8437,6 +8257,7 @@ window.mapData = {
 				}
 			},
 			"name": "Shopkeeper's Key",
+			"randomizerArea": "Crystal_Peak",
 			"transitions": {
 				"bot1": {
 					"to": "Mines_05[top1]",
@@ -8497,6 +8318,7 @@ window.mapData = {
 				}
 			},
 			"name": "Fake Grub",
+			"randomizerArea": "Crystal_Peak",
 			"transitions": {
 				"top1": {
 					"to": "Mines_10[bot1]",
@@ -8508,6 +8330,7 @@ window.mapData = {
 		"Mines_17": {
 			"area": "Mines",
 			"items": {},
+			"randomizerArea": "Crystal_Peak",
 			"transitions": {
 				"left1": {
 					"to": "Mines_03[right1]",
@@ -8534,6 +8357,7 @@ window.mapData = {
 				}
 			},
 			"name": "Crystal Guradian",
+			"randomizerArea": "Crystal_Peak",
 			"transitions": {
 				"left1": {
 					"to": "Mines_11[right1]",
@@ -8569,6 +8393,7 @@ window.mapData = {
 				}
 			},
 			"name": "Crushers & Grub",
+			"randomizerArea": "Crystal_Peak",
 			"transitions": {
 				"left1": {
 					"to": "Mines_05[right1]",
@@ -8628,6 +8453,7 @@ window.mapData = {
 					"y": 174.26
 				}
 			},
+			"randomizerArea": "Crystal_Peak",
 			"transitions": {
 				"bot1": {
 					"to": "Mines_37[top1]",
@@ -8660,6 +8486,12 @@ window.mapData = {
 					"y": 64.0
 				}
 			}
+		},
+		"Mines_20-lower": {
+			"area": "Mines",
+			"items": {},
+			"randomizerArea": "Crystal_Peak",
+			"transitions": {}
 		},
 		"Mines_23": {
 			"area": "Mines",
@@ -8708,6 +8540,7 @@ window.mapData = {
 				}
 			},
 			"name": "Grub Betwixt Spikes",
+			"randomizerArea": "Crystal_Peak",
 			"transitions": {
 				"left1": {
 					"to": "Mines_23[right2]",
@@ -8820,6 +8653,7 @@ window.mapData = {
 				}
 			},
 			"name": "Southeast Bench",
+			"randomizerArea": "Crystal_Peak",
 			"transitions": {
 				"left1": {
 					"to": "Mines_02[right1]",
@@ -8857,6 +8691,7 @@ window.mapData = {
 				}
 			},
 			"name": "Conifer",
+			"randomizerArea": "Crystal_Peak",
 			"transitions": {
 				"left1": {
 					"to": "Mines_10[right1]",
@@ -8910,6 +8745,7 @@ window.mapData = {
 				}
 			},
 			"name": "Superdash",
+			"randomizerArea": "Crystal_Peak",
 			"transitions": {
 				"left1": {
 					"to": "Mines_20[right2]",
@@ -8938,6 +8774,7 @@ window.mapData = {
 				}
 			},
 			"name": "Enraged Guardian",
+			"randomizerArea": "Crystal_Peak",
 			"transitions": {
 				"bot1": {
 					"to": "Mines_18[top1]",
@@ -9069,6 +8906,7 @@ window.mapData = {
 				}
 			},
 			"name": "Deep Focus",
+			"randomizerArea": "Crystal_Peak",
 			"transitions": {
 				"right1": {
 					"to": "Mines_06[left1]",
@@ -9103,6 +8941,7 @@ window.mapData = {
 				}
 			},
 			"name": "Crushers & Cash",
+			"randomizerArea": "Crystal_Peak",
 			"transitions": {
 				"bot1": {
 					"to": "Mines_04[top1]",
@@ -9161,12 +9000,14 @@ window.mapData = {
 					"y": 11.51
 				}
 			},
+			"randomizerArea": "Resting_Grounds",
 			"transitions": {}
 		},
 		"RestingGrounds_04": {
 			"area": "RestingGrounds",
 			"items": {},
 			"name": "Dreamer's Interruption",
+			"randomizerArea": "Resting_Grounds",
 			"transitions": {
 				"left1": {
 					"to": "RestingGrounds_02[right1]",
@@ -9332,6 +9173,7 @@ window.mapData = {
 				}
 			},
 			"name": "Moth Seer",
+			"randomizerArea": "Resting_Grounds",
 			"transitions": {
 				"door_dreamReturn": {
 					"to": null,
@@ -9397,6 +9239,7 @@ window.mapData = {
 				}
 			},
 			"name": "Stag Station",
+			"randomizerArea": "Resting_Grounds",
 			"stag": "RestingGrounds",
 			"transitions": {
 				"door_stagExit": {
@@ -9472,6 +9315,7 @@ window.mapData = {
 				}
 			},
 			"name": "Lower Resting Grounds",
+			"randomizerArea": "Resting_Grounds",
 			"transitions": {
 				"left1": {
 					"to": "Ruins2_10[right1]",
@@ -9494,6 +9338,7 @@ window.mapData = {
 			"area": "RestingGrounds",
 			"items": {},
 			"name": "Outside Grey Mourner",
+			"randomizerArea": "Resting_Grounds",
 			"transitions": {
 				"bot1": {
 					"to": "RestingGrounds_10[top2]",
@@ -9519,6 +9364,7 @@ window.mapData = {
 				}
 			},
 			"name": "Dreamshield",
+			"randomizerArea": "Resting_Grounds",
 			"transitions": {
 				"right1": {
 					"to": "RestingGrounds_05[left3]",
@@ -9539,6 +9385,7 @@ window.mapData = {
 				}
 			},
 			"name": "Bertta's House",
+			"randomizerArea": "Dirtmouth",
 			"transitions": {
 				"door1": {
 					"to": null,
@@ -9565,6 +9412,7 @@ window.mapData = {
 				}
 			},
 			"name": "Bertta's Basement",
+			"randomizerArea": "Dirtmouth",
 			"transitions": {
 				"door1": {
 					"to": null,
@@ -9623,6 +9471,7 @@ window.mapData = {
 				}
 			},
 			"name": "Salubra's Shop",
+			"randomizerArea": "Forgotten_Crossroads",
 			"transitions": {
 				"left1": {
 					"to": "Crossroads_04[door_charmshop]",
@@ -9648,7 +9497,7 @@ window.mapData = {
 					"y": 9.0
 				},
 				"right1": {
-					"to": "[left1]",
+					"to": null,
 					"x": 60.5,
 					"y": 9.0
 				}
@@ -9658,6 +9507,7 @@ window.mapData = {
 			"area": "Room",
 			"items": {},
 			"name": "Colosseum Bench",
+			"randomizerArea": "Colosseum",
 			"transitions": {
 				"top1": {
 					"to": "Room_Colosseum_01[bot1]",
@@ -9682,32 +9532,26 @@ window.mapData = {
 					"y": 23.77254
 				}
 			},
+			"name": "Trial of the Warrior",
+			"randomizerArea": "Colosseum",
 			"transitions": {
 				"left1": {
 					"to": "Room_Colosseum_01[right1]",
 					"x": 1.5,
 					"y": 7.0
-				},
-				"left1 (1)": {
-					"to": "Room_Colosseum_01[right1]",
-					"x": 1.5,
-					"y": 11.0
 				}
 			}
 		},
 		"Room_Colosseum_Gold": {
 			"area": "Room",
 			"items": {},
+			"name": "Trial of the Fool",
+			"randomizerArea": "Colosseum",
 			"transitions": {
 				"left1": {
 					"to": "Room_Colosseum_01[right1]",
 					"x": 1.5,
 					"y": 7.0
-				},
-				"left1 (1)": {
-					"to": "Room_Colosseum_01[right1]",
-					"x": 1.5,
-					"y": 11.0
 				}
 			}
 		},
@@ -9722,16 +9566,13 @@ window.mapData = {
 					"y": 23.77254
 				}
 			},
+			"name": "Trial of the Conqueror",
+			"randomizerArea": "Colosseum",
 			"transitions": {
 				"left1": {
 					"to": "Room_Colosseum_01[right1]",
 					"x": 1.5,
 					"y": 7.0
-				},
-				"left1 (1)": {
-					"to": "Room_Colosseum_01[right1]",
-					"x": 1.5,
-					"y": 11.0
 				}
 			}
 		},
@@ -9772,6 +9613,7 @@ window.mapData = {
 				}
 			},
 			"name": "Outside Hollow Knight",
+			"randomizerArea": "Black_Egg_Temple",
 			"transitions": {
 				"left1": {
 					"to": "Room_temple[door1]",
@@ -9788,9 +9630,11 @@ window.mapData = {
 		"Room_Final_Boss_Core": {
 			"area": "Room",
 			"items": {},
+			"name": "Hollow Knight",
+			"randomizerArea": "Black_Egg_Temple",
 			"transitions": {
 				"left1": {
-					"to": "Room_Final_Boss_atrium[right1]",
+					"to": "Room_Final_Boss_Atrium[right1]",
 					"x": 7.5,
 					"y": 9.0
 				}
@@ -9860,7 +9704,8 @@ window.mapData = {
 		"Room_Jinn": {
 			"area": "Room",
 			"items": {},
-			"name": "Jiji & Jinn",
+			"name": "Jinn",
+			"randomizerArea": "Dirtmouth",
 			"transitions": {
 				"left1": {
 					"to": "Town[door_jiji]",
@@ -9881,6 +9726,7 @@ window.mapData = {
 				}
 			},
 			"name": "Grey Mourner",
+			"randomizerArea": "Resting_Grounds",
 			"transitions": {
 				"left1": {
 					"to": "RestingGrounds_12[door_Mansion]",
@@ -9893,6 +9739,7 @@ window.mapData = {
 			"area": "Room",
 			"items": {},
 			"name": "Mask Maker",
+			"randomizerArea": "Deepnest",
 			"transitions": {
 				"right1": {
 					"to": "Deepnest_42[left1]",
@@ -9905,6 +9752,7 @@ window.mapData = {
 			"area": "Room",
 			"items": {},
 			"name": "Menderbug's House",
+			"randomizerArea": "Forgotten_Crossroads",
 			"transitions": {
 				"left1": {
 					"to": "Crossroads_04[door_Mender_House]",
@@ -9916,7 +9764,8 @@ window.mapData = {
 		"Room_Ouiji": {
 			"area": "Room",
 			"items": {},
-			"name": "Jiji & Jinn",
+			"name": "Jiji",
+			"randomizerArea": "Dirtmouth",
 			"transitions": {
 				"left1": {
 					"to": "Town[door_jiji]",
@@ -9937,6 +9786,7 @@ window.mapData = {
 				}
 			},
 			"name": "White Lady",
+			"randomizerArea": "Queens_Gardens",
 			"transitions": {
 				"left1": {
 					"to": "Fungus3_48[door1]",
@@ -9949,6 +9799,7 @@ window.mapData = {
 			"area": "Room",
 			"items": {},
 			"name": "Lake of Unn Bench",
+			"randomizerArea": "Lake_of_Unn",
 			"transitions": {
 				"left1": {
 					"to": "Fungus1_26[door_SlugShrine]",
@@ -9969,6 +9820,7 @@ window.mapData = {
 				}
 			},
 			"name": "Sly's Basement",
+			"randomizerArea": "Dirtmouth",
 			"transitions": {
 				"door1": {
 					"to": null,
@@ -9994,6 +9846,7 @@ window.mapData = {
 				}
 			},
 			"name": "Dirtmouth Stag",
+			"randomizerArea": "Dirtmouth",
 			"stag": "Town",
 			"transitions": {
 				"door_stagExit": {
@@ -10042,6 +9895,7 @@ window.mapData = {
 				}
 			},
 			"name": "Cast off Shell",
+			"randomizerArea": "Cast_Off_Shell",
 			"transitions": {
 				"right1": {
 					"to": "Deepnest_East_Hornet[left2]",
@@ -10062,6 +9916,7 @@ window.mapData = {
 				}
 			},
 			"name": "Conifer's Shop",
+			"randomizerArea": "Dirtmouth",
 			"transitions": {
 				"left1": {
 					"to": "Town[door_mapper]",
@@ -10082,6 +9937,7 @@ window.mapData = {
 				}
 			},
 			"name": "Nailmaster Mato",
+			"randomizerArea": "Howling_Cliffs",
 			"transitions": {
 				"left1": {
 					"to": "Cliffs_02[door1]",
@@ -10102,6 +9958,7 @@ window.mapData = {
 				}
 			},
 			"name": "Nailmaster Sheo",
+			"randomizerArea": "Greenpath",
 			"transitions": {
 				"left1": {
 					"to": "Fungus1_15[door1]",
@@ -10122,6 +9979,7 @@ window.mapData = {
 				}
 			},
 			"name": "Nailmaster Oro",
+			"randomizerArea": "Kingdoms_Edge",
 			"transitions": {
 				"left1": {
 					"to": "Deepnest_East_06[door1]",
@@ -10134,6 +9992,7 @@ window.mapData = {
 			"area": "Room",
 			"items": {},
 			"name": "Nailsmith",
+			"randomizerArea": "City_of_Tears",
 			"transitions": {
 				"left1": {
 					"to": "Ruins1_04[door1]",
@@ -10146,6 +10005,7 @@ window.mapData = {
 			"area": "Room",
 			"items": {},
 			"name": "Infected Sly",
+			"randomizerArea": "Forgotten_Crossroads",
 			"transitions": {
 				"left1": {
 					"to": "Crossroads_04[door1]",
@@ -10257,6 +10117,7 @@ window.mapData = {
 				}
 			},
 			"name": "Sly's Shop",
+			"randomizerArea": "Dirtmouth",
 			"transitions": {
 				"door1": {
 					"to": null,
@@ -10282,6 +10143,7 @@ window.mapData = {
 				}
 			},
 			"name": "Brumm's Betrayal",
+			"randomizerArea": "Distant_Village",
 			"transitions": {
 				"left1": {
 					"to": "Deepnest_10[door2]",
@@ -10342,6 +10204,7 @@ window.mapData = {
 				}
 			},
 			"name": "Early City Bench",
+			"randomizerArea": "City_of_Tears",
 			"transitions": {
 				"bot1": {
 					"to": "Ruins1_03[top1]",
@@ -10373,6 +10236,7 @@ window.mapData = {
 					"y": 57.23
 				}
 			},
+			"randomizerArea": "City_of_Tears",
 			"transitions": {
 				"left1": {
 					"to": "Ruins1_04[right1]",
@@ -10408,7 +10272,7 @@ window.mapData = {
 					"y": -0.5
 				},
 				"door1": {
-					"to": "Room_nailmsith[left1]",
+					"to": "Room_nailsmith[left1]",
 					"x": 38.42376,
 					"y": 35.69
 				},
@@ -10530,6 +10394,7 @@ window.mapData = {
 					"y": 92.15
 				}
 			},
+			"randomizerArea": "City_of_Tears",
 			"transitions": {
 				"bot1": {
 					"to": "Ruins1_05b[top1]",
@@ -10562,6 +10427,7 @@ window.mapData = {
 			"area": "Ruins1",
 			"items": {},
 			"name": "Zote Likes to Hang Out Here",
+			"randomizerArea": "City_of_Tears",
 			"transitions": {
 				"left1": {
 					"to": "Ruins1_17[right1]",
@@ -10612,6 +10478,7 @@ window.mapData = {
 				}
 			},
 			"name": "Platforms",
+			"randomizerArea": "City_of_Tears",
 			"transitions": {
 				"bot1": {
 					"to": "Ruins1_01[top1]",
@@ -10634,6 +10501,7 @@ window.mapData = {
 			"area": "Ruins1",
 			"items": {},
 			"name": "Tower Shortcut",
+			"randomizerArea": "City_of_Tears",
 			"splitRoom": [
 				[
 					"right1"
@@ -10730,6 +10598,7 @@ window.mapData = {
 				}
 			},
 			"name": "Soul Master",
+			"randomizerArea": "Soul_Sanctum",
 			"splitRoom": [
 				[
 					"left1",
@@ -10768,6 +10637,12 @@ window.mapData = {
 				}
 			}
 		},
+		"Ruins1_24-upper": {
+			"area": "Ruins1",
+			"items": {},
+			"randomizerArea": "Soul_Sanctum",
+			"transitions": {}
+		},
 		"Ruins1_24_boss": {
 			"area": "Ruins1",
 			"items": {},
@@ -10784,11 +10659,13 @@ window.mapData = {
 					"y": 10.45
 				}
 			},
+			"randomizerArea": "Soul_Sanctum",
 			"transitions": {}
 		},
 		"Ruins1_25": {
 			"area": "Ruins1",
 			"items": {},
+			"randomizerArea": "Soul_Sanctum",
 			"transitions": {
 				"left1": {
 					"to": "Ruins1_30[right1]",
@@ -10811,6 +10688,7 @@ window.mapData = {
 			"area": "Ruins1",
 			"items": {},
 			"name": "Fountain",
+			"randomizerArea": "City_of_Tears",
 			"transitions": {
 				"left1": {
 					"to": "Ruins1_05b[right1]",
@@ -10843,6 +10721,7 @@ window.mapData = {
 				}
 			},
 			"name": "City Storerooms",
+			"randomizerArea": "City_of_Tears",
 			"transitions": {
 				"bot1": {
 					"to": "Ruins1_17[top1]",
@@ -10873,6 +10752,7 @@ window.mapData = {
 				}
 			},
 			"name": "City Storerooms Stag",
+			"randomizerArea": "City_of_Tears",
 			"stag": "Ruins1",
 			"transitions": {
 				"door_stagExit": {
@@ -10898,6 +10778,7 @@ window.mapData = {
 					"y": 50.26
 				}
 			},
+			"randomizerArea": "Soul_Sanctum",
 			"transitions": {
 				"bot1": {
 					"to": "Ruins1_23[top1]",
@@ -10981,6 +10862,7 @@ window.mapData = {
 				}
 			},
 			"name": "Shade Soul",
+			"randomizerArea": "City_of_Tears",
 			"transitions": {
 				"right1": {
 					"to": "Ruins1_31[left2]",
@@ -11048,6 +10930,7 @@ window.mapData = {
 				}
 			},
 			"name": "After Soul Master",
+			"randomizerArea": "Soul_Sanctum",
 			"transitions": {
 				"right1": {
 					"to": "Ruins1_24[left1]",
@@ -11072,6 +10955,7 @@ window.mapData = {
 					"y": 73.46977
 				}
 			},
+			"randomizerArea": "City_of_Tears",
 			"transitions": {
 				"bot1": {
 					"to": "Ruins2_01_b[top1]",
@@ -11094,6 +10978,7 @@ window.mapData = {
 			"area": "Ruins2",
 			"items": {},
 			"name": "Foot of Watcher's Tower",
+			"randomizerArea": "City_of_Tears",
 			"transitions": {
 				"left1": {
 					"to": "Ruins1_27[right1]",
@@ -11139,6 +11024,7 @@ window.mapData = {
 				}
 			},
 			"name": "Watcher Knights",
+			"randomizerArea": "City_of_Tears",
 			"splitRoom": [
 				[
 					"bot2"
@@ -11174,6 +11060,7 @@ window.mapData = {
 		"Ruins2_03b": {
 			"area": "Ruins2",
 			"items": {},
+			"randomizerArea": "City_of_Tears",
 			"transitions": {
 				"bot1": {
 					"to": "Ruins2_01[top1]",
@@ -11263,6 +11150,7 @@ window.mapData = {
 					"y": 20.24224
 				}
 			},
+			"randomizerArea": "Kings_Station",
 			"transitions": {
 				"bot1": {
 					"to": "Ruins2_06[top1]",
@@ -11372,6 +11260,7 @@ window.mapData = {
 				}
 			},
 			"name": "King's Station Stag",
+			"randomizerArea": "Kings_Station",
 			"stag": "Ruins2",
 			"transitions": {
 				"door_stagExit": {
@@ -11398,6 +11287,7 @@ window.mapData = {
 				}
 			},
 			"name": "Vessel Fragment",
+			"randomizerArea": "Kings_Station",
 			"transitions": {
 				"bot1": {
 					"to": "Ruins2_05[top1]",
@@ -11410,6 +11300,7 @@ window.mapData = {
 			"area": "Ruins2",
 			"items": {},
 			"name": "East Elevator (Upper)",
+			"randomizerArea": "Resting_Grounds",
 			"transitions": {
 				"elev_entrance": {
 					"to": null,
@@ -11500,6 +11391,7 @@ window.mapData = {
 				}
 			},
 			"name": "The Collector",
+			"randomizerArea": "Tower_of_Love",
 			"transitions": {
 				"right1": {
 					"to": "Ruins2_11_b[left1]",
@@ -11555,6 +11447,7 @@ window.mapData = {
 				}
 			},
 			"name": "Lurien's Tower",
+			"randomizerArea": "City_of_Tears",
 			"transitions": {
 				"bot1": {
 					"to": "Ruins2_03[top1]",
@@ -11645,6 +11538,7 @@ window.mapData = {
 				}
 			},
 			"name": "Husk Sentry Miniboss Room",
+			"randomizerArea": "City_of_Tears",
 			"transitions": {
 				"left1": {
 					"to": "Ruins2_04[door_Ruin_House_01]",
@@ -11665,6 +11559,7 @@ window.mapData = {
 				}
 			},
 			"name": "Gorgeous Husk",
+			"randomizerArea": "City_of_Tears",
 			"transitions": {
 				"left1": {
 					"to": "Ruins2_04[door_Ruin_House_02]",
@@ -11748,7 +11643,7 @@ window.mapData = {
 					"y": 10.8265
 				},
 				"room_grimm": {
-					"to": "Grimm_Tent[left1]",
+					"to": "Grimm_Main_Tent[left1]",
 					"x": 82.75712,
 					"y": 10.8265
 				},
@@ -11950,6 +11845,7 @@ window.mapData = {
 				}
 			},
 			"name": "Slanted Bench",
+			"randomizerArea": "Royal_Waterways",
 			"transitions": {
 				"bot1": {
 					"to": "Waterways_08[top1]",
@@ -11982,6 +11878,7 @@ window.mapData = {
 			"area": "Waterways",
 			"items": {},
 			"name": "Tuk (Egg Seller)",
+			"randomizerArea": "Royal_Waterways",
 			"transitions": {
 				"left1": {
 					"to": "Waterways_01[right1]",
@@ -12008,6 +11905,7 @@ window.mapData = {
 					"y": 16.42
 				}
 			},
+			"randomizerArea": "Royal_Waterways",
 			"transitions": {
 				"bot1": {
 					"to": "Waterways_02[top3]",
@@ -12063,6 +11961,7 @@ window.mapData = {
 					"y": 41.5429
 				}
 			},
+			"randomizerArea": "Royal_Waterways",
 			"transitions": {
 				"left1": {
 					"to": "Waterways_09[right1]",
@@ -12094,6 +11993,7 @@ window.mapData = {
 				}
 			},
 			"name": "Dung Defender",
+			"randomizerArea": "Royal_Waterways",
 			"transitions": {
 				"bot1": {
 					"to": "Waterways_02[top2]",
@@ -12120,6 +12020,7 @@ window.mapData = {
 		"Waterways_06": {
 			"area": "Waterways",
 			"items": {},
+			"randomizerArea": "Royal_Waterways",
 			"transitions": {
 				"right1": {
 					"to": "Abyss_01[left2]",
@@ -12213,6 +12114,7 @@ window.mapData = {
 				}
 			},
 			"name": "Outside Flukemarm",
+			"randomizerArea": "Royal_Waterways",
 			"transitions": {
 				"left1": {
 					"to": "Waterways_12[right1]",
@@ -12270,6 +12172,7 @@ window.mapData = {
 				}
 			},
 			"name": "Flukemarm",
+			"randomizerArea": "Royal_Waterways",
 			"transitions": {
 				"right1": {
 					"to": "Waterways_08[left1]",
@@ -12361,6 +12264,7 @@ window.mapData = {
 				}
 			},
 			"name": "White Defender",
+			"randomizerArea": "Royal_Waterways",
 			"transitions": {
 				"door_dreamReturn": {
 					"to": null,
@@ -12377,6 +12281,7 @@ window.mapData = {
 		"White_Palace_01": {
 			"area": "White_Palace",
 			"items": {},
+			"randomizerArea": "White_Palace",
 			"transitions": {
 				"left1": {
 					"to": "White_Palace_11[door2]",
@@ -12407,6 +12312,7 @@ window.mapData = {
 				}
 			},
 			"name": "Kingsmould Miniboss 2",
+			"randomizerArea": "White_Palace",
 			"transitions": {
 				"left1": {
 					"to": "White_Palace_01[right1]",
@@ -12427,6 +12333,7 @@ window.mapData = {
 				}
 			},
 			"name": "Hub",
+			"randomizerArea": "White_Palace",
 			"transitions": {
 				"bot1": {
 					"to": "White_Palace_01[top1]",
@@ -12481,6 +12388,7 @@ window.mapData = {
 					"y": 57.65
 				}
 			},
+			"randomizerArea": "White_Palace",
 			"transitions": {
 				"right2": {
 					"to": "White_Palace_03_hub[left2]",
@@ -12497,6 +12405,7 @@ window.mapData = {
 		"White_Palace_05": {
 			"area": "White_Palace",
 			"items": {},
+			"randomizerArea": "White_Palace",
 			"splitRoom": [
 				[
 					"left1",
@@ -12530,10 +12439,17 @@ window.mapData = {
 				}
 			}
 		},
+		"White_Palace_05-upper": {
+			"area": "White_Palace",
+			"items": {},
+			"randomizerArea": "White_Palace",
+			"transitions": {}
+		},
 		"White_Palace_06": {
 			"area": "White_Palace",
 			"items": {},
 			"name": "Outside PoP",
+			"randomizerArea": "White_Palace",
 			"transitions": {
 				"bot1": {
 					"to": "White_Palace_03_hub[top1]",
@@ -12560,6 +12476,7 @@ window.mapData = {
 		"White_Palace_07": {
 			"area": "White_Palace",
 			"items": {},
+			"randomizerArea": "White_Palace",
 			"transitions": {
 				"bot1": {
 					"to": "White_Palace_06[top1]",
@@ -12585,6 +12502,7 @@ window.mapData = {
 				}
 			},
 			"name": "Workshop",
+			"randomizerArea": "White_Palace",
 			"transitions": {
 				"left1": {
 					"to": "White_Palace_13[right1]",
@@ -12624,6 +12542,7 @@ window.mapData = {
 				}
 			},
 			"name": "Throne Room",
+			"randomizerArea": "White_Palace",
 			"transitions": {
 				"right1": {
 					"to": "White_Palace_13[left1]",
@@ -12636,6 +12555,7 @@ window.mapData = {
 			"area": "White_Palace",
 			"items": {},
 			"name": "Entrance",
+			"randomizerArea": "White_Palace",
 			"transitions": {
 				"door1": {
 					"to": null,
@@ -12663,6 +12583,7 @@ window.mapData = {
 		"White_Palace_12": {
 			"area": "White_Palace",
 			"items": {},
+			"randomizerArea": "White_Palace",
 			"transitions": {
 				"bot1": {
 					"to": "White_Palace_07[top1]",
@@ -12679,6 +12600,7 @@ window.mapData = {
 		"White_Palace_13": {
 			"area": "White_Palace",
 			"items": {},
+			"randomizerArea": "White_Palace",
 			"transitions": {
 				"left1": {
 					"to": "White_Palace_09[right1]",
@@ -12705,6 +12627,7 @@ window.mapData = {
 		"White_Palace_14": {
 			"area": "White_Palace",
 			"items": {},
+			"randomizerArea": "White_Palace",
 			"transitions": {
 				"bot1": {
 					"to": "White_Palace_04[top1]",
@@ -12729,6 +12652,7 @@ window.mapData = {
 					"y": 115.7281
 				}
 			},
+			"randomizerArea": "White_Palace",
 			"transitions": {
 				"left1": {
 					"to": "White_Palace_03_hub[right1]",
@@ -12750,6 +12674,7 @@ window.mapData = {
 		"White_Palace_16": {
 			"area": "White_Palace",
 			"items": {},
+			"randomizerArea": "White_Palace",
 			"transitions": {
 				"left1": {
 					"to": "White_Palace_05[right1]",
@@ -12782,6 +12707,7 @@ window.mapData = {
 				}
 			},
 			"pain": true,
+			"randomizerArea": "White_Palace",
 			"transitions": {
 				"bot1": {
 					"to": "White_Palace_18[top1]",
@@ -12822,6 +12748,7 @@ window.mapData = {
 			},
 			"name": "Path of Pain Entrance",
 			"pain": true,
+			"randomizerArea": "White_Palace",
 			"transitions": {
 				"right1": {
 					"to": "White_Palace_06[left1]",
@@ -12854,6 +12781,7 @@ window.mapData = {
 				}
 			},
 			"pain": true,
+			"randomizerArea": "White_Palace",
 			"transitions": {
 				"left1": {
 					"to": "White_Palace_17[right1]",
@@ -12880,6 +12808,7 @@ window.mapData = {
 			},
 			"name": "Path of Pain Finish",
 			"pain": true,
+			"randomizerArea": "White_Palace",
 			"transitions": {
 				"bot1": {
 					"to": "White_Palace_19[top1]",

@@ -57,29 +57,40 @@ class DataGen {
 			return room
 		}
 
+		//Randomized transitions:
 		var tPlacements = this.randomizerData["_transitionPlacements"];
 
-		for (var srcDoor in tPlacements) {
-			var srcInfo = DataGen.parseDoorId(srcDoor)
-			var dstDoor = tPlacements[srcDoor]
-			var dstInfo = DataGen.parseDoorId(dstDoor)
+		for (let roomId in window.mapData.rooms) {
+			let roomData = window.mapData.rooms[roomId]
+			for (let doorSide in roomData.transitions) {
+				let srcDoor = `${roomId}[${doorSide}]`
+				let srcInfo = DataGen.parseDoorId(srcDoor)
+				let dstDoor = tPlacements[srcDoor] || roomData.transitions[doorSide].to || null
+				if (!dstDoor) continue
 
-			var srcRoom = getAndUpdateRoom(srcInfo.roomId, srcDoor)
-			var dstRoom = getAndUpdateRoom(dstInfo.roomId, dstDoor)
+				let dstInfo = DataGen.parseDoorId(dstDoor)
+				if (!window.mapData.rooms[dstInfo.roomId]) {
+					console.warn("No such room " + dstInfo.roomId)
+					continue
+				}
 
-			this.transitions[srcDoor] = Object.assign(new RoomTransition, {
-				id: srcDoor + "-" + dstDoor,
-				srcDoor,
-				srcRoom,
-				srcSide: srcInfo.side,
+				let srcRoom = getAndUpdateRoom(srcInfo.roomId, srcDoor)
+				let dstRoom = getAndUpdateRoom(dstInfo.roomId, dstDoor)
 
-				dstDoor,
-				dstRoom,
-				dstSide: dstInfo.side,
+				this.transitions[srcDoor] = Object.assign(new RoomTransition, {
+					id: srcDoor + "-" + dstDoor,
+					srcDoor,
+					srcRoom,
+					srcSide: srcInfo.side,
 
-				visited: null,//will fill out shortly
-				bidi: tPlacements[dstDoor] === srcDoor,//bidirectional link
-			})
+					dstDoor,
+					dstRoom,
+					dstSide: dstInfo.side,
+
+					visited: null,//will fill out shortly
+					bidi: tPlacements[dstDoor] === srcDoor,//bidirectional link
+				})
+			}
 		}
 
 		this.doorTransitions = {}
@@ -202,10 +213,13 @@ class RoomNode {
 	graphParent = null//an adjacent room on our island that's closer to the hub than us
 	/** Bounding box, in local coordinates, center of that, width and height of that, radius of a circle that touches the rectangle edges. */
 	aabb = {x1: Infinity, y1: Infinity, x2: -Infinity, y2: -Infinity, cx: null, cy: null, width: null, height: null, radius: null}
+	roomMapData = {}
 
 	constructor(id, data) {
 		this.id = id
 		this.data = data
+
+		this.roomMapData = window.mapData.rooms[id] || {}
 	}
 
 	addDoor(doorId) {
@@ -417,6 +431,18 @@ class RoomNode {
 
 /** A transition from room A to room B. Might have a brother that's for room B to A. */
 class RoomTransition {
+	id = ""
+	srcDoor = ""
+	srcRoom = ""
+	srcSide = ""
+
+	dstDoor = ""
+	dstRoom = ""
+	dstSide = ""
+
+	visited = false
+	bidi = false
+
 	/** Returns the room on this transition that isn't the given one. */
 	otherRoom(room) {
 		if (this.srcRoom === room) return this.dstRoom

@@ -202,11 +202,31 @@ class SceneHandler:
 			# print("Found a door on " + id)
 
 			go = self.getGameObject(object)
-			x, y = self.getPosition(go)
 
-			targetDoorId = f"{object['targetScene']}[{object['entryPoint']}]"
-			if targetDoorId == "[]": targetDoorId = None
-			doors[go["m_Name"]] = {"x": x, "y": y, "to": targetDoorId}
+
+			doorSide = go["m_Name"]
+			targetRoomId = object['targetScene']
+			targetSide = object['entryPoint']
+
+			if doorSide == "left1 extra": continue #oddball door we don't want (it's a copy anyway)
+			if " (" in doorSide: continue # "left1 (1)", etc
+			if targetRoomId == "bot1" and targetSide == "Town": continue # go home Crossroads_01, you're drunk
+
+			# probably all the non-case mismatches are unused and could be deleted:
+			if targetRoomId == "Deepnest_east_07": targetRoomId = "Deepnest_East_07"
+			if targetRoomId == "Room_Fung_Shaman": targetRoomId = "Room_Fungus_Shaman"
+			if targetRoomId == "Room_Final_Boss_atrium": targetRoomId = "Room_Final_Boss_Atrium"
+			if targetRoomId == "Room_nailmsith": targetRoomId = "Room_nailsmith"
+			if targetRoomId == "Grimm_Tent": targetRoomId = "Grimm_Main_Tent"
+
+
+			if not targetRoomId or not targetSide or targetRoomId == "0.":
+				targetDoorId = None
+			else:
+				targetDoorId = f"{targetRoomId}[{targetSide}]"
+
+			x, y = self.getPosition(go)
+			doors[doorSide] = {"x": x, "y": y, "to": targetDoorId}
 
 
 		# Item locations
@@ -224,7 +244,7 @@ class SceneHandler:
 			elif len(possibleIds) > 1:
 				# Find based on parent's name too
 				parentName = nameParts[-2] if len(nameParts) >= 2 else None
-				print("Object " + itemId + " targets " + item['objectName'] + " and could be", repr(possibleIds), "parent name is", parentName)
+				# print("Object " + itemId + " targets " + item['objectName'] + " and could be", repr(possibleIds), "parent name is", parentName)
 
 				go = None
 				for id in possibleIds:
@@ -233,7 +253,7 @@ class SceneHandler:
 					candidate = self.getObject(id)
 					candidateParent = self.getGOParent(candidate)
 
-					print("Candidate parent is", repr(candidateParent))
+					# print("Candidate parent is", repr(candidateParent))
 
 					if candidateParent is None and parentName is None:
 						go = candidate

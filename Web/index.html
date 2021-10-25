@@ -23,7 +23,7 @@
 		<div id="prefs">
 			<fieldset>
 				<legend>Spoilers</legend>
-				<label>Show all rooms:
+				<label title="Show the full room layout, even for rooms oyu haven't visited.">Show all rooms:
 					<button id="pref-spoilers" onclick="app.updatePref('spoilers', !app.prefs['spoilers'])">On</button><br>
 				</label>
 				<label title="Allow layouts to use all data to determine grouping. This should reduce how often a room switches groups, but can leak hints about room topology.">
@@ -33,7 +33,7 @@
 			</fieldset>
 			<fieldset>
 				<legend>Display</legend>
-				<label>Follow player:
+				<label title="Frame the new room in the middle of the view as you move from room-to-room.">Follow player:
 					<button id="pref-followPlayer" onclick="app.updatePref('followPlayer', !app.prefs['followPlayer'])">On</button><br>
 				</label>
 				<label title="Stop animating/updating when not focused. Turn on if you have performance issues with the game.">FPS Saver:
@@ -43,6 +43,7 @@
 					<select id="pref-layout" onchange="app.updatePref('layout', this.value)">
 						<option value="islandsCluster">Islands (cluster)</option>
 						<option value="islands">Islands (hub &amp; distance)</option>
+						<option value="areas">Areas</option>
 						<option value="player">Player-centric</option>
 						<option value="tangled">Tangled Mess</option>
 					</select>

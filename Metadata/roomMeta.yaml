@@ -64,7 +64,7 @@ rooms:
       tram_west:
         x: 74.5
         y: 10.4
-        to: Abyss_03b[tram]
+        to: Abyss_03_b[tram]
       tram_east:
         x: 92.6
         y: 10.4
@@ -84,7 +84,7 @@ rooms:
       dream:
         x: 129
         y: 17.4
-        to: White_Palace_03_hub
+        to: White_Palace_03_hub[magic_circle]
   Abyss_06_Core:
     name: Abyss Core
   Abyss_08:
@@ -93,7 +93,7 @@ rooms:
       magic_circle:
         x: 63
         y: 3
-        to: Abyss_06_Core
+        to: Abyss_06_Core[door_dreamReturn] # todo, is that the right location?
   Abyss_09:
     name: Abyss Lake
     splitRoom:
@@ -557,10 +557,12 @@ rooms:
   Grimm_Divine:
     name: Divine
     area: Town
+    randomizerArea: Dirtmouth
   Grimm_Main_Tent:
     name: Grimm
     boss: Grimm, Nightmare King Grimm
     area: Town
+    randomizerArea: Dirtmouth
 
   Hive_01:
     splitRoom:
@@ -661,26 +663,43 @@ rooms:
     boss: Grey Prince Zote
   Room_Charm_Shop:
     name: Salubra's Shop
+
   Room_Colosseum_01:
     name: Colosseum Entrance
   Room_Colosseum_02:
     name: Colosseum Bench
+  Room_Colosseum_Bronze:
+    name: Trial of the Warrior
+    randomizerArea: Colosseum
+  Room_Colosseum_Silver:
+    name: Trial of the Conqueror
+    randomizerArea: Colosseum
+  Room_Colosseum_Gold:
+    name: Trial of the Fool
+    randomizerArea: Colosseum
   Room_Colosseum_Spectate:
     name: Colosseum Spectate
+
+  Room_Final_Boss_Core:
+    name: Hollow Knight
+    randomizerArea: Black_Egg_Temple
   Room_Fungus_Shaman:
     name: Howling Wraiths
   Room_GG_Shortcut:
     name: Junk Pit Shortcut
   Room_Jinn:
-    name: Jiji & Jinn
+    name: Jinn
+    randomizerArea: Dirtmouth
   Room_Mansion:
     name: Grey Mourner
   Room_Mask_Maker:
     name: Mask Maker
   Room_Mender_House:
     name: Menderbug's House
+    randomizerArea: Forgotten_Crossroads
   Room_Ouiji:
-    name: Jiji & Jinn
+    name: Jiji
+    randomizerArea: Dirtmouth
   Room_Queen:
     name: White Lady
   Room_Slug_Shrine:
@@ -704,8 +723,10 @@ rooms:
     name: Nailmaster Oro
   Room_nailsmith:
     name: Nailsmith
+    randomizerArea: City_of_Tears
   Room_ruinhouse:
     name: Infected Sly
+    randomizerArea: Forgotten_Crossroads
   Room_shop:
     name: Sly's Shop
   Room_spider_small:

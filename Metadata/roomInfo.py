@@ -24,6 +24,21 @@ def getRoom(roomId):
 
 	return data
 
+def addArea(node):
+	"""Adds the randomizarArea for the given <transition>, <item>, etc."""
+	roomId = prop(node, "sceneName")
+	room = getRoom(roomId)
+	area = prop(node, "areaName")
+
+	# Randomizer isn't consistent on this one:
+	if area == "Palace_Grounds": area = "White_Palace"
+
+	if not area: return
+	if "randomizerArea" in room and room["randomizerArea"] != area:
+		# print("Multiple areas for " + roomId, area, room["randomizerArea"]); return
+		raise Exception("Multiple areas for " + roomId, area, room["randomizerArea"])
+	room["randomizerArea"] = area
+
 def loadData():
 	global metaData, roomData
 	with open("roomMeta.yaml", "rb") as f:
@@ -43,34 +58,43 @@ def loadData():
 	# print(repr(roomData["Room_Bretta"]))
 	# print(repr(metaData))
 
+def prop(el, name):
+	target = el.getElementsByTagName(name)
+	if len(target):
+		if len(target[0].childNodes): return target[0].childNodes[0].data
+		else: return None
+	else: return None
+
 def loadRandomizerData():
 	dataPath = config.randomizerSourcePath + "/RandomizerMod3.0/Resources/"
+
+	# Note what area the randomizer considers each room to be in
+	# use the areaName from a number of files since it isn't always filled out...and even still some places
+	# don't have it so it's added in roomMeta.yaml
+
+	# Most the room areas are in this file:
+	rooms = minidom.parse(dataPath + "rooms.xml")
+	for transition in rooms.getElementsByTagName("transition"):
+		addArea(transition)
+
 	areas = minidom.parse(dataPath + "areas.xml")
+	for transition in areas.getElementsByTagName("transition"):
+		addArea(transition)
+
+
+	# note what items/checks are in each room
 	items = [
 		minidom.parse(dataPath + "items.xml"),
 		minidom.parse(dataPath + "rocks.xml"),
 		minidom.parse(dataPath + "soul_lore.xml"),
 	]
-
-	def prop(el, name):
-		target = el.getElementsByTagName(name)
-		if len(target):
-			if len(target[0].childNodes): return target[0].childNodes[0].data
-			else: return None
-		else: return None
-
-	# Note what area the randomizer considers each room to be in
-	for transition in areas.getElementsByTagName("transition"):
-		roomId = prop(transition, "sceneName")
-		room = getRoom(roomId)
-		room["randomizerArea"] = prop(transition, "areaName")
-
-	# note what items/checks are in each room
 	for doc in items:
 		for item in doc.getElementsByTagName("item"):
 			try:
 				roomId = prop(item, "sceneName")
 				if not roomId: continue
+
+				addArea(item)
 
 				# if roomId is None:
 				# 	# not originally in the game
