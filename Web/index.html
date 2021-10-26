@@ -52,15 +52,15 @@
 			<fieldset>
 				<legend>Search</legend>
 
-				<button id="framePlayer"
-					title="Center the current player room in the view."
-					onclick="app.zoomToRoom(app.data.currentPlayerRoom)"
-				>Frame Player</button><br>
+				<input type="text" placeholder="Search... (regex)" id="searchInput"></select>
+
+				<br>
+				<br>
 
 				<label>
 					<label>
 						Selected room:<br>
-						<select id="search-room"></select>
+						<select id="roomList"></select>
 					</label>
 					<button onclick="app.selectRoom(null)">Clear</button>
 				</label>
@@ -70,10 +70,11 @@
 					title="Center the currently selected room in the view, if any."
 					onclick="app.zoomToRoom(app.data.selectedRoom)"
 				>Frame Selection</button><br>
-				<!-- <label>
-					Find item:<br>
-					<select id="search-item"></select>
-				</label> -->
+
+				<button id="framePlayer"
+					title="Center the current player room in the view."
+					onclick="app.zoomToRoom(app.data.currentPlayerRoom)"
+				>Frame Player</button><br>
 
 			</fieldset>
 		</div>
@@ -87,6 +88,7 @@
 		<br>
 		<span id="itemInfo"></span>
 	</div>
+	<div id="searchResults"></div>
 </body>
 <script>
 	var app = new App()

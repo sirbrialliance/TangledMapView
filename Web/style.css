@@ -295,3 +295,19 @@ fieldset {
 	border-color: #BBB;
 }
 
+#searchResults {
+	display: none;
+	overflow: auto;
+	bottom: 0;
+	position: fixed;
+	background: white;
+	border: 2px solid gray;
+	padding: 10px;
+	min-width: 200px;
+	font-family: sans-serif;
+}
+
+#searchResults .result:hover {
+	background: #AAA;
+	cursor: pointer;
+}

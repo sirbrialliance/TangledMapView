@@ -175,7 +175,7 @@ class ClusterHandler {
 
 		for (let roomId in this._visibleRooms) {
 			let room = this._visibleRooms[roomId]
-			let area = room.roomMapData.randomizerArea
+			let area = room.mapData.randomizerArea
 			if (!area) {
 				console.warn("No area for " + roomId)
 				continue

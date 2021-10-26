@@ -213,13 +213,13 @@ class RoomNode {
 	graphParent = null//an adjacent room on our island that's closer to the hub than us
 	/** Bounding box, in local coordinates, center of that, width and height of that, radius of a circle that touches the rectangle edges. */
 	aabb = {x1: Infinity, y1: Infinity, x2: -Infinity, y2: -Infinity, cx: null, cy: null, width: null, height: null, radius: null}
-	roomMapData = {}
+	mapData = {}
 
 	constructor(id, data) {
 		this.id = id
 		this.data = data
 
-		this.roomMapData = window.mapData.rooms[id] || {}
+		this.mapData = window.mapData.rooms[id] || {}
 	}
 
 	addDoor(doorId) {

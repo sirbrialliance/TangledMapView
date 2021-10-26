@@ -51,6 +51,7 @@ class App {
 		this._setBlockingMessage("Loading...")
 
 		this._setupPrefs()
+		this._setupSearch()
 
 		var svg = this.svg = d3.select("svg")
 
@@ -109,10 +110,84 @@ class App {
 	}
 
 	_setupSearch() {
+		var resultsEl = document.getElementById("searchResults")
+		d3.select("#searchInput")
+			.on("focus", ev => {
+				var rect = ev.target.getBoundingClientRect()
+				resultsEl.style.display = "block"
+				resultsEl.style.top = rect.bottom + "px"
+				resultsEl.style.left = rect.left + "px"
+				this._updateSearch()
+			})
+			.on("blur", ev => {
+				resultsEl.style.display = ""
+			})
+			.on("keyup",  ev => {
+				this._updateSearch()
+			})
+		resultsEl.addEventListener("pointerdown", ev => {
+			let target = ev.target.getAttribute("data-roomId")
+			if (target) {
+				this.selectRoom(target)
+				this.zoomToRoom(target)
+			}
+		}, {capture: true})
+	}
+
+	_updateSearch() {
+		var resultsEl = document.getElementById("searchResults")
+		var searchEl = document.getElementById("searchInput")
+		var searchText = searchEl.value
+		if (!searchText) {
+			resultsEl.textContent = "Type to search..."
+			return
+		}
+
+		resultsEl.textContent = ""
+		var roomList = []
+		var visibleRooms = this.data.visibleRooms
+
+		if (searchText === "*") {
+			roomList = Object.values(visibleRooms)
+		} else {
+			try {
+				var regex = new RegExp(searchText, 'i')
+			} catch (ex) {
+				console.error(ex)
+				resultsEl.textContent = "Invalid regex: " + ex.message
+				return
+			}
+
+			for (let room of Object.values(visibleRooms)) {
+				let match = false
+				if (regex.test(room.id)) match = true
+				if (regex.test(room.mapData.name)) match = true
+				for (let itemId in room.items) {
+					if (regex.test(itemId)) match = true
+				}
+				if (room.mapData.pain && regex.test("pain")) match = true
+
+				if (match) roomList.push(room)
+			}
+		}
+
+		roomList.sort((a, b) => a.id < b.id ? -1 : 1)
+
+		for (let room of roomList) {
+			let el = document.createElement("div")
+			el.className = "result"
+			el.setAttribute("data-roomId", room.id)
+			if (room.mapData.name) el.textContent = `${room.mapData.name} (${room.id})`
+			else el.textContent = room.id
+			resultsEl.appendChild(el)
+		}
+	}
+
+	_setupRoomList() {
 		var rooms = Object.values(this.data.rooms)
 		rooms.sort((a, b) => a.id < b.id ? -1 : 1)
 		rooms.unshift({id: ""})
-		var roomSearch = d3.select("#search-room")
+		var roomSearch = d3.select("#roomList")
 		roomSearch
 			.selectAll("option")
 			.data(rooms, x => x.id)
@@ -151,7 +226,7 @@ class App {
 
 	selectRoom(roomId) {
 		this.data.selectedRoom = roomId
-		d3.select("#search-room").node().value = roomId
+		d3.select("#roomList").node().value = roomId
 		this.updateRoute()
 	}
 
@@ -205,7 +280,7 @@ class App {
 		this.zoom.scaleTo(this.svg, .5)
 		this.zoom.translateTo(this.svg, 0, 0)
 
-		this._setupSearch()
+		this._setupRoomList()
 		this._updateView()
 
 		if (this.data.saveData) this._setBlockingMessage(null)
