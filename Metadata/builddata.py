@@ -27,14 +27,15 @@ testScenes = [
 	# "Room_Bretta",
 	# "Tutorial_01",
 	# "Abyss_06_Core",
-	"Fungus2_05",
+	# "Fungus2_05",
+	"Room_Colosseum_Silver",
 ]
 
 
 if __name__ == "__main__":
 	skipRooms = (
 		"BetaEnd", "Opening_Sequence", "Beta", "Pre_Menu_Intro", "PermaDeath_Unlock", "Quit_To_Menu",
-		"Dream_Room_Believer_Shrine", "Dream_Backer_Shrine",
+		"Dream_Room_Believer_Shrine", "Dream_Backer_Shrine", "Room_Jinn",
 	)
 	ggIncludes = ("GG_Lurker", "GG_Pipeway", "GG_Waterways")
 

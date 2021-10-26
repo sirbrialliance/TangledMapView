@@ -208,6 +208,8 @@ class SceneHandler:
 			targetRoomId = object['targetScene']
 			targetSide = object['entryPoint']
 
+			if doorSide in doors: continue # custom changes in roomMeta.yaml
+
 			if doorSide == "left1 extra": continue #oddball door we don't want (it's a copy anyway)
 			if " (" in doorSide: continue # "left1 (1)", etc
 			if targetRoomId == "bot1" and targetSide == "Town": continue # go home Crossroads_01, you're drunk

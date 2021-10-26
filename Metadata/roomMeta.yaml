@@ -666,17 +666,46 @@ rooms:
 
   Room_Colosseum_01:
     name: Colosseum Entrance
+    # dynamic right transition, so we just add manual "fake" transitions
+    transitions:
+      trial1:
+        x: 60.5
+        y: 3
+        to: Room_Colosseum_Bronze[left1]
+      trial2:
+        x: 60.5
+        y: 13
+        to: Room_Colosseum_Silver[left1]
+      trial3:
+        x: 60.5
+        y: 23
+        to: Room_Colosseum_Gold[left1]
   Room_Colosseum_02:
     name: Colosseum Bench
   Room_Colosseum_Bronze:
     name: Trial of the Warrior
     randomizerArea: Colosseum
+    transitions:
+      left1:
+        x: 1.5
+        y: 7
+        to: Room_Colosseum_01[trial1]
   Room_Colosseum_Silver:
     name: Trial of the Conqueror
     randomizerArea: Colosseum
+    transitions:
+      left1:
+        x: 1.5
+        y: 7
+        to: Room_Colosseum_01[trial2]
   Room_Colosseum_Gold:
     name: Trial of the Fool
     randomizerArea: Colosseum
+    transitions:
+      left1:
+        x: 1.5
+        y: 7
+        to: Room_Colosseum_01[trial3]
   Room_Colosseum_Spectate:
     name: Colosseum Spectate
 
@@ -687,9 +716,9 @@ rooms:
     name: Howling Wraiths
   Room_GG_Shortcut:
     name: Junk Pit Shortcut
-  Room_Jinn:
-    name: Jinn
-    randomizerArea: Dirtmouth
+  # Room_Jinn:
+  #   name: Jinn
+  #   randomizerArea: Dirtmouth
   Room_Mansion:
     name: Grey Mourner
   Room_Mask_Maker:

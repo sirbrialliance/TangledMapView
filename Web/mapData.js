@@ -9500,6 +9500,21 @@ window.mapData = {
 					"to": null,
 					"x": 60.5,
 					"y": 9.0
+				},
+				"trial1": {
+					"to": "Room_Colosseum_Bronze[left1]",
+					"x": 60.5,
+					"y": 3
+				},
+				"trial2": {
+					"to": "Room_Colosseum_Silver[left1]",
+					"x": 60.5,
+					"y": 13
+				},
+				"trial3": {
+					"to": "Room_Colosseum_Gold[left1]",
+					"x": 60.5,
+					"y": 23
 				}
 			}
 		},
@@ -9536,9 +9551,9 @@ window.mapData = {
 			"randomizerArea": "Colosseum",
 			"transitions": {
 				"left1": {
-					"to": "Room_Colosseum_01[right1]",
+					"to": "Room_Colosseum_01[trial1]",
 					"x": 1.5,
-					"y": 7.0
+					"y": 7
 				}
 			}
 		},
@@ -9549,9 +9564,9 @@ window.mapData = {
 			"randomizerArea": "Colosseum",
 			"transitions": {
 				"left1": {
-					"to": "Room_Colosseum_01[right1]",
+					"to": "Room_Colosseum_01[trial3]",
 					"x": 1.5,
-					"y": 7.0
+					"y": 7
 				}
 			}
 		},
@@ -9570,9 +9585,9 @@ window.mapData = {
 			"randomizerArea": "Colosseum",
 			"transitions": {
 				"left1": {
-					"to": "Room_Colosseum_01[right1]",
+					"to": "Room_Colosseum_01[trial2]",
 					"x": 1.5,
-					"y": 7.0
+					"y": 7
 				}
 			}
 		},
@@ -9698,19 +9713,6 @@ window.mapData = {
 					"to": "Ruins1_04[bot1]",
 					"x": 4.5,
 					"y": 108.5
-				}
-			}
-		},
-		"Room_Jinn": {
-			"area": "Room",
-			"items": {},
-			"name": "Jinn",
-			"randomizerArea": "Dirtmouth",
-			"transitions": {
-				"left1": {
-					"to": "Town[door_jiji]",
-					"x": 10.0,
-					"y": 8.0
 				}
 			}
 		},

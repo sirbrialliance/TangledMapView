@@ -12,6 +12,7 @@ Unsorted
 
 - icons for rooms
 - mark shade room
+	- PlayerData.instance.shadeScene
 - color door we used to enter
 - color recently taken transitions/rooms
 - stronger relative positions next to user's room
@@ -83,6 +84,7 @@ Unsorted
 	- view layout that linearizes your selected route
 
 - Spoilers: give hint
+	- See: JSON.parse(data.saveData.PolymorphicModData.RandomizerMod).StringValues._orderedLocations
 	- next in progression or specific item, save to a log
 - Button to select a nearby room with unvisited transition
 

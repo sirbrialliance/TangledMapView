@@ -50,7 +50,17 @@ And options:
 - **Spoilers -> Show all rooms**: Turn this on to see all rooms, be that you have visited them or not. When disabled, only places you've been to are shown.
 - **Spoilers -> Cluster based on all rooms**: When using an island-based layout, clustering/island-picking is done considering all rooms and connections. This causes rooms to stay where they would finally end up if you visited every room, but also can leak information about how some of the rooms relate to each other (hench it's a spoilers option).
 
-# Dev Misc
+# Dev
+
+## Building
+
+- Install the modding API and Randomizer3.0
+- If needed: crack open `Mod/TangledMapView.csproj` and make sure the paths to the Hollow Knight installation match up with your installation
+- Build `Mod/TangledMapView.csproj`
+- Copy/symlink/etc. `Mod/bin/(Debug or Release)/TangledMapView.dll` and `websocket-sharp.dll` to your mods directory.
+
+
+## Misc
 
 Rebuild door metadata:
 
