@@ -144,14 +144,20 @@ class DataGen {
 
 
 	static parseDoorId(doorId) {
-		var parts = doorId.match(/^(\w+)\[(([a-zA-Z_]+)(\d*))\]$/);
-		return {
-			doorId,
-			roomId: parts[1],
-			doorName: parts[2],
-			side: parts[3],
-			number: parts[4] || -1,
+		var parts = doorId.match(/^(\w+)\[(([a-zA-Z_]+)(\d*))\]$/)
+
+		var ret = {
+			doorId,// Town[left1]
+			roomId: parts[1], // Town
+			doorName: parts[2], // left1
+			side: parts[3], // left
+			number: parts[4] || -1, // 1
 		}
+
+		let info = window.mapData.rooms[ret.roomId].transitions[ret.doorName]
+		if (info && info.side) ret.side = info.side
+
+		return ret
 	}
 
 	/** Returns a map of rooms that are currently visible (roomId => room) */

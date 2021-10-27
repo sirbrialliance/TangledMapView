@@ -63,7 +63,7 @@ Unsorted
 		- xx positions of all items the randomizer may fiddle with
 		- xx which randomizer area a room is in
 
-		- benches and locations
+		- xx benches and locations
 		- some doors don't have directly set destinations, just add hardcoded overrides
 
 	- render map w/out randomization

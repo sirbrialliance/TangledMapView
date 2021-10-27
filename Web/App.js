@@ -165,7 +165,8 @@ class App {
 				for (let itemId in room.items) {
 					if (regex.test(itemId)) match = true
 				}
-				if (room.mapData.pain && regex.test("pain")) match = true
+				if (room.mapData.stag && regex.test("stag")) match = true
+				if (room.mapData.benches.length && regex.test("bench")) match = true
 
 				if (match) roomList.push(room)
 			}

@@ -182,11 +182,13 @@ window.mapData = {
 					"y": 22.5
 				},
 				"tram_east": {
+					"side": "right",
 					"to": "Abyss_03_c[tram]",
 					"x": 92.6,
 					"y": 10.4
 				},
 				"tram_west": {
+					"side": "left",
 					"to": "Abyss_03_b[tram]",
 					"x": 74.5,
 					"y": 10.4
@@ -216,6 +218,7 @@ window.mapData = {
 					"y": 10.0
 				},
 				"tram": {
+					"side": "right",
 					"to": "Abyss_03[tram_west]",
 					"x": 32.4,
 					"y": 10.4
@@ -250,6 +253,7 @@ window.mapData = {
 					"y": 25.5
 				},
 				"tram": {
+					"side": "left",
 					"to": "Abyss_03[tram_east]",
 					"x": 44.4,
 					"y": 10.4
@@ -325,6 +329,7 @@ window.mapData = {
 					"y": 16.87
 				},
 				"dream": {
+					"side": "top",
 					"to": "White_Palace_03_hub[magic_circle]",
 					"x": 129,
 					"y": 17.4
@@ -1955,7 +1960,7 @@ window.mapData = {
 				}
 			],
 			"items": {},
-			"name": "Spa",
+			"name": "Hot Springs",
 			"randomizerArea": "Forgotten_Crossroads",
 			"transitions": {
 				"left1": {
@@ -2327,6 +2332,7 @@ window.mapData = {
 					"y": 11.0
 				},
 				"tram": {
+					"side": "right",
 					"to": "Crossroads_46b[tram]",
 					"x": 18.5,
 					"y": 10.4
@@ -2351,6 +2357,7 @@ window.mapData = {
 					"y": 11.0
 				},
 				"tram": {
+					"side": "left",
 					"to": "Crossroads_46[tram]",
 					"x": 33,
 					"y": 10.4
@@ -2424,6 +2431,7 @@ window.mapData = {
 					"y": 158.79
 				},
 				"elevator": {
+					"side": "bot",
 					"to": "Crossroads_49b[elevator]",
 					"x": 15,
 					"y": 159
@@ -2453,6 +2461,7 @@ window.mapData = {
 					"y": 34.220000000000006
 				},
 				"elevator": {
+					"side": "top",
 					"to": "Crossroads_49[elevator]",
 					"x": 15,
 					"y": 5.4
@@ -9950,16 +9959,19 @@ window.mapData = {
 					"y": 9.0
 				},
 				"trial1": {
+					"side": "right",
 					"to": "Room_Colosseum_Bronze[left1]",
 					"x": 60.5,
 					"y": 3
 				},
 				"trial2": {
+					"side": "right",
 					"to": "Room_Colosseum_Silver[left1]",
 					"x": 60.5,
 					"y": 13
 				},
 				"trial3": {
+					"side": "right",
 					"to": "Room_Colosseum_Gold[left1]",
 					"x": 60.5,
 					"y": 23
@@ -11878,6 +11890,7 @@ window.mapData = {
 					"y": 159.82
 				},
 				"elevator": {
+					"side": "bot",
 					"to": "Ruins2_10b[elevator]",
 					"x": 15,
 					"y": 159
@@ -11907,6 +11920,7 @@ window.mapData = {
 					"y": 41.52
 				},
 				"elevator": {
+					"side": "top",
 					"to": "Ruins2_10[elevator]",
 					"x": 15,
 					"y": 10
@@ -12987,6 +13001,7 @@ window.mapData = {
 					"y": 35.0
 				},
 				"magic_circle": {
+					"side": "bot",
 					"to": "Abyss_05[dream]",
 					"x": 11.1,
 					"y": 43.4
@@ -13212,7 +13227,7 @@ window.mapData = {
 					"y": 16.75
 				},
 				"magic_circle": {
-					"oneWay": true,
+					"side": "bot",
 					"to": "Abyss_05[dream]",
 					"x": 16.5,
 					"y": 17.4
@@ -13351,7 +13366,7 @@ window.mapData = {
 					"y": 64.78
 				}
 			},
-			"pain": true,
+			"name": "Path of Pain 2",
 			"randomizerArea": "White_Palace",
 			"transitions": {
 				"bot1": {
@@ -13393,7 +13408,6 @@ window.mapData = {
 				}
 			},
 			"name": "Path of Pain Entrance",
-			"pain": true,
 			"randomizerArea": "White_Palace",
 			"transitions": {
 				"right1": {
@@ -13427,7 +13441,7 @@ window.mapData = {
 					"y": 120.82
 				}
 			},
-			"pain": true,
+			"name": "Path of Pain 3",
 			"randomizerArea": "White_Palace",
 			"transitions": {
 				"left1": {
@@ -13455,7 +13469,6 @@ window.mapData = {
 				}
 			},
 			"name": "Path of Pain Finish",
-			"pain": true,
 			"randomizerArea": "White_Palace",
 			"transitions": {
 				"bot1": {

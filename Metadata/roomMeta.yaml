@@ -58,6 +58,7 @@ rooms:
         x: 32.4
         y: 10.4
         to: Abyss_03[tram_west]
+        side: right
   Abyss_03:
     name: Basin Tram (Center)
     transitions:
@@ -65,10 +66,12 @@ rooms:
         x: 74.5
         y: 10.4
         to: Abyss_03_b[tram]
+        side: left
       tram_east:
         x: 92.6
         y: 10.4
         to: Abyss_03_c[tram]
+        side: right
   Abyss_03_c:
     name: Basin Tram (East)
     transitions:
@@ -76,6 +79,7 @@ rooms:
         x: 44.4
         y: 10.4
         to: Abyss_03[tram_east]
+        side: left
   Abyss_04:
     name: Ancient Basin
   Abyss_05:
@@ -85,6 +89,7 @@ rooms:
         x: 129
         y: 17.4
         to: White_Palace_03_hub[magic_circle]
+        side: top
   Abyss_06_Core:
     name: Abyss Core
   Abyss_08:
@@ -178,7 +183,7 @@ rooms:
   Crossroads_27:
     name: Outside Tram
   Crossroads_30:
-    name: Spa
+    name: Hot Springs
   Crossroads_31:
     name: Spike Pogo Grub
   Crossroads_33:
@@ -201,6 +206,7 @@ rooms:
         x: 18.5
         y: 10.4
         to: Crossroads_46b[tram]
+        side: right
   Crossroads_46b:
     name: Crossroads Tram (East)
     transitions:
@@ -208,6 +214,7 @@ rooms:
         x: 33
         y: 10.4
         to: Crossroads_46[tram]
+        side: left
   Crossroads_47:
     name: Stag
     stag: Crossroads
@@ -219,6 +226,7 @@ rooms:
         x: 15
         y: 159
         to: Crossroads_49b[elevator]
+        side: bot
   Crossroads_49b:
     name: West Elevator (Lower)
     transitions:
@@ -226,6 +234,7 @@ rooms:
         x: 15
         y: 5.4
         to: Crossroads_49[elevator]
+        side: top
   Crossroads_50:
     name: Blue Lake
   Crossroads_52:
@@ -672,14 +681,17 @@ rooms:
         x: 60.5
         y: 3
         to: Room_Colosseum_Bronze[left1]
+        side: right
       trial2:
         x: 60.5
         y: 13
         to: Room_Colosseum_Silver[left1]
+        side: right
       trial3:
         x: 60.5
         y: 23
         to: Room_Colosseum_Gold[left1]
+        side: right
   Room_Colosseum_02:
     name: Colosseum Bench
   Room_Colosseum_Bronze:
@@ -850,6 +862,7 @@ rooms:
         x: 15
         y: 159
         to: Ruins2_10b[elevator]
+        side: bot
   Ruins2_10b:
     name: East Elevator (Lower)
     transitions:
@@ -857,6 +870,7 @@ rooms:
         x: 15
         y: 10
         to: Ruins2_10[elevator]
+        side: top
   Ruins2_11:
     name: The Collector
     boss: The Collector
@@ -924,6 +938,7 @@ rooms:
         x: 11.1
         y: 43.4
         to: Abyss_05[dream]
+        side: bot
   White_Palace_04:
   White_Palace_05:
     splitRoom:
@@ -945,19 +960,17 @@ rooms:
         x: 16.5
         y: 17.4
         to: Abyss_05[dream]
-        oneWay: true
+        side: bot
   White_Palace_12:
   White_Palace_13:
   White_Palace_14:
   White_Palace_15:
   White_Palace_16:
-  White_Palace_17:
-    pain: true
   White_Palace_18:
     name: Path of Pain Entrance
-    pain: true
+  White_Palace_17:
+    name: Path of Pain 2
   White_Palace_19:
-    pain: true
+    name: Path of Pain 3
   White_Palace_20:
     name: Path of Pain Finish
-    pain: true
