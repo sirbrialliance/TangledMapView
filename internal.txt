@@ -66,16 +66,17 @@ Unsorted
 		- xx benches and locations
 		- some doors don't have directly set destinations, just add hardcoded overrides
 
-	- render map w/out randomization
+	- xx render map w/out randomization
 
 	- show check instead of rotated square when you get an item?
 
 	- add transport to map linkage
 		- available stag stations
-		- elevators
-		- trams
+		- xx elevators
+		- xx trams
 		- current dream warp
-		- dream warps to/from white palace
+		- xx dream warps to/from white palace
+
 	- how to handle "Boss_Essence-Marmu" and friends that have their item in a different scene in the same room?
 		- maybe just detect and shunt read data to roomId?
 	- use randomizer's logic to plan routes

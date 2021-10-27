@@ -805,7 +805,7 @@ window.mapData = {
 			"stag": "HiddenStation",
 			"transitions": {
 				"door_stagExit": {
-					"to": null,
+					"to": "Cinematic_Stag_travel[stag_HiddenStation]",
 					"x": 35.6,
 					"y": 5.64
 				},
@@ -832,7 +832,67 @@ window.mapData = {
 		},
 		"Cinematic_Stag_travel": {
 			"area": "Room",
-			"name": "Stag Travel"
+			"benches": [],
+			"items": {},
+			"name": "Stag Travel",
+			"randomizerArea": "StagTravel",
+			"transitions": {
+				"stag_Crossroads": {
+					"to": "Crossroads_47[door_stagExit]",
+					"x": 6.231225195028297,
+					"y": 13.644479930317775
+				},
+				"stag_Deepnest": {
+					"to": "Deepnest_09[door_stagExit]",
+					"x": -2.1347225740992752,
+					"y": 14.847321628213992
+				},
+				"stag_FungalWastes": {
+					"to": "Fungus2_02[door_stagExit]",
+					"x": -14.39239460421746,
+					"y": 4.225988352621451
+				},
+				"stag_Greenpath": {
+					"to": "Fungus1_16_alt[door_stagExit]",
+					"x": -9.822911009179276,
+					"y": 11.336243615313874
+				},
+				"stag_HiddenStation": {
+					"to": "Abyss_22[door_stagExit]",
+					"x": 15.0,
+					"y": 0.0
+				},
+				"stag_RestingGrounds": {
+					"to": "RestingGrounds_09[door_stagExit]",
+					"x": -9.822911009179279,
+					"y": -11.336243615313872
+				},
+				"stag_RoyalGardens": {
+					"to": "Fungus3_40[door_stagExit]",
+					"x": -14.392394604217461,
+					"y": -4.225988352621441
+				},
+				"stag_Ruins1": {
+					"to": "Ruins1_29[door_stagExit]",
+					"x": 6.231225195028302,
+					"y": -13.644479930317774
+				},
+				"stag_Ruins2": {
+					"to": "Ruins2_08[door_stagExit]",
+					"x": 12.618802992467712,
+					"y": -8.109612261833973
+				},
+				"stag_StagNest": {
+					"to": "Cliffs_03[door_stagExit]",
+					"x": 12.618802992467717,
+					"y": 8.109612261833963
+				},
+				"stag_Town": {
+					"to": "Room_Town_Stag_Station[door_stagExit]",
+					"x": -2.1347225740992783,
+					"y": -14.84732162821399
+				}
+			}
 		},
 		"Cliffs_01": {
 			"area": "Cliffs",
@@ -1035,7 +1095,7 @@ window.mapData = {
 			"stag": "StagNest",
 			"transitions": {
 				"door_stagExit": {
-					"to": null,
+					"to": "Cinematic_Stag_travel[stag_StagNest]",
 					"x": 16.13,
 					"y": 5.71
 				},
@@ -2386,7 +2446,7 @@ window.mapData = {
 			"stag": "Crossroads",
 			"transitions": {
 				"door_stagExit": {
-					"to": null,
+					"to": "Cinematic_Stag_travel[stag_Crossroads]",
 					"x": 16.2,
 					"y": 5.74
 				},
@@ -2813,7 +2873,7 @@ window.mapData = {
 			"stag": "Deepnest",
 			"transitions": {
 				"door_stagExit": {
-					"to": null,
+					"to": "Cinematic_Stag_travel[stag_Deepnest]",
 					"x": 31.83,
 					"y": 5.73
 				},
@@ -5188,7 +5248,7 @@ window.mapData = {
 			"stag": "Greenpath",
 			"transitions": {
 				"door_stagExit": {
-					"to": null,
+					"to": "Cinematic_Stag_travel[stag_Greenpath]",
 					"x": 16.09,
 					"y": 5.81
 				},
@@ -5885,7 +5945,7 @@ window.mapData = {
 			"stag": "FungalWastes",
 			"transitions": {
 				"door_stagExit": {
-					"to": null,
+					"to": "Cinematic_Stag_travel[stag_FungalWastes]",
 					"x": 16.13,
 					"y": 5.8
 				},
@@ -7656,7 +7716,7 @@ window.mapData = {
 			"stag": "RoyalGardens",
 			"transitions": {
 				"door_stagExit": {
-					"to": null,
+					"to": "Cinematic_Stag_travel[stag_RoyalGardens]",
 					"x": 156.3,
 					"y": 12.63
 				},
@@ -9688,7 +9748,7 @@ window.mapData = {
 			"stag": "RestingGrounds",
 			"transitions": {
 				"door_stagExit": {
-					"to": null,
+					"to": "Cinematic_Stag_travel[stag_RestingGrounds]",
 					"x": 31.78,
 					"y": 5.74
 				},
@@ -10344,7 +10404,7 @@ window.mapData = {
 			"stag": "Town",
 			"transitions": {
 				"door_stagExit": {
-					"to": null,
+					"to": "Cinematic_Stag_travel[stag_Town]",
 					"x": 55.64,
 					"y": 5.74
 				},
@@ -11312,7 +11372,7 @@ window.mapData = {
 			"stag": "Ruins1",
 			"transitions": {
 				"door_stagExit": {
-					"to": null,
+					"to": "Cinematic_Stag_travel[stag_Ruins1]",
 					"x": 31.83,
 					"y": 5.74
 				},
@@ -11844,7 +11904,7 @@ window.mapData = {
 			"stag": "Ruins2",
 			"transitions": {
 				"door_stagExit": {
-					"to": null,
+					"to": "Cinematic_Stag_travel[stag_Ruins2]",
 					"x": 31.85,
 					"y": 5.64
 				},

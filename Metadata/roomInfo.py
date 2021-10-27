@@ -1,3 +1,4 @@
+import math
 from xml.dom import minidom
 import yaml # pip install pyyaml
 
@@ -125,5 +126,33 @@ def loadRandomizerData():
 			except:
 				print("Issue handling " + item.toxml())
 				raise
+
+def buildStagTransitions():
+	stagHub = getRoom("Cinematic_Stag_travel")
+	stagRooms = []
+	for roomId, room in roomData.items():
+		if "stag" not in room: continue
+		stagRooms.append(roomId)
+
+	stagRooms.sort()
+
+	radius = 15
+	for i in range(len(stagRooms)):
+		angle = i / len(stagRooms) * 2 * math.pi
+		roomId = stagRooms[i]
+		room = getRoom(roomId)
+
+		doorName = "stag_" + room["stag"]
+
+		stagDoor = room["transitions"]["door_stagExit"]
+		stagDoor["to"] = "Cinematic_Stag_travel[" + doorName + "]"
+
+		stagHub["transitions"][doorName] = {
+			"x": math.cos(angle) * radius,
+			"y": math.sin(angle) * radius,
+			"to": roomId + "[door_stagExit]",
+		}
+
+
 
 

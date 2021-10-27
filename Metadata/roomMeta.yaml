@@ -40,6 +40,7 @@ rooms:
   Cinematic_Stag_travel:
     name: Stag Travel
     area: Room
+    randomizerArea: StagTravel
 
   Abyss_01:
     name: Broken Elevator Shaft
