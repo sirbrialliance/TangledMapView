@@ -5,6 +5,7 @@ Next
 
 - xx FPS saver
 - @routing 2.0
+- highlight selected room even if no route
 
 -------------------------------------------------------------------------
 Unsorted

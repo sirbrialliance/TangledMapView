@@ -232,12 +232,30 @@ class App {
 
 	updateRoute() {
 		let path = window.ngraphPath.aStar(this.data.visibleRoomGraph, {oriented: true})
+		let statusEl = document.getElementById("routeState")
 
 		try {
 			var route = path.find(this.data.currentPlayerRoom, this.data.selectedRoom)
 		} catch {
 			route = []
 		}
+		if (route.length === 0) {
+			//no route found
+			//still highlight the room, though
+			if (this.data.selectedRoom) {
+				route = [{id: this.data.selectedRoom}]
+				if (this.data.visibleRooms[this.data.selectedRoom]) {
+					statusEl.textContent = "No route found."
+				} else {
+					statusEl.textContent = "Target room not visited."
+				}
+			} else {
+				statusEl.textContent = ""
+			}
+		} else {
+			statusEl.textContent = `Route to target in ${route.length} step(s).`
+		}
+
 		route.reverse()//pathfinder gives it to us backwards
 		//console.log(route)
 

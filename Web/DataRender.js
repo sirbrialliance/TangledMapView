@@ -378,7 +378,7 @@ class DataRender {
 		for (let i = 0; i < rooms.length; ++i) {
 			let room = rooms[i]
 			let el = document.getElementById("room-" + room.id)?.querySelector(":scope > rect")
-			if (i > 0) pulseElements.push(el)
+			if (i > 0 || rooms.length === 1) pulseElements.push(el)
 
 			if (i < rooms.length - 1) {
 				//find a link (hopefully there's exactly one)
