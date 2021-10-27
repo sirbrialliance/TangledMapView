@@ -275,10 +275,17 @@ class RoomNode {
 		//include items
 		this.items = {...allRoomData[this.id].items}
 		for (let itemId in this.items) {
-			let item = this.items[itemId]
+			let item = this.items[itemId] = {...this.items[itemId]}
 			item.y *= -1
 			item.id = itemId
 			this._expandAABB(item.x, item.y)
+		}
+
+		//include benches
+		this.benches = [...allRoomData[this.id].benches]
+		for (let bench of this.benches) {
+			bench.y *= -1
+			this._expandAABB(bench.x, bench.y)
 		}
 
 		this._calcAABBData()

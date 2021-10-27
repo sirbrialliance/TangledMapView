@@ -200,6 +200,22 @@ class DataRender {
 						.on("pointerleave", (ev, item) => {
 							itemInfoEl.textContent = ""
 						})
+
+					//benches
+					let benchData = room.benches
+					d3.select(this)
+						.selectAll("rect.bench")
+						.data(benchData)
+						.join(enter => {
+							var els = enter.append("rect")
+								.classed("bench", true)
+							return els
+						})
+						.attr("transform", d => {
+							let x = d.x * roomScale - room.aabb.cx * roomScale
+							let y = d.y * roomScale - room.aabb.cy * roomScale
+							return `translate(${x}, ${y})`
+						})
 				})
 				return els
 			})

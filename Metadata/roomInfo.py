@@ -21,6 +21,7 @@ def getRoom(roomId):
 		elif roomId.startswith("Deepnest_East"): data["area"] = "Deepnest_East"
 		elif roomId == "Town": data["area"] = "Town"
 		else: data["area"] = roomId.split("_")[0]
+	if "benches" not in data: data["benches"] = []
 
 	return data
 

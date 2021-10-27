@@ -119,7 +119,10 @@ class SceneHandler:
 		with open(path, "rb") as f:
 			self.rawSceneData = f.read()
 
-		binaryDoorTypeGUID = config.doorTypeGUID.encode()
+		scriptGUIDs = (
+			config.doorTypeGUID.encode(),
+			config.benchTypeGUID.encode(),
+		)
 
 		# instead of parsing the whole YAML document (really slow wih our parser)
 		# do some string manipulation to get the individual sections and note things for later
@@ -127,7 +130,7 @@ class SceneHandler:
 		self.objects = {}
 		self.sceneObjectStrings = {}
 		self.namesToObjectIds = {}
-		self.probablyDoorObjectIds = set()
+		self.interestingObjectIds = set()
 		for segment in self.rawSceneData.split(b"--- !u!")[1:]:
 			objId = idMatch.match(segment).group(1).decode()
 			self.sceneObjectStrings[objId] = segment
@@ -141,8 +144,10 @@ class SceneHandler:
 				idsWithName = self.namesToObjectIds.setdefault(name, [])
 				idsWithName.append(objId)
 
-			if segment.startswith(b"114 ") and binaryDoorTypeGUID in segment: # MonoBehaviour with GUID in it
-				self.probablyDoorObjectIds.add(objId)
+			if segment.startswith(b"114 "): # MonoBehaviour
+				for guid in scriptGUIDs:
+					if guid in segment:
+							self.interestingObjectIds.add(objId)
 
 
 	def getObject(self, id):
@@ -191,10 +196,9 @@ class SceneHandler:
 
 		return (x, y)
 
-	def addInfo(self, roomData):
-		# Doors
+	def _addDoors(self, roomData):
 		doors = roomData["transitions"]
-		for id in self.probablyDoorObjectIds:
+		for id in self.interestingObjectIds:
 			object = self.getObject(id)
 			# print("obj is", repr(object))
 			if object["type"] != "MonoBehaviour": continue
@@ -230,8 +234,7 @@ class SceneHandler:
 			x, y = self.getPosition(go)
 			doors[doorSide] = {"x": x, "y": y, "to": targetDoorId}
 
-
-		# Item locations
+	def _addItems(self, roomData):
 		for itemId, item in roomData["items"].items():
 			if 'x' in item: continue
 
@@ -274,6 +277,24 @@ class SceneHandler:
 			item["x"] = x
 			item["y"] = y
 			del item['objectName']
+
+	def _addBenches(self, roomData):
+		benches = roomData["benches"]
+		for id in self.interestingObjectIds:
+			object = self.getObject(id)
+			if object["type"] != "MonoBehaviour": continue
+			if object["m_Script"]["guid"] != config.benchTypeGUID: continue
+
+			go = self.getGameObject(object)
+
+			x, y = self.getPosition(go)
+			benches.append({"x": x, "y": y})
+
+
+	def addInfo(self, roomData):
+		self._addDoors(roomData)
+		self._addItems(roomData)
+		self._addBenches(roomData)
 
 
 

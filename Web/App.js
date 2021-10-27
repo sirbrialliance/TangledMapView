@@ -56,7 +56,7 @@ class App {
 		var svg = this.svg = d3.select("svg")
 
 		var zoom = this.zoom = d3.zoom()
-			.scaleExtent([.1, 2.5])
+			.scaleExtent([.1, 5])
 			.filter(ev => {
 				if (ev.ctrlKey && ev.type === "wheel") return false
 				if (!ev.type.startsWith("mouse")) return true

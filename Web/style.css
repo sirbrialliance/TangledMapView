@@ -89,6 +89,11 @@ svg { user-select: none; }
 }
 .roomItem:hover > rect {stroke-width: 1px;}
 
+.bench {
+	stroke: blue;
+	width: 3px;
+	height: 3px;
+}
 
 .mapNode {
 	stroke: black;
