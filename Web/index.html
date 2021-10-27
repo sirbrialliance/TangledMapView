@@ -57,26 +57,32 @@
 				<br>
 				<br>
 
-				<label>
-					<label>
-						Selected room:<br>
-						<select id="roomList"></select>
-					</label>
-					<button onclick="app.selectRoom(null)">Clear</button>
-				</label>
+				<table class="currentRoomTable">
+					<thead><tr><th>Current Room</th><th>Selected Room</th></tr></thead>
+					<tbody>
+						<tr>
+							<td class="roomNav">
+								<span id="currentRoomIdText"></span>
+								<button id="framePlayer"
+									title="Center the current player room in the view."
+									onclick="app.zoomToRoom(app.data.currentPlayerRoom)"
+								>Frame</button>
+							</td>
+							<td class="roomNav">
+								<span id="selectedRoomIdText"></span>
+								<button id="frameSelection"
+									title="Center the currently selected room in the view, if any."
+									onclick="app.zoomToRoom(app.data.selectedRoom)"
+								>Frame</button>
+								<button onclick="app.selectRoom(null)">Clear</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
 				<br>
 
 				<div id="routeState"></div>
-
-				<button id="frameSelection"
-					title="Center the currently selected room in the view, if any."
-					onclick="app.zoomToRoom(app.data.selectedRoom)"
-				>Frame Selection</button><br>
-
-				<button id="framePlayer"
-					title="Center the current player room in the view."
-					onclick="app.zoomToRoom(app.data.currentPlayerRoom)"
-				>Frame Player</button><br>
 
 			</fieldset>
 		</div>

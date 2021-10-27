@@ -316,3 +316,18 @@ fieldset {
 	background: #AAA;
 	cursor: pointer;
 }
+
+.currentRoomTable td {
+	border-collapse: collapse;
+	border: 1px solid gray;
+	vertical-align: top;
+	font-family: monospace;
+	text-align: center;
+	font-size: 14px;
+}
+
+td.roomNav > span { display: block; }
+
+td.roomNav > span:empty ~ button {
+	display: none;
+}

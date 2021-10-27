@@ -184,21 +184,6 @@ class App {
 		}
 	}
 
-	_setupRoomList() {
-		var rooms = Object.values(this.data.rooms)
-		rooms.sort((a, b) => a.id < b.id ? -1 : 1)
-		rooms.unshift({id: ""})
-		var roomSearch = d3.select("#roomList")
-		roomSearch
-			.selectAll("option")
-			.data(rooms, x => x.id)
-			.join("option")
-			.attr("value", x => x.id)
-			.text(x => x.id)
-		roomSearch.node().value = ""
-		roomSearch.on("change", ev => this.selectRoom(ev.target.value))
-	}
-
 	_resumeFrameUpdate() {
 		if (this._frameUpdateEnabled) return
 
@@ -227,7 +212,7 @@ class App {
 
 	selectRoom(roomId) {
 		this.data.selectedRoom = roomId
-		d3.select("#roomList").node().value = roomId
+		document.getElementById("selectedRoomIdText").textContent = roomId || ""
 		this.updateRoute()
 	}
 
@@ -299,7 +284,7 @@ class App {
 		this.zoom.scaleTo(this.svg, .5)
 		this.zoom.translateTo(this.svg, 0, 0)
 
-		this._setupRoomList()
+		document.getElementById("currentRoomIdText").textContent = this.data.currentPlayerRoom || ""
 		this._updateView()
 
 		if (this.data.saveData) this._setBlockingMessage(null)
@@ -354,8 +339,9 @@ class App {
 		if (this.data.selectedRoom === roomId) this.selectRoom(null)
 
 		this.data.currentPlayerRoom = roomId
+		document.getElementById("currentRoomIdText").textContent = roomId || ""
 		d3.select(".currentRoom").classed("currentRoom", false)
-		let el = d3.select("#room-" + roomId).classed("currentRoom", true)
+		d3.select("#room-" + roomId).classed("currentRoom", true)
 		if (this.prefs.followPlayer && this.cluster.layout !== "player") {
 			this.zoomToRoom(roomId)
 		}
