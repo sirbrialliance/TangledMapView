@@ -61,6 +61,8 @@ if __name__ == "__main__":
 
 			if testing: print(yaml.dump(roomData))
 
+	roomInfo.markOneWayDoors()
+
 	if not testing:
 		roomInfo.buildStagTransitions()
 		# print(repr(roomInfo.roomData))

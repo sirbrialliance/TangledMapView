@@ -67,6 +67,8 @@ def prop(el, name):
 		else: return None
 	else: return None
 
+rndRoomXML = rndAreaXML = None
+
 def loadRandomizerData():
 	dataPath = config.randomizerSourcePath + "/RandomizerMod3.0/Resources/"
 
@@ -74,12 +76,14 @@ def loadRandomizerData():
 	# use the areaName from a number of files since it isn't always filled out...and even still some places
 	# don't have it so it's added in roomMeta.yaml
 
+	global rndRoomXML, rndAreaXML
+
 	# Most the room areas are in this file:
-	rooms = minidom.parse(dataPath + "rooms.xml")
+	rndRoomXML = rooms = minidom.parse(dataPath + "rooms.xml")
 	for transition in rooms.getElementsByTagName("transition"):
 		addArea(transition)
 
-	areas = minidom.parse(dataPath + "areas.xml")
+	rndAreaXML = areas = minidom.parse(dataPath + "areas.xml")
 	for transition in areas.getElementsByTagName("transition"):
 		addArea(transition)
 
@@ -154,5 +158,26 @@ def buildStagTransitions():
 		}
 
 
+def markOneWayDoors():
 
+	def handleTransition(node):
+		# oneWay: 1 is entrance, 2 is exit
+		# See RandomizerMod.Randomization.TransitionDef.oneWay
+		oneWay = prop(node, "oneWay")
+		if oneWay != "2": return
+
+		roomId = prop(node, "sceneName")
+		doorName = prop(node, "doorName")
+
+		room = getRoom(roomId)
+		if doorName not in room["transitions"]:
+			print("One-way: No " + doorName + " on " + roomId)
+			return
+		room["transitions"][doorName]["to"] = None
+
+	for transition in rndRoomXML.getElementsByTagName("transition"):
+		handleTransition(transition)
+
+	for transition in rndAreaXML.getElementsByTagName("transition"):
+		handleTransition(transition)
 

@@ -1209,12 +1209,10 @@ window.mapData = {
 				"top1": {
 					"to": "Town[bot1]",
 					"x": 52.5,
-					"y": 25.5
+					"y": 42.5
 				},
 				"top2": {
-					"to": "Town[bot1]",
-					"x": 52.5,
-					"y": 42.5
+					"to": null
 				}
 			}
 		},
@@ -1226,7 +1224,7 @@ window.mapData = {
 			"randomizerArea": "Forgotten_Crossroads",
 			"transitions": {
 				"door1": {
-					"to": null,
+					"to": "Room_temple[left1]",
 					"x": 46.47,
 					"y": 3.77
 				},
@@ -1316,12 +1314,12 @@ window.mapData = {
 					"y": 2.82
 				},
 				"door_Mender_House": {
-					"to": null,
+					"to": "Room_Mender_House[left1]",
 					"x": 57.099998322,
 					"y": 2.6674399300000005
 				},
 				"door_charmshop": {
-					"to": null,
+					"to": "Room_Charm_Shop[left1]",
 					"x": 144.05999,
 					"y": 10.74
 				},
@@ -1383,7 +1381,7 @@ window.mapData = {
 			"randomizerArea": "Forgotten_Crossroads",
 			"transitions": {
 				"door1": {
-					"to": null,
+					"to": "Crossroads_ShamanTemple[left1]",
 					"x": 28.41,
 					"y": 29.66
 				},
@@ -1920,9 +1918,7 @@ window.mapData = {
 					"y": 29.5
 				},
 				"top2": {
-					"to": "Crossroads_22[bot2]",
-					"x": 45.0,
-					"y": 26.5
+					"to": null
 				}
 			}
 		},
@@ -2755,7 +2751,7 @@ window.mapData = {
 					"y": 83.5
 				},
 				"top2": {
-					"to": "Deepnest_01[bot2]",
+					"to": null,
 					"x": 32.0,
 					"y": 86.0
 				}
@@ -2900,7 +2896,7 @@ window.mapData = {
 			"randomizerArea": "Distant_Village",
 			"transitions": {
 				"door1": {
-					"to": null,
+					"to": "Deepnest_Spider_Town[left1]",
 					"x": 32.87,
 					"y": 117.51
 				},
@@ -3798,7 +3794,7 @@ window.mapData = {
 					"y": 150.5
 				},
 				"top2": {
-					"to": "Deepnest_East_07[bot2]",
+					"to": null,
 					"x": 35.5,
 					"y": 150.5
 				}
@@ -6413,19 +6409,15 @@ window.mapData = {
 			"randomizerArea": "Mantis_Village",
 			"transitions": {
 				"bot1": {
-					"to": "Fungus2_15[top2]",
-					"x": 44.0,
-					"y": -0.5
-				},
-				"bot2": {
-					"to": "Fungus2_15[top2]",
+					"to": "Fungus2_15[top1]",
 					"x": 52.0,
 					"y": -0.5
 				},
+				"bot2": {
+					"to": null
+				},
 				"bot3": {
-					"to": "Fungus2_15[top2]",
-					"x": 60.0,
-					"y": -0.5
+					"to": null
 				},
 				"right1": {
 					"to": "Fungus2_13[left2]",
@@ -6481,18 +6473,14 @@ window.mapData = {
 				},
 				"top1": {
 					"to": "Fungus2_14[bot1]",
-					"x": 29.0,
-					"y": 120.5
-				},
-				"top2": {
-					"to": "Fungus2_14[bot3]",
 					"x": 33.5,
 					"y": 120.5
 				},
+				"top2": {
+					"to": null
+				},
 				"top3": {
-					"to": "Fungus2_14[bot3]",
-					"x": 38.0,
-					"y": 120.5
+					"to": null
 				}
 			}
 		},
@@ -6794,7 +6782,7 @@ window.mapData = {
 					"y": 35.5
 				},
 				"top2": {
-					"to": "Fungus2_30[bot1]",
+					"to": null,
 					"x": 95.0,
 					"y": 26.0
 				}
@@ -7848,7 +7836,7 @@ window.mapData = {
 					"y": -0.5
 				},
 				"door1": {
-					"to": null,
+					"to": "Room_Queen[left1]",
 					"x": 38.021,
 					"y": 93.644
 				},
@@ -8754,7 +8742,7 @@ window.mapData = {
 					"y": 16.0
 				},
 				"top1": {
-					"to": "Mines_34[left1]",
+					"to": null,
 					"x": 86.5,
 					"y": 50.0
 				}
@@ -8996,7 +8984,7 @@ window.mapData = {
 					"y": 6.0
 				},
 				"top1": {
-					"to": "Mines_34[bot2]",
+					"to": null,
 					"x": 32.5,
 					"y": 40.5
 				}
@@ -9341,9 +9329,7 @@ window.mapData = {
 					"y": 40.0
 				},
 				"right1": {
-					"to": "Mines_13[top1]",
-					"x": 193.5,
-					"y": 50.0
+					"to": null
 				}
 			}
 		},
@@ -9476,7 +9462,7 @@ window.mapData = {
 					"y": 6.0
 				},
 				"top1": {
-					"to": "Mines_28[bot1]",
+					"to": null,
 					"x": 109.0,
 					"y": 26.0
 				}
@@ -9902,7 +9888,7 @@ window.mapData = {
 			"randomizerArea": "Dirtmouth",
 			"transitions": {
 				"door1": {
-					"to": null,
+					"to": "Room_Bretta_Basement[top1]",
 					"x": 16.56,
 					"y": 5.67
 				},
@@ -10699,9 +10685,9 @@ window.mapData = {
 			"randomizerArea": "Dirtmouth",
 			"transitions": {
 				"door1": {
-					"to": null,
+					"to": "Room_Sly_Storeroom[top1]",
 					"x": 19.07,
-					"y": 5.687180000000001
+					"y": 5.68718
 				},
 				"left1": {
 					"to": "Town[door_sly]",
@@ -10740,8 +10726,8 @@ window.mapData = {
 			"randomizerArea": "Black_Egg_Temple",
 			"transitions": {
 				"door1": {
-					"to": null,
-					"x": 35.410000000000004,
+					"to": "Room_Final_Boss_Atrium[left1]",
+					"x": 35,
 					"y": 4.57
 				},
 				"left1": {
@@ -12263,7 +12249,7 @@ window.mapData = {
 					"y": -1.5
 				},
 				"door_bretta": {
-					"to": null,
+					"to": "Room_Bretta[right1]",
 					"x": 165.6210056,
 					"y": 10.87395055
 				},
@@ -12283,12 +12269,12 @@ window.mapData = {
 					"y": 10.71354861
 				},
 				"door_sly": {
-					"to": null,
+					"to": "Room_shop[left1]",
 					"x": 120.85837204913,
 					"y": 10.644788846994999
 				},
 				"door_station": {
-					"to": null,
+					"to": "Room_Town_Stag_Station[left1]",
 					"x": 142.5016043229,
 					"y": 10.645210062404999
 				},
@@ -12313,7 +12299,7 @@ window.mapData = {
 					"y": 10.8265
 				},
 				"top1": {
-					"to": "Cliffs_02[right1]",
+					"to": null,
 					"x": 33.5,
 					"y": 72.0
 				}
@@ -12438,7 +12424,7 @@ window.mapData = {
 					"y": 68.0
 				},
 				"top1": {
-					"to": "Cliffs_02[bot2]",
+					"to": null,
 					"x": 34.5,
 					"y": 93.5
 				},

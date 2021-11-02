@@ -3,13 +3,39 @@
 Next
 -------------------------------------------------------------------------
 
-- xx FPS saver
 - @routing 2.0
-- xx highlight selected room even if no route
+	- bad/doubled room links
+		shouldn't have:
+			xx Crossroads_01[top2]-Town[bot1] multiple transitions
+			xx Fungus2_14 bottoms to Fungus2_15 tops
+
+		should be bidi:
+			xx Crossroads_ShamanTemple[left1]-Crossroads_06[door1]
+			xx Deepnest_Spider_Town[left1]-Deepnest_10[door1]
+			xx Room_Bretta[right1]-Town[door_bretta]
+			xx Room_Bretta_Basement[top1]-Room_Bretta[door1]
+			xx Room_Charm_Shop[left1]-Crossroads_04[door_charmshop]
+			xx Room_Final_Boss_Atrium[left1]-Room_temple[door1]
+			xx Room_Mender_House[left1]-Crossroads_04[door_Mender_House]
+			xx Room_Queen[left1]-Fungus3_48[door1]
+			xx Room_Sly_Storeroom[top1]-Room_shop[door1]
+			xx Room_Town_Stag_Station[left1]-Town[door_station]
+			xx Room_shop[left1]-Town[door_sly]
+			xx Room_temple[left1]-Crossroads_02[door1]
+
+		odd doors
+			xx Crossroads_21[top2]-Crossroads_22[bot2] lol idk
+			xx Mines_34[right1]
+	- fix path rendering when there's multiple paths between two rooms (e.g. Deepnest_01b and Deepnest_02)
+	- handle split rooms
+	- text description of calculated route
 
 -------------------------------------------------------------------------
 Unsorted
 -------------------------------------------------------------------------
+
+- zoom at least x amount when framing a room
+- arrow keys+enter for search box
 
 - icons for rooms
 - mark shade room
@@ -156,6 +182,7 @@ Wishes
 
 - Bugs
 	- Doesn't work with fresh save file, have to exit and reload
+		- "try using the On.UIManager.StartNewGame hook rather than the ModHooks hook"
 	- reload page while save data is stale gives...stale save data  - seems to happen even if I pull data directly from the randomizer mod settings
 
 - User feedback:

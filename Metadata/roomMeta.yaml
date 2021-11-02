@@ -10,6 +10,9 @@
 #
 # And YAML...cuz...I'm already reading it for the scenes and I don't have to
 # put in as many quotation marks as I do with JSON.
+#
+# A lot of the random rooms that have manual transitions defined are rooms that don't start linked, so the
+# data grabber doesn't pick up on where they connect once the door is open.
 ---
 
 areas: # By level name prefix
@@ -148,16 +151,43 @@ rooms:
 
   Crossroads_01:
     name: Crossroads Entry
+    # we have two "top" transitions, but they both go to the same place, so nix one
+    transitions:
+      top1:
+        to: Town[bot1]
+        x: 52.5
+        y: 42.5
+      top2:
+        to: null # to nix from list
   Crossroads_02:
     name: Outside Black Egg
+    transitions:
+      door1:
+        to: Room_temple[left1]
+        x: 46.47
+        y: 3.77
   Crossroads_03:
     name: Outside Stag
   Crossroads_04:
     name: Salubra & Gruz Mother
     boss: GruzMother
+    transitions:
+      door_charmshop:
+        to: Room_Charm_Shop[left1]
+        x: 144.05999
+        y: 10.74
+      door_Mender_House:
+        to: Room_Mender_House[left1]
+        x: 57.099998322
+        y: 2.6674399300000005
   Crossroads_05:
   Crossroads_06:
     name: Outside Ancestral Mound
+    transitions:
+      door1: # door doesn't start linked/open
+        to: Crossroads_ShamanTemple[left1]
+        x: 28.41
+        y: 29.66
   Crossroads_07:
     name: Platforms
   Crossroads_08:
@@ -178,6 +208,9 @@ rooms:
   Crossroads_18:
   Crossroads_19:
   Crossroads_21:
+    transitions:
+      top2: # random weird thing goes to "Crossroads_22[bot2]" which doesn't exist
+        to: null
   Crossroads_22:
     name: Glowing Womb
   Crossroads_25:
@@ -252,6 +285,11 @@ rooms:
     stag: Deepnest
   Deepnest_10:
     name: Distant Village
+    transitions:
+      door1:
+        to: Deepnest_Spider_Town[left1]
+        x: 32.87
+        y: 117.51
   Deepnest_14:
     name: Failed Tramway (East)
   Deepnest_16:
@@ -424,9 +462,29 @@ rooms:
     name: Outside Mantis Village
   Fungus2_14:
     name: Mantis Village (Upper)
+    transitions:
+      # The bottom transition has three transitions, but they are all the same except where you land/come up, so nix 2
+      bot1:
+        to: Fungus2_15[top1]
+        x: 52.0
+        y: -0.5
+      bot2:
+        to: null
+      bot3:
+        to: null
   Fungus2_15:
     name: Mantis Lords
     boss: Mantis Lords
+    transitions:
+      # The other side of the Fungus2_14 issue
+      top1:
+        to: Fungus2_14[bot1]
+        x: 33.5
+        y: 120.5
+      top2:
+        to: null
+      top3:
+        to: null
   Fungus2_17:
   Fungus2_18:
     name: Conifer
@@ -493,6 +551,11 @@ rooms:
         - door1
       - - right1
         - bot1
+    transitions:
+      door1:
+        to: Room_Queen[left1]
+        x: 38.021
+        y: 93.644
   Fungus3_49:
     name: Traitor's Child's Grave
   Fungus3_50:
@@ -636,6 +699,9 @@ rooms:
     name: Dark Toll Entrance
   Mines_34:
     name: Hallownest's Crown
+    transitions:
+      right1: # probably here for safety, but not useful for mapping
+        to: null
   Mines_35:
     name: Crystallized Mound
   Mines_36:
@@ -668,6 +734,11 @@ rooms:
 
   Room_Bretta:
     name: Bertta's House
+    transitions:
+      door1:
+        to: Room_Bretta_Basement[top1]
+        x: 16.56
+        y: 5.67
   Room_Bretta_Basement:
     name: Bertta's Basement
     boss: Grey Prince Zote
@@ -771,12 +842,20 @@ rooms:
     randomizerArea: Forgotten_Crossroads
   Room_shop:
     name: Sly's Shop
+    transitions:
+      door1:
+        to: Room_Sly_Storeroom[top1]
+        x: 19.07
+        y: 5.68718
   Room_spider_small:
     name: Brumm's Betrayal
   Room_temple:
     name: Black Egg Temple
-
-
+    transitions:
+      door1:
+        x: 35
+        y: 4.57
+        to: Room_Final_Boss_Atrium[left1]
   Ruins1_01:
   Ruins1_02:
     name: Early City Bench
@@ -897,7 +976,19 @@ rooms:
 
   Town:
     name: Dirtmouth
-
+    transitions:
+      door_bretta:
+        to: Room_Bretta[right1]
+        x: 165.6210056
+        y: 10.87395055
+      door_sly:
+        to: Room_shop[left1]
+        x: 120.85837204913
+        y: 10.644788846994999
+      door_station:
+        to: Room_Town_Stag_Station[left1]
+        x: 142.5016043229
+        y: 10.645210062404999
   Tutorial_01:
     name: King's Pass
     area: Cliffs

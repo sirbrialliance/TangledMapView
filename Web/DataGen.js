@@ -57,15 +57,32 @@ class DataGen {
 			return room
 		}
 
-		//Randomized transitions:
-		var tPlacements = this.randomizerData["_transitionPlacements"];
+		// map of doorId => doorId
+		var tPlacements = {}
 
+		//first fill with standard transitions
+		for (let roomId in window.mapData.rooms) {
+			let roomData = window.mapData.rooms[roomId]
+			for (let doorSide in roomData.transitions) {
+				let doorInfo = roomData.transitions[doorSide]
+				if (doorInfo.to) tPlacements[`${roomId}[${doorSide}]`] = doorInfo.to
+			}
+		}
+
+		//Then update with any transitions that have been randomized:
+		for (let srcDoorId in this.randomizerData["_transitionPlacements"]) {
+			tPlacements[srcDoorId] = this.randomizerData["_transitionPlacements"][srcDoorId]
+		}
+
+		console.log("tPlacements", tPlacements)
+
+		// Build doors, transitions, and such
 		for (let roomId in window.mapData.rooms) {
 			let roomData = window.mapData.rooms[roomId]
 			for (let doorSide in roomData.transitions) {
 				let srcDoor = `${roomId}[${doorSide}]`
 				let srcInfo = DataGen.parseDoorId(srcDoor)
-				let dstDoor = tPlacements[srcDoor] || roomData.transitions[doorSide].to || null
+				let dstDoor = tPlacements[srcDoor]
 				if (!dstDoor) continue
 
 				let dstInfo = DataGen.parseDoorId(dstDoor)
