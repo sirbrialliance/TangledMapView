@@ -48,6 +48,14 @@
 						<option value="tangled">Tangled Mess</option>
 					</select>
 				</label>
+				<br>
+				<label>Show Items:
+					<select id="pref-visibleItems" onchange="app.updatePref('visibleItems', this.value)">
+						<option value="none">None</option>
+						<option value="relevant">Relevant</option>
+						<option value="all">All</option>
+					</select>
+				</label>
 			</fieldset>
 			<fieldset>
 				<legend>Search</legend>

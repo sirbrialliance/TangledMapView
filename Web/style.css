@@ -79,6 +79,8 @@ svg { user-select: none; }
 	stroke-dasharray: none;
 }
 
+
+.roomItem { display: none; }
 .roomItem > rect {
 	stroke: white;
 	stroke-width: .5px;
@@ -88,6 +90,33 @@ svg { user-select: none; }
 	transform: rotate(45deg) translate(-3px, -3px);
 }
 .roomItem:hover > rect {stroke-width: 1px;}
+
+body.showItemsInPool-Boss_Geo .roomItem { display: unset; }
+body.showItemsInPool-Charm .roomItem { display: unset; }
+body.showItemsInPool-Cocoon .roomItem { display: unset; }
+body.showItemsInPool-Cursed .roomItem { display: unset; }
+body.showItemsInPool-CursedNail .roomItem { display: unset; }
+body.showItemsInPool-Dreamer .roomItem { display: unset; }
+body.showItemsInPool-Egg .roomItem { display: unset; }
+body.showItemsInPool-Essence_Boss .roomItem { display: unset; }
+body.showItemsInPool-Flame .roomItem { display: unset; }
+body.showItemsInPool-Geo .roomItem { display: unset; }
+body.showItemsInPool-Grub .roomItem { display: unset; }
+body.showItemsInPool-Key .roomItem { display: unset; }
+body.showItemsInPool-Lore .roomItem { display: unset; }
+body.showItemsInPool-Map .roomItem { display: unset; }
+body.showItemsInPool-Mask .roomItem { display: unset; }
+body.showItemsInPool-Notch .roomItem { display: unset; }
+body.showItemsInPool-Ore .roomItem { display: unset; }
+body.showItemsInPool-PalaceLore .roomItem { display: unset; }
+body.showItemsInPool-PalaceSoul .roomItem { display: unset; }
+body.showItemsInPool-Relic .roomItem { display: unset; }
+body.showItemsInPool-Rock .roomItem { display: unset; }
+body.showItemsInPool-Root .roomItem { display: unset; }
+body.showItemsInPool-Skill .roomItem { display: unset; }
+body.showItemsInPool-Soul .roomItem { display: unset; }
+body.showItemsInPool-Stag .roomItem { display: unset; }
+body.showItemsInPool-Vessel .roomItem { display: unset; }
 
 .bench {
 	stroke: blue;
@@ -331,3 +360,6 @@ td.roomNav > span { display: block; }
 td.roomNav > span:empty ~ button {
 	display: none;
 }
+
+
+

@@ -7,7 +7,9 @@ class App {
 		followPlayer: true,
 		fpsSaver: true,
 		layout: "islands",
+		visibleItems: "relevant",
 	}
+
 	/** Should we render/update/animate? We can pause that to help with resource consumption. */
 	_frameUpdateEnabled = true
 	_pendingZoomTarget = null
@@ -260,6 +262,7 @@ class App {
 			case "clusterBasedOnAll": this.data.clusterBasedOnAll = v; break
 			case "spoilers": this.data.showAll = v; break
 			case "layout": this.cluster.layout = v; break
+			case "visibleItems": this.dataRender.visibleItems = v; break
 		}
 		this.prefs[k] = v
 		localStorage.setItem("pref-" + k, JSON.stringify(v))
@@ -276,6 +279,9 @@ class App {
 					this.svg.transition().duration(800).call(this.zoom.translateTo, 0, 0)
 				}
 				break
+			case "visibleItems":
+				this.dataRender.updateVisibleItems()
+				return
 		}
 		this._updateView()
 	}

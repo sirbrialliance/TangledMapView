@@ -12,6 +12,7 @@ class DataRender {
 	constructor(cluster) {
 		this.cluster = cluster
 		this.data = cluster.data
+		this.visibleItems = "none"
 	}
 
 	renderInto(holder) {
@@ -193,6 +194,9 @@ class DataRender {
 							let x = d.x * roomScale - room.aabb.cx * roomScale
 							let y = d.y * roomScale - room.aabb.cy * roomScale
 							return `translate(${x}, ${y})`
+						})
+						.attr("class", d => {
+							return "roomItem pool-" + d.randPool
 						})
 						.on("pointerover", (ev, item) => {
 							itemInfoEl.textContent = `${item.id} (${item.randType}/${item.randAction}/${item.randPool})`
@@ -379,6 +383,31 @@ class DataRender {
 			.attr("id", link => "link-" + link.id)
 
 		this._crossLinkLines = crossIslandLinks
+
+		// this.updateVisibleItems()
+	}
+
+	updateVisibleItems() {
+		for (let cls of Array.from(document.body.classList)) {
+			if (cls.startsWith("showItemsInPool-")) document.body.classList.remove(cls)
+		}
+
+		let pools = []
+		switch (this.visibleItems) {
+			default:
+			case "none":
+				break
+			case "all":
+				pools = Object.keys(DataGen.allItemPools)
+				break
+			case "relevant":
+				pools = Object.keys(this.data.itemPools)
+				break
+		}
+
+		for (let pool of pools) {
+			document.body.classList.add("showItemsInPool-" + pool)
+		}
 	}
 
 	highlightPath(rooms) {

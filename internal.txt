@@ -4,35 +4,36 @@ Next
 -------------------------------------------------------------------------
 
 - @routing 2.0
-	- bad/doubled room links
-		shouldn't have:
-			xx Crossroads_01[top2]-Town[bot1] multiple transitions
-			xx Fungus2_14 bottoms to Fungus2_15 tops
-
-		should be bidi:
-			xx Crossroads_ShamanTemple[left1]-Crossroads_06[door1]
-			xx Deepnest_Spider_Town[left1]-Deepnest_10[door1]
-			xx Room_Bretta[right1]-Town[door_bretta]
-			xx Room_Bretta_Basement[top1]-Room_Bretta[door1]
-			xx Room_Charm_Shop[left1]-Crossroads_04[door_charmshop]
-			xx Room_Final_Boss_Atrium[left1]-Room_temple[door1]
-			xx Room_Mender_House[left1]-Crossroads_04[door_Mender_House]
-			xx Room_Queen[left1]-Fungus3_48[door1]
-			xx Room_Sly_Storeroom[top1]-Room_shop[door1]
-			xx Room_Town_Stag_Station[left1]-Town[door_station]
-			xx Room_shop[left1]-Town[door_sly]
-			xx Room_temple[left1]-Crossroads_02[door1]
-
-		odd doors
-			xx Crossroads_21[top2]-Crossroads_22[bot2] lol idk
-			xx Mines_34[right1]
-	- fix path rendering when there's multiple paths between two rooms (e.g. Deepnest_01b and Deepnest_02)
 	- handle split rooms
-	- text description of calculated route
+		- render transitions stubs different, use icon ref
+		- change node graph
+
+	- pathing
+		- text description of calculated route
+		- get stag working right
+		- options
+			- benchwarp (off, discovered, all (spoilers))
+			- dream warp
+			- avoid room list
+		- fix path rendering when there's multiple paths between two rooms (e.g. Deepnest_01b and Deepnest_02)
+
+	- test non/area/room rando works
+	- view layout that linearizes your selected route
+
+- Item viewing
+	- how to handle "Boss_Essence-Marmu" and friends that have their item in a different scene in the same room?
+		- maybe just detect and shunt read data to roomId?
+	- Option to hide/relelevant/all
+	- show collected items as check, show name on hover
+	- show all items near mouse, in some cases v close or on top of each other
+	- record what an item is if we get near it but don't collect it?
 
 -------------------------------------------------------------------------
 Unsorted
 -------------------------------------------------------------------------
+
+- use randomizer's logic when planning routes
+
 
 - zoom at least x amount when framing a room
 - arrow keys+enter for search box
@@ -45,12 +46,7 @@ Unsorted
 - stronger relative positions next to user's room
 - things that aren't "close" to our current room shouldn't appear close visually
 
-- search rooms by name
 - search rooms by icon
-
-- show checks/possibleChecks save completion percentage
-
-- remove "dist X, Y unvisted"
 
 - where I died
 	- and automatically draw a route to shade
@@ -62,8 +58,6 @@ Unsorted
 	- stronger/more distant repulsion to things we aren't graph close to
 	- stay close to src room if dead end
 	- align with doors instead of centers
-
-- common rooms in room list by easy description (shops, black egg, grubs, mantis village, traitor's child grave, etc.)
 
 - Little "?" next to items that explain what they do?
 
@@ -81,35 +75,6 @@ Unsorted
 	- shade
 	- dream warp
 
-- routing 2.0:
-	- xx one-way paths
-	- re-parse scenes:
-		- xx include door destinations
-			- xx which door on the destination?
-		- xx positions of all items the randomizer may fiddle with
-		- xx which randomizer area a room is in
-
-		- xx benches and locations
-		- some doors don't have directly set destinations, just add hardcoded overrides
-
-	- xx render map w/out randomization
-
-	- show check instead of rotated square when you get an item?
-
-	- add transport to map linkage
-		- available stag stations
-		- xx elevators
-		- xx trams
-		- current dream warp
-		- xx dream warps to/from white palace
-
-	- how to handle "Boss_Essence-Marmu" and friends that have their item in a different scene in the same room?
-		- maybe just detect and shunt read data to roomId?
-	- use randomizer's logic to plan routes
-	- option
-		- to do benchwarp from current pos
-		- to try to avoid path of pain
-	- view layout that linearizes your selected route
 
 - Spoilers: give hint
 	- See: JSON.parse(data.saveData.PolymorphicModData.RandomizerMod).StringValues._orderedLocations
@@ -121,29 +86,17 @@ Unsorted
 - In-game maps reveal info
 	- Show grub locations when you have the collector's map
 	- Area maps: show all rooms for area, and transitions between rooms that we have maps for)
+		- or maybe just reveal 40% of nearby rooms if room rando
 	- bonus: show where you are in a room when you have wayward compass equipped
 
 - pathfind to nearest mark of given type
 
 - based on route, could show an in-game arrow pointing to the target transition in question
 
-- not stopping server causes hang on quit?
-	- maybe need to nuke websocket connections?
-
-
-- put the options in a "hamburger" menu if we are on a small display device?
-
-
 - Pathfinding to item in spoiler mode?
 - Select room for name and stats (num transitions visited/unvisited, items found/not found (or count of not found if no spoilers))
 - as you reveal the map, things end up in funny places, the hub isn't cenetered in island
 - Sliders to adjust room align forces/radii
-
-- is falling out of the blue heart challenge room to warp considered by logic?
-
-- show one-way transitions?
-
-- works with not-full-room-rando modes
 
 - Jumbled mess
 	- tune door constraint, much stronger repulsion if inline on the wrong side, less force if off-axis at a distance
@@ -152,27 +105,14 @@ Unsorted
 	- constrain islands to circles with dynamic and cross-simulation influenced radii?
 		- copy forces to keep objects inside to push on the circle radius, counteract it with forces from the inter-island interactions
 
-- "this direction dead-ends soonest" hints?
-
-- move room name (and stats if any) to bottom of screen or to info box or something
-
 - maybe show where you are and your target is, if offscreen (little this-a-way arrows)
-
-- maybe better room search? If you know you want a stag but not which room
-
-- Notes on split rooms:
-	- Soul master
-	- that one in White Palace
-	- Deepnest_East_07
-	- that one in the city
-	- Fungus3_44
 
 - goals
 	- checkboxes for common goals: any%, grubs, pantheon, 112%, moth evaportaion
 	- show status toward each goal (e.g. 5/46 grubs, 2/3 dreamers, boss count and which you do/don't have)
 		- maybe just always show that stuff?
 		- can show "randomizer percent" too (num checks/cleared checks)
-	- give hint button skips things that aren't in your goals
+	- "give hint" button skips things that aren't in your goals
 
 -------------------------------------------------------------------------
 Wishes
@@ -188,12 +128,12 @@ Wishes
 - User feedback:
 	- xx forgot dependency for websockets
 	- hit the new save file bug
-	- found it to kill game performance on another monitor (likely multi-GPU buffer copy)
+	- xx found it to kill game performance on another monitor (likely multi-GPU buffer copy)
 	- make dragged rooms stay where dragged a lot better
-	- connections hard to see with long room names in the way (and maybe make room connections have dark "inside" inside the broader white outline)
+	- xx connections hard to see with long room names in the way (and maybe make room connections have dark "inside" inside the broader white outline)
 	- color transitions based on logic (if it can be taken with the current loadout)
 	- performance issues when rendering in cluster layout (perhaps push cluster motion (and DOM update plans?) to web workers)
-	- when selecting a room, ability to zoom to it, or message that you haven't seen it
+	- xx when selecting a room, ability to zoom to it, or message that you haven't seen it
 	- map wiggling bug
 	- make it easier to find yourself
 	- probably should make hub & distance the default view

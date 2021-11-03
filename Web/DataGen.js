@@ -12,6 +12,42 @@ door_*: 13
 
  /** Loads data from the save file and hands general information about that data */
 class DataGen {
+
+
+	/** Map of item pool name => randomizer bool setting */
+	static allItemPools = {
+		// Get pool list from data: Object.keys(Object.values(data.rooms).map(x => Object.values(x.items)).flat().reduce((res, item) => {res[item.randPool] = true; return res}, {}))
+
+		// See RandomizerMod.Randomization.ItemManager.GetRandomizedItems()
+		Boss_Geo: "RandomizeBossGeo",
+		Charm: "RandomizeCharms",
+		Cocoon: "RandomizeLifebloodCocoons",
+		Cursed: "RandomizeFocus",
+		CursedNail: "CursedNail",
+		Dreamer: "RandomizeDreamers",
+		Egg: "RandomizeRancidEggs",
+		Essence_Boss: "RandomizeBossEssence",
+		Flame: "RandomizeGrimmkinFlames",
+		Geo: "RandomizeGeoChests",
+		Grub: "RandomizeGrubs",
+		Key: "RandomizeKeys",
+		Lore: "RandomizeLoreTablets",
+		Map: "RandomizeMaps",
+		Mask: "RandomizeMaskShards",
+		Notch: "RandomizeCharmNotches",
+		Ore: "RandomizePaleOre",
+		PalaceLore: "RandomizePalaceTablets",
+		PalaceSoul: "RandomizePalaceTotems",
+		Relic: "RandomizeRelics",
+		Rock: "RandomizeRocks",
+		Root: "RandomizeWhisperingRoots",
+		Skill: "RandomizeSkills",
+		Soul: "RandomizeSoulTotems",
+		Stag: "RandomizeStags",
+		Vessel: "RandomizeVesselFragments",
+		//note we have pools for SplitClaw, SplitCloak, and SplitCloakLocation that aren't in that list
+	}
+
 	// centerPos = [0, 0]
 	rooms = {}//map of room id => RoomNode
 	transitions = {}//map of (srcDoor) => RoomTransition
@@ -19,6 +55,9 @@ class DataGen {
 	doorTransitions = {}
 	/** set of doors we've used including src and dst door, door id => true */
 	visitedDoors = {}
+
+	/** Map of pool name => true for items pools active in our save file */
+	itemPools = {}
 
 	currentPlayerRoom = "Tutorial_01"
 	selectedRoom = null
@@ -34,6 +73,7 @@ class DataGen {
 		this.transitions = {}
 		this.visitedDoors = {}
 		this.rooms = {}
+		this.itemPools = {}
 	}
 
 	load(saveData) {
@@ -42,7 +82,6 @@ class DataGen {
 		this.randomizerData = JSON.parse(randomizerDataJSON)
 
 		var visitedDoorIdsRaw = JSON.parse(this.randomizerData["StringValues"]["_obtainedTransitions"])
-//visitedDoorIdsRaw._keys = ["Town[left1]"]
 
 		this.startRoom = this.randomizerData.StringValues.StartSceneName
 		this.currentPlayerRoom = this.startRoom //if we wanted to send more data could read from save file, but nah
@@ -133,6 +172,13 @@ class DataGen {
 
 		for (let roomId in this.rooms) {
 			this.rooms[roomId].finishSetup()
+		}
+
+		//item pools
+		this.itemPools = {}
+		for (let k in DataGen.allItemPools) {
+			let saveKey = DataGen.allItemPools[k]
+			if (this.randomizerData["BoolValues"][saveKey]) this.itemPools[k] = true
 		}
 	}
 
