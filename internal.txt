@@ -18,12 +18,13 @@ Next
 		- fix path rendering when there's multiple paths between two rooms (e.g. Deepnest_01b and Deepnest_02)
 
 	- test non/area/room rando works
+		- do visited rooms/transitions get recorded?
 	- view layout that linearizes your selected route
+
 
 - Item viewing
 	- how to handle "Boss_Essence-Marmu" and friends that have their item in a different scene in the same room?
 		- maybe just detect and shunt read data to roomId?
-	- Option to hide/relelevant/all
 	- show collected items as check, show name on hover
 	- show all items near mouse, in some cases v close or on top of each other
 	- record what an item is if we get near it but don't collect it?

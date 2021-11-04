@@ -58,6 +58,8 @@ class DataGen {
 
 	/** Map of pool name => true for items pools active in our save file */
 	itemPools = {}
+	/** Map of item id => true or false if we have it or not */
+	items = {}
 
 	currentPlayerRoom = "Tutorial_01"
 	selectedRoom = null
@@ -74,6 +76,16 @@ class DataGen {
 		this.visitedDoors = {}
 		this.rooms = {}
 		this.itemPools = {}
+		this.items = {}
+	}
+
+	static inflate(kvString) {
+		let data = JSON.parse(kvString)
+		let ret = {}
+		for (let i = 0; i < data._keys.length; ++i) {
+			ret[data._keys[i]] = data._values[i]
+		}
+		return ret
 	}
 
 	load(saveData) {
@@ -113,7 +125,9 @@ class DataGen {
 			tPlacements[srcDoorId] = this.randomizerData["_transitionPlacements"][srcDoorId]
 		}
 
-		console.log("tPlacements", tPlacements)
+		// console.log("tPlacements", tPlacements)
+
+
 
 		// Build doors, transitions, and such
 		for (let roomId in window.mapData.rooms) {
@@ -180,6 +194,9 @@ class DataGen {
 			let saveKey = DataGen.allItemPools[k]
 			if (this.randomizerData["BoolValues"][saveKey]) this.itemPools[k] = true
 		}
+
+		//items
+		this.items = DataGen.inflate(this.randomizerData["StringValues"]["_obtainedItems"]) || {}
 	}
 
 	get visibleRoomGraph() {

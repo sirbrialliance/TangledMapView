@@ -30,80 +30,82 @@ class DataRender {
 		})
 	}
 
+	_getRoomDragHandler(island, holder, isHub) {
+		function note(ev) {}// console.log(ev.active, ev.subject, simulation.alpha(), simulation.alphaTarget(), simulation.alphaMin())}
+
+		//Target simulation can very based on the node, we want to drag the room in the macro simulation if you grab an island hub
+		function getTargets(room) {
+			return [island.simulation, room]
+			// if (room.isHub) return [this_.cluster.macroSimulation, room.island]
+			// else return [island.simulation, room]
+		}
+
+		var ret = d3.drag()
+			.on("start", ev => {
+				let room = ev.subject; note(ev)
+				let [simulation, target] = getTargets(room)
+
+				console.log(
+					`Clicked ${room.displayText}`, room,
+					`Visited: ${room.visitedDoors.map(x=>x + " => " + this.data.doorTransitions[x].otherDoor(x)).join(", ")}`,
+					`Unvisited: ${room.unvisitedDoors.map(x=>x + " => " + this.data.doorTransitions[x].otherDoor(x)).join(", ")}`,
+				)
+
+				simulation.alphaTarget(0.3).restart()//ask it to "keep the alpha warm" while we drag
+
+				if (typeof target.fx === "number") target.__hadFixedPos = true
+
+				if (isHub) target.__eventOffset = [target.x, target.y]
+				target.fx = target.x
+				target.fy = target.y
+
+
+				if (ev.sourceEvent.shiftKey) {
+					window.app.enterRoom(room.id)
+				} else {
+					window.app.selectRoom(room.id)
+				}
+			})
+			.on("drag", (event) => {
+				let room = event.subject; note(event)
+				let [simulation, target] = getTargets(room)
+
+
+				if (isHub) {
+					let [ox, oy] = target.__eventOffset
+					target.fx = event.x + ox
+					target.fy = event.y + oy
+				} else {
+					target.fx = event.x
+					target.fy = event.y
+				}
+			})
+			.on("end", (event) => {
+				let room = event.subject; note(event)
+				let [simulation, target] = getTargets(room)
+
+				simulation.alphaTarget(0)//let alpha cool off and stop now
+
+				delete target.__eventOffset
+				if (target.__hadFixedPos) {
+					delete target.__hadFixedPos
+				} else {
+					target.fx = null
+					target.fy = null
+				}
+
+			})
+
+		if (isHub) return ret.container(holder)
+		else return ret
+	}
+
 	_renderIsland(island, holder) {
 		var this_ = this
 
 		var roomInfoEl = document.getElementById("roomInfo")
 		var itemInfoEl = document.getElementById("itemInfo")
 
-		function setupDrag(isHub) {
-			function note(ev) {}// console.log(ev.active, ev.subject, simulation.alpha(), simulation.alphaTarget(), simulation.alphaMin())}
-
-			//Target simulation can very based on the node, we want to drag the room in the macro simulation if you grab an island hub
-			function getTargets(room) {
-				return [island.simulation, room]
-				// if (room.isHub) return [this_.cluster.macroSimulation, room.island]
-				// else return [island.simulation, room]
-			}
-
-			var ret = d3.drag()
-				.on("start", ev => {
-					let room = ev.subject; note(ev)
-					let [simulation, target] = getTargets(room)
-
-					console.log(
-						`Clicked ${room.displayText}`, room,
-						`Visited: ${room.visitedDoors.map(x=>x + " => " + this_.data.doorTransitions[x].otherDoor(x)).join(", ")}`,
-						`Unvisited: ${room.unvisitedDoors.map(x=>x + " => " + this_.data.doorTransitions[x].otherDoor(x)).join(", ")}`,
-					)
-
-					simulation.alphaTarget(0.3).restart()//ask it to "keep the alpha warm" while we drag
-
-					if (typeof target.fx === "number") target.__hadFixedPos = true
-
-					if (isHub) target.__eventOffset = [target.x, target.y]
-					target.fx = target.x
-					target.fy = target.y
-
-
-					if (ev.sourceEvent.shiftKey) {
-						window.app.enterRoom(room.id)
-					} else {
-						window.app.selectRoom(room.id)
-					}
-				})
-				.on("drag", (event) => {
-					let room = event.subject; note(event)
-					let [simulation, target] = getTargets(room)
-
-
-					if (isHub) {
-						let [ox, oy] = target.__eventOffset
-						target.fx = event.x + ox
-						target.fy = event.y + oy
-					} else {
-						target.fx = event.x
-						target.fy = event.y
-					}
-				})
-				.on("end", (event) => {
-					let room = event.subject; note(event)
-					let [simulation, target] = getTargets(room)
-
-					simulation.alphaTarget(0)//let alpha cool off and stop now
-
-					delete target.__eventOffset
-					if (target.__hadFixedPos) {
-						delete target.__hadFixedPos
-					} else {
-						target.fx = null
-						target.fy = null
-					}
-
-				})
-			if (isHub) return ret.container(holder)
-			else return ret
-		}
 
 		const linkEls = holder.selectAll("path")
 			.data(island.links, x => x.id)
@@ -174,29 +176,49 @@ class DataRender {
 						.attr("cy", d => d.y * roomScale - room.aabb.cy * roomScale)
 						.each(function(door) { door.__el = this })
 
+
+					//benches
+					let benchData = room.benches
+					d3.select(this)
+						.selectAll("use.bench")
+						.data(benchData)
+						.join(enter => {
+							return enter.append("use").classed("bench", true).attr("href", "#icon-bench")
+						})
+						// .attr("transform", d => {
+						// 	let x = d.x * roomScale - room.aabb.cx * roomScale
+						// 	let y = d.y * roomScale - room.aabb.cy * roomScale
+						// 	return `translate(${x}, ${y})`
+						// })
+						.attr("x", d => d.x * roomScale - room.aabb.cx * roomScale)
+						.attr("y", d => d.y * roomScale - room.aabb.cy * roomScale)
+
+					//items
 					let itemData = Object.keys(room.items)
 						.map(x => {
-							let item = room.items[x]
+							let item = {...room.items[x]}
+							item.got = this_.data.items[item.id]
 							return item
 						})
 
-					//items
 					d3.select(this)
-						.selectAll("g.roomItem")
+						.selectAll("use.roomItem")
 						.data(itemData)
 						.join(enter => {
-							var els = enter.append("g")
+							var els = enter.append("use")
 								.classed("roomItem", true)
-							els.append("rect")
 							return els
 						})
-						.attr("transform", d => {
-							let x = d.x * roomScale - room.aabb.cx * roomScale
-							let y = d.y * roomScale - room.aabb.cy * roomScale
-							return `translate(${x}, ${y})`
-						})
+						// .attr("transform", d => {
+						// 	let x = d.x * roomScale - room.aabb.cx * roomScale
+						// 	let y = d.y * roomScale - room.aabb.cy * roomScale
+						// 	return `translate(${x}, ${y})`
+						// })
+						.attr("x", d => d.x * roomScale - room.aabb.cx * roomScale)
+						.attr("y", d => d.y * roomScale - room.aabb.cy * roomScale)
+						.attr("href", d => d.got ? "#icon-item-got" : "#icon-item")
 						.attr("class", d => {
-							return "roomItem pool-" + d.randPool
+							return "roomItem pool-" + d.randPool + (d.got ? " got" : "")
 						})
 						.on("pointerover", (ev, item) => {
 							itemInfoEl.textContent = `${item.id} (${item.randType}/${item.randAction}/${item.randPool})`
@@ -205,21 +227,6 @@ class DataRender {
 							itemInfoEl.textContent = ""
 						})
 
-					//benches
-					let benchData = room.benches
-					d3.select(this)
-						.selectAll("rect.bench")
-						.data(benchData)
-						.join(enter => {
-							var els = enter.append("rect")
-								.classed("bench", true)
-							return els
-						})
-						.attr("transform", d => {
-							let x = d.x * roomScale - room.aabb.cx * roomScale
-							let y = d.y * roomScale - room.aabb.cy * roomScale
-							return `translate(${x}, ${y})`
-						})
 				})
 				return els
 			})
@@ -241,7 +248,7 @@ class DataRender {
 
 		// node.filter(x => x.isHub).call(setupDrag(true))
 		// node.filter(x => !x.isHub).call(setupDrag(false))
-		node.call(setupDrag(false))
+		node.call(this._getRoomDragHandler(island, holder, false))
 
 		//update door colors
 		let visitedDoors = this.data.visitedDoors
@@ -384,7 +391,7 @@ class DataRender {
 
 		this._crossLinkLines = crossIslandLinks
 
-		// this.updateVisibleItems()
+		this.updateVisibleItems()
 	}
 
 	updateVisibleItems() {

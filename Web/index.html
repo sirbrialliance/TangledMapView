@@ -18,12 +18,40 @@
 	<link href="style.css" rel="stylesheet">
 </head>
 <body>
-	<svg width="100%" height="100%"></svg>
+	<svg width="100%" height="100%">
+		<defs>
+			<path id="icon-entrance" d="M -0.84812254,0.00796937 -1.8446016,-2.8257331 c 0,0 0.371742,-1.5892331 0.536602,-2.5188043 0.257148,-1.4499456 -0.536602,-3.0374456 -0.536602,-3.0374456 0,0 1.52205006,-2.525552 1.58774906,-2.645833 h 0.533743 c 0.0657,0.120281 1.58267494,2.645833 1.58267494,2.645833 0,0 -0.79375,1.5875 -0.531529,3.0374456 0.16801,0.9290085 0.531529,2.5188043 0.531529,2.5188043 L 0.86816046,0.00796937 Z" />
+			<path id="icon-entrance-oneWay" d="M 0.01198345,-3.9687496 -1.3109336,-6.6145829 c 1.32291705,-2.6458333 0,-2.6458333 -0.79375,-3.9687471 h 4.233333 c -0.79375,1.3229138 -2.11666595,1.3229138 -0.79375,3.9687471 M 0.01198345,1.4763917e-8 -1.3109336,-2.6458329 h 2.645833" />
+			<path id="icon-entrance-split" d="M -0.55733717,0.00181441 -1.3510873,-2.6440191 c 0,0 1.59890913,-1.6725936 0.58293113,-3.264512 -1.13168413,-1.7732156 -0.04987,-3.4208711 0.735409,-5.2021559 H 1.0301627 c 0.05805,2.120353 -1.39884787,3.1585387 -1.03431187,4.1521099 0.5016,1.3671514 1.50333787,2.9225147 1.44679087,4.0119668 -0.09751,1.8787688 -0.94164587,2.94842471 -0.94164587,2.94842471 z" />
+
+			<path id="icon-bench" d="m -3.3140455,-0.62152875 h 6.614584 V 0.7013881 h -6.614584 v -1.32291685 m 1.322917,1.58749981 c 0,0.26458484 1.20275992,1.07168484 1.99650992,1.07168484 0.75867803,0 1.97224008,-0.8071 1.97224008,-1.07168484" />
+
+			<g id="icon-item">
+				<circle class="hitbox" cx="0" cy="0" r="5" />
+				<path d="m 0.01195878,-3.8327137 -0.203008,0.201315 -3.64059888,3.6406 3.84360688,3.841914 3.84191512,-3.841914 z m -0.0017,0.810338 3.03326812,3.031577 -3.03326812,3.031577 -3.03157788,-3.031577 z" />
+			</g>
+			<g id="icon-item-got">
+				<circle class="hitbox" cx="0" cy="0" r="5" />
+				<path d="m -3.0379269,-0.92651774 c 0.316364,1.12652576 1.957381,3.33818794 2.44575204,4.01072794 C 0.08091514,1.39765 2.1233491,-1.1666045 3.5886681,-2.3084375 L 3.7616551,-3.484065 C 2.4850961,-2.6231928 0.07033414,0.04420672 -0.72018286,1.5904798 -1.3555769,1.079644 -2.5375639,-0.84263324 -2.7236319,-1.7147518 Z" />
+			</g>
+
+			<filter id="filter-white-shadow">
+				<feGaussianBlur stdDeviation=".4" />
+				<feComponentTransfer result="shadow">
+					<feFuncR type="discrete" tableValues=".5"/>
+					<feFuncG type="discrete" tableValues=".5"/>
+					<feFuncB type="discrete" tableValues=".5"/>
+					<feFuncA type="table" tableValues="0 .75 1"/>
+				</feComponentTransfer>
+				<feComposite in="SourceGraphic" in2="shadow" operator="over"/>
+			</filter>
+		</defs>
+	</svg>
 	<div id="controlPanel">
 		<div id="prefs">
 			<fieldset>
 				<legend>Spoilers</legend>
-				<label title="Show the full room layout, even for rooms oyu haven't visited.">Show all rooms:
+				<label title="Show the full room layout, even for rooms you haven't visited.">Show all rooms:
 					<button id="pref-spoilers" onclick="app.updatePref('spoilers', !app.prefs['spoilers'])">On</button><br>
 				</label>
 				<label title="Allow layouts to use all data to determine grouping. This should reduce how often a room switches groups, but can leak hints about room topology.">
@@ -66,7 +94,7 @@
 				<br>
 
 				<table class="currentRoomTable">
-					<thead><tr><th>Current Room</th><th>Selected Room</th></tr></thead>
+					<thead><tr><th>Current</th><th>Selected</th></tr></thead>
 					<tbody>
 						<tr>
 							<td class="roomNav">
@@ -83,7 +111,7 @@
 									onclick="app.zoomToRoom(app.data.selectedRoom)"
 								>Frame</button>
 								<button onclick="app.selectRoom(null)">Clear</button><br>
-								<button onclick="app.enterRoom(app.data.selectedRoom)">Make Current</button>
+								<button onclick="app.enterRoom(app.data.selectedRoom)">Enter</button>
 							</td>
 						</tr>
 					</tbody>
