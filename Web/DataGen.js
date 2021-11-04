@@ -122,6 +122,11 @@ class DataGen {
 
 		//Then update with any transitions that have been randomized:
 		for (let srcDoorId in this.randomizerData["_transitionPlacements"]) {
+			if (!tPlacements[srcDoorId]) {
+				//Not in the original map data, so skip (e.g. Fungus2_14[bot2] and bot3 which are redundant and not included)
+				console.warn("No initial door for " + srcDoorId)
+				continue
+			}
 			tPlacements[srcDoorId] = this.randomizerData["_transitionPlacements"][srcDoorId]
 		}
 

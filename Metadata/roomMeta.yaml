@@ -463,28 +463,29 @@ rooms:
   Fungus2_14:
     name: Mantis Village (Upper)
     transitions:
-      # The bottom transition has three transitions, but they are all the same except where you land/come up, so nix 2
+      # The bottom transition has three transitions, but they are all the same except where you land/come up,
+      # so nix 1 and 2. Randomizer only uses bot3/top3
       bot1:
-        to: Fungus2_15[top1]
-        x: 52.0
-        y: -0.5
+        to: null
       bot2:
         to: null
       bot3:
-        to: null
+        to: Fungus2_15[top1]
+        x: 52.0
+        y: -0.5
   Fungus2_15:
     name: Mantis Lords
     boss: Mantis Lords
     transitions:
       # The other side of the Fungus2_14 issue
       top1:
-        to: Fungus2_14[bot1]
-        x: 33.5
-        y: 120.5
+        to: null
       top2:
         to: null
       top3:
-        to: null
+        to: Fungus2_14[bot1]
+        x: 33.5
+        y: 120.5
   Fungus2_17:
   Fungus2_18:
     name: Conifer

@@ -6409,15 +6409,15 @@ window.mapData = {
 			"randomizerArea": "Mantis_Village",
 			"transitions": {
 				"bot1": {
-					"to": "Fungus2_15[top1]",
-					"x": 52.0,
-					"y": -0.5
+					"to": null
 				},
 				"bot2": {
 					"to": null
 				},
 				"bot3": {
-					"to": null
+					"to": "Fungus2_15[top1]",
+					"x": 52.0,
+					"y": -0.5
 				},
 				"right1": {
 					"to": "Fungus2_13[left2]",
@@ -6472,15 +6472,15 @@ window.mapData = {
 					"y": 88.0
 				},
 				"top1": {
-					"to": "Fungus2_14[bot1]",
-					"x": 33.5,
-					"y": 120.5
+					"to": null
 				},
 				"top2": {
 					"to": null
 				},
 				"top3": {
-					"to": null
+					"to": "Fungus2_14[bot1]",
+					"x": 33.5,
+					"y": 120.5
 				}
 			}
 		},
