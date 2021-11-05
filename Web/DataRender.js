@@ -121,7 +121,12 @@ class DataRender {
 			.selectAll("use")
 			.data(edgeDoors)
 			.join("use")
-			.attr("href", d => this.data.transitions[d.door.doorId] ? "#icon-entrance" : "#icon-entrance-oneWay")
+			.attr("href", d => {
+				let transition = this.data.transitions[d.door.doorId]
+				if (!transition) return "#icon-entrance-oneWay"
+				else if (transition.srcSplit !== 0) return "#icon-entrance-split"
+				else return "#icon-entrance"
+			})
 			.classed("roomLeadOut", true)
 			.attr("x", d => d.x1)
 			.attr("y", d => d.y1)

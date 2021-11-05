@@ -49,11 +49,11 @@ rooms:
     name: Broken Elevator Shaft
     #would not be considered a split room with spicy skips, but being conservative:
     splitRoom:
-      - - left2
-        - right2
       - - left1
         - left3
         - right1
+      - - left2
+        - right2
   Abyss_02:
   Abyss_03_b:
     name: Basin Tram (West)
@@ -107,9 +107,9 @@ rooms:
     name: Abyss Lake
     splitRoom:
       - - right1
-      - - right2
-        - right3
+        - right2
         - left1
+      - - right3
   Abyss_10:
     name: Shade Cloak
   Abyss_12:
@@ -343,11 +343,11 @@ rooms:
   Deepnest_East_07:
     name: Upper Cliff Face
     splitRoom:
-      - - bot1
       - - bot2
         - left1
         - left2
         - right1
+      - - bot1
   Deepnest_East_08:
   Deepnest_East_09:
     name: Outside Colosseum
@@ -548,9 +548,9 @@ rooms:
   Fungus3_48:
     name: Outside White Lady
     splitRoom:
-      - - right2
-        - door1
       - - right1
+        - door1
+      - - right2
         - bot1
     transitions:
       door1:
@@ -646,9 +646,9 @@ rooms:
   Hive_02:
   Hive_03:
     splitRoom:
-      - - top1
       - - bot1
         - right1
+      - - top1
   Hive_03_c:
   Hive_04:
   Hive_05:
@@ -865,12 +865,12 @@ rooms:
     name: Outside Nailsmith
   Ruins1_05:
     splitRoom:
-      - - bot1
-        - bot2
       - - bot3
         - right1
         - right2
         - top1
+      - - bot1
+        - bot2
   Ruins1_05b:
     name: Relic Seeker Lemm
   Ruins1_05c:
@@ -884,8 +884,8 @@ rooms:
     name: Tower Shortcut
     splitRoom:
       - - right1
-      - - right2
         - left1
+      - - right2
   Ruins1_23:
     name: Soul Sanctum Entrance
     boss: Soul Warrior
@@ -920,9 +920,9 @@ rooms:
     name: Watcher Knights
     boss: Watcher Knight
     splitRoom:
-      - - bot2
       - - bot1
         - top1
+      - - bot2
   Ruins2_03b:
   Ruins2_04:
     name: Hub Area

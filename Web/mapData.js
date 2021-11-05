@@ -58,13 +58,13 @@ window.mapData = {
 			"randomizerArea": "Royal_Waterways",
 			"splitRoom": [
 				[
-					"left2",
-					"right2"
-				],
-				[
 					"left1",
 					"left3",
 					"right1"
+				],
+				[
+					"left2",
+					"right2"
 				]
 			],
 			"transitions": {
@@ -456,12 +456,12 @@ window.mapData = {
 			"randomizerArea": "Abyss",
 			"splitRoom": [
 				[
-					"right1"
+					"right1",
+					"right2",
+					"left1"
 				],
 				[
-					"right2",
-					"right3",
-					"left1"
+					"right3"
 				]
 			],
 			"transitions": {
@@ -3942,13 +3942,13 @@ window.mapData = {
 			"randomizerArea": "Kingdoms_Edge",
 			"splitRoom": [
 				[
-					"bot1"
-				],
-				[
 					"bot2",
 					"left1",
 					"left2",
 					"right1"
+				],
+				[
+					"bot1"
 				]
 			],
 			"transitions": {
@@ -7821,11 +7821,11 @@ window.mapData = {
 			"randomizerArea": "Queens_Gardens",
 			"splitRoom": [
 				[
-					"right2",
+					"right1",
 					"door1"
 				],
 				[
-					"right1",
+					"right2",
 					"bot1"
 				]
 			],
@@ -8284,11 +8284,11 @@ window.mapData = {
 			"randomizerArea": "Hive",
 			"splitRoom": [
 				[
-					"top1"
-				],
-				[
 					"bot1",
 					"right1"
+				],
+				[
+					"top1"
 				]
 			],
 			"transitions": {
@@ -10874,14 +10874,14 @@ window.mapData = {
 			"randomizerArea": "City_of_Tears",
 			"splitRoom": [
 				[
-					"bot1",
-					"bot2"
-				],
-				[
 					"bot3",
 					"right1",
 					"right2",
 					"top1"
+				],
+				[
+					"bot1",
+					"bot2"
 				]
 			],
 			"transitions": {
@@ -11092,11 +11092,11 @@ window.mapData = {
 			"randomizerArea": "City_of_Tears",
 			"splitRoom": [
 				[
-					"right1"
+					"right1",
+					"left1"
 				],
 				[
-					"right2",
-					"left1"
+					"right2"
 				]
 			],
 			"transitions": {
@@ -11641,11 +11641,11 @@ window.mapData = {
 			"randomizerArea": "City_of_Tears",
 			"splitRoom": [
 				[
-					"bot2"
-				],
-				[
 					"bot1",
 					"top1"
+				],
+				[
+					"bot2"
 				]
 			],
 			"transitions": {

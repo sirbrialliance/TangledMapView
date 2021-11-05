@@ -2,10 +2,13 @@
 -------------------------------------------------------------------------
 Next
 -------------------------------------------------------------------------
+- look into framerate
+	- nn Firefox is faster than Chromium, item icons+filter and cross-island links make it worse
+	- either ignore it or three.js, probably
 
 - @routing 2.0
 	- handle split rooms
-		- render transitions stubs different, use icon ref
+		- xx render transitions stubs different, use icon ref
 		- change node graph
 
 	- pathing
@@ -20,6 +23,10 @@ Next
 	- test non/area/room rando works
 		- do visited rooms/transitions get recorded?
 	- view layout that linearizes your selected route
+
+	- double-check split room door ids: Hive_01
+	- needs to know what side has bench Hive_01, Ruins1_18
+	- Ruins2_03 doens't show the grub? Or, it's on the wrong side?
 
 
 - Item viewing

@@ -137,6 +137,9 @@ class DataGen {
 		// Build doors, transitions, and such
 		for (let roomId in window.mapData.rooms) {
 			let roomData = window.mapData.rooms[roomId]
+			let splitRoom = roomData.splitRoom
+			if (splitRoom && !splitRoom.length) splitRoom = null
+
 			for (let doorSide in roomData.transitions) {
 				let srcDoor = `${roomId}[${doorSide}]`
 				let srcInfo = DataGen.parseDoorId(srcDoor)
@@ -149,6 +152,20 @@ class DataGen {
 					continue
 				}
 
+				let srcSplit = 0
+				if (splitRoom) {
+					for (; srcSplit < splitRoom.length; ++srcSplit) {
+						if (splitRoom[srcSplit].indexOf(doorSide) >= 0) {
+							//found it, srcSplit is now set right
+							break
+						}
+					}
+					if (srcSplit == splitRoom.length) {
+						console.error("Door not in split room list", doorSide, roomData)
+						continue
+					}
+				}
+
 				let srcRoom = getAndUpdateRoom(srcInfo.roomId, srcDoor)
 				let dstRoom = getAndUpdateRoom(dstInfo.roomId, dstDoor)
 
@@ -157,6 +174,7 @@ class DataGen {
 					srcDoor,
 					srcRoom,
 					srcSide: srcInfo.side,
+					srcSplit,
 
 					dstDoor,
 					dstRoom,
@@ -533,6 +551,8 @@ class RoomTransition {
 	srcDoor = ""
 	srcRoom = ""
 	srcSide = ""
+	/** Split index. Usually 0, but may be more if the source room is a split room (can't get to all doors from any door). */
+	srcSplit = 0
 
 	dstDoor = ""
 	dstRoom = ""
