@@ -101,6 +101,17 @@ class DataRender {
 	}
 
 	_renderRoom(el, room) {
+		//benches
+		let benchData = room.benches
+		d3.select(el)
+			.selectAll("use.bench")
+			.data(benchData)
+			.join(enter => {
+				return enter.append("use").classed("bench", true).attr("href", "#icon-bench")
+			})
+			.attr("x", d => d.x * roomScale - room.aabb.cx * roomScale)
+			.attr("y", d => d.y * roomScale - room.aabb.cy * roomScale)
+
 
 		//edge stubs
 		let c = {x: room.aabb.cx * roomScale, y: room.aabb.cy * roomScale}
@@ -118,7 +129,7 @@ class DataRender {
 			})
 
 		d3.select(el)
-			.selectAll("use")
+			.selectAll("use.roomLeadOut")
 			.data(edgeDoors)
 			.join("use")
 			.attr("href", d => {
@@ -149,18 +160,6 @@ class DataRender {
 			.attr("cx", d => d.x * roomScale - room.aabb.cx * roomScale)
 			.attr("cy", d => d.y * roomScale - room.aabb.cy * roomScale)
 			.each(function(door) { door.__el = this })
-
-
-		//benches
-		let benchData = room.benches
-		d3.select(el)
-			.selectAll("use.bench")
-			.data(benchData)
-			.join(enter => {
-				return enter.append("use").classed("bench", true).attr("href", "#icon-bench")
-			})
-			.attr("x", d => d.x * roomScale - room.aabb.cx * roomScale)
-			.attr("y", d => d.y * roomScale - room.aabb.cy * roomScale)
 
 
 		//items

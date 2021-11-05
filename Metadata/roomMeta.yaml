@@ -885,7 +885,7 @@ rooms:
     splitRoom:
       - - right1
         - left1
-      - - right2
+      - - right2 # bench side
   Ruins1_23:
     name: Soul Sanctum Entrance
     boss: Soul Warrior

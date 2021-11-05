@@ -6,10 +6,12 @@ Next
 	- nn Firefox is faster than Chromium, item icons+filter and cross-island links make it worse
 	- either ignore it or three.js, probably
 
+- more visible player room
+
 - @routing 2.0
-	- handle split rooms
+	- xx handle split rooms
 		- xx render transitions stubs different, use icon ref
-		- change node graph
+		- xx change node graph
 
 	- pathing
 		- text description of calculated route

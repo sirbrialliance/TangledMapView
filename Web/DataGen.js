@@ -102,6 +102,56 @@ class DataGen {
 		this.visitedDoors = {}
 		this.rooms = {}
 
+
+		this._buildDoors()
+
+
+		//mark what's been visited
+		for (let doorId of visitedDoorIdsRaw._keys) {
+			let transitionA = this.doorTransitions[doorId]
+			transitionA.visited = true
+			this.visitedDoors[transitionA.srcDoor] = true
+			this.visitedDoors[transitionA.dstDoor] = true
+
+			if (transitionA.bidi) {
+				let transitionB = this.doorTransitions[transitionA.dstDoor]
+				transitionB.visited = true
+			}
+		}
+
+		for (let roomId in this.rooms) {
+			this.rooms[roomId].finishSetup()
+		}
+
+		//item pools
+		this.itemPools = {}
+		for (let k in DataGen.allItemPools) {
+			let saveKey = DataGen.allItemPools[k]
+			if (this.randomizerData["BoolValues"][saveKey]) this.itemPools[k] = true
+		}
+
+		//items
+		this.items = DataGen.inflate(this.randomizerData["StringValues"]["_obtainedItems"]) || {}
+	}
+
+	/** Given a room and door name (e.g. right1), returns the split index that door is in on that room (usually 0).
+	 */
+	_getSplit(room, doorSide) {
+		let splitRoom = room.mapData.splitRoom
+		if (!splitRoom || !splitRoom.length) return 0
+
+		let split = 0
+		for (; split < splitRoom.length; ++split) {
+			if (splitRoom[split].indexOf(doorSide) >= 0) {
+				return split
+			}
+		}
+
+		console.error("Door not in split room list", doorSide, room)
+		return 0
+	}
+
+	_buildDoors() {
 		const getAndUpdateRoom = (roomId, doorId) => {
 			var room = this.rooms[roomId] || (this.rooms[roomId] = new RoomNode(roomId, this))
 			room.addDoor(doorId)
@@ -133,15 +183,12 @@ class DataGen {
 		// console.log("tPlacements", tPlacements)
 
 
-
 		// Build doors, transitions, and such
 		for (let roomId in window.mapData.rooms) {
 			let roomData = window.mapData.rooms[roomId]
-			let splitRoom = roomData.splitRoom
-			if (splitRoom && !splitRoom.length) splitRoom = null
 
-			for (let doorSide in roomData.transitions) {
-				let srcDoor = `${roomId}[${doorSide}]`
+			for (let doorName in roomData.transitions) {
+				let srcDoor = `${roomId}[${doorName}]`
 				let srcInfo = DataGen.parseDoorId(srcDoor)
 				let dstDoor = tPlacements[srcDoor]
 				if (!dstDoor) continue
@@ -152,33 +199,21 @@ class DataGen {
 					continue
 				}
 
-				let srcSplit = 0
-				if (splitRoom) {
-					for (; srcSplit < splitRoom.length; ++srcSplit) {
-						if (splitRoom[srcSplit].indexOf(doorSide) >= 0) {
-							//found it, srcSplit is now set right
-							break
-						}
-					}
-					if (srcSplit == splitRoom.length) {
-						console.error("Door not in split room list", doorSide, roomData)
-						continue
-					}
-				}
-
 				let srcRoom = getAndUpdateRoom(srcInfo.roomId, srcDoor)
 				let dstRoom = getAndUpdateRoom(dstInfo.roomId, dstDoor)
 
 				this.transitions[srcDoor] = Object.assign(new RoomTransition, {
 					id: srcDoor + "-" + dstDoor,
+
 					srcDoor,
 					srcRoom,
 					srcSide: srcInfo.side,
-					srcSplit,
+					srcSplit: this._getSplit(srcRoom, srcInfo.doorName),
 
 					dstDoor,
 					dstRoom,
 					dstSide: dstInfo.side,
+					dstSplit: this._getSplit(dstRoom, dstInfo.doorName),
 
 					visited: null,//will fill out shortly
 					bidi: tPlacements[dstDoor] === srcDoor,//bidirectional link
@@ -193,56 +228,25 @@ class DataGen {
 			this.doorTransitions[transition.srcDoor] = transition
 			if (!transition.bidi) this.doorTransitions[transition.dstDoor] = transition
 		}
+	}
 
-		//mark what's been visited
-		for (let doorId of visitedDoorIdsRaw._keys) {
-			let transitionA = this.doorTransitions[doorId]
-			transitionA.visited = true
-			this.visitedDoors[transitionA.srcDoor] = true
-			this.visitedDoors[transitionA.dstDoor] = true
+	_makeGraph(transitionList) {
+		let ret = window.createGraph()
 
-			if (transitionA.bidi) {
-				let transitionB = this.doorTransitions[transitionA.dstDoor]
-				transitionB.visited = true
-			}
+		for (let transition of transitionList) {
+			// ret.addLink(transition.srcRoom.id, transition.dstRoom.id, transition)
+			ret.addLink(transition.srcRoomSplitId, transition.dstRoomSplitId)
 		}
 
-		for (let roomId in this.rooms) {
-			this.rooms[roomId].finishSetup()
-		}
-
-		//item pools
-		this.itemPools = {}
-		for (let k in DataGen.allItemPools) {
-			let saveKey = DataGen.allItemPools[k]
-			if (this.randomizerData["BoolValues"][saveKey]) this.itemPools[k] = true
-		}
-
-		//items
-		this.items = DataGen.inflate(this.randomizerData["StringValues"]["_obtainedItems"]) || {}
+		return ret
 	}
 
 	get visibleRoomGraph() {
-		let ret = window.createGraph()
-
-		let vt = this.visibleTransitions
-		for (let doorId in vt) {
-			let transition = vt[doorId]
-			ret.addLink(transition.srcRoom.id, transition.dstRoom.id, transition)
-		}
-
-		return ret
+		return this._makeGraph(Object.values(this.visibleTransitions))
 	}
 
 	get allRoomGraph() {
-		let ret = window.createGraph()
-
-		for (let doorId in this.transitions) {
-			let transition = this.transitions[doorId]
-			ret.addLink(transition.srcRoom.id, transition.dstRoom.id, transition)
-		}
-
-		return ret
+		return this._makeGraph(Object.values(this.transitions))
 	}
 
 
@@ -557,6 +561,8 @@ class RoomTransition {
 	dstDoor = ""
 	dstRoom = ""
 	dstSide = ""
+	/** Same as srcSplit, but for destination door */
+	dstSplit = 0
 
 	visited = false
 	bidi = false
@@ -572,6 +578,16 @@ class RoomTransition {
 		if (this.srcDoor === doorId) return this.dstDoor
 		else if (this.dstDoor === doorId) return this.srcDoor
 		else throw new Error("Door is unrelated")
+	}
+
+	get srcRoomSplitId() {
+		if (this.srcSplit === 0) return this.srcRoom.id
+		else return this.srcRoom.id + "." + this.srcSplit
+	}
+
+	get dstRoomSplitId() {
+		if (this.dstSplit === 0) return this.dstRoom.id
+		else return this.dstSplit.id + "." + this.dstSplit
 	}
 
 }

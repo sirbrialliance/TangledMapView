@@ -247,7 +247,11 @@ class App {
 		route.reverse()//pathfinder gives it to us backwards
 		//console.log(route)
 
-		this.dataRender.highlightPath(route.map(x => this.data.rooms[x.id]))
+		this.dataRender.highlightPath(route.map(x => {
+			//chop off ".1" or whatnot for split rooms so we just have the base room id
+			let roomSplitId = x.id
+			return this.data.rooms[roomSplitId.split(".")[0]]
+		}))
 	}
 
 	updatePref(k, v) {
