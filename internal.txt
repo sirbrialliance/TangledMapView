@@ -2,11 +2,19 @@
 -------------------------------------------------------------------------
 Next
 -------------------------------------------------------------------------
+
+- v0.0.2?
+	- push item state
+	- handle _Boss scene items
+	- get stags working right
+	- test non/area/room rando works
+	- more visible player room
+	- new save bug
+
 - look into framerate
 	- nn Firefox is faster than Chromium, item icons+filter and cross-island links make it worse
 	- either ignore it or three.js, probably
 
-- more visible player room
 
 - @routing 2.0
 	- xx handle split rooms
@@ -14,13 +22,15 @@ Next
 		- xx change node graph
 
 	- pathing
-		- text description of calculated route
 		- get stag working right
 		- options
 			- benchwarp (off, discovered, all (spoilers))
 			- dream warp
 			- avoid room list
-		- fix path rendering when there's multiple paths between two rooms (e.g. Deepnest_01b and Deepnest_02)
+		- text description of calculated route
+			- push to in-game HUD?
+				- option to show/hide/where
+		- fix path rendering when there's multiple paths between two rooms (e.g. Deepnest_01b and Deepnest_02 no room rando)
 
 	- test non/area/room rando works
 		- do visited rooms/transitions get recorded?
@@ -155,7 +165,7 @@ Wishes
 	- show benches w/Benchwap mod names
 	- ** "where am I?"
 	- ** "it's lagging my computer" "this is pretty awful" - enough so I can see the framerate drop at 2x speed...
-	- Confusion from elevators not being linked
+	- xx Confusion from elevators not being linked
 	- somehow map stopped recording new transitions? Might be because they were reloading the map and the save data is stale bug.
 	- room <-> bench routing
 	- room icons
