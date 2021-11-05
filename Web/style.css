@@ -49,18 +49,16 @@ svg { user-select: none; }
 	stroke-width: 2px;
 	stroke-linecap: round;
 }
+
 .roomLeadOut {
-	fill: none;
-	stroke-width: 2px;
-	stroke: white;
-	stroke-linecap: round;
+	fill: white;
+	stroke: none;
 }
 .roomLeadOut.visitedDoor {
-	stroke: black;
+	fill: black;
 }
 .roomLeadOut.noEntry {
-	stroke: black;
-	stroke-dasharray: 0 3;
+	fill: black;
 }
 .crossIslandLink.roomLink {
 	stroke-width: 1.5px;
@@ -73,8 +71,9 @@ svg { user-select: none; }
 .crossIslandLink:nth-child(6n + 4) {stroke-dasharray: 2, 7;}
 .crossIslandLink:nth-child(6n + 5) {stroke-dasharray: 7, 2;}
 .roomLink.hoverRelated {
-	stroke: var(--highlight-color);
-	stroke-width: 6px;
+	/* stroke: var(--highlight-color);
+	stroke-width: 6px; */
+	filter: url(#filter-roomLink-hoverRelated);
 	stroke-opacity: 1;
 	stroke-dasharray: none;
 }
@@ -93,7 +92,7 @@ svg { user-select: none; }
 .roomItem.got {
 	/* fill: green; */
 	fill: black;
-	filter: url(#filter-white-shadow);
+	filter: url(#filter-item-got-shadow);
 }
 .roomItem:hover {
 	opacity: 1;

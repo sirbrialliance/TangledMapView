@@ -2,10 +2,10 @@ const roomScale = .5 //in-game room size time this = SVG pixel size
 const roomLeadOutLen = 10//length of "leaving this room" stub lines
 
 const roomDirections = {
-	top: {x: 0, y: -1},
-	bot: {x: 0, y: 1},
-	right: {x: 1, y: 0},
-	left: {x: -1, y: 0},
+	top: {x: 0, y: -1, r: 0},
+	bot: {x: 0, y: 1, r: 180},
+	right: {x: 1, y: 0, r: 90},
+	left: {x: -1, y: 0, r: -90},
 }
 
 class DataRender {
@@ -100,11 +100,99 @@ class DataRender {
 		else return ret
 	}
 
+	_renderRoom(el, room) {
+
+		//edge stubs
+		let c = {x: room.aabb.cx * roomScale, y: room.aabb.cy * roomScale}
+		let edgeDoors = Object.values(room.doors)
+			.filter(door => roomDirections[door.side])
+			.map(door => {
+				let dir = roomDirections[door.side] || {x: 0, y: 0}
+				return {
+					x1: door.x * roomScale - c.x,
+					y1: door.y * roomScale - c.y,
+					x2: door.x * roomScale + roomLeadOutLen * dir.x - c.x,
+					y2: door.y * roomScale + roomLeadOutLen * dir.y - c.y,
+					door
+				}
+			})
+
+		d3.select(el)
+			.selectAll("use")
+			.data(edgeDoors)
+			.join("use")
+			.attr("href", d => this.data.transitions[d.door.doorId] ? "#icon-entrance" : "#icon-entrance-oneWay")
+			.classed("roomLeadOut", true)
+			.attr("x", d => d.x1)
+			.attr("y", d => d.y1)
+			.attr("transform", d => {
+				let door = d.door
+				let angle = roomDirections[door.side].r
+				return `rotate(${angle} ${d.x1} ${d.y1})`
+			})
+			.each(function(d) { d.door.__el = this })
+
+
+		//door dots
+		let doorDoors = Object.values(room.doors).filter(door => !roomDirections[door.side])
+
+		d3.select(el)
+			.selectAll("circle.door")
+			.data(doorDoors)
+			.join("circle")
+			.classed("door", true)
+			.attr("cx", d => d.x * roomScale - room.aabb.cx * roomScale)
+			.attr("cy", d => d.y * roomScale - room.aabb.cy * roomScale)
+			.each(function(door) { door.__el = this })
+
+
+		//benches
+		let benchData = room.benches
+		d3.select(el)
+			.selectAll("use.bench")
+			.data(benchData)
+			.join(enter => {
+				return enter.append("use").classed("bench", true).attr("href", "#icon-bench")
+			})
+			.attr("x", d => d.x * roomScale - room.aabb.cx * roomScale)
+			.attr("y", d => d.y * roomScale - room.aabb.cy * roomScale)
+
+
+		//items
+		var itemInfoEl = document.getElementById("itemInfo")
+		let itemData = Object.keys(room.items)
+			.map(x => {
+				let item = {...room.items[x]}
+				item.got = this.data.items[item.id]
+				return item
+			})
+
+		d3.select(el)
+			.selectAll("use.roomItem")
+			.data(itemData)
+			.join(enter => {
+				var els = enter.append("use")
+					.classed("roomItem", true)
+				return els
+			})
+			.attr("x", d => d.x * roomScale - room.aabb.cx * roomScale)
+			.attr("y", d => d.y * roomScale - room.aabb.cy * roomScale)
+			.attr("href", d => d.got ? "#icon-item-got" : "#icon-item")
+			.attr("class", d => {
+				return "roomItem pool-" + d.randPool + (d.got ? " got" : "")
+			})
+			.on("pointerover", (ev, item) => {
+				itemInfoEl.textContent = `${item.id} (${item.randType}/${item.randAction}/${item.randPool})`
+			})
+			.on("pointerleave", (ev, item) => {
+				itemInfoEl.textContent = ""
+			})
+	}
+
 	_renderIsland(island, holder) {
 		var this_ = this
 
 		var roomInfoEl = document.getElementById("roomInfo")
-		var itemInfoEl = document.getElementById("itemInfo")
 
 
 		const linkEls = holder.selectAll("path")
@@ -137,96 +225,7 @@ class DataRender {
 					})
 				els.append("rect").classed("roomShape", true)
 				els.each(function(room) {
-					//edge stubs
-					let c = {x: room.aabb.cx * roomScale, y: room.aabb.cy * roomScale}
-					let edgeDoors = Object.keys(room.doors)
-						.filter(x => x.indexOf("[door") < 0)
-						.map(x => {
-							let door = room.doors[x]
-							let dir = roomDirections[door.side] || {x: 0, y: 0}
-							return {
-								x1: door.x * roomScale - c.x,
-								y1: door.y * roomScale - c.y,
-								x2: door.x * roomScale + roomLeadOutLen * dir.x - c.x,
-								y2: door.y * roomScale + roomLeadOutLen * dir.y - c.y,
-								door
-							}
-						})
-
-					d3.select(this)
-						.selectAll("line.roomLeadOut")
-						.data(edgeDoors)
-						.join("line")
-						.classed("roomLeadOut", true)
-						.attr("x1", d => d.x1)
-						.attr("x2", d => d.x2)
-						.attr("y1", d => d.y1)
-						.attr("y2", d => d.y2)
-						.each(function(d) { d.door.__el = this })
-
-					//door dots
-					let doorDoors = Object.keys(room.doors).filter(x => x.indexOf("[door") >= 0).map(x => room.doors[x])
-
-					d3.select(this)
-						.selectAll("circle.door")
-						.data(doorDoors)
-						.join("circle")
-						.classed("door", true)
-						.attr("cx", d => d.x * roomScale - room.aabb.cx * roomScale)
-						.attr("cy", d => d.y * roomScale - room.aabb.cy * roomScale)
-						.each(function(door) { door.__el = this })
-
-
-					//benches
-					let benchData = room.benches
-					d3.select(this)
-						.selectAll("use.bench")
-						.data(benchData)
-						.join(enter => {
-							return enter.append("use").classed("bench", true).attr("href", "#icon-bench")
-						})
-						// .attr("transform", d => {
-						// 	let x = d.x * roomScale - room.aabb.cx * roomScale
-						// 	let y = d.y * roomScale - room.aabb.cy * roomScale
-						// 	return `translate(${x}, ${y})`
-						// })
-						.attr("x", d => d.x * roomScale - room.aabb.cx * roomScale)
-						.attr("y", d => d.y * roomScale - room.aabb.cy * roomScale)
-
-					//items
-					let itemData = Object.keys(room.items)
-						.map(x => {
-							let item = {...room.items[x]}
-							item.got = this_.data.items[item.id]
-							return item
-						})
-
-					d3.select(this)
-						.selectAll("use.roomItem")
-						.data(itemData)
-						.join(enter => {
-							var els = enter.append("use")
-								.classed("roomItem", true)
-							return els
-						})
-						// .attr("transform", d => {
-						// 	let x = d.x * roomScale - room.aabb.cx * roomScale
-						// 	let y = d.y * roomScale - room.aabb.cy * roomScale
-						// 	return `translate(${x}, ${y})`
-						// })
-						.attr("x", d => d.x * roomScale - room.aabb.cx * roomScale)
-						.attr("y", d => d.y * roomScale - room.aabb.cy * roomScale)
-						.attr("href", d => d.got ? "#icon-item-got" : "#icon-item")
-						.attr("class", d => {
-							return "roomItem pool-" + d.randPool + (d.got ? " got" : "")
-						})
-						.on("pointerover", (ev, item) => {
-							itemInfoEl.textContent = `${item.id} (${item.randType}/${item.randAction}/${item.randPool})`
-						})
-						.on("pointerleave", (ev, item) => {
-							itemInfoEl.textContent = ""
-						})
-
+					this_._renderRoom(this, room)
 				})
 				return els
 			})

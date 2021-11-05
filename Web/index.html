@@ -35,13 +35,24 @@
 				<path d="m -3.0379269,-0.92651774 c 0.316364,1.12652576 1.957381,3.33818794 2.44575204,4.01072794 C 0.08091514,1.39765 2.1233491,-1.1666045 3.5886681,-2.3084375 L 3.7616551,-3.484065 C 2.4850961,-2.6231928 0.07033414,0.04420672 -0.72018286,1.5904798 -1.3555769,1.079644 -2.5375639,-0.84263324 -2.7236319,-1.7147518 Z" />
 			</g>
 
-			<filter id="filter-white-shadow">
+			<filter id="filter-item-got-shadow">
 				<feGaussianBlur stdDeviation=".4" />
 				<feComponentTransfer result="shadow">
 					<feFuncR type="discrete" tableValues=".5"/>
 					<feFuncG type="discrete" tableValues=".5"/>
 					<feFuncB type="discrete" tableValues=".5"/>
 					<feFuncA type="table" tableValues="0 .75 1"/>
+				</feComponentTransfer>
+				<feComposite in="SourceGraphic" in2="shadow" operator="over"/>
+			</filter>
+
+			<filter id="filter-roomLink-hoverRelated">
+				<feGaussianBlur stdDeviation="1" />
+				<feComponentTransfer result="shadow">
+					<feFuncR type="discrete" tableValues="1"/>
+					<feFuncG type="discrete" tableValues="1"/>
+					<feFuncB type="discrete" tableValues="1"/>
+					<!-- <feFuncA type="table" tableValues="0 .75 1"/> -->
 				</feComponentTransfer>
 				<feComposite in="SourceGraphic" in2="shadow" operator="over"/>
 			</filter>

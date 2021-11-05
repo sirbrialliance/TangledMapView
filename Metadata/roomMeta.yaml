@@ -335,13 +335,13 @@ rooms:
   Deepnest_East_01:
   Deepnest_East_02:
   Deepnest_East_03:
-    name: Tall Shaft (lower)
+    name: Lower Cliff Face
   Deepnest_East_04:
     name: Bardoon
   Deepnest_East_06:
     name: Path to Oro
   Deepnest_East_07:
-    name: Tall Shaft (upper)
+    name: Upper Cliff Face
     splitRoom:
       - - bot1
       - - bot2
@@ -502,9 +502,9 @@ rooms:
     name: Leg Eater
   Fungus2_28:
   Fungus2_29:
-    name: Fungal Core (Upper)
+    name: Upper Fungal Core
   Fungus2_30:
-    name: Fungal Core (Lower)
+    name: Lower Fungal Core
   Fungus2_31:
     name: Mantis Village (Loot)
   Fungus2_32:

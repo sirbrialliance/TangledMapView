@@ -25,9 +25,14 @@ Next
 - Item viewing
 	- how to handle "Boss_Essence-Marmu" and friends that have their item in a different scene in the same room?
 		- maybe just detect and shunt read data to roomId?
-	- show collected items as check, show name on hover
+	- xx show collected items as check, show name on hover
 	- show all items near mouse, in some cases v close or on top of each other
-	- record what an item is if we get near it but don't collect it?
+	- show what an item is if we've gotten it
+		- record what an item is if we get near it but don't collect it? e.g. essence trees?
+		- replace the rotated square with a letter or icon once you know (maybe hotload the .pngs from the Randomizer mod)
+	- test item view set to "relevant"
+		- do irrelevant items still get recorded?
+	- live update item state when you get them
 
 -------------------------------------------------------------------------
 Unsorted

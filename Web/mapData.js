@@ -3765,7 +3765,7 @@ window.mapData = {
 					"y": 60.1
 				}
 			},
-			"name": "Tall Shaft (lower)",
+			"name": "Lower Cliff Face",
 			"randomizerArea": "Kingdoms_Edge",
 			"transitions": {
 				"left1": {
@@ -3938,7 +3938,7 @@ window.mapData = {
 					"y": 10.2
 				}
 			},
-			"name": "Tall Shaft (upper)",
+			"name": "Upper Cliff Face",
 			"randomizerArea": "Kingdoms_Edge",
 			"splitRoom": [
 				[
@@ -6873,7 +6873,7 @@ window.mapData = {
 					"y": 56.45001
 				}
 			},
-			"name": "Fungal Core (Upper)",
+			"name": "Upper Fungal Core",
 			"randomizerArea": "Fungal_Core",
 			"transitions": {
 				"bot1": {
@@ -6921,7 +6921,7 @@ window.mapData = {
 					"y": 98.6
 				}
 			},
-			"name": "Fungal Core (Lower)",
+			"name": "Lower Fungal Core",
 			"randomizerArea": "Fungal_Core",
 			"transitions": {
 				"bot1": {
