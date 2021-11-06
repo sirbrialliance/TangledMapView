@@ -6415,7 +6415,7 @@ window.mapData = {
 					"to": null
 				},
 				"bot3": {
-					"to": "Fungus2_15[top1]",
+					"to": "Fungus2_15[top3]",
 					"x": 52.0,
 					"y": -0.5
 				},
@@ -6478,7 +6478,7 @@ window.mapData = {
 					"to": null
 				},
 				"top3": {
-					"to": "Fungus2_14[bot1]",
+					"to": "Fungus2_14[bot3]",
 					"x": 33.5,
 					"y": 120.5
 				}

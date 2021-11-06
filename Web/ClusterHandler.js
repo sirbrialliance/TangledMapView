@@ -198,7 +198,7 @@ class ClusterHandler {
 		if (Object.keys(this._visibleRooms).length === 0) {
 			return
 		}
-		let graph = this.data.clusterBasedOnAll ? this.data.allRoomGraph : this.data.visibleRoomGraph
+		let graph = this.data.getRoomGraph(this.data.clusterBasedOnAll, false)
 
 		function mkRndIter(ids) {
 			let rng = d3.randomLcg(.59556736066)
@@ -233,7 +233,7 @@ class ClusterHandler {
 			islandMap[clusterer.getClass(n.id)] = n.id
 		})
 
-		console.log(islandMap)
+		console.log("Cluster islands:", islandMap)
 
 		for (let islandClass in islandMap) {
 			let aRoomId = islandMap[islandClass]

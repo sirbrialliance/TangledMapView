@@ -470,7 +470,7 @@ rooms:
       bot2:
         to: null
       bot3:
-        to: Fungus2_15[top1]
+        to: Fungus2_15[top3]
         x: 52.0
         y: -0.5
   Fungus2_15:
@@ -483,7 +483,7 @@ rooms:
       top2:
         to: null
       top3:
-        to: Fungus2_14[bot1]
+        to: Fungus2_14[bot3]
         x: 33.5
         y: 120.5
   Fungus2_17:

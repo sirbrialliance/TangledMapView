@@ -93,8 +93,6 @@ class DataGen {
 		var randomizerDataJSON = saveData["PolymorphicModData"]["RandomizerMod"]
 		this.randomizerData = JSON.parse(randomizerDataJSON)
 
-		var visitedDoorIdsRaw = JSON.parse(this.randomizerData["StringValues"]["_obtainedTransitions"])
-
 		this.startRoom = this.randomizerData.StringValues.StartSceneName
 		this.currentPlayerRoom = this.startRoom //if we wanted to send more data could read from save file, but nah
 
@@ -105,19 +103,7 @@ class DataGen {
 
 		this._buildDoors()
 
-
-		//mark what's been visited
-		for (let doorId of visitedDoorIdsRaw._keys) {
-			let transitionA = this.doorTransitions[doorId]
-			transitionA.visited = true
-			this.visitedDoors[transitionA.srcDoor] = true
-			this.visitedDoors[transitionA.dstDoor] = true
-
-			if (transitionA.bidi) {
-				let transitionB = this.doorTransitions[transitionA.dstDoor]
-				transitionB.visited = true
-			}
-		}
+		this._markVisitedTransitions()
 
 		for (let roomId in this.rooms) {
 			this.rooms[roomId].finishSetup()
@@ -134,8 +120,7 @@ class DataGen {
 		this.items = DataGen.inflate(this.randomizerData["StringValues"]["_obtainedItems"]) || {}
 	}
 
-	/** Given a room and door name (e.g. right1), returns the split index that door is in on that room (usually 0).
-	 */
+	/** Given a room and door name (e.g. right1), returns the split index that door is in on that room (usually 0). */
 	_getSplit(room, doorSide) {
 		let splitRoom = room.mapData.splitRoom
 		if (!splitRoom || !splitRoom.length) return 0
@@ -171,7 +156,8 @@ class DataGen {
 		}
 
 		//Then update with any transitions that have been randomized:
-		for (let srcDoorId in this.randomizerData["_transitionPlacements"]) {
+		let randomizedPlacements = this.randomizerData["_transitionPlacements"]
+		for (let srcDoorId in randomizedPlacements) {
 			if (!tPlacements[srcDoorId]) {
 				//Not in the original map data, so skip (e.g. Fungus2_14[bot2] and bot3 which are redundant and not included)
 				console.warn("No initial door for " + srcDoorId)
@@ -215,6 +201,8 @@ class DataGen {
 					dstSide: dstInfo.side,
 					dstSplit: this._getSplit(dstRoom, dstInfo.doorName),
 
+					randomized: !!randomizedPlacements[srcDoor],
+
 					visited: null,//will fill out shortly
 					bidi: tPlacements[dstDoor] === srcDoor,//bidirectional link
 				})
@@ -230,23 +218,71 @@ class DataGen {
 		}
 	}
 
-	_makeGraph(transitionList) {
+	_markVisitedTransitions() {
+		let markVisited = (transitionA) => {
+			transitionA.visited = true
+			this.visitedDoors[transitionA.srcDoor] = true
+			this.visitedDoors[transitionA.dstDoor] = true
+
+			if (transitionA.bidi) {
+				let transitionB = this.doorTransitions[transitionA.dstDoor]
+				transitionB.visited = true
+			}
+		}
+
+		var obtainedTransitions = DataGen.inflate(this.randomizerData["StringValues"]["_obtainedTransitions"])
+
+		//mark what's been visited from _obtainedTransitions)
+		for (let doorId in obtainedTransitions) {
+			let transitionA = this.doorTransitions[doorId]
+			markVisited(transitionA)
+		}
+
+		//_obtainedTransitions only records randomized transitions, not unrandomized taken transitions
+		//so mark those too
+		//note we don't blindy link any connections between scenesVisited as you may not have taken that
+		//transition and don't actually know they connect (but if you don't have those rooms randomized and you've
+		//been in both you "know" they connect because we assume your base game knowledge is perfect)
+		let visitedScenesSet = Object.fromEntries(this.saveData.playerData.scenesVisited.map(x => [x, true]))
+		for (let roomId of this.saveData.playerData.scenesVisited) {
+			let room = this.rooms[roomId]
+			if (!room) continue // not every room you can enter is handled by this map
+			for (let doorId in room.doors) {
+				let transition = this.transitions[doorId]
+				if (!transition) continue //one-way entrance, which we alway treat as "visited"
+
+				if (!transition.randomized && visitedScenesSet[transition.dstRoom.id]) {
+					//not randomized, been in both rooms
+					markVisited(transition)
+				}
+			}
+		}
+	}
+
+	getRoomGraph(allRooms = false, splitSplitRooms = true) {
 		let ret = window.createGraph()
 
-		for (let transition of transitionList) {
-			// ret.addLink(transition.srcRoom.id, transition.dstRoom.id, transition)
-			ret.addLink(transition.srcRoomSplitId, transition.dstRoomSplitId)
+		let transitionList = allRooms ? Object.values(this.transitions) : Object.values(this.visibleTransitions)
+
+		if (splitSplitRooms) {
+			for (let transition of transitionList) {
+				ret.addLink(transition.srcRoomSplitId, transition.dstRoomSplitId)
+			}
+		} else {
+			for (let transition of transitionList) {
+				ret.addLink(transition.srcRoom.id, transition.dstRoom.id, transition)
+			}
 		}
 
 		return ret
 	}
 
 	get visibleRoomGraph() {
-		return this._makeGraph(Object.values(this.visibleTransitions))
+		return this.getRoomGraph(false, true)
 	}
 
 	get allRoomGraph() {
-		return this._makeGraph(Object.values(this.transitions))
+		return this.getRoomGraph(true, true)
 	}
 
 
@@ -563,6 +599,9 @@ class RoomTransition {
 	dstSide = ""
 	/** Same as srcSplit, but for destination door */
 	dstSplit = 0
+
+	/** Different transition in this save file than the base game? */
+	randomized = false
 
 	visited = false
 	bidi = false
