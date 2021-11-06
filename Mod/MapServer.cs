@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Modding;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using WebSocketSharp;
@@ -14,6 +15,7 @@ public class MapServer {
 	private HttpServer server;
 	public int port = 7900;
 	private WebSocketSessionManager sessions;
+	private ILogger logger;
 
 	internal class WSHandler : WebSocketBehavior {
 		protected override void OnMessage(MessageEventArgs e) {
@@ -31,6 +33,13 @@ public class MapServer {
 		}
 	}
 
+	public MapServer() {
+		this.logger = null;
+	}
+
+	public MapServer(ILogger logger) {
+		this.logger = logger;
+	}
 
 	public void Start() {
 		server = new HttpServer(port);
@@ -103,7 +112,7 @@ public class MapServer {
 
 	public void Stop() {
 		if (server == null) return;
-		Modding.Logger.Log("Stopping web server");
+		logger?.Log("Stopping web server");
 		foreach (var sessionId in sessions.IDs.ToArray()) {
 			sessions.CloseSession(sessionId, CloseStatusCode.Away, "GameShutdown");
 		}

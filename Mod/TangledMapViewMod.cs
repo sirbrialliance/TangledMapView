@@ -1,6 +1,7 @@
 ﻿
 using System.Collections;
 using Modding;
+using Modding.Patches;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
@@ -81,14 +82,21 @@ public class TangledMapViewMod : Mod {
 			}).ToString();
 		}
 
-		return JToken.FromObject(new {
-			type = "loadSave",
-			data = new {
-				//don't need the full save file, just the stuff we need
-				// activeSaveData.PolymorphicModData,
-				PolymorphicModData = new {RandomizerMod = JsonConvert.SerializeObject(rndMod.Settings)},
+		return JsonConvert.SerializeObject(
+			new {
+				type = "loadSave",
+				data = new {
+					//this is more-or-less the normal save file data, but not everything
+					playerData = activeSaveData.playerData,
+					PolymorphicModData = new {RandomizerMod = JsonConvert.SerializeObject(rndMod.Settings)},
+				},
 			},
-		}).ToString();
+			Formatting.None, new JsonSerializerSettings {
+				ContractResolver = ShouldSerializeContractResolver.Instance,
+				TypeNameHandling = TypeNameHandling.Auto,
+				Converters = JsonConverterTypes.ConverterTypes,
+			}
+		);
 	}
 
 
@@ -110,7 +118,7 @@ internal class TangledMapManager : MonoBehaviour {
 		yield return null;
 		yield return null;
 
-		mod.server = new MapServer();
+		mod.server = new MapServer((Modding.ILogger)mod);
 		mod.server.Start();
 		mod.Log("TangledMapViewMod web server started: http://localhost:" + mod.server.port + "/");
 

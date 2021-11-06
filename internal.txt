@@ -7,7 +7,8 @@ slot 4: area + "everything" (and a shade)
 Next
 -------------------------------------------------------------------------
 
-- v0.0.2?
+- Do a release?
+	- xx don't have all save data pushed by game for accessed rooms
 	- push item state
 	- handle _Boss scene items
 	- get stags working right
@@ -16,6 +17,7 @@ Next
 	- new save bug
 	- Crossroads_01 has a bench?!
 	- obtained items list doens't include irellevant things (e.g. geo rocks when not rando'd)
+	- leave save file, lines remain
 
 - look into framerate
 	- nn Firefox is faster than Chromium, item icons+filter and cross-island links make it worse
