@@ -14,6 +14,8 @@ Next
 	- test non/area/room rando works
 	- more visible player room
 	- new save bug
+	- Crossroads_01 has a bench?!
+	- obtained items list doens't include irellevant things (e.g. geo rocks when not rando'd)
 
 - look into framerate
 	- nn Firefox is faster than Chromium, item icons+filter and cross-island links make it worse

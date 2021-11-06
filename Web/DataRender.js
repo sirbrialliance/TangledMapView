@@ -167,7 +167,8 @@ class DataRender {
 		let itemData = Object.keys(room.items)
 			.map(x => {
 				let item = {...room.items[x]}
-				item.got = this.data.items[item.id]
+				//do we have the item that's randomized into that location?
+				item.got = this.data.hasItemAt(item.id)
 				return item
 			})
 

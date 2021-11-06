@@ -58,8 +58,16 @@ class DataGen {
 
 	/** Map of pool name => true for items pools active in our save file */
 	itemPools = {}
-	/** Map of item id => true or false if we have it or not */
+	/**
+	 * Map of item id => true or false if we have it or not
+	 * NB: this is the item we got, NOT necessarily where it is in the world.
+	 */
 	items = {}
+	/**
+	 * What item is at each given item location (NB: K/V is swapped from randomizerData["StringValues"]["_itemPlacements"])
+	 * Map of item id (some item's original location) => item id for item that is there (after randomization)
+	 */
+	itemPlacements = {}
 
 	currentPlayerRoom = "Tutorial_01"
 	selectedRoom = null
@@ -117,6 +125,9 @@ class DataGen {
 		}
 
 		//items
+		this.itemPlacements = DataGen.inflate(this.randomizerData["StringValues"]["_itemPlacements"]) || {}
+		//flip src/ddt
+		this.itemPlacements = Object.fromEntries(Object.entries(this.itemPlacements).map(a => a.reverse()))
 		this.items = DataGen.inflate(this.randomizerData["StringValues"]["_obtainedItems"]) || {}
 	}
 
@@ -257,6 +268,17 @@ class DataGen {
 				}
 			}
 		}
+	}
+
+	/** Returns the item id that can be found at the given source item location. */
+	getItemAt(locationItemId) {
+		return this.itemPlacements[locationItemId] || locationItemId
+	}
+
+	/** true/false if we have the item (whatever it is) that's located at the given item id location */
+	hasItemAt(locationItemId) {
+		let itemId = this.getItemAt(locationItemId)
+		return this.items[itemId]
 	}
 
 	getRoomGraph(allRooms = false, splitSplitRooms = true) {
