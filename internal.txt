@@ -9,6 +9,8 @@ Next
 
 - Do a release?
 	- xx don't have all save data pushed by game for accessed rooms
+	- xx new, unrandomized rooms live-visited don't appear
+
 	- push item state
 	- handle _Boss scene items
 	- get stags working right

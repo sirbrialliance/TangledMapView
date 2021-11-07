@@ -351,6 +351,7 @@ class App {
 		this.data.currentPlayerRoom = roomId
 		document.getElementById("currentRoomIdText").textContent = roomId || ""
 		d3.select(".currentRoom").classed("currentRoom", false)
+		//the new room generally should exist in normal gameplay, revealTransition fires in advance of enterRoom
 		d3.select("#room-" + roomId).classed("currentRoom", true)
 		if (this.prefs.followPlayer && this.cluster.layout !== "player") {
 			this.zoomToRoom(roomId)
@@ -387,7 +388,6 @@ class App {
 				this.unloadSave()
 				break
 			case "revealTransition":
-				this.data.addVisit(msg.from)
 				this.data.addVisit(msg.to)
 				this._updateView()
 				break

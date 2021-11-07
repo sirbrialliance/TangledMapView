@@ -38,20 +38,25 @@ public class TangledMapViewMod : Mod {
 
 		UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
 		ModHooks.Instance.AfterSavegameLoadHook += OnSaveLoaded;
+
+		On.GameManager.BeginSceneTransition += OnBeginSceneTransition;
 	}
-
-
 
 	private void OnSaveLoaded(SaveGameData data) {
 		activeSaveData = data;
 		server.Send(PrepareSaveDataMessage());
 	}
 
-	private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
-		var from = rndMod.LastRandomizedExit;
-		var to = rndMod.LastRandomizedEntrance;
-		Log($"Left {from} to enter {to} in {scene.name}");
+	private void OnBeginSceneTransition(On.GameManager.orig_BeginSceneTransition orig, GameManager self, GameManager.SceneLoadInfo info) {
+		// Log($"OnBeginSceneTransition: to {info.SceneName}[{info.EntryGateName}]");
+		if (!string.IsNullOrEmpty(info.SceneName) && !string.IsNullOrEmpty(info.EntryGateName)) {
+			server.Send("revealTransition", "to", $"{info.SceneName}[{info.EntryGateName}]");
+		}
 
+		orig(self, info);
+	}
+
+	private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
 		CurrentRoom = scene.name;
 
 		if (scene.name == "Menu_Title") {
@@ -62,9 +67,6 @@ public class TangledMapViewMod : Mod {
 			return;
 		}
 
-		if (from != null && to != null) {
-			server.Send("revealTransition", "from", from, "to", to);
-		}
 		server.Send(PreparePlayerMoveMessage());
 	}
 

@@ -367,6 +367,7 @@ class DataGen {
 		}
 	}
 
+	/** Indicates that the player has entered a room via the given doorId and we should update accordingly. */
 	addVisit(doorId) {
 		var transition = this.doorTransitions[doorId]
 		this.visitedDoors[transition.srcDoor] = true
