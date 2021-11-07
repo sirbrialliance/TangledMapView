@@ -17,9 +17,8 @@ Because remembering where anything is with room randomization on is really hard.
 - Start the game.
 - Open a browser to http://localhost:7900/ and (recommended) put the window on another monitor.
 	- You could also open it on another device on your LAN, replacing "localhost" with your IP address.
-- Start a save file with room randomization turned on
-	- I haven't tested/tried it with room randomization off...
-	- bug: if you create a new save you have to quit and reload the save for the map to appear
+- Start or continue a randomized save.
+	- The map is blank when you make a new save, start exploring to fill it out.
 - See the map in your browser.
 
 ### General Usage

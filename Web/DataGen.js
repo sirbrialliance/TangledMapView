@@ -88,6 +88,8 @@ class DataGen {
 	}
 
 	static inflate(kvString) {
+		if (!kvString) return {}
+
 		let data = JSON.parse(kvString)
 		let ret = {}
 		for (let i = 0; i < data._keys.length; ++i) {

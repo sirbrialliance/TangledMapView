@@ -13,7 +13,8 @@ public class TangledMapViewMod : Mod {
 	public static TangledMapViewMod Instance { get; private set; }
 
 	internal MapServer server;
-	public SaveGameData activeSaveData;
+	// public SaveGameData activeSaveData;
+	private bool saveLoaded, startingSave;
 	private RandomizerMod.RandomizerMod rndMod;
 	public string CurrentRoom { get; private set; }
 
@@ -36,15 +37,22 @@ public class TangledMapViewMod : Mod {
 		rndMod = RandomizerMod.RandomizerMod.Instance;
 
 
-		UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
-		ModHooks.Instance.AfterSavegameLoadHook += OnSaveLoaded;
-
 		On.GameManager.BeginSceneTransition += OnBeginSceneTransition;
-	}
+		UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
+		ModHooks.Instance.AfterSavegameLoadHook += data => {
+			// Log("get load");
+			saveLoaded = true;
+			server.Send(PrepareSaveDataMessage());
+		};
 
-	private void OnSaveLoaded(SaveGameData data) {
-		activeSaveData = data;
-		server.Send(PrepareSaveDataMessage());
+		//not called, likely because the randomizer mod overrides how a game is started
+		//ModHooks.Instance.NewGameHook += ...
+
+		On.UIManager.StartNewGame += (orig, self, death, rush) => {
+			// Log("got StartNewGame");
+			startingSave = true;//we will actually push data once a scene loads
+			orig(self, death, rush);
+		};
 	}
 
 	private void OnBeginSceneTransition(On.GameManager.orig_BeginSceneTransition orig, GameManager self, GameManager.SceneLoadInfo info) {
@@ -60,11 +68,18 @@ public class TangledMapViewMod : Mod {
 		CurrentRoom = scene.name;
 
 		if (scene.name == "Menu_Title") {
-			if (activeSaveData != null) {
-				activeSaveData = null;
+			if (saveLoaded) {
+				saveLoaded = false;
+				startingSave = false;
 				server.Send(PrepareSaveDataMessage());
 			}
 			return;
+		}
+
+		if (startingSave) {
+			startingSave = false;
+			saveLoaded = true;
+			server.Send(PrepareSaveDataMessage());
 		}
 
 		server.Send(PreparePlayerMoveMessage());
@@ -78,7 +93,7 @@ public class TangledMapViewMod : Mod {
 	}
 
 	public string PrepareSaveDataMessage() {
-		if (activeSaveData == null) {
+		if (!saveLoaded) {
 			return JToken.FromObject(new {
 				type = "unloadSave",
 			}).ToString();
@@ -89,7 +104,7 @@ public class TangledMapViewMod : Mod {
 				type = "loadSave",
 				data = new {
 					//this is more-or-less the normal save file data, but not everything
-					playerData = activeSaveData.playerData,
+					playerData = GameManager.instance.playerData,
 					PolymorphicModData = new {RandomizerMod = JsonConvert.SerializeObject(rndMod.Settings)},
 				},
 			},
