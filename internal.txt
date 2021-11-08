@@ -8,30 +8,22 @@ Next
 -------------------------------------------------------------------------
 
 - Do a release?
-	- xx don't have all save data pushed by game for accessed rooms
-	- xx new, unrandomized rooms live-visited don't appear
-	- xx new save bug
-
 	- items
 		- push item state
+			- some items don't get pushed?
 		- handle _Boss scene items
-		- xx obtained items list doesn't include irrelevant things (e.g. geo rocks when not rando'd)
-			- xx maybe just hide irrelevant items always...
 
 	- get stags working right
 	- more visible player room
 	- Crossroads_01 has a bench?!
-	- leave save file, lines remain
+	- update readme
+	- update version
 
 - look into framerate
 	- nn Firefox is faster than Chromium, item icons+filter and cross-island links make it worse
 	- either ignore it or three.js, probably
 
 - @routing 2.0
-	- xx handle split rooms
-		- xx render transitions stubs different, use icon ref
-		- xx change node graph
-
 	- pathing
 		- get stag working right
 		- options
@@ -55,7 +47,6 @@ Next
 - Item viewing
 	- how to handle "Boss_Essence-Marmu" and friends that have their item in a different scene in the same room?
 		- maybe just detect and shunt read data to roomId?
-	- xx show collected items as check, show name on hover
 	- show all items near mouse, in some cases v close or on top of each other
 	- show what an item is if we've gotten it
 		- record what an item is if we get near it but don't collect it? e.g. essence trees?

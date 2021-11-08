@@ -51,6 +51,7 @@ class DataRender {
 					`Unvisited: ${room.unvisitedDoors.map(x=>x + " => " + this.data.doorTransitions[x].otherDoor(x)).join(", ")}`,
 				)
 
+				room.__isDrag = true
 				simulation.alphaTarget(0.3).restart()//ask it to "keep the alpha warm" while we drag
 
 				if (typeof target.fx === "number") target.__hadFixedPos = true
@@ -83,6 +84,8 @@ class DataRender {
 			.on("end", (event) => {
 				let room = event.subject; note(event)
 				let [simulation, target] = getTargets(room)
+
+				room.__isDrag = false
 
 				simulation.alphaTarget(0)//let alpha cool off and stop now
 
@@ -228,6 +231,8 @@ class DataRender {
 				return els
 			})
 			.on("pointerover", (ev, room) => {
+				room.__isHover = true
+
 				d3.selectAll(relatedElements(room)).classed("hoverRelated", true)
 
 				let roomInfo = window.mapData.rooms[room.id]
@@ -239,6 +244,11 @@ class DataRender {
 				roomInfoEl.querySelector(".roomId").textContent = room.id
 			})
 			.on("pointerleave", (ev, room) => {
+				room.__isHover = false
+
+				//update pos if it changed while hovered
+				ev.target.setAttribute("transform", `translate(${room.x},${room.y})`)
+
 				d3.selectAll(relatedElements(room)).classed("hoverRelated", false)
 				roomInfoEl.style.display = ""
 			})
@@ -285,12 +295,16 @@ class DataRender {
 
 		island.simulation.on("tick", () => {
 			// for (let room of island.rooms) if (isNaN(room.x) || isNaN(room.y)) throw new Error("bad data")
+
 			linkEls.attr("d", link => {
 				var pos = this._getDoorPositions(link)
 				return DataRender.buildLinkPath(link.transitionA, pos.src, pos.dst)
 			})
 
-			node.attr("transform", d => `translate(${d.x},${d.y})`)
+			node
+				.filter(d => !d.__isHover || d.__isDrag)//don't include hovered room, unless dragging
+				.attr("transform", d => `translate(${d.x},${d.y})`)
+
 			this._updateCrossLinks()
 		})
 
