@@ -85,6 +85,8 @@ class DataGen {
 		this.rooms = {}
 		this.itemPools = {}
 		this.items = {}
+		this.itemPlacements = {}
+		this.selectedRoom = null
 	}
 
 	static inflate(kvString) {
