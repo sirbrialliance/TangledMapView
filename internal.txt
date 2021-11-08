@@ -10,17 +10,17 @@ Next
 - Do a release?
 	- xx don't have all save data pushed by game for accessed rooms
 	- xx new, unrandomized rooms live-visited don't appear
+	- xx new save bug
 
-	- new save bug
-		- and refresh with unsaved data
+	- items
+		- push item state
+		- handle _Boss scene items
+		- xx obtained items list doesn't include irrelevant things (e.g. geo rocks when not rando'd)
+			- xx maybe just hide irrelevant items always...
 
-	- push item state
-	- handle _Boss scene items
 	- get stags working right
-	- test non/area/room rando works
 	- more visible player room
 	- Crossroads_01 has a bench?!
-	- obtained items list doens't include irellevant things (e.g. geo rocks when not rando'd)
 	- leave save file, lines remain
 
 - look into framerate

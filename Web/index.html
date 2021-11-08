@@ -92,7 +92,7 @@
 					<select id="pref-visibleItems" onchange="app.updatePref('visibleItems', this.value)">
 						<option value="none">None</option>
 						<option value="relevant">Relevant</option>
-						<option value="all">All</option>
+						<!-- <option value="all">All</option> -->
 					</select>
 				</label>
 			</fieldset>
@@ -144,7 +144,17 @@
 		<br>
 		<span id="itemInfo"></span>
 	</div>
-	<div id="searchResults"></div>
+	<div id="searchResults">
+		<fragment id="searchHelp">
+			<p>Type to search. Checks room ids, room names, item ids (for the location), and boss names.</p>
+			<p>Text entered is a regular expression.</p>
+			<p>Enter just <code>*</code> to show all rooms</p>
+			<p><code>bench</code>/<code>stag</code>/<code>station</code> looks for rooms with that</p>
+			<p>Separate multiple regexes with <code>&amp;</code> (no spaces) to require matching multiple criteria.</p>
+			<p>Rooms you can't see/haven't visited are light-colored in results.</p>
+			<p>Item matches are for <em>original</em> item locations.</p>
+		</fragment>
+	</div>
 </body>
 <script>
 	var app = new App()

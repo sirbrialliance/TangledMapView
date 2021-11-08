@@ -249,7 +249,7 @@ body.noAnimate .mapNode > rect.currentRoute, body.noAnimate .roomLink.currentRou
 	padding: 15px;
 }
 
-#roomInfo .areaName {
+.areaName {
 	display: inline-block;
 	border-width: 1px;
 	border-style: solid;
@@ -351,10 +351,35 @@ fieldset {
 	font-family: sans-serif;
 }
 
+#searchResults .result {
+	padding: 2px;
+}
+
+#searchResults .result.unavailable {
+	opacity: .5;
+}
+
 #searchResults .result:hover {
 	background: #AAA;
 	cursor: pointer;
 }
+
+#searchResults .result .matchReason {
+	display: block;
+	margin: 0 0 0 10px;
+	font-size: 80%;
+	opacity: .9;
+}
+#searchResults .result .matchReason:before {
+	content: "Because: ";
+	color: rgb(61, 0, 58);
+}
+
+#searchResults .areaName {
+	font-size: 80%;
+	margin-left: 0;
+}
+
 
 .currentRoomTable td {
 	border-collapse: collapse;

@@ -113,6 +113,9 @@ class App {
 
 	_setupSearch() {
 		var resultsEl = document.getElementById("searchResults")
+		this._searchHelpEl = document.getElementById("searchHelp")
+		this._searchHelpEl.parentNode.removeChild(this._searchHelpEl)
+
 		d3.select("#searchInput")
 			.on("focus", ev => {
 				var rect = ev.target.getBoundingClientRect()
@@ -128,61 +131,153 @@ class App {
 				this._updateSearch()
 			})
 		resultsEl.addEventListener("pointerdown", ev => {
-			let target = ev.target.getAttribute("data-roomId")
-			if (target) {
-				this.selectRoom(target)
-				this.zoomToRoom(target)
+			let target = ev.target
+			while (target != document.body && !target.getAttribute("data-roomId")) target = target.parentNode
+
+			let targetRoom = target?.getAttribute("data-roomId")
+			if (targetRoom) {
+				this.selectRoom(targetRoom)
+				this.zoomToRoom(targetRoom)
 			}
 		}, {capture: true})
 	}
 
 	_updateSearch() {
+		//setup
 		var resultsEl = document.getElementById("searchResults")
 		var searchEl = document.getElementById("searchInput")
 		var searchText = searchEl.value
+
+		//don't let help bits get nuked
+		if (this._searchHelpEl.parentNode) this._searchHelpEl.parentNode.removeChild(this._searchHelpEl)
+
 		if (!searchText) {
-			resultsEl.textContent = "Type to search..."
+			resultsEl.textContent = ""
+			resultsEl.appendChild(this._searchHelpEl)
 			return
 		}
-
 		resultsEl.textContent = ""
-		var roomList = []
-		var visibleRooms = this.data.visibleRooms
 
-		if (searchText === "*") {
-			roomList = Object.values(visibleRooms)
-		} else {
-			try {
-				var regex = new RegExp(searchText, 'i')
-			} catch (ex) {
-				console.error(ex)
-				resultsEl.textContent = "Invalid regex: " + ex.message
-				return
+
+		//parse search string
+		const wildcardSearch = {}
+		const benchSearch = {}
+		const stagSearch = {}
+		const nullSearch = {}
+
+		var searches = searchText.split("&")
+		for (let i = 0; i < searches.length; i++) {
+			let regex
+			switch (searches[i]) {
+				case "*": regex = wildcardSearch; break
+				case "bench": regex = benchSearch; break
+				case "": regex = nullSearch; break
+				case "stag":
+				case "station":
+					regex = stagSearch
+					break
+				default:
+					try {
+						regex = new RegExp(searches[i], 'i')
+					} catch (ex) {
+						console.error(ex)
+						resultsEl.textContent = "Invalid regex: " + ex.message
+						return
+					}
+					break
 			}
-
-			for (let room of Object.values(visibleRooms)) {
-				let match = false
-				if (regex.test(room.id)) match = true
-				if (regex.test(room.mapData.name)) match = true
-				for (let itemId in room.items) {
-					if (regex.test(itemId)) match = true
-				}
-				if (room.mapData.stag && regex.test("stag")) match = true
-				if (room.mapData.benches.length && regex.test("bench")) match = true
-
-				if (match) roomList.push(room)
-			}
+			searches[i] = regex
 		}
 
+		//search
+		var roomList = []
+		var visibleRooms = this.data.visibleRooms
+		var allMatchReasons = {}
+
+		let matchCheck = (regex, room) => {
+			let reasons = []
+
+			if (regex === wildcardSearch) {
+				reasons.push(['id'])
+			} else if (regex === nullSearch) {
+				//no match
+			} else if (regex === stagSearch) {
+				if (room.mapData.stag) reasons.push(['stag'])
+			} else if (regex === benchSearch) {
+				if (room.mapData.benches.length) reasons.push(['bench'])
+			} else {
+				if (regex.test(room.id)) reasons.push(['id'])
+				if (regex.test(room.mapData.name)) reasons.push(['name'])
+				if (room.mapData.boss && regex.test(room.mapData.boss)) reasons.push(['boss', room.mapData.boss])
+
+				for (let itemId in room.items) {
+					if (regex.test(itemId)) reasons.push(['item', itemId])
+				}
+			}
+
+			return reasons
+		}
+
+		for (let room of Object.values(this.data.rooms)) {
+			let reasons = []
+			for (let regex of searches) {
+				let r = matchCheck(regex, room)
+				if (!r.length) {
+					reasons = null
+					break
+				} else {
+					reasons = reasons.concat(r)
+				}
+			}
+
+			if (reasons === null) continue
+
+			roomList.push(room)
+			allMatchReasons[room.id] = Array.from(new Set(reasons))
+		}
+
+
+		//render
 		roomList.sort((a, b) => a.id < b.id ? -1 : 1)
 
 		for (let room of roomList) {
 			let el = document.createElement("div")
 			el.className = "result"
 			el.setAttribute("data-roomId", room.id)
-			if (room.mapData.name) el.textContent = `${room.mapData.name} (${room.id})`
-			else el.textContent = room.id
+
+			if (!visibleRooms[room.id]) el.classList.add("unavailable")
+
+			let area = room.mapData.area
+			let areaEl = document.createElement("span")
+			areaEl.className = "areaName"
+			areaEl.textContent = window.mapData.areas[area]
+			areaEl.setAttribute("data-area", area)
+			el.appendChild(areaEl)
+
+			let nameEl = document.createElement("span")
+			nameEl.className = "name"
+			if (room.mapData.name) nameEl.textContent = `${room.mapData.name} (${room.id})`
+			else nameEl.textContent = room.id
+			el.appendChild(nameEl)
+
+			for (let reason of allMatchReasons[room.id] || []) {
+				if (reason[0] === "id" || reason[0] === "name") continue
+
+				let reasonEl = document.createElement("span")
+				reasonEl.className = "matchReason"
+				switch (reason[0]) {
+					case "stag": reasonEl.textContent = "Stag Station"; break
+					case "bench": reasonEl.textContent = "Bench"; break
+					case "item": reasonEl.textContent = "Item: " + reason[1]; break
+					case "boss": reasonEl.textContent = "Boss: " + reason[1]; break
+				}
+				el.appendChild(reasonEl)
+			}
+
 			resultsEl.appendChild(el)
+		}
+		if (roomList.length === 0) {
+			resultsEl.textContent = "Nothing found"
 		}
 	}
 
