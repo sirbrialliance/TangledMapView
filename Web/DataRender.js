@@ -164,13 +164,7 @@ class DataRender {
 
 		//items
 		var itemInfoEl = document.getElementById("itemInfo")
-		let itemData = Object.keys(room.items)
-			.map(x => {
-				let item = {...room.items[x]}
-				//do we have the item that's randomized into that location?
-				item.got = this.data.hasItemAt(item.id)
-				return item
-			})
+		let itemData = Object.values(room.items)
 
 		d3.select(el)
 			.selectAll("use.roomItem")
@@ -182,16 +176,15 @@ class DataRender {
 			})
 			.attr("x", d => d.x * roomScale - room.aabb.cx * roomScale)
 			.attr("y", d => d.y * roomScale - room.aabb.cy * roomScale)
-			.attr("href", d => d.got ? "#icon-item-got" : "#icon-item")
-			.attr("class", d => {
-				return "roomItem pool-" + d.randPool + (d.got ? " got" : "")
-			})
+			.attr("href", "#icon-item") // collected item state is set later
+			.attr("class", d => "roomItem pool-" + d.randPool)
 			.on("pointerover", (ev, item) => {
 				itemInfoEl.textContent = `${item.id} (${item.randType}/${item.randAction}/${item.randPool})`
 			})
 			.on("pointerleave", (ev, item) => {
 				itemInfoEl.textContent = ""
 			})
+			.each(function(d) { d.__el = this })
 	}
 
 	_renderIsland(island, holder) {
@@ -254,9 +247,9 @@ class DataRender {
 		// node.filter(x => !x.isHub).call(setupDrag(false))
 		node.call(this._getRoomDragHandler(island, holder, false))
 
-		//update door colors
 		let visitedDoors = this.data.visitedDoors
 		node.each(function(room) {
+			//update door colors
 			for (let doorId in room.doors) {
 				let door = room.doors[doorId]
 				if (!door.__el) continue
@@ -270,7 +263,19 @@ class DataRender {
 					door.__el.classList.remove("visitedDoor")
 				}
 			}
+
+			//update collected items
+			for (let itemId in room.items) {
+				//do we have the item that's randomized into that location?
+				let got = this_.data.hasItemAt(itemId)
+				if (got) {
+					let el = room.items[itemId].__el
+					el.setAttribute("href", "#icon-item-got")
+					el.classList.add("got")
+				}
+			}
 		})
+
 
 		node.select("rect")
 			.attr("x", node => -node.aabb.width / 2 * roomScale)

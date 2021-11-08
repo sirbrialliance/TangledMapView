@@ -486,6 +486,11 @@ class App {
 				this.data.addVisit(msg.to)
 				this._updateView()
 				break
+			case "getItem":
+				console.log(`Got item ${msg.item} at ${msg.location}`)
+				this.data.markItemAcquired(msg.item)
+				if (this.prefs.visibleItems !== "none") this._updateView()
+				break
 			default:
 				console.warn("Unknown message: ", msg)
 				break

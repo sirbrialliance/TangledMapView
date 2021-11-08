@@ -285,6 +285,11 @@ class DataGen {
 		return this.items[itemId]
 	}
 
+	/** Marks the given item (not location) as collected. */
+	markItemAcquired(itemId) {
+		this.items[itemId] = true
+	}
+
 	getRoomGraph(allRooms = false, splitSplitRooms = true) {
 		let ret = window.createGraph()
 
