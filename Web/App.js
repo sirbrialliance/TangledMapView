@@ -2,7 +2,8 @@
 class App {
 	ws = null
 	prefs = {
-		spoilers: false,
+		showAllRooms: false,
+		showAllItems: false,
 		clusterBasedOnAll: false,
 		followPlayer: true,
 		fpsSaver: true,
@@ -194,6 +195,12 @@ class App {
 		var visibleRooms = this.data.visibleRooms
 		var allMatchReasons = {}
 
+		let itemMatch = (regex, item) => {
+			if (regex.test(item.id)) return true
+			if (regex.test(DataRender.getItemDescription(item))) return true
+			return false
+		}
+
 		let matchCheck = (regex, room) => {
 			let reasons = []
 
@@ -210,8 +217,13 @@ class App {
 				if (regex.test(room.mapData.name)) reasons.push(['name'])
 				if (room.mapData.boss && regex.test(room.mapData.boss)) reasons.push(['boss', room.mapData.boss])
 
-				for (let itemId in room.items) {
-					if (regex.test(itemId)) reasons.push(['item', itemId])
+				for (let item of Object.values(room.items)) {
+					if (itemMatch(regex, item)) reasons.push(['itemLocation', item])
+
+					if (this.data.shouldRevealItemAt(item.id)) {
+						let realItem = this.data.getNormalItemInfo(this.data.getItemAt(item.id))
+						if (itemMatch(regex, realItem)) reasons.push(['itemPlaced', realItem])
+					}
 				}
 			}
 
@@ -268,7 +280,14 @@ class App {
 				switch (reason[0]) {
 					case "stag": reasonEl.textContent = "Stag Station"; break
 					case "bench": reasonEl.textContent = "Bench"; break
-					case "item": reasonEl.textContent = "Item: " + reason[1]; break
+					case "itemLocation":
+						reasonEl.textContent = "Normal item: " + DataRender.getItemDescription(reason[1])
+						reasonEl.title = reason[1].id
+						break
+						case "itemPlaced":
+						reasonEl.textContent = "Current item: " + DataRender.getItemDescription(reason[1])
+						reasonEl.title = reason[1].id
+						break
 					case "boss": reasonEl.textContent = "Boss: " + reason[1]; break
 				}
 				el.appendChild(reasonEl)
@@ -359,7 +378,8 @@ class App {
 
 		switch (k) {
 			case "clusterBasedOnAll": this.data.clusterBasedOnAll = v; break
-			case "spoilers": this.data.showAll = v; break
+			case "showAllRooms": this.data.showAllRooms = v; break
+			case "showAllItems": this.data.showAllItems = v; break
 			case "layout": this.cluster.layout = v; break
 			case "visibleItems": this.dataRender.visibleItems = v; break
 		}

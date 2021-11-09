@@ -284,20 +284,37 @@ body.noAnimate .mapNode > rect.currentRoute, body.noAnimate .roomLink.currentRou
 [data-area=Waterways] { border-color: var(--area-Waterways-border); background-color: var(--area-Waterways-fill); color: var(--area-Waterways-border);}
 [data-area=White_Palace] { border-color: var(--area-White_Palace-border); background-color: var(--area-White_Palace-fill); color: var(--area-White_Palace-border);}
 
+
 #itemInfo {
+	margin-top: 3px;
+}
+.itemInfo {
 	font-size: 16px;
 	color: rgb(205 205 226);
 	border: 1px dashed rgb(119, 119, 119);
 	border-radius: 5px;
 	padding: 4px 5px;
+	display: inline-block;
 }
-#itemInfo:empty {
+.itemInfo:empty {
 	display: none;
 }
-#itemInfo:before {
-	content: "Item:";
+
+.itemInfo > .normalItem {
+	margin-right: 7px;
+}
+
+.itemInfo > .normalItem:before {
+	content: "Normally:";
 	margin-right: 5px;
 	opacity: .5;
+}
+
+.itemInfo > .currentItem:before {
+	content: "Currently:";
+	margin-right: 5px;
+	opacity: .5;
+
 }
 
 .currentRoom > rect.roomShape {

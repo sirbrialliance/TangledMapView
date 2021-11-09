@@ -29,6 +29,7 @@ def getRoom(roomId):
 def addArea(node):
 	"""Adds the randomizarArea for the given <transition>, <item>, etc."""
 	roomId = prop(node, "sceneName")
+	if not roomId: return
 	room = getRoom(roomId)
 	area = prop(node, "areaName")
 
@@ -67,6 +68,10 @@ def prop(el, name):
 		else: return None
 	else: return None
 
+def maybeProp(el, name, dest):
+	val = prop(el, name)
+	if val is not None: dest[name] = val
+
 rndRoomXML = rndAreaXML = None
 
 def loadRandomizerData():
@@ -88,7 +93,7 @@ def loadRandomizerData():
 		addArea(transition)
 
 
-	# note what items/checks are in each room
+	# note what items/checks are in each room and info about them
 	items = [
 		minidom.parse(dataPath + "items.xml"),
 		minidom.parse(dataPath + "rocks.xml"),
@@ -98,19 +103,8 @@ def loadRandomizerData():
 		for item in doc.getElementsByTagName("item"):
 			try:
 				roomId = prop(item, "sceneName")
-				if not roomId: continue
-
+				if not roomId: roomId = "__orphans__"
 				addArea(item)
-
-				# if roomId is None:
-				# 	# not originally in the game
-				# 	continue
-				# elif roomId in skipRooms:
-				# 	# not a room ew handle, but one that has item(s)
-				# 	continue
-				# elif roomId.endswith("_boss"):
-				# 	# todo.
-				# 	continue
 
 				items = getRoom(roomId)["items"]
 
@@ -126,10 +120,38 @@ def loadRandomizerData():
 				itemInfo['randType'] = prop(item, "type")
 				itemInfo['randAction'] = prop(item, "action")
 				itemInfo['randPool'] = prop(item, "pool")
+				maybeProp(item, "geo", itemInfo)
 				items[item.getAttribute("name")] = itemInfo
 			except:
 				print("Issue handling " + item.toxml())
 				raise
+
+def finishData():
+	buildStagTransitions()
+
+	# merge items from certain rooms to other rooms
+	for roomId, room in roomData.copy().items():
+		targetRoomId = None
+		if roomId.endswith("_boss"): targetRoomId = roomId[:-5]
+		if roomId.endswith("_boss_defeated"): targetRoomId = roomId[:-14]
+		if roomId == "Dream_Nailcollection": targetRoomId = "__orphans__"
+
+		if not targetRoomId: continue
+
+
+		# merge to new room
+		targetRoom = getRoom(targetRoomId)
+		if "items" not in room: continue
+		if "items" not in targetRoom: continue
+
+		print("Forward data from", roomId, "to", targetRoomId)
+		# print("----", roomId, "going to", targetRoomId)
+		# print(repr(room), repr(targetRoom))
+
+		targetRoom["items"].update(room["items"])
+
+		del roomData[roomId]
+
 
 def buildStagTransitions():
 	stagHub = getRoom("Cinematic_Stag_travel")

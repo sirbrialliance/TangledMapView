@@ -69,12 +69,18 @@ class DataGen {
 	 */
 	itemPlacements = {}
 
+	/** Map of item id => mapData information about that item */
+	allItems = {}
+
 	currentPlayerRoom = "Tutorial_01"
 	selectedRoom = null
 	startRoom = "Tutorial_01"
 
-	/** Show everything? If false just what we've visited. */
-	showAll = false
+	/** Show all rooms? If false just what we've visited. */
+	showAllRooms = false
+	/** Spoil what items are */
+	showAllItems = false
+
 	clusterBasedOnAll = true
 
 	clear() {
@@ -130,9 +136,19 @@ class DataGen {
 
 		//items
 		this.itemPlacements = DataGen.inflate(this.randomizerData["StringValues"]["_itemPlacements"]) || {}
-		//flip src/ddt
+		//flip src/dst
 		this.itemPlacements = Object.fromEntries(Object.entries(this.itemPlacements).map(a => a.reverse()))
 		this.items = DataGen.inflate(this.randomizerData["StringValues"]["_obtainedItems"]) || {}
+
+		//all items list
+		this.allItems = {}
+		for (let room of [...Object.values(this.rooms), window.mapData.rooms.__orphans__]) {
+			for (let itemId in room.items) {
+				let item = room.items[itemId]
+				item.id = itemId
+				this.allItems[item.id] = item
+			}
+		}
 	}
 
 	/** Given a room and door name (e.g. right1), returns the split index that door is in on that room (usually 0). */
@@ -279,6 +295,12 @@ class DataGen {
 		return this.itemPlacements[locationItemId] || locationItemId
 	}
 
+	/** Returns true if we should reveal to the user what item is at the given location. */
+	shouldRevealItemAt(locationItemId) {
+		if (this.showAllItems) return true
+		return this.hasItemAt(locationItemId)
+	}
+
 	/** true/false if we have the item (whatever it is) that's located at the given item id location */
 	hasItemAt(locationItemId) {
 		let itemId = this.getItemAt(locationItemId)
@@ -288,6 +310,17 @@ class DataGen {
 	/** Marks the given item (not location) as collected. */
 	markItemAcquired(itemId) {
 		this.items[itemId] = true
+	}
+
+	/** Returns data from mapData about the item that's normally at the given item location. */
+	getNormalItemInfo(itemId) {
+		if (itemId.endsWith("_(1)")) {
+			itemId = itemId.substring(0, itemId.length - 4)
+		}
+
+		let item = this.allItems[itemId] || null
+		if (!item) console.warn("No item: " + itemId)
+		return item
 	}
 
 	getRoomGraph(allRooms = false, splitSplitRooms = true) {
@@ -336,7 +369,7 @@ class DataGen {
 
 	/** Returns a map of rooms that are currently visible (roomId => room) */
 	get visibleRooms() {
-		if (this.showAll) {
+		if (this.showAllRooms) {
 			return this.rooms
 		} else {
 			//just what we've visited
@@ -357,7 +390,7 @@ class DataGen {
 
 	/** Returns a map of visible transitions (srcDoor (or maybe dstDoor) => transition) */
 	get visibleTransitions() {
-		if (this.showAll) {
+		if (this.showAllRooms) {
 			return this.doorTransitions
 		} else {
 			var ret = {}

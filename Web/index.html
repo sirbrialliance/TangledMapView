@@ -62,8 +62,13 @@
 		<div id="prefs">
 			<fieldset>
 				<legend>Spoilers</legend>
-				<label title="Show the full room layout, even for rooms you haven't visited.">Show all rooms:
-					<button id="pref-spoilers" onclick="app.updatePref('spoilers', !app.prefs['spoilers'])">On</button><br>
+				<label title="Show the full room layout, even for rooms you haven't visited.">
+					Show all rooms:
+					<button id="pref-showAllRooms" onclick="app.updatePref('showAllRooms', !app.prefs['showAllRooms'])">On</button><br>
+				</label>
+				<label title="Reveal what uncollected items are when you hover over them. Also include all item identities in search results.">
+					Show all items:
+					<button id="pref-showAllItems" onclick="app.updatePref('showAllItems', !app.prefs['showAllItems'])">On</button><br>
 				</label>
 				<label title="Allow layouts to use all data to determine grouping. This should reduce how often a room switches groups, but can leak hints about room topology.">
 					Cluster based on all rooms:
@@ -142,7 +147,7 @@
 		<span class="roomName"></span>
 		<span class="roomId"></span>
 		<br>
-		<span id="itemInfo"></span>
+		<span id="itemInfo" class="itemInfo"></span>
 	</div>
 	<div id="searchResults">
 		<fragment id="searchHelp">
@@ -152,7 +157,6 @@
 			<p><code>bench</code>/<code>stag</code>/<code>station</code> looks for rooms with that</p>
 			<p>Separate multiple regexes with <code>&amp;</code> (no spaces) to require matching multiple criteria.</p>
 			<p>Rooms you can't see/haven't visited are light-colored in results.</p>
-			<p>Item matches are for <em>original</em> item locations.</p>
 		</fragment>
 	</div>
 </body>

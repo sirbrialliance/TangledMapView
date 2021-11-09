@@ -49,7 +49,7 @@ class DataRender {
 					`Clicked ${room.displayText}`, room,
 					`Visited: ${room.visitedDoors.map(x=>x + " => " + this.data.doorTransitions[x].otherDoor(x)).join(", ")}`,
 					`Unvisited: ${room.unvisitedDoors.map(x=>x + " => " + this.data.doorTransitions[x].otherDoor(x)).join(", ")}`,
-				)
+					)
 
 				room.__isDrag = true
 				simulation.alphaTarget(0.3).restart()//ask it to "keep the alpha warm" while we drag
@@ -182,7 +182,25 @@ class DataRender {
 			.attr("href", "#icon-item") // collected item state is set later
 			.attr("class", d => "roomItem pool-" + d.randPool)
 			.on("pointerover", (ev, item) => {
-				itemInfoEl.textContent = `${item.id} (${item.randType}/${item.randAction}/${item.randPool})`
+				itemInfoEl.textContent = ""
+				let mkEl = (className, content) => {
+					let el = document.createElement("span")
+					el.className = className
+					el.textContent = content
+					el.title = item.id
+					itemInfoEl.appendChild(el)
+				}
+
+				mkEl("normalItem", DataRender.getItemDescription(item))
+
+				let currentDesc = "???"
+				if (this.data.shouldRevealItemAt(item.id)) {
+					let realItemId = this.data.getItemAt(item.id)
+					let realItem = this.data.getNormalItemInfo(realItemId)
+					currentDesc = DataRender.getItemDescription(realItem)
+				}
+
+				mkEl("currentItem", currentDesc)
 			})
 			.on("pointerleave", (ev, item) => {
 				itemInfoEl.textContent = ""
@@ -476,6 +494,79 @@ class DataRender {
 			// el.style.animationDelay = (i / pulseElements.length * 3) + "s"
 			el.style.animationDelay = (i * .2) + "s"
 		}
+	}
+
+	/**
+	 * Returns an English string describing what item the given item object
+	 * represents.
+	 */
+	static getItemDescription(item) {
+		if (!item) return "Nothing"
+
+		const simpleMapping = {
+			Cocoon: "Life Blood",
+			Cursed: "Focus",
+			CursedNail: "Nail Direction",
+			Egg: "Rancid Egg",
+			Flame: "Grimmkin Flame",
+			Grub: "Grub",
+			Lore: "Lore",
+			Mask: "Mask Shard",
+			Notch: "Charm Notch",
+			Ore: "Pale Ore",
+			PalaceLore: "Lore",
+			PalaceSoul: "Soul Refill",
+			Soul: "Soul Refill",
+			Vessel: "Vessel Fragment",
+
+			//The id is a good description:
+			Charm: null,
+			Skill: null,
+			Stag: null,
+			SplitClaw: null,
+			SplitCloak: null,
+			SplitCloakLocation: null,
+			Fake: null,
+		}
+
+		var simpleResult = simpleMapping[item.randPool]
+		if (typeof simpleResult !== "undefined") {
+			if (simpleResult) return simpleResult
+			else return item.id.replace(/_/g, " ")
+		}
+
+		switch (item.randPool) {
+			case "Dreamer":
+				if (item.id === "World_Sense") return "World Sense"
+				else if (item.id === "Dreamer") return "Dreamer (wildcard)"
+				else return item.id
+			case "Key":
+				if (item.id.startsWith("Simple_Key")) return "Simple Key"
+				else return item.id.replace(/_/g, " ")
+			case "Boss_Geo":
+			case "Rock":
+			case "Geo":
+				return item.geo + " Geo"
+			case "Relic":
+				return {
+					WanderersJournal: "Wanderer's Journal",
+					HallownestSeal: "Hallownest Seal",
+					KingsIdol: "King's Idol",
+					ArcaneEgg: "Arcane Egg",
+				}[item.randAction]
+			case "Root":
+			case "Essence_Boss":
+				return item.geo + " Essence"
+			case "Map":
+				if (item.id === "Deepnest_Map-Upper") return "Deepnest Map"
+				else if (item.id === "Deepnest_Map-Right_[Gives_Quill]") return "Quill"
+				else return item.id.replace(/_/g, " ")
+		}
+
+		// //`${item.id} (${item.randType}/${item.randAction}/${item.randPool})`
+
+		console.warn("Don't know how to describe item", item)
+		return "<unknown: " + item.id + ">"
 	}
 
 }
