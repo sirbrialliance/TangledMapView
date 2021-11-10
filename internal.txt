@@ -9,10 +9,7 @@ Next
 
 - Do a release?
 	- some items don't get pushed?
-	- search and hover shows item gotten state
 
-	- select shade room on death (if no selection)
-	- search finds shade
 	- get stags working right
 	- more visible player room
 	- Crossroads_01 has a bench?!
@@ -57,6 +54,7 @@ Next
 -------------------------------------------------------------------------
 Unsorted
 -------------------------------------------------------------------------
+- select shade room on death (if no selection)
 
 - use randomizer's logic when planning routes
 

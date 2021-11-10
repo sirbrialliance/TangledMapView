@@ -286,13 +286,19 @@ class App {
 					case "stag": reasonEl.textContent = "Stag Station"; break
 					case "bench": reasonEl.textContent = "Bench"; break
 					case "itemLocation":
-						reasonEl.textContent = "Normal item: " + DataRender.getItemDescription(reason[1])
+					case "itemPlaced": {
+						let isLocation = reason[0] === "itemLocation"
+						let item = reason[1]
+						let has = isLocation ? this.data.hasItemAt(item.id) : this.data.items[item.id]
+
+						let desc = isLocation ? "Normal item: " : "Current item: "
+						desc += DataRender.getItemDescription(item)
+						desc += has ? " ✓" : " ✖"
+
+						reasonEl.textContent = desc
 						reasonEl.title = reason[1].id
 						break
-						case "itemPlaced":
-						reasonEl.textContent = "Current item: " + DataRender.getItemDescription(reason[1])
-						reasonEl.title = reason[1].id
-						break
+					}
 					case "boss": reasonEl.textContent = "Boss: " + reason[1]; break
 				}
 				el.appendChild(reasonEl)

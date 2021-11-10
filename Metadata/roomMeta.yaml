@@ -276,7 +276,7 @@ rooms:
     name: Ancestral Mound
 
   Deepnest_01:
-    name: Ground Collapse Entrance
+    name: Outside Moss Prophet
   Deepnest_01b:
   Deepnest_02:
   Deepnest_03:
@@ -497,7 +497,7 @@ rooms:
   Fungus2_23:
     name: Bretta Rescue
   Fungus2_25:
-    name: Deepnest Entrance
+    name: Mantis Deepnest Entrance
   Fungus2_26:
     name: Leg Eater
   Fungus2_28:

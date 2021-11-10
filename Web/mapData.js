@@ -2731,7 +2731,7 @@ window.mapData = {
 					"y": 5.69
 				}
 			},
-			"name": "Ground Collapse Entrance",
+			"name": "Outside Moss Prophet",
 			"randomizerArea": "Fungal_Wastes",
 			"transitions": {
 				"bot1": {
@@ -6850,7 +6850,7 @@ window.mapData = {
 					"y": 14.57
 				}
 			},
-			"name": "Deepnest Entrance",
+			"name": "Mantis Deepnest Entrance",
 			"randomizerArea": "Deepnest",
 			"transitions": {
 				"right1": {
