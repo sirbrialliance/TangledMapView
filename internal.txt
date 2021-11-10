@@ -8,11 +8,11 @@ Next
 -------------------------------------------------------------------------
 
 - Do a release?
-	- items
-		- push item state
-			- some items don't get pushed?
-		- handle _Boss scene items
+	- some items don't get pushed?
+	- search and hover shows item gotten state
 
+	- select shade room on death (if no selection)
+	- search finds shade
 	- get stags working right
 	- more visible player room
 	- Crossroads_01 has a bench?!
@@ -45,9 +45,8 @@ Next
 
 
 - Item viewing
-	- how to handle "Boss_Essence-Marmu" and friends that have their item in a different scene in the same room?
-		- maybe just detect and shunt read data to roomId?
 	- show all items near mouse, in some cases v close or on top of each other
+		- also, shops
 	- show what an item is if we've gotten it
 		- record what an item is if we get near it but don't collect it? e.g. essence trees?
 		- replace the rotated square with a letter or icon once you know (maybe hotload the .pngs from the Randomizer mod)
@@ -86,13 +85,10 @@ Unsorted
 	- stay close to src room if dead end
 	- align with doors instead of centers
 
-- Little "?" next to items that explain what they do?
-
 - metadata
 	- missed item flag/icon
 	- times visited room?
 	- maybe only after you have map for the area?
-
 
 - icons for rooms:
 	- automatically mark: transport (elevators, stations, tram, dram connection), benches, darkness, shops
@@ -102,25 +98,19 @@ Unsorted
 	- shade
 	- dream warp
 
-
 - Spoilers: give hint
 	- See: JSON.parse(data.saveData.PolymorphicModData.RandomizerMod).StringValues._orderedLocations
-	- next in progression or specific item, save to a log
+	- next in progression or specific item, save given hints to a log
+
 - Button to select a nearby room with unvisited transition
 
 - travel history?
 
-- In-game maps reveal info
-	- Show grub locations when you have the collector's map
-	- Area maps: show all rooms for area, and transitions between rooms that we have maps for)
-		- or maybe just reveal 40% of nearby rooms if room rando
-	- bonus: show where you are in a room when you have wayward compass equipped
 
 - pathfind to nearest mark of given type
 
 - based on route, could show an in-game arrow pointing to the target transition in question
 
-- Pathfinding to item in spoiler mode?
 - Select room for name and stats (num transitions visited/unvisited, items found/not found (or count of not found if no spoilers))
 - as you reveal the map, things end up in funny places, the hub isn't cenetered in island
 - Sliders to adjust room align forces/radii
@@ -134,12 +124,32 @@ Unsorted
 
 - maybe show where you are and your target is, if offscreen (little this-a-way arrows)
 
-- goals
+- goals/stats
+	- collapsible box
+	- Stats summary
+		- dreamer status
+		- pantheon/boss status summary
+		- # of mask shards, grimm flames, grubs, essencecharm notch, ore, vessel fragments, charms, stags
+		- geo and geo in relics (and geo spend?)
+		- key abilities (focus, nail, dash, spells, etc)
+		- "randomizer percent" (num checks/cleared checks)
 	- checkboxes for common goals: any%, grubs, pantheon, 112%, moth evaportaion
 	- show status toward each goal (e.g. 5/46 grubs, 2/3 dreamers, boss count and which you do/don't have)
-		- maybe just always show that stuff?
-		- can show "randomizer percent" too (num checks/cleared checks)
 	- "give hint" button skips things that aren't in your goals
+	- show rando seed (and settings?)
+
+
+- "balance" section
+	- options:
+		- only show completion stats with world sense
+		- enable/disable room routing (off/auto/on, auto enables for room rando)
+		- In-game maps reveal info
+			- Show grub locations when you have the collector's map (or unveil item data)
+			- Area maps: show all rooms for area, and transitions between rooms that we have maps for)
+				- or maybe just reveal 40% of nearby rooms if room rando (Conifer's maps don't start complete)
+			- bonus: show where you are in a room when you have wayward compass equipped
+		- grub map reveals grub items
+		- Jiji hint egg gives real hints
 
 -------------------------------------------------------------------------
 Wishes

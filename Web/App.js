@@ -164,6 +164,7 @@ class App {
 		const wildcardSearch = {}
 		const benchSearch = {}
 		const stagSearch = {}
+		const shadeSearch = {}
 		const nullSearch = {}
 
 		var searches = searchText.split("&")
@@ -173,6 +174,7 @@ class App {
 				case "*": regex = wildcardSearch; break
 				case "bench": regex = benchSearch; break
 				case "": regex = nullSearch; break
+				case "shade": regex = shadeSearch; break
 				case "stag":
 				case "station":
 					regex = stagSearch
@@ -212,6 +214,8 @@ class App {
 				if (room.mapData.stag) reasons.push(['stag'])
 			} else if (regex === benchSearch) {
 				if (room.mapData.benches.length) reasons.push(['bench'])
+			} else if (regex === shadeSearch) {
+				if (this.data.saveData.playerData.shadeScene === room.id) reasons.push(['shade'])
 			} else {
 				if (regex.test(room.id)) reasons.push(['id'])
 				if (regex.test(room.mapData.name)) reasons.push(['name'])
@@ -278,6 +282,7 @@ class App {
 				let reasonEl = document.createElement("span")
 				reasonEl.className = "matchReason"
 				switch (reason[0]) {
+					case "shade": reasonEl.textContent = "Shade"; break
 					case "stag": reasonEl.textContent = "Stag Station"; break
 					case "bench": reasonEl.textContent = "Bench"; break
 					case "itemLocation":
