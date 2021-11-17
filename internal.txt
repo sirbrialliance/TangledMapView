@@ -8,11 +8,16 @@ Next
 -------------------------------------------------------------------------
 
 - Do a release?
-	- some items don't get pushed?
+	- Collected items don't appear right on new saves until you've saved and refreshed the page
 
 	- get stags working right
 	- more visible player room
 	- Crossroads_01 has a bench?!
+
+	- have to refresh for shade search
+	- item search shows irrelevant items as not gotten
+	- taking elevator/etc. doesn't mark transition as visited
+
 	- update readme
 	- update version
 
