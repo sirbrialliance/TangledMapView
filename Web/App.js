@@ -198,6 +198,7 @@ class App {
 		var allMatchReasons = {}
 
 		let itemMatch = (regex, item) => {
+			if (item == undefined) return false
 			if (regex.test(item.id)) return true
 			if (regex.test(DataRender.getItemDescription(item))) return true
 			return false
