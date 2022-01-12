@@ -7,59 +7,58 @@ slot 4: area + "everything" (and a shade)
 Next
 -------------------------------------------------------------------------
 
-- Do a release?
+- Issues
 	- Collected items don't appear right on new saves until you've saved and refreshed the page
-
-	- get stags working right
 	- more visible player room
-	- Crossroads_01 has a bench?!
-
-	- have to refresh for shade search
+	- have to refresh for shade search (push updates to save data to browser)
 	- item search shows irrelevant items as not gotten
 	- taking elevator/etc. doesn't mark transition as visited
 
-	- update readme
-	- update version
+- routing 2.0
+	- get stag working right
+	- options
+		- benchwarp (off, discovered, all (spoilers))
+		- dream warp
+		- avoid room list?
+	- text description of calculated route
+		- push to in-game HUD
+			- option to show/hide/where?
+	- fix path rendering (animated glow) when there's multiple paths between two rooms (e.g. Deepnest_01b and Deepnest_02 no room rando)
+	- view layout that linearizes your selected route
+
+- data issues:
+	- split room door ids on Hive_01 are wrong
+	- needs to know what side has bench Hive_01, Ruins1_18
+	- Ruins2_03 doens't show the grub? Or, it's on the wrong side?
+	- Crossroads_01 "has a bench"
+
+- Item viewing
+	- show all items near mouse, in some cases v close or on top of each other
+		- also, shops
+	- test item view set to "relevant"
+		- do irrelevant items still get recorded?
+	- do something with the flickering when hovering over a room near the bottom of the screen?
+
+-------------------------------------------------------------------------
+Unsorted
+-------------------------------------------------------------------------
 
 - look into framerate
 	- nn Firefox is faster than Chromium, item icons+filter and cross-island links make it worse
 	- either ignore it or three.js, probably
 
-- @routing 2.0
-	- pathing
-		- get stag working right
-		- options
-			- benchwarp (off, discovered, all (spoilers))
-			- dream warp
-			- avoid room list
-		- text description of calculated route
-			- push to in-game HUD?
-				- option to show/hide/where
-		- fix path rendering when there's multiple paths between two rooms (e.g. Deepnest_01b and Deepnest_02 no room rando)
+- just show irrelevant items as irrelevant, never mind if you got it or not
+	- own icon, can see if you select the view option
 
-	- test non/area/room rando works
-		- do visited rooms/transitions get recorded?
-	- view layout that linearizes your selected route
+- names: "Mimic Room", Midwife
+- add benches in trams...somehow?
+- show if room has bench in room hover or give bench a more visible icon
 
-	- double-check split room door ids: Hive_01
-	- needs to know what side has bench Hive_01, Ruins1_18
-	- Ruins2_03 doens't show the grub? Or, it's on the wrong side?
+- unmatched transitions?
 
-
-- Item viewing
-	- show all items near mouse, in some cases v close or on top of each other
-		- also, shops
-	- show what an item is if we've gotten it
-		- record what an item is if we get near it but don't collect it? e.g. essence trees?
-		- replace the rotated square with a letter or icon once you know (maybe hotload the .pngs from the Randomizer mod)
-	- test item view set to "relevant"
-		- do irrelevant items still get recorded?
-	- live update item state when you get them
-
--------------------------------------------------------------------------
-Unsorted
--------------------------------------------------------------------------
 - select shade room on death (if no selection)
+
+- collapsible settings menus
 
 - use randomizer's logic when planning routes
 
@@ -118,6 +117,9 @@ Unsorted
 - as you reveal the map, things end up in funny places, the hub isn't cenetered in island
 - Sliders to adjust room align forces/radii
 
+- record what an item is if we get near it but don't collect it? e.g. essence trees?
+	- replace the rotated square with a letter or icon once you know (maybe hotload the .pngs from the Randomizer mod)
+
 - Jumbled mess
 	- tune door constraint, much stronger repulsion if inline on the wrong side, less force if off-axis at a distance
 	- try turning off "keep apart" constraints for a warmup period then turn them back on
@@ -153,37 +155,41 @@ Unsorted
 			- bonus: show where you are in a room when you have wayward compass equipped
 		- grub map reveals grub items
 		- Jiji hint egg gives real hints
+		- Wayward compass shows where in a room you are on the map
 
 -------------------------------------------------------------------------
 Wishes
 -------------------------------------------------------------------------
 
 
-
-- Bugs
-	- Doesn't work with fresh save file, have to exit and reload
-		- "try using the On.UIManager.StartNewGame hook rather than the ModHooks hook"
-	- reload page while save data is stale gives...stale save data  - seems to happen even if I pull data directly from the randomizer mod settings
-
 - User feedback:
-	- xx forgot dependency for websockets
-	- hit the new save file bug
-	- xx found it to kill game performance on another monitor (likely multi-GPU buffer copy)
+	- old/handled
+		- xx hit the new save file bug
+		- xx forgot dependency for websockets
+		- xx found it to kill game performance on another monitor (likely multi-GPU buffer copy)
+		- xx connections hard to see with long room names in the way (and maybe make room connections have dark "inside" inside the broader white outline)
+		- xx when selecting a room, ability to zoom to it, or message that you haven't seen it
+		- xx "it's lagging my computer" "this is pretty awful" - enough so I can see the framerate drop at 2x speed...
+		- xx Confusion from elevators not being linked
+		- zz somehow map stopped recording new transitions? Might be because they were reloading the map and the save data is stale bug.
+		- xx room search:
+			- only show visible rooms in dropdown (but maybe we just make it easy to see in selection)
+			- name search
+
 	- make dragged rooms stay where dragged a lot better
-	- xx connections hard to see with long room names in the way (and maybe make room connections have dark "inside" inside the broader white outline)
 	- color transitions based on logic (if it can be taken with the current loadout)
 	- performance issues when rendering in cluster layout (perhaps push cluster motion (and DOM update plans?) to web workers)
-	- xx when selecting a room, ability to zoom to it, or message that you haven't seen it
 	- map wiggling bug
-	- make it easier to find yourself
+	- make it easier to find yourself "where am I?"
 	- probably should make hub & distance the default view
 	- show benches w/Benchwap mod names
-	- ** "where am I?"
-	- ** "it's lagging my computer" "this is pretty awful" - enough so I can see the framerate drop at 2x speed...
-	- xx Confusion from elevators not being linked
-	- somehow map stopped recording new transitions? Might be because they were reloading the map and the save data is stale bug.
 	- room <-> bench routing
-	- room icons
-	- room search:
-		- only show visible rooms in dropdown (but maybe we just make it easy to see in selection)
-		- name search
+	- add room icons/annotation
+
+	- hard to see bench, show if has bench in room hover
+	- support for HK 1.5 + Randomizer 4?
+	- unmatched transitions?
+	- rooms start far apart
+
+	- use better map icons (Cornifer icons)
+	- assorted room metadata feedback
