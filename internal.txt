@@ -157,6 +157,12 @@ Unsorted
 		- Jiji hint egg gives real hints
 		- Wayward compass shows where in a room you are on the map
 
+- randomizer area vs Cornifer area
+
+- click a door to jump to linked room
+- disable long connect lines when things get slow?
+
+
 -------------------------------------------------------------------------
 Wishes
 -------------------------------------------------------------------------

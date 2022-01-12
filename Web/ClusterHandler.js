@@ -34,10 +34,11 @@ class ClusterHandler {
 		if (this.layout === "islands") this._setupIslands()
 		else if (this.layout === "islandsCluster") this._setupCluster()
 		else if (this.layout === "player") this._setupPlayerIsland()
-		else if (this.layout === "areas") this._setupAreas()
+		else if (this.layout === "areas" || this.layout === "areasRandomizer") this._setupAreas("randomizer")
+		else if (this.layout === "areasCornifer") this._setupAreas("cornifer")
 		else this._setupUglyIsland()
 
-		if (this.layout !== "islandsCluster" && this.layout !== "areas") {
+		if (this.layout !== "islandsCluster" && !this.layout.startsWith("areas")) {
 			this._measureDistances()
 		}
 		for (let island of this.islands) this._buildIslandData(island)
@@ -169,13 +170,15 @@ class ClusterHandler {
 		}
 	}
 
-	_setupAreas() {
+	_setupAreas(type) {
 		this.islands = []
 		let islandMap = {}
 
 		for (let roomId in this._visibleRooms) {
 			let room = this._visibleRooms[roomId]
-			let area = room.mapData.randomizerArea
+
+			let area = type === "cornifer" ? room.mapData.area : room.mapData.randomizerArea
+
 			if (!area) {
 				console.warn("No area for " + roomId)
 				continue
@@ -191,6 +194,16 @@ class ClusterHandler {
 		}
 
 		this._setInitialIslandPositions()
+	}
+
+	_debugIslandDump() {
+		let islands = []
+
+		for (let i of this.islands) {
+			let rooms = i.rooms.map(r => `${r.id} => ${r.mapData.area}`)
+			islands.push(rooms)
+		}
+		console.log(islands)
 	}
 
 	_setupCluster() {
