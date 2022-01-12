@@ -128,7 +128,7 @@ class App {
 			.on("blur", ev => {
 				resultsEl.style.display = ""
 			})
-			.on("keyup",  ev => {
+			.on("keyup", ev => {
 				this._updateSearch()
 			})
 		resultsEl.addEventListener("pointerdown", ev => {
@@ -140,7 +140,7 @@ class App {
 				this.selectRoom(targetRoom)
 				this.zoomToRoom(targetRoom)
 			}
-		}, {capture: true})
+		}, { capture: true })
 	}
 
 	_updateSearch() {
@@ -345,7 +345,7 @@ class App {
 	}
 
 	updateRoute() {
-		let path = window.ngraphPath.aStar(this.data.visibleRoomGraph, {oriented: true})
+		let path = window.ngraphPath.aStar(this.data.visibleRoomGraph, { oriented: true })
 		let statusEl = document.getElementById("routeState")
 
 		try {
@@ -357,7 +357,7 @@ class App {
 			//no route found
 			//still highlight the room, though
 			if (this.data.selectedRoom) {
-				route = [{id: this.data.selectedRoom}]
+				route = [{ id: this.data.selectedRoom }]
 				if (this.data.visibleRooms[this.data.selectedRoom]) {
 					statusEl.textContent = "No route found."
 				} else {

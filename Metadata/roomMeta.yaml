@@ -47,6 +47,7 @@ rooms:
 
   Abyss_01:
     name: Broken Elevator Shaft
+    area: Ruins2
     #would not be considered a split room with spicy skips, but being conservative:
     splitRoom:
       - - left1
@@ -56,7 +57,8 @@ rooms:
         - right2
   Abyss_02:
   Abyss_03_b:
-    name: Basin Tram (West)
+    name: Lower Tram (West)
+    area: Deepnest
     transitions:
       tram:
         x: 32.4
@@ -64,7 +66,7 @@ rooms:
         to: Abyss_03[tram_west]
         side: right
   Abyss_03:
-    name: Basin Tram (Center)
+    name: Lower Tram (Center)
     transitions:
       tram_west:
         x: 74.5
@@ -77,7 +79,8 @@ rooms:
         to: Abyss_03_c[tram]
         side: right
   Abyss_03_c:
-    name: Basin Tram (East)
+    name: Lower Tram (East)
+    area: Deepnest_East
     transitions:
       tram:
         x: 44.4
@@ -145,7 +148,7 @@ rooms:
   Cliffs_04:
     name: Joni's Dark and Spiky Path
   Cliffs_05:
-    name: Joni's Blessing
+    name: Joni's Repose
   Cliffs_06:
     name: Grimm Summon
 
@@ -221,7 +224,7 @@ rooms:
   Crossroads_31:
     name: Spike Pogo Grub
   Crossroads_33:
-    name: Conifer
+    name: Cornifer
   Crossroads_35:
   Crossroads_36:
   Crossroads_37:
@@ -243,6 +246,7 @@ rooms:
         side: right
   Crossroads_46b:
     name: Crossroads Tram (East)
+    area: RestingGrounds
     transitions:
       tram:
         x: 33
@@ -263,6 +267,7 @@ rooms:
         side: bot
   Crossroads_49b:
     name: West Elevator (Lower)
+    area: Ruins1
     transitions:
       elevator:
         x: 15
@@ -271,12 +276,14 @@ rooms:
         side: top
   Crossroads_50:
     name: Blue Lake
+    area: RestingGrounds
   Crossroads_52:
   Crossroads_ShamanTemple:
     name: Ancestral Mound
 
   Deepnest_01:
     name: Outside Moss Prophet
+    area: Fungus2
   Deepnest_01b:
   Deepnest_02:
   Deepnest_03:
@@ -325,6 +332,7 @@ rooms:
   Deepnest_42:
     name: Outside Mask Maker
   Deepnest_43:
+    area: Fungus3
   Deepnest_44:
     name: Sharp Shadow
   Deepnest_45_v02:
@@ -383,7 +391,7 @@ rooms:
     boss: Hornet Protector
   Fungus1_05:
   Fungus1_06:
-    name: Conifer
+    name: Cornifer
   Fungus1_07:
   Fungus1_08:
     name: The Hunter
@@ -417,6 +425,7 @@ rooms:
     name: Lake of Unn
   Fungus1_28:
     name: Baulder's Shell
+    area: Cliffs
   Fungus1_29:
     name: Moss Charger
     boss: Moss Charger
@@ -488,7 +497,7 @@ rooms:
         y: 120.5
   Fungus2_17:
   Fungus2_18:
-    name: Conifer
+    name: Cornifer
   Fungus2_19:
   Fungus2_20:
     name: Room of Three Things
@@ -498,6 +507,7 @@ rooms:
     name: Bretta Rescue
   Fungus2_25:
     name: Mantis Deepnest Entrance
+    area: Deepnest
   Fungus2_26:
     name: Leg Eater
   Fungus2_28:
@@ -515,12 +525,13 @@ rooms:
     name: Willoh
 
   Fungus1_24:
-    name: Conifer
+    name: Cornifer
     area: Fungus3
   Fungus1_23:
     area: Fungus3
   Fungus3_03:
     name: Acid Entrance
+    area: FogCanyon
   Fungus3_04:
   Fungus3_05:
     name: Mantis Petra Miniboss
@@ -545,6 +556,7 @@ rooms:
     stag: RoyalGardens
   Fungus3_44:
     name: Outside Howling Wraiths
+    area: FogCanyon
   Fungus3_48:
     name: Outside White Lady
     splitRoom:
@@ -572,7 +584,7 @@ rooms:
     area: FogCanyon
   Fungus3_25:
     area: FogCanyon
-    name: Conifer
+    name: Cornifer
   Fungus3_25b:
     area: FogCanyon
   Fungus3_26:
@@ -690,7 +702,7 @@ rooms:
   Mines_29:
     name: Southeast Bench
   Mines_30:
-    name: Conifer
+    name: Cornifer
   Mines_31:
     name: Superdash
   Mines_32:
@@ -698,6 +710,7 @@ rooms:
     boss: Enraged Guardian
   Mines_33:
     name: Dark Toll Entrance
+    area: Crossroads
   Mines_34:
     name: Hallownest's Crown
     transitions:
@@ -735,6 +748,7 @@ rooms:
 
   Room_Bretta:
     name: Bertta's House
+    area: Town
     transitions:
       door1:
         to: Room_Bretta_Basement[top1]
@@ -742,12 +756,15 @@ rooms:
         y: 5.67
   Room_Bretta_Basement:
     name: Bertta's Basement
+    area: Town
     boss: Grey Prince Zote
   Room_Charm_Shop:
     name: Salubra's Shop
+    area: Crossroads
 
   Room_Colosseum_01:
     name: Colosseum Entrance
+    area: Deepnest_East
     # dynamic right transition, so we just add manual "fake" transitions
     transitions:
       trial1:
@@ -767,8 +784,10 @@ rooms:
         side: right
   Room_Colosseum_02:
     name: Colosseum Bench
+    area: Deepnest_East
   Room_Colosseum_Bronze:
     name: Trial of the Warrior
+    area: Deepnest_East
     randomizerArea: Colosseum
     transitions:
       left1:
@@ -777,6 +796,7 @@ rooms:
         to: Room_Colosseum_01[trial1]
   Room_Colosseum_Silver:
     name: Trial of the Conqueror
+    area: Deepnest_East
     randomizerArea: Colosseum
     transitions:
       left1:
@@ -785,6 +805,7 @@ rooms:
         to: Room_Colosseum_01[trial2]
   Room_Colosseum_Gold:
     name: Trial of the Fool
+    area: Deepnest_East
     randomizerArea: Colosseum
     transitions:
       left1:
@@ -793,56 +814,77 @@ rooms:
         to: Room_Colosseum_01[trial3]
   Room_Colosseum_Spectate:
     name: Colosseum Spectate
+    area: Deepnest_East
 
   Room_Final_Boss_Core:
     name: Hollow Knight
+    area: Crossroads
     randomizerArea: Black_Egg_Temple
   Room_Fungus_Shaman:
     name: Howling Wraiths
+    area: Fungus3
   Room_GG_Shortcut:
     name: Junk Pit Shortcut
+    area: Waterways
   # Room_Jinn:
   #   name: Jinn
   #   randomizerArea: Dirtmouth
   Room_Mansion:
     name: Grey Mourner
+    area: RestingGrounds
   Room_Mask_Maker:
     name: Mask Maker
+    area: Deepnest
   Room_Mender_House:
     name: Menderbug's House
+    area: Crossroads
     randomizerArea: Forgotten_Crossroads
   Room_Ouiji:
     name: Jiji
+    area: Town
     randomizerArea: Dirtmouth
   Room_Queen:
     name: White Lady
+    area: Fungus3
   Room_Slug_Shrine:
     name: Lake of Unn Bench
+    area: Fungus1
   Room_Sly_Storeroom:
     name: Sly's Basement
+    area: Town
   Room_Town_Stag_Station:
     name: Dirtmouth Stag
+    area: Town
     stag: Town
   Room_Wyrm:
     name: Cast off Shell
+    area: Deepnest_East
   Room_Final_Boss_Atrium:
     name: Outside Hollow Knight
+    area: Crossroads
   Room_mapper:
-    name: Conifer's Shop
+    name: Cornifer's Shop
+    area: Town
   Room_nailmaster:
     name: Nailmaster Mato
+    area: Cliffs
   Room_nailmaster_02:
     name: Nailmaster Sheo
+    area: Fungus1
   Room_nailmaster_03:
     name: Nailmaster Oro
+    area: Deepnest_East
   Room_nailsmith:
     name: Nailsmith
+    area: Ruins1
     randomizerArea: City_of_Tears
   Room_ruinhouse:
     name: Infected Sly
+    area: Crossroads
     randomizerArea: Forgotten_Crossroads
   Room_shop:
     name: Sly's Shop
+    area: Town
     transitions:
       door1:
         to: Room_Sly_Storeroom[top1]
@@ -850,8 +892,10 @@ rooms:
         y: 5.68718
   Room_spider_small:
     name: Brumm's Betrayal
+    area: Deepnest
   Room_temple:
     name: Black Egg Temple
+    area: Crossroads
     transitions:
       door1:
         x: 35
@@ -907,7 +951,7 @@ rooms:
     stag: Ruins1
   Ruins1_30:
   Ruins1_31:
-    name: Conifer
+    name: Cornifer
   Ruins1_31b:
     name: Shade Soul
   Ruins1_32:
@@ -1010,7 +1054,7 @@ rooms:
   Waterways_08:
     name: Outside Flukemarm
   Waterways_09:
-    name: Hwurmp Miniboss, Conifer
+    name: Hwurmp Miniboss, Cornifer
   Waterways_12:
     name: Flukemarm
     boss: Flukemarm

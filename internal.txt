@@ -151,7 +151,7 @@ Unsorted
 		- In-game maps reveal info
 			- Show grub locations when you have the collector's map (or unveil item data)
 			- Area maps: show all rooms for area, and transitions between rooms that we have maps for)
-				- or maybe just reveal 40% of nearby rooms if room rando (Conifer's maps don't start complete)
+				- or maybe just reveal 40% of nearby rooms if room rando (Cornifer's maps don't start complete)
 			- bonus: show where you are in a room when you have wayward compass equipped
 		- grub map reveals grub items
 		- Jiji hint egg gives real hints

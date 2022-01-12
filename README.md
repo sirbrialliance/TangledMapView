@@ -51,7 +51,8 @@ To help visualize the room arrangement a few different view options are provided
 
 - **Islands (cluster)** uses a clustering algorithm to try to determine "groups" of rooms that don't connect to other rooms as much. In theory it sounds useful, in practice I'm not so sure.
 - **Islands (hubs & distance)** picks the visible rooms with the most doorways leading in/out and as the main island "centers". (e.g. Dirtmouth has 9 different transitions in/out of it and will often get picked.) Then, we group all the remaining rooms in the island they are "closest" to with "closest" being defined as the number of room transitions it takes to get there. This is a good choice for seeing a general world overview.
-- **Areas** groups based on what the Randomizer considers an "area" for area randomization.
+- **Areas (Randomizer)** groups based on what the Randomizer considers an "area" for area randomization.
+- **Areas (Cornifer)** groups based on the coloring of each room in Cornifer's maps and/or what makes sense in-game.
 - **Player-centric** picks the knight's current room as the "center" of our grouping and shows all nearby rooms, up to a certain number of transitions away. It doesn't show everything we know, just what's nearby.
 - **Tangled Mess** doesn't group rooms at all. It just throws everything into a giant pile, which generally results in a tangled spider-web mess of rooms and connections going everywhere. When you get frustrated with how things look with the other options, switch to this for a moment of reflection. Arranging the rooms in a way that's visually easy to parse is actually kind of hard!
 

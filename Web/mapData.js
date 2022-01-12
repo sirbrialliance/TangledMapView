@@ -22,7 +22,7 @@ window.mapData = {
 	},
 	"rooms": {
 		"Abyss_01": {
-			"area": "Abyss",
+			"area": "Ruins2",
 			"benches": [],
 			"items": {
 				"Geo_Rock-Broken_Elevator_1": {
@@ -160,7 +160,7 @@ window.mapData = {
 			"area": "Abyss",
 			"benches": [],
 			"items": {},
-			"name": "Basin Tram (Center)",
+			"name": "Lower Tram (Center)",
 			"randomizerArea": "Ancient_Basin",
 			"transitions": {
 				"bot1": {
@@ -203,10 +203,10 @@ window.mapData = {
 			}
 		},
 		"Abyss_03_b": {
-			"area": "Abyss",
+			"area": "Deepnest",
 			"benches": [],
 			"items": {},
-			"name": "Basin Tram (West)",
+			"name": "Lower Tram (West)",
 			"randomizerArea": "Deepnest",
 			"transitions": {
 				"door_tram": {
@@ -233,10 +233,10 @@ window.mapData = {
 			}
 		},
 		"Abyss_03_c": {
-			"area": "Abyss",
+			"area": "Deepnest_East",
 			"benches": [],
 			"items": {},
-			"name": "Basin Tram (East)",
+			"name": "Lower Tram (East)",
 			"randomizerArea": "Kingdoms_Edge",
 			"transitions": {
 				"door_tram": {
@@ -1159,7 +1159,7 @@ window.mapData = {
 					"y": 6.462356
 				}
 			},
-			"name": "Joni's Blessing",
+			"name": "Joni's Repose",
 			"randomizerArea": "Howling_Cliffs",
 			"transitions": {
 				"left1": {
@@ -2086,7 +2086,7 @@ window.mapData = {
 					"y": 34.0
 				}
 			},
-			"name": "Conifer",
+			"name": "Cornifer",
 			"randomizerArea": "Forgotten_Crossroads",
 			"transitions": {
 				"left1": {
@@ -2427,7 +2427,7 @@ window.mapData = {
 			}
 		},
 		"Crossroads_46b": {
-			"area": "Crossroads",
+			"area": "RestingGrounds",
 			"benches": [],
 			"items": {},
 			"name": "Crossroads Tram (East)",
@@ -2536,7 +2536,7 @@ window.mapData = {
 			}
 		},
 		"Crossroads_49b": {
-			"area": "Crossroads",
+			"area": "Ruins1",
 			"benches": [],
 			"items": {},
 			"name": "West Elevator (Lower)",
@@ -2566,7 +2566,7 @@ window.mapData = {
 			}
 		},
 		"Crossroads_50": {
-			"area": "Crossroads",
+			"area": "RestingGrounds",
 			"benches": [],
 			"items": {
 				"Rancid_Egg-Blue_Lake": {
@@ -2711,7 +2711,7 @@ window.mapData = {
 			}
 		},
 		"Deepnest_01": {
-			"area": "Deepnest",
+			"area": "Fungus2",
 			"benches": [],
 			"items": {
 				"Geo_Rock-Moss_Prophet": {
@@ -3618,7 +3618,7 @@ window.mapData = {
 			}
 		},
 		"Deepnest_43": {
-			"area": "Deepnest",
+			"area": "Fungus3",
 			"benches": [],
 			"items": {
 				"Geo_Rock-Above_Mask_Maker_1": {
@@ -4940,7 +4940,7 @@ window.mapData = {
 					"y": 21.55728
 				}
 			},
-			"name": "Conifer",
+			"name": "Cornifer",
 			"randomizerArea": "Greenpath",
 			"transitions": {
 				"bot1": {
@@ -5560,7 +5560,7 @@ window.mapData = {
 					"y": 22.3
 				}
 			},
-			"name": "Conifer",
+			"name": "Cornifer",
 			"randomizerArea": "Queens_Gardens",
 			"transitions": {
 				"left1": {
@@ -5613,7 +5613,7 @@ window.mapData = {
 			}
 		},
 		"Fungus1_28": {
-			"area": "Fungus1",
+			"area": "Cliffs",
 			"benches": [],
 			"items": {
 				"Baldur_Shell": {
@@ -6659,7 +6659,7 @@ window.mapData = {
 					"y": 50.66
 				}
 			},
-			"name": "Conifer",
+			"name": "Cornifer",
 			"randomizerArea": "Fungal_Wastes",
 			"transitions": {
 				"bot1": {
@@ -6808,7 +6808,7 @@ window.mapData = {
 			}
 		},
 		"Fungus2_25": {
-			"area": "Fungus2",
+			"area": "Deepnest",
 			"benches": [],
 			"items": {
 				"Deepnest_Map-Right_[Gives_Quill]": {
@@ -7198,7 +7198,7 @@ window.mapData = {
 			}
 		},
 		"Fungus3_03": {
-			"area": "Fungus3",
+			"area": "FogCanyon",
 			"benches": [],
 			"items": {
 				"Geo_Rock-Queen's_Gardens_Acid_Entrance": {
@@ -7522,7 +7522,7 @@ window.mapData = {
 					"y": 32.0
 				}
 			},
-			"name": "Conifer",
+			"name": "Cornifer",
 			"randomizerArea": "Fog_Canyon",
 			"transitions": {
 				"left1": {
@@ -7817,7 +7817,7 @@ window.mapData = {
 			}
 		},
 		"Fungus3_44": {
-			"area": "Fungus3",
+			"area": "FogCanyon",
 			"benches": [],
 			"items": {},
 			"name": "Outside Howling Wraiths",
@@ -9255,7 +9255,7 @@ window.mapData = {
 					"y": 16.83706
 				}
 			},
-			"name": "Conifer",
+			"name": "Cornifer",
 			"randomizerArea": "Crystal_Peak",
 			"transitions": {
 				"left1": {
@@ -9353,7 +9353,7 @@ window.mapData = {
 			}
 		},
 		"Mines_33": {
-			"area": "Mines",
+			"area": "Crossroads",
 			"benches": [],
 			"items": {
 				"Geo_Rock-Crystal_Peak_Entrance": {
@@ -9974,7 +9974,7 @@ window.mapData = {
 			}
 		},
 		"Room_Bretta": {
-			"area": "Room",
+			"area": "Town",
 			"benches": [],
 			"items": {
 				"Mask_Shard-Bretta": {
@@ -10001,7 +10001,7 @@ window.mapData = {
 			}
 		},
 		"Room_Bretta_Basement": {
-			"area": "Room",
+			"area": "Town",
 			"benches": [],
 			"boss": "Grey Prince Zote",
 			"items": {
@@ -10035,7 +10035,7 @@ window.mapData = {
 			}
 		},
 		"Room_Charm_Shop": {
-			"area": "Room",
+			"area": "Crossroads",
 			"benches": [],
 			"items": {
 				"Lifeblood_Heart": {
@@ -10085,7 +10085,7 @@ window.mapData = {
 			}
 		},
 		"Room_Colosseum_01": {
-			"area": "Room",
+			"area": "Deepnest_East",
 			"benches": [],
 			"items": {},
 			"name": "Colosseum Entrance",
@@ -10127,7 +10127,7 @@ window.mapData = {
 			}
 		},
 		"Room_Colosseum_02": {
-			"area": "Room",
+			"area": "Deepnest_East",
 			"benches": [
 				{
 					"x": 106.31,
@@ -10151,7 +10151,7 @@ window.mapData = {
 			}
 		},
 		"Room_Colosseum_Bronze": {
-			"area": "Room",
+			"area": "Deepnest_East",
 			"benches": [],
 			"items": {
 				"Charm_Notch-Colosseum": {
@@ -10173,7 +10173,7 @@ window.mapData = {
 			}
 		},
 		"Room_Colosseum_Gold": {
-			"area": "Room",
+			"area": "Deepnest_East",
 			"benches": [],
 			"items": {},
 			"name": "Trial of the Fool",
@@ -10187,7 +10187,7 @@ window.mapData = {
 			}
 		},
 		"Room_Colosseum_Silver": {
-			"area": "Room",
+			"area": "Deepnest_East",
 			"benches": [],
 			"items": {
 				"Pale_Ore-Colosseum": {
@@ -10209,7 +10209,7 @@ window.mapData = {
 			}
 		},
 		"Room_Colosseum_Spectate": {
-			"area": "Room",
+			"area": "Deepnest_East",
 			"benches": [],
 			"items": {},
 			"name": "Colosseum Spectate",
@@ -10228,7 +10228,7 @@ window.mapData = {
 			}
 		},
 		"Room_Final_Boss_Atrium": {
-			"area": "Room",
+			"area": "Crossroads",
 			"benches": [
 				{
 					"x": 196.0,
@@ -10267,7 +10267,7 @@ window.mapData = {
 			}
 		},
 		"Room_Final_Boss_Core": {
-			"area": "Room",
+			"area": "Crossroads",
 			"benches": [],
 			"items": {},
 			"name": "Hollow Knight",
@@ -10281,7 +10281,7 @@ window.mapData = {
 			}
 		},
 		"Room_Fungus_Shaman": {
-			"area": "Room",
+			"area": "Fungus3",
 			"benches": [],
 			"items": {
 				"Geo_Rock-Overgrown_Mound": {
@@ -10311,7 +10311,7 @@ window.mapData = {
 			}
 		},
 		"Room_GG_Shortcut": {
-			"area": "Room",
+			"area": "Waterways",
 			"benches": [],
 			"items": {
 				"Geo_Rock-Fluke_Hermit": {
@@ -10347,7 +10347,7 @@ window.mapData = {
 			}
 		},
 		"Room_Mansion": {
-			"area": "Room",
+			"area": "RestingGrounds",
 			"benches": [],
 			"items": {
 				"Mask_Shard-Grey_Mourner": {
@@ -10369,7 +10369,7 @@ window.mapData = {
 			}
 		},
 		"Room_Mask_Maker": {
-			"area": "Room",
+			"area": "Deepnest",
 			"benches": [],
 			"items": {},
 			"name": "Mask Maker",
@@ -10383,7 +10383,7 @@ window.mapData = {
 			}
 		},
 		"Room_Mender_House": {
-			"area": "Room",
+			"area": "Crossroads",
 			"benches": [],
 			"items": {},
 			"name": "Menderbug's House",
@@ -10397,7 +10397,7 @@ window.mapData = {
 			}
 		},
 		"Room_Ouiji": {
-			"area": "Room",
+			"area": "Town",
 			"benches": [],
 			"items": {},
 			"name": "Jiji",
@@ -10411,7 +10411,7 @@ window.mapData = {
 			}
 		},
 		"Room_Queen": {
-			"area": "Room",
+			"area": "Fungus3",
 			"benches": [],
 			"items": {
 				"Queen_Fragment": {
@@ -10433,7 +10433,7 @@ window.mapData = {
 			}
 		},
 		"Room_Slug_Shrine": {
-			"area": "Room",
+			"area": "Fungus1",
 			"benches": [
 				{
 					"x": 21.09,
@@ -10452,7 +10452,7 @@ window.mapData = {
 			}
 		},
 		"Room_Sly_Storeroom": {
-			"area": "Room",
+			"area": "Town",
 			"benches": [],
 			"items": {
 				"Nailmaster's_Glory": {
@@ -10479,7 +10479,7 @@ window.mapData = {
 			}
 		},
 		"Room_Town_Stag_Station": {
-			"area": "Room",
+			"area": "Town",
 			"benches": [],
 			"items": {
 				"Dirtmouth_Stag": {
@@ -10541,7 +10541,7 @@ window.mapData = {
 			}
 		},
 		"Room_Wyrm": {
-			"area": "Room",
+			"area": "Deepnest_East",
 			"benches": [],
 			"items": {
 				"King's_Brand": {
@@ -10563,7 +10563,7 @@ window.mapData = {
 			}
 		},
 		"Room_mapper": {
-			"area": "Room",
+			"area": "Town",
 			"benches": [],
 			"items": {
 				"Wayward_Compass": {
@@ -10574,7 +10574,7 @@ window.mapData = {
 					"y": 0.54
 				}
 			},
-			"name": "Conifer's Shop",
+			"name": "Cornifer's Shop",
 			"randomizerArea": "Dirtmouth",
 			"transitions": {
 				"left1": {
@@ -10585,7 +10585,7 @@ window.mapData = {
 			}
 		},
 		"Room_nailmaster": {
-			"area": "Room",
+			"area": "Cliffs",
 			"benches": [
 				{
 					"x": 19.69,
@@ -10612,7 +10612,7 @@ window.mapData = {
 			}
 		},
 		"Room_nailmaster_02": {
-			"area": "Room",
+			"area": "Fungus1",
 			"benches": [],
 			"items": {
 				"Great_Slash": {
@@ -10634,7 +10634,7 @@ window.mapData = {
 			}
 		},
 		"Room_nailmaster_03": {
-			"area": "Room",
+			"area": "Deepnest_East",
 			"benches": [],
 			"items": {
 				"Dash_Slash": {
@@ -10656,7 +10656,7 @@ window.mapData = {
 			}
 		},
 		"Room_nailsmith": {
-			"area": "Room",
+			"area": "Ruins1",
 			"benches": [],
 			"items": {},
 			"name": "Nailsmith",
@@ -10670,7 +10670,7 @@ window.mapData = {
 			}
 		},
 		"Room_ruinhouse": {
-			"area": "Room",
+			"area": "Crossroads",
 			"benches": [],
 			"items": {},
 			"name": "Infected Sly",
@@ -10684,7 +10684,7 @@ window.mapData = {
 			}
 		},
 		"Room_shop": {
-			"area": "Room",
+			"area": "Town",
 			"benches": [],
 			"items": {
 				"Elegant_Key": {
@@ -10802,7 +10802,7 @@ window.mapData = {
 			}
 		},
 		"Room_spider_small": {
-			"area": "Room",
+			"area": "Deepnest",
 			"benches": [],
 			"items": {
 				"Grimmkin_Flame-Brumm": {
@@ -10824,7 +10824,7 @@ window.mapData = {
 			}
 		},
 		"Room_temple": {
-			"area": "Room",
+			"area": "Crossroads",
 			"benches": [],
 			"items": {},
 			"name": "Black Egg Temple",
@@ -11519,7 +11519,7 @@ window.mapData = {
 					"y": 15.3
 				}
 			},
-			"name": "Conifer",
+			"name": "Cornifer",
 			"randomizerArea": "City_of_Tears",
 			"transitions": {
 				"bot1": {
@@ -12910,7 +12910,7 @@ window.mapData = {
 					"y": 30.5
 				}
 			},
-			"name": "Hwurmp Miniboss, Conifer",
+			"name": "Hwurmp Miniboss, Cornifer",
 			"randomizerArea": "Royal_Waterways",
 			"transitions": {
 				"left1": {
