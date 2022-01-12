@@ -2405,7 +2405,7 @@ window.mapData = {
 					"y": 3.45
 				}
 			},
-			"name": "Crossroads Tram (West)",
+			"name": "Upper Tram (West)",
 			"randomizerArea": "Forgotten_Crossroads",
 			"transitions": {
 				"door_tram": {
@@ -2430,7 +2430,7 @@ window.mapData = {
 			"area": "RestingGrounds",
 			"benches": [],
 			"items": {},
-			"name": "Crossroads Tram (East)",
+			"name": "Upper Tram (East)",
 			"randomizerArea": "Resting_Grounds",
 			"transitions": {
 				"door_tram": {

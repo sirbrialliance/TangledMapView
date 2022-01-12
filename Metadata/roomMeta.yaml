@@ -237,7 +237,7 @@ rooms:
   Crossroads_45:
     name: Myla
   Crossroads_46:
-    name: Crossroads Tram (West)
+    name: Upper Tram (West)
     transitions:
       tram:
         x: 18.5
@@ -245,7 +245,7 @@ rooms:
         to: Crossroads_46b[tram]
         side: right
   Crossroads_46b:
-    name: Crossroads Tram (East)
+    name: Upper Tram (East)
     area: RestingGrounds
     transitions:
       tram:
