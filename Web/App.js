@@ -433,7 +433,7 @@ class App {
 	}
 
 	async loadTestData() {
-		this.data.load(testSaveData[localStorage.testSaveId || "a3"])
+		this.data.load(JSON.parse(testSaveData[localStorage.testSaveId || "a3"]))
 	}
 
 	unloadSave() {

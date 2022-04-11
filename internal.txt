@@ -7,6 +7,32 @@ slot 4: area + "everything" (and a shade)
 Next
 -------------------------------------------------------------------------
 
+- Randomizer 4
+	- all the data has been rearranged
+		- item locations
+		- transitions
+		- "allItemPools"
+		- itemPlacements needs to have array values
+			- getItemAt() too
+			- this.items get populated
+
+		- Are the final item locatoins only in ItemSpoilerLog.json, or can I just grab them from the ItemChanger?
+			- ItemChanger save data is a bit more obtuse and includes things like "if you have A, then item is A + 1"
+
+		- also for transitions from TransitionSpoilerLog.json?
+		- transistion log still good? If not may have data in TrackerDataPM.txt
+
+
+		- where did the "intended route" data go? Can I get it from TrackerData class?
+			- Is the id on RandomizerMod.IC.RandoPlacementTag, RandomizerMod relevant?
+			- Or do I have to open up spoiler log stuffs instead?
+
+	- non-bidi transitions mess up island generation
+
+
+
+
+
 - Do a release?
 	- Collected items don't appear right on new saves until you've saved and refreshed the page
 

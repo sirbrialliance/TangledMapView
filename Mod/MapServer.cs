@@ -95,6 +95,7 @@ public class MapServer {
 			if (path.EndsWith(".js")) res.ContentType = "application/javascript";
 			else if (path.EndsWith(".html")) res.ContentType = "text/html";
 			else if (path.EndsWith(".css")) res.ContentType = "text/css";
+			else if (path.EndsWith(".svg")) res.ContentType = "image/svg+xml";
 			else res.ContentType = "text/plain";
 
 			res.ContentEncoding = Encoding.UTF8;
