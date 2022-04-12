@@ -311,17 +311,14 @@ class ClusterHandler {
 		room.islandDistance = islandDistance
 		++islandDistance
 
-		for (let doorId in room.doors) {
+		//map of adjacent rooms (roomId => room)
+		//We want to include both rooms we can go to, but also rooms that can get to us.
+		//(The distinction is important with unmatched transitions.)
+		var adjacentRooms = room.adjacentVisibleRooms
+
+		for (let roomId in adjacentRooms) {
 			//don't allow graph traversal along transitions we haven't taken, even if both rooms are visited (or not)
-			if (!this._visibleTransitions[doorId]) continue
-
-			let transition = this.data.doorTransitions[doorId]
-
-			let otherRoom = transition.dstRoom === room ? transition.srcRoom : transition.dstRoom
-
-			//ignore non-visible rooms
-			if (!this._visibleRooms[otherRoom.id]) continue
-
+			let otherRoom = adjacentRooms[roomId]
 
 			if (islandDistance < otherRoom.islandDistance) {
 				//we're closer than what it currently has
@@ -341,14 +338,15 @@ class ClusterHandler {
 			// if (links.length >= 2) break;
 
 			var transitionA = this._visibleTransitions[doorId]
-			if (!transitionA) continue //one-way that doesn't start on doorId we'll get this from the other side
+			if (!transitionA) continue //one-way that doesn't start on doorId. We'll get this from the other side
 
 			if (transitionA.srcRoom.island !== island && transitionA.dstRoom.island !== island) {
 				//Fully unrelated to this island
 				continue
 			}
 
-			var transitionB = this.data.transitions[transitionA.otherDoor(doorId)]
+			var transitionB = null
+			if (transitionA.bidi) transitionB = this.data.transitions[transitionA.otherDoor(doorId)]
 			let link = new RoomLink(transitionA, transitionB)
 
 			if (transitionA.srcRoom.island !== transitionA.dstRoom.island) {
@@ -364,7 +362,7 @@ class ClusterHandler {
 				//same island
 				links.push(link)
 				handledDoors[transitionA.srcDoor] = true
-				handledDoors[transitionA.dstDoor] = true
+				if (transitionA.bidi) handledDoors[transitionA.dstDoor] = true
 			}
 		}
 

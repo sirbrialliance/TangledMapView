@@ -8,6 +8,8 @@ const roomDirections = {
 	left: {x: -1, y: 0, r: -90},
 }
 
+const SVG_NS = 'http://www.w3.org/2000/svg'
+
 class DataRender {
 	constructor(cluster) {
 		this.cluster = cluster
@@ -17,6 +19,12 @@ class DataRender {
 
 	renderInto(holder) {
 		this._holder = holder
+
+		DataRender._scratchPath?.remove()
+		DataRender._scratchPath = document.createElementNS(SVG_NS, "path")
+		DataRender._scratchPath.id = "_scratchPath"
+		holder.node().appendChild(DataRender._scratchPath)
+		DataRender._scratchPath.style.display = "none"
 
 		this._crossIslandHolder = this._holder.append("g").attr("id", "crossIslandHolder").lower()
 
@@ -221,12 +229,22 @@ class DataRender {
 				.attr("id", link => "link-" + link.id)
 
 		const relatedElements = room => {
+			var roomLinks = []
+			for (let doorId of Object.keys(room.doors)) {
+				var transitionA = this.data.doorTransitions[doorId]
+				var transitionB = this.data.reverseDoorTransitions[doorId]
+
+				if (transitionA) {
+					roomLinks.push(RoomLink.getId(transitionA))
+				}
+				if (transitionB && !transitionA?.bidi) {
+					roomLinks.push(RoomLink.getId(transitionB))
+				}
+			}
+
 			return [
-				...room.adjacentVisibleRooms.map(x => document.getElementById(`room-${x.id}`)),
-				...Object.keys(room.doors).map(doorId => {
-					var elId = RoomLink.getId(this.data.doorTransitions[doorId])
-					return document.getElementById("link-" + elId)
-				}),
+				...Object.values(room.adjacentVisibleRooms).map(x => document.getElementById(`room-${x.id}`)),
+				...roomLinks.map(linkId => document.getElementById("link-" + linkId)),
 			]
 		}
 
@@ -369,6 +387,43 @@ class DataRender {
 		}, 0)
 	}
 
+	static _makeCurve(start, startDir, endDir, end) {
+		let delta = {x: start.x - end.x, y: start.y - end.y}
+		var curveDist = Math.sqrt(delta.x * delta.x + delta.y * delta.y)
+
+		let tangentLen = Math.max(10, Math.min(curveDist * .6, 300))
+
+		return `M ${start.x} ${start.y} ` +
+			`C ${start.x + (startDir.x || 0) * tangentLen} ${start.y + (startDir.y || 0) * tangentLen} ` +
+			`${end.x + (endDir.x || 0) * tangentLen} ${end.y + (endDir.y || 0) * tangentLen} ` +
+			`${end.x} ${end.y} `
+	}
+
+	static _arrowSize = 10
+	static _arrowLeadSize = 10
+	static _makeArrow(start, direction) {
+		let matrix = [//direction must be normalized
+			direction.y, direction.x,
+			-direction.x, direction.y,
+		]
+
+		let rotateFromStart = (x, y) => ({
+			x: start.x + matrix[0] * x + matrix[1] * y,
+			y: start.y + matrix[2] * x + matrix[3] * y,
+		})
+
+		let a = rotateFromStart(-DataRender._arrowSize / 2, 0)
+		let b = rotateFromStart(0, DataRender._arrowSize)
+		let c = rotateFromStart(DataRender._arrowSize / 2, 0)
+
+		var ret = `L ${a.x} ${a.y} `
+		ret += `L ${b.x} ${b.y} `
+		ret += `L ${c.x} ${c.y} `
+		ret += `L ${start.x} ${start.y} `
+		ret += `L ${b.x} ${b.y} `
+		return ret
+	}
+
 	/** Returns the path bit to use with a <path d=XXYY /> */
 	static buildLinkPath(transition, src, dst) {
 		// if (isNaN(src.x) || isNaN(src.y) || isNaN(dst.x) || isNaN(dst.y)) throw Error("bad data")
@@ -376,26 +431,65 @@ class DataRender {
 		//Unit (or zero) vector for the direction we want to head towards (use zero influence on doors)
 		let srcDir = roomDirections[srcSide] || false, dstDir = roomDirections[dstSide] || false
 
+		var ret = ""
+
 		// var curveStart = srcDir ? {x: src.x + srcDir.x * leadOutLen, y: src.y + srcDir.y * leadOutLen} : src
 		// var curveEnd = dstDir ? {x: dst.x + dstDir.x * leadOutLen, y: dst.y + dstDir.y * leadOutLen} : dst
 		var curveStart = src
 		var curveEnd = dst
 
-		let delta = {x: curveStart.x - curveEnd.x, y: curveStart.y - curveEnd.y}
-		var curveDist = Math.sqrt(delta.x * delta.x + delta.y * delta.y)
+		if (!transition.bidi) {
+			if (!srcDir) {
+				//if no base direction, just point at our destination
+				srcDir = {x: dst.x - src.x, y: dst.y - src.y}
+				let scale = 1 / Math.sqrt(srcDir.x * srcDir.x + srcDir.y * srcDir.y)
+				srcDir.x *= scale
+				srcDir.y *= scale
+			}
+			if (!dstDir) {
+				//if no base direction, just point at our source
+				dstDir = {x: dst.x - src.x, y: dst.y - src.y}
+				let scale = -1 / Math.sqrt(dstDir.x * dstDir.x + dstDir.y * dstDir.y)
+				dstDir.x *= scale
+				dstDir.y *= scale
+			}
 
-		let tangentLen = Math.max(10, Math.min(curveDist * .6, 300))
+			// //straight line start
+			// curveStart.x += srcDir.x * DataRender._arrowLeadSize
+			// curveStart.y += srcDir.y * DataRender._arrowLeadSize
+			// ret += `L ${curveStart.x} ${curveStart.y} `
 
+			// //Little arrow thing
+			// ret += DataRender._makeArrow(curveStart, srcDir)
+			// curveStart.x += srcDir.x * DataRender._arrowSize
+			// curveStart.y += srcDir.y * DataRender._arrowSize
 
-		var ret = `M ${src.x} ${src.y} `
+			//calculate curve midpoint
+			DataRender._scratchPath.setAttribute("d",
+				DataRender._makeCurve(curveStart, srcDir, dstDir, curveEnd)
+			)
+			let len = DataRender._scratchPath.getTotalLength()
+			let midpoint = DataRender._scratchPath.getPointAtLength(len / 2)
+			let midpoint1 = DataRender._scratchPath.getPointAtLength(len / 2 + .001)
+			let midDir = {x: midpoint1.x - midpoint.x, y: midpoint1.y - midpoint.y}
+			let scale = 1 / Math.sqrt(midDir.x * midDir.x + midDir.y * midDir.y)
+			midDir.x *= scale
+			midDir.y *= scale
 
-		// if (srcDir) ret += `L ${curveStart.x} ${curveStart.y} `
+			//curve to middle
+			ret += DataRender._makeCurve(curveStart, srcDir, {x: -midDir.x, y: -midDir.y}, midpoint)
 
-		ret += `C ${curveStart.x + (srcDir.x || 0) * tangentLen} ${curveStart.y + (srcDir.y || 0) * tangentLen} ` +
-			`${curveEnd.x + (dstDir.x || 0) * tangentLen} ${curveEnd.y + (dstDir.y || 0) * tangentLen} ` +
-			`${curveEnd.x} ${curveEnd.y} `
+			//arrow
+			ret += DataRender._makeArrow(midpoint, midDir)
+			// midpoint.x += midDir.x * DataRender._arrowSize
+			// midpoint.y += midDir.y * DataRender._arrowSize
 
-		// if (dstDir) ret += `L ${dst.x} ${dst.y} `
+			//curve to dest
+			ret += DataRender._makeCurve(midpoint, midDir, dstDir, curveEnd)
+		} else {
+			//bidirectional
+			ret += DataRender._makeCurve(curveStart, srcDir, dstDir, curveEnd)
+		}
 
 		return ret
 	}

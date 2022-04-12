@@ -15,6 +15,7 @@ Next
 		- itemPlacements needs to have array values
 			- getItemAt() too
 			- this.items get populated
+		- relatedElements needs to return incoming doors, too
 
 		- Are the final item locatoins only in ItemSpoilerLog.json, or can I just grab them from the ItemChanger?
 			- ItemChanger save data is a bit more obtuse and includes things like "if you have A, then item is A + 1"
@@ -28,6 +29,7 @@ Next
 			- Or do I have to open up spoiler log stuffs instead?
 
 	- non-bidi transitions mess up island generation
+	- adjacentVisibleRooms needs to handle non-bidi transitions
 
 
 

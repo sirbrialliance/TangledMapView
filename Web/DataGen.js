@@ -75,11 +75,13 @@ class DataGen {
 	// centerPos = [0, 0]
 	rooms = {}//map of room id => RoomNode
 	transitions = {}//map of (srcDoor) => RoomTransition
-	/** Map of door id => RoomTransition. The forward transition is preferred, but if there isn't one the reverse transition is used. */
+	/** Map of source door id => RoomTransition that starts there. */
 	doorTransitions = {}
+	/** Map of destination door id => RoomTransition that ends there */
+	reverseDoorTransitions = {}
 	/**
-	 * set of doors we've used (door id => true)
-	 * Source doors, and also the associated destination door if it's bidirectional.
+	 * Source doors we've transitioned into, {door id => true, ...}
+	 * Also includes the associated destination door if it's bidirectional (and that's not a spoiler)
 	 */
 	visitedDoors = {}
 
@@ -111,6 +113,8 @@ class DataGen {
 	showAllItems = false
 
 	clusterBasedOnAll = true
+	/** Is that cursed "turn around and go back through the door but end up somewhere else" transition option on? */
+	disjointTransitions = false
 
 	clear() {
 		this.saveData = null
@@ -121,6 +125,7 @@ class DataGen {
 		this.items = {}
 		this.itemPlacements = {}
 		this.selectedRoom = null
+		this.disjointTransitions = false
 	}
 
 	/** Parses a string JSON value (or null/empty) into a (perhaps empty) dictionary */
@@ -146,6 +151,7 @@ class DataGen {
 		this.visitedDoors = {}
 		this.rooms = {}
 
+		this.disjointTransitions = !this.saveData.randomizerSettings.GenerationSettings.TransitionSettings.Coupled
 
 		this._buildDoors()
 
@@ -253,6 +259,11 @@ class DataGen {
 				let srcRoom = getAndUpdateRoom(srcInfo.roomId, srcDoor)
 				let dstRoom = getAndUpdateRoom(dstInfo.roomId, dstDoor)
 
+				let randomized = !!randomizedPlacements[srcDoor]
+				let bidi = tPlacements[dstDoor] === srcDoor
+				//don't treat as bidi if things link up by chance:
+				if (this.disjointTransitions && randomized) bidi = false
+
 				this.transitions[srcDoor] = Object.assign(new RoomTransition, {
 					id: srcDoor + "-" + dstDoor,
 
@@ -266,47 +277,41 @@ class DataGen {
 					dstSide: dstInfo.side,
 					dstSplit: this._getSplit(dstRoom, dstInfo.doorName),
 
-					randomized: !!randomizedPlacements[srcDoor],
-
-					visited: null,//will fill out shortly
-					//bidirectional link (you can enter src to got o dest and vice-verse)
-					//some doors are one-way, and some randomization isn't reflexive (returning where you came from goes somewhere else)
-					bidi: tPlacements[dstDoor] === srcDoor,
+					randomized,
+					bidi,
 				})
 			}
 		}
 
 		this.doorTransitions = {}
+		this.reverseDoorTransitions = {}
 		//add door mappings
 		for (let k in this.transitions) {
 			var transition = this.transitions[k]
+
 			this.doorTransitions[transition.srcDoor] = transition
-			if (!transition.bidi) this.doorTransitions[transition.dstDoor] = transition
+			this.reverseDoorTransitions[transition.dstDoor] = transition
 		}
 	}
 
 	_markVisitedTransitions() {
 		let markVisited = (transitionA) => {
-			transitionA.visited = true
 			this.visitedDoors[transitionA.srcDoor] = true
 
 			//if dest door does the same in reverse AND we don't have mismatched transitions, mark it visited too
-			if (transitionA.bidi && this.saveData.randomizerSettings.TransitionSettings.Coupled) {
-				let transitionB = this.doorTransitions[transitionA.dstDoor]
-				transitionB.visited = true
+			if (transitionA.bidi && this.disjointTransitions) {
 				this.visitedDoors[transitionA.dstDoor] = true
 			}
 		}
 
-		//mark what's been visited (data is map of src door=>randomized dest door))
+		//mark what's been visited (TrackerData.visitedTransitions is map of src door=>randomized dest door))
 		for (let doorId in this.saveData.randomizerSettings.TrackerData.visitedTransitions) {
 			let transitionA = this.doorTransitions[doorId]
 			markVisited(transitionA)
 		}
 
 		//visitedTransitions only records randomized transitions, not unrandomized taken transitions
-		//todo: still true?
-		//so mark those too
+		//(todo: still true?) so mark those too
 		//note we don't blindy link any connections between scenesVisited as you may not have taken that
 		//transition and don't actually know they connect (but if you don't have those rooms randomized and you've
 		//been in both you "know" they connect because we assume your base game knowledge is perfect)
@@ -420,13 +425,15 @@ class DataGen {
 				var transition = this.doorTransitions[doorId]
 				ret[transition.srcRoom.id] = transition.srcRoom
 				ret[transition.dstRoom.id] = transition.dstRoom
+
+				//no need to check reverseDoorTransitions, visitedDoors should contain the forward case
 			}
 
 			return ret
 		}
 	}
 
-	/** Returns a map of visible transitions (srcDoor (or maybe dstDoor) => transition) */
+	/** Returns a map of visible transitions (srcDoor => transition) */
 	get visibleTransitions() {
 		if (this.showAllRooms) {
 			return this.doorTransitions
@@ -434,13 +441,13 @@ class DataGen {
 			var ret = {}
 			for (let doorId in this.visitedDoors) {
 				var transition = this.doorTransitions[doorId]
-				ret[transition.srcDoor] = transition
-				if (transition.bidi) {
-					var transitionB = this.transitions[transition.dstDoor]
-					ret[transitionB.srcDoor] = transitionB
-				} else {
-					ret[transition.dstDoor] = transition
-				}
+				if (transition) ret[transition.srcDoor] = transition
+				// //todo: is this even needed? the other side should mark for us
+				// else {
+				// 	//destination-only doorId included in visitedDoors because we know they link
+				// 	var transitionB = this.transitions[transition.dstDoor]
+				// 	ret[transitionB.srcDoor] = transitionB
+				// }
 			}
 
 			return ret
@@ -451,7 +458,10 @@ class DataGen {
 	addVisit(doorId) {
 		var transition = this.doorTransitions[doorId]
 		this.visitedDoors[transition.srcDoor] = true
-		this.visitedDoors[transition.dstDoor] = true
+
+		if (transition.bidi && this.disjointTransitions) {
+			this.visitedDoors[transition.dstDoor] = true
+		}
 	}
 
 }
@@ -654,27 +664,35 @@ class RoomNode {
 		return ret
 	}
 
-	get adjacentRooms() {
-		//(aside: rooms can link to themselves, FYI)
-		var ret = []
-		for (let doorId in this.doors) {
-			let transition = this.data.doorTransitions[doorId]
-			if (transition.srcRoom !== this && ret.indexOf(transition.srcRoom) < 0) ret.push(transition.srcRoom)
-			if (transition.dstRoom !== this && ret.indexOf(transition.dstRoom) < 0) ret.push(transition.dstRoom)
-		}
-		return ret
-	}
-
+	/** Returns a map of room id => RoomNode for all visible rooms we connect to or are connected to by */
 	get adjacentVisibleRooms() {
-		//(aside: rooms can link to themselves, FYI)
-		var visibleTransitions = this.data.visibleTransitions
-		var ret = []
+		//Note that rooms can link to themselves
+		//Transitions only come to us are still considered "adjacent"
+		var ret = {}
 		for (let doorId in this.doors) {
-			let transition = visibleTransitions[doorId]
-			if (!transition) continue
-			if (transition.srcRoom !== this && ret.indexOf(transition.srcRoom) < 0) ret.push(transition.srcRoom)
-			if (transition.dstRoom !== this && ret.indexOf(transition.dstRoom) < 0) ret.push(transition.dstRoom)
+			let outwardTransition = this.data.doorTransitions[doorId]
+			//may be different from outwardTransition with disjoint transitions:
+			//(so one of our doors can have two adjacent rooms)
+			let inwardTransition = this.data.reverseDoorTransitions[doorId]
+
+			if (!this.data.showAllRooms) {
+				//check if we know if rooms are adjacent
+				if (!this.data.visitedDoors[outwardTransition.srcDoor]) outwardTransition = null
+				if (!this.data.visitedDoors[inwardTransition.srcDoor]) inwardTransition = null
+			}
+
+			if (outwardTransition) {
+				ret[outwardTransition.srcRoom.id] = outwardTransition.srcRoom
+				ret[outwardTransition.dstRoom.id] = outwardTransition.dstRoom
+			}
+			if (inwardTransition) {
+				ret[inwardTransition.srcRoom.id] = inwardTransition.srcRoom
+				ret[inwardTransition.dstRoom.id] = inwardTransition.dstRoom
+			}
 		}
+
+		delete ret[this.id]//never include ourself
+
 		return ret
 	}
 
@@ -691,14 +709,14 @@ class RoomNode {
 /** A transition from room A to room B. Might have a brother that's for room B to A. */
 class RoomTransition {
 	id = ""
-	srcDoor = ""
-	srcRoom = ""
+	srcDoor = ""//door id
+	srcRoom = null//RoomNode
 	srcSide = ""
 	/** Split index. Usually 0, but may be more if the source room is a split room (can't get to all doors from any door). */
 	srcSplit = 0
 
-	dstDoor = ""
-	dstRoom = ""
+	dstDoor = ""//door id
+	dstRoom = null//RoomNode
 	dstSide = ""
 	/** Same as srcSplit, but for destination door */
 	dstSplit = 0
@@ -706,7 +724,14 @@ class RoomTransition {
 	/** Different transition in this save file than the base game? */
 	randomized = false
 
-	visited = false
+	/**
+	 * Bidirectional link?
+	 * Can enter src to got to dest and dest to get to src?
+	 * Some doors are one-way, and disjointTransitions randomization isn't reflexive
+	 *
+	 * Also, this is always false for randomized transitions when disjointTransitions is on,
+	 * even if, by chance, you do get a "normal" bidirectional link.
+	 */
 	bidi = false
 
 	/** Returns the room on this transition that isn't the given one. */
@@ -737,15 +762,24 @@ class RoomTransition {
 class RoomLink {
 
 	static getId(transition) {
-		return [transition.srcDoor, transition.dstDoor].sort().join("-")
+		if (window.data.disjointTransitions && transition.randomized) {
+			//Disjoint transitions need a different id
+			return `dt-${transition.srcDoor} - ${transition.dstDoor}`
+		} else {
+			//Normal.
+			//id is door id + "-" + door id, with the alphabetically first one first
+			return [transition.srcDoor, transition.dstDoor].sort().join("-")
+		}
 	}
 
 	constructor(transitionA, transitionB) {
-		//id is door id + "-" + door id, with the alphabetically first one first
 		this.id = RoomLink.getId(transitionA)
 
 		this.transitionA = transitionA
 		//optional, but if given must be transitionA with src and dst swapped
+		if (transitionB && (!transitionB.bidi || !transitionB.srcDoor === transitionA.dstDoor)) {
+			throw new Error("Invalid RoomLink")
+		}
 		this.transitionB = transitionB
 
 		this.source = transitionA.srcRoom
