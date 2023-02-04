@@ -1,5 +1,5 @@
 import math
-from xml.dom import minidom
+import json
 import yaml # pip install pyyaml
 
 import config
@@ -26,21 +26,6 @@ def getRoom(roomId):
 
 	return data
 
-def addArea(node):
-	"""Adds the randomizarArea for the given <transition>, <item>, etc."""
-	roomId = prop(node, "sceneName")
-	if not roomId: return
-	room = getRoom(roomId)
-	area = prop(node, "areaName")
-
-	# Randomizer isn't consistent on this one:
-	if area == "Palace_Grounds": area = "White_Palace"
-
-	if not area: return
-	if "randomizerArea" in room and room["randomizerArea"] != area:
-		# print("Multiple areas for " + roomId, area, room["randomizerArea"]); return
-		raise Exception("Multiple areas for " + roomId, area, room["randomizerArea"])
-	room["randomizerArea"] = area
 
 def loadData():
 	global metaData, roomData
@@ -61,70 +46,82 @@ def loadData():
 	# print(repr(roomData["Room_Bretta"]))
 	# print(repr(metaData))
 
-def prop(el, name):
-	target = el.getElementsByTagName(name)
-	if len(target):
-		if len(target[0].childNodes): return target[0].childNodes[0].data
-		else: return None
-	else: return None
 
-def maybeProp(el, name, dest):
-	val = prop(el, name)
-	if val is not None: dest[name] = val
-
-rndRoomXML = rndAreaXML = None
+randomizerData = {}
 
 def loadRandomizerData():
-	dataPath = config.randomizerSourcePath + "/RandomizerMod3.0/Resources/"
+	dataPath = config.randomizerSourcePath + "/RandomizerMod/Resources/Data/"
 
-	# Note what area the randomizer considers each room to be in
-	# use the areaName from a number of files since it isn't always filled out...and even still some places
-	# don't have it so it's added in roomMeta.yaml
+	global randomizerData
 
-	global rndRoomXML, rndAreaXML
+	for id in ['rooms', 'transitions', 'locations']:
+		with open(dataPath + id + ".json", "rt") as f:
+			randomizerData[id] = json.load(f)
 
-	# Most the room areas are in this file:
-	rndRoomXML = rooms = minidom.parse(dataPath + "rooms.xml")
-	for transition in rooms.getElementsByTagName("transition"):
-		addArea(transition)
+	with open(config.itemRandomizerSourcePath + "/ItemChanger/Resources/locations.json", "rt") as f:
+		randomizerData["sceneLocations"] = json.load(f)
 
-	rndAreaXML = areas = minidom.parse(dataPath + "areas.xml")
-	for transition in areas.getElementsByTagName("transition"):
-		addArea(transition)
 
+	# Note what area the randomizer considers each room to be in.
+	for roomId, data in randomizerData['rooms'].items():
+		room = getRoom(roomId)
+		room["randomizerArea"] = data["MapArea"]
+		room["randomizerTitleArea"] = data["TitledArea"]
 
 	# note what items/checks are in each room and info about them
-	items = [
-		minidom.parse(dataPath + "items.xml"),
-		minidom.parse(dataPath + "rocks.xml"),
-		minidom.parse(dataPath + "soul_lore.xml"),
-	]
-	for doc in items:
-		for item in doc.getElementsByTagName("item"):
-			try:
-				roomId = prop(item, "sceneName")
-				if not roomId: roomId = "__orphans__"
-				addArea(item)
+	# If we have to look up the location of an object in the scene we'll do that later.
+	for locId, data in randomizerData['locations'].items():
+		if locId == "Start": continue
+		if locId == "Salubra_(Requires_Charms)": continue # same place as normal Salubra
 
-				items = getRoom(roomId)["items"]
+		# These don't have actual locations in a scene (do they?)
+		if locId in ["Leftslash", "Rightslash", "Upslash", ]: continue
 
-				if prop(item, "newShiny") == "true":
-					itemInfo = {
-						'x': float(prop(item, 'x')),
-						'y': float(prop(item, 'y')),
-					}
-				else:
-					itemInfo = {
-						'objectName': prop(item, 'objectName'),
-					}
-				itemInfo['randType'] = prop(item, "type")
-				itemInfo['randAction'] = prop(item, "action")
-				itemInfo['randPool'] = prop(item, "pool")
-				maybeProp(item, "geo", itemInfo)
-				items[item.getAttribute("name")] = itemInfo
-			except:
-				print("Issue handling " + item.toxml())
-				raise
+		try:
+			roomId = data['SceneName']
+			items = getRoom(roomId)["items"]
+
+			locData = randomizerData["sceneLocations"][locId]
+
+			itemInfo = {'id': locId}
+
+			# Dig into relevant detail for certain item types:
+			if "chestLocation" in locData: locData = locData["chestLocation"]
+			elif "location" in locData: locData = locData["location"]
+			elif "trueLocation" in locData: locData = locData["trueLocation"]
+
+			if "objectName" in locData:
+				itemInfo['objectName'] = locData['objectName']
+			elif "objName" in locData:
+				itemInfo['objectName'] = locData['objName']
+			elif "x" in locData:
+				itemInfo = {
+					'x': float(locData['x']),
+					'y': float(locData['y']),
+				}
+			elif locData["$type"] == "ItemChanger.Locations.SpecialLocations.WhisperingRootLocation, ItemChanger":
+				itemInfo['objectName'] = "__whisperingRoot__"
+			elif locData["$type"] == "ItemChanger.Locations.SpecialLocations.GrimmkinLocation, ItemChanger":
+				itemInfo['objectName'] = "__grimmkin__"
+			# Special items without embedded hints. To get info, you Look up the
+			# class (e.g. ShadeCloakLocation) and find the object named.
+			elif locId == "Shade_Cloak": itemInfo['objectName'] = "Dish Plat"
+			elif locId == "Shade_Soul": itemInfo['objectName'] = "Ruins Shaman"
+			elif locId == "Abyss_Shriek": itemInfo['objectName'] = "Scream 2 Get"
+			elif locId == "Nailmaster's_Glory": itemInfo['objectName'] = "Sly Basement NPC"
+			elif locId == "Void_Heart": itemInfo['objectName'] = "__todo__" # put the location on the black sphere you hit
+			elif locId == "Rancid_Egg-Tuk_Defender's_Crest": itemInfo['objectName'] = "Tuk NPC"
+			elif locId == "Grimmkin_Flame-Brumm": itemInfo['objectName'] = "Brumm Torch NPC"
+			else:
+				raise Exception("No scene location data")
+
+			# itemInfo['randType'] = prop(item, "type")
+			# itemInfo['randAction'] = prop(item, "action")
+			# itemInfo['randPool'] = prop(item, "pool")
+			items[locId] = itemInfo
+		except:
+			print(f"Issue handling {locId}\n{repr(data)}\n{repr(locData)}")
+			raise
 
 def finishData():
 	buildStagTransitions()
@@ -170,6 +167,10 @@ def buildStagTransitions():
 
 		doorName = "stag_" + room["stag"]
 
+		if "door_stagExit" not in room["transitions"]:
+			print(f"Missing door_stagExit in {roomId}", repr(room["transitions"]))
+			continue
+
 		stagDoor = room["transitions"]["door_stagExit"]
 		stagDoor["to"] = "Cinematic_Stag_travel[" + doorName + "]"
 
@@ -181,15 +182,11 @@ def buildStagTransitions():
 
 
 def markOneWayDoors():
+	for id, data in randomizerData['transitions'].items():
+		if data['Sides'] == "Both": continue # not one-way
 
-	def handleTransition(node):
-		# oneWay: 1 is entrance, 2 is exit
-		# See RandomizerMod.Randomization.TransitionDef.oneWay
-		oneWay = prop(node, "oneWay")
-		if oneWay != "2": return
-
-		roomId = prop(node, "sceneName")
-		doorName = prop(node, "doorName")
+		roomId = data['SceneName']
+		doorName = data['DoorName']
 
 		room = getRoom(roomId)
 		if doorName not in room["transitions"]:
@@ -197,9 +194,4 @@ def markOneWayDoors():
 			return
 		room["transitions"][doorName]["to"] = None
 
-	for transition in rndRoomXML.getElementsByTagName("transition"):
-		handleTransition(transition)
-
-	for transition in rndAreaXML.getElementsByTagName("transition"):
-		handleTransition(transition)
 

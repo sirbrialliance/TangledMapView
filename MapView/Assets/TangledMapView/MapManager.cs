@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TangledMapView {
+namespace TangledMapView {
+
+public class MapManager {
 
 	public static void Show() {}
 
 
+}
 }

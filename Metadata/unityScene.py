@@ -124,7 +124,7 @@ class SceneHandler:
 			config.benchTypeGUID.encode(),
 		)
 
-		# instead of parsing the whole YAML document (really slow wih our parser)
+		# instead of parsing the whole YAML document (really slow with our parser)
 		# do some string manipulation to get the individual sections and note things for later
 		# We'll parse things when we actually need the real data.
 		self.objects = {}
@@ -148,6 +148,8 @@ class SceneHandler:
 				for guid in scriptGUIDs:
 					if guid in segment:
 							self.interestingObjectIds.add(objId)
+
+		# print("FYI, scene names->ids: " + repr(self.namesToObjectIds))
 
 
 	def getObject(self, id):
@@ -238,9 +240,19 @@ class SceneHandler:
 		for itemId, item in roomData["items"].items():
 			if 'x' in item: continue
 
+			if "objectName" not in item or not item['objectName']:
+				print(f"{itemId} has no object location - {repr(item)}")
+				continue
+
 			# try to find the object's position
 			nameParts = item['objectName'].split("\\")
 			objName = nameParts[-1]
+
+			if objName not in self.namesToObjectIds:
+				print(f"There's no {objName} in {self.roomId} - location {itemId} - {repr(item)}")
+				continue
+				# raise Exception(f"There's no {objName} in {self.roomId} - location {itemId} - {repr(item)}")
+
 			possibleIds = self.namesToObjectIds[objName]
 
 			if itemId == "Charm_Notch-Shrumal_Ogres":

@@ -78,10 +78,5 @@ To help visualize the room arrangement a few different view options are provided
 
 ## Misc
 
-Rebuild map metadata:
-
-- You'll need the .unity scenes ([see here](https://radiance.host/apidocs/EditScene.html)) and the [RandomizerMod sources](https://github.com/homothetyhk/HollowKnight.RandomizerMod).
-- `cd Metadata`
-- Edit `config.py` and give it the information it wants
-- `python builddata.py`
+To rebuild map/game metadata follow the information in metadata/config.py then run the builddata.py script.
 
