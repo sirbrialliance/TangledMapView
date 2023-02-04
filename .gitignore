@@ -9,3 +9,9 @@ Metadata/yamap*
 .vs/
 __pycache__
 TangledMapView.sln.DotSettings.user
+MapView/Library/
+MapView/Temp/
+MapView/.vsconfig
+MapView/UserSettings/
+MapView/*.csproj
+MapView/MapView.sln
