@@ -1,10 +1,23 @@
 
-slot 2: defaults
-slot 3: c-area + more item rando
-slot 4: area + "everything" (and a shade)
 
 -------------------------------------------------------------------------
 Next
+-------------------------------------------------------------------------
+
+
+- mega revamp
+
+	- map tiles
+		- xx DrawBlackBordersHook may give useful info on bounds
+		- black screen during awake
+
+- things:
+	- update visuals when get item
+	- works right with new game or loaded game
+	-
+
+-------------------------------------------------------------------------
+Unsorted
 -------------------------------------------------------------------------
 
 - Issues
@@ -39,9 +52,6 @@ Next
 		- do irrelevant items still get recorded?
 	- do something with the flickering when hovering over a room near the bottom of the screen?
 
--------------------------------------------------------------------------
-Unsorted
--------------------------------------------------------------------------
 
 - look into framerate
 	- nn Firefox is faster than Chromium, item icons+filter and cross-island links make it worse

@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TangledMapView</RootNamespace>
     <AssemblyName>TangledMapView</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,13 +31,18 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
       <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
-    <Reference Include="RandomizerMod3.0">
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\RandomizerMod3.0.dll</HintPath>
+    <Reference Include="PlayMaker, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\PlayMaker.dll</HintPath>
+    </Reference>
+    <Reference Include="RandomizerMod">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\Randomizer 4\RandomizerMod.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -45,18 +52,75 @@
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.InputLegacyModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
+    </Reference>
     <Reference Include="websocket-sharp">
       <HintPath>.\websocket-sharp.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MappingCamera.cs" />
+    <Compile Include="TangledMapManager.cs" />
     <Compile Include="TangledMapViewMod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="MapServer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="..\Web\*">
-      <LogicalName>Web\%(filename)%(extension)</LogicalName>
+    <EmbeddedResource Include="..\Web\App.js">
+      <LogicalName>Web\App.js</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Web\ClusterHandler.js">
+      <LogicalName>Web\ClusterHandler.js</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Web\d3.js">
+      <LogicalName>Web\d3.js</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Web\d3.LICENSE.txt">
+      <LogicalName>Web\d3.LICENSE.txt</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Web\DataGen.js">
+      <LogicalName>Web\DataGen.js</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Web\DataRender.js">
+      <LogicalName>Web\DataRender.js</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Web\index.html">
+      <LogicalName>Web\index.html</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Web\mapData.js">
+      <LogicalName>Web\mapData.js</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Web\mapData.LICENSE.txt">
+      <LogicalName>Web\mapData.LICENSE.txt</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Web\ngraph.cw.js">
+      <LogicalName>Web\ngraph.cw.js</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Web\ngraph.cw.LICENSE.txt">
+      <LogicalName>Web\ngraph.cw.LICENSE.txt</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Web\ngraph.graph.LICENSE.txt">
+      <LogicalName>Web\ngraph.graph.LICENSE.txt</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Web\ngraph.graph.min.js">
+      <LogicalName>Web\ngraph.graph.min.js</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Web\ngraph.path.LICENSE.txt">
+      <LogicalName>Web\ngraph.path.LICENSE.txt</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Web\ngraph.path.min.js">
+      <LogicalName>Web\ngraph.path.min.js</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Web\style.css">
+      <LogicalName>Web\style.css</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Web\testSaveData.js">
+      <LogicalName>Web\testSaveData.js</LogicalName>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
