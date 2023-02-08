@@ -6,10 +6,10 @@ Next
 
 
 - mega revamp
+	- get datas
 
 	- map tiles
-		- xx DrawBlackBordersHook may give useful info on bounds
-		- black screen during awake
+
 
 - things:
 	- update visuals when get item
@@ -19,6 +19,15 @@ Next
 -------------------------------------------------------------------------
 Unsorted
 -------------------------------------------------------------------------
+	- map tiles
+		- deal with black screen during bench wake up
+		- thumbs don't get the LUT
+		- can't see acid and sometimes other level details
+		- some way to deal with the massive useless margins
+			- automated GIMP filter?
+
+		- maybe put a punch of successive backplanes in so it looks like fog?
+
 
 - Issues
 	- Collected items don't appear right on new saves until you've saved and refreshed the page

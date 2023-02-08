@@ -2,7 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Reflection;
+using ItemChanger;
 using Modding;
+using Modding.Converters;
+using RandomizerMod.RandomizerData;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using USceneManager = UnityEngine.SceneManagement.SceneManager;
@@ -14,14 +19,18 @@ namespace TangledMapView {
 /// Helper camera for rendering out views of scenes for use in maps.
 /// </summary>
 public class MappingCamera : MonoBehaviour {
+	/// <summary>
+	/// GameObject layer we use for our purposes.
+	/// </summary>
 	public const int Layer = 6;
+	// public const string SrcScenesFolder = "SrcScenes";
 	public const string OutFolder = "MappingTiles";
-	public const float MapTileScale = 30f;//how world size is scaled to pixel size in exported tiles
+	public const float MapTileScale = 10f;//how world size is scaled to pixel size in exported tiles
 	public const float LiveViewZoom = 100;
 
 	public static MappingCamera Create(TangledMapViewMod mod) {
 		Display.displays[1].Activate();
-		Display.displays[1].SetParams(800, 600, 100, 100);
+		Display.displays[1].SetParams(1920, 1080, 0, 0);
 
 		var go = new GameObject("MappingCamera");
 		DontDestroyOnLoad(go);
@@ -30,13 +39,12 @@ public class MappingCamera : MonoBehaviour {
 		var cam = ret.camera = go.AddComponent<Camera>();
 
 		cam.targetDisplay = 1;
-		cam.clearFlags = CameraClearFlags.Color | CameraClearFlags.Depth;
-		cam.backgroundColor = new Color(.4f, .4f, .4f);
+		cam.clearFlags = CameraClearFlags.Color;
+		cam.backgroundColor = new Color(0, 0, 0);
 		cam.orthographic = true;
 		cam.orthographicSize = LiveViewZoom;
-		const float maxZ = 10;
-		cam.nearClipPlane = -10;
-		cam.farClipPlane = maxZ + .00001f;
+		cam.nearClipPlane = -1;
+		cam.farClipPlane = 1000;
 
 		/** HK Layers:
 			0 -> Default
@@ -73,12 +81,17 @@ public class MappingCamera : MonoBehaviour {
 		cam.cullingMask = (1 << 0) | (1 << 4) | (1 << Layer) | (1 << 8) | (1 << 21);
 
 
+		//Make a "backplane" to make it easier to see terrain and stuff
 		var back = ret.backplane = GameObject.CreatePrimitive(PrimitiveType.Quad);
 		back.name = "Backplane";
 		back.transform.SetParent(ret.transform);
-		back.transform.localPosition = new Vector3(0, 0, maxZ);
+		back.transform.localPosition = new Vector3(0, 0, .5f);
 		back.transform.localScale = new Vector3(10000, 10000, 10000);
 		back.layer = Layer;
+
+		var bren = back.GetComponent<Renderer>();
+		bren.material = new Material(Shader.Find("Sprites/Default-ColorFlash"));
+		bren.material.color = new Color(.5f, .5f, .5f, .7f);
 
 		return ret;
 	}
@@ -86,10 +99,11 @@ public class MappingCamera : MonoBehaviour {
 
 	public Camera camera;
 	private HeroController _hero;
-	private SpriteRenderer heroLight;
+	private List<SpriteRenderer> heroLights = new List<SpriteRenderer>();
 	private TangledMapViewMod mod;
 	private GameObject backplane;
 	private Bounds currentBorders;
+	private bool doingGrandTour = false;
 
 	public HeroController Hero {
 		get {
@@ -129,8 +143,10 @@ public class MappingCamera : MonoBehaviour {
 	}
 
 	private void SceneChanged(Scene prev, Scene current) {
-		mod.Log($"Switch from {prev.name} to {current.name}");
-		StartCoroutine(SnapScene());
+		if (!doingGrandTour) {
+			mod.Log($"Switch from {prev.name} to {current.name}");
+			StartCoroutine(SnapScene());
+		}
 	}
 
 
@@ -144,7 +160,9 @@ public class MappingCamera : MonoBehaviour {
 
 		Hero.vignette.enabled = false;
 
-		heroLight = Hero.transform.Find("HeroLight").GetComponent<SpriteRenderer>();
+		heroLights.Clear();
+		heroLights.Add(Hero.transform.Find("HeroLight").GetComponent<SpriteRenderer>());
+		heroLights.Add(Hero.transform.Find("white_light_donut").GetComponent<SpriteRenderer>());
 
 		//deactivate visual masks
 		foreach (var renderer in FindObjectsOfType<Renderer>()) {
@@ -166,6 +184,8 @@ public class MappingCamera : MonoBehaviour {
 			}
 		}
 	}
+
+	private string SceneName => USceneManager.GetActiveScene().name;
 
 	private IEnumerator SnapScene() {
 		yield return StartCoroutine(CleanupView());
@@ -207,10 +227,49 @@ public class MappingCamera : MonoBehaviour {
 		Destroy(buf);
 		camera.orthographicSize = LiveViewZoom;
 
+		var roomData = GetRoomData();
+		var dataFileName = $"{OutFolder}/{SceneName}.json";
+		File.WriteAllText(dataFileName, JsonUtil.Serialize(roomData));
+
 		//Write
-		var fileName = OutFolder + "/" + USceneManager.GetActiveScene().name + ".png";
-		File.WriteAllBytes(fileName, data);
-		mod.Log($"Wrote {fileName}");
+		var imgFileName = $"{OutFolder}/{SceneName}.png";
+		File.WriteAllBytes(imgFileName, data);
+		mod.Log($"Wrote {imgFileName}");
+	}
+
+	private Room GetRoomData() {
+		var sceneName = SceneName;
+		var ret = new Room {id = sceneName};
+
+		var placements = Finder.GetFullLocationList().Where(kvp => kvp.Value.sceneName == sceneName)
+		;
+		foreach (var kvp in placements) {
+			ret.locations.Add(RoomLocation.From(kvp.Value));
+		}
+
+		var transitions = Data.Transitions.Where(kvp => kvp.Value.SceneName == sceneName);
+		var tObjects = FindObjectsOfType<TransitionPoint>(true);
+		foreach (var kvp in transitions) {
+			var randoTransition = kvp.Value;
+			var sceneObject = tObjects
+				.FirstOrDefault(x => x.name == randoTransition.DoorName)
+			;
+
+			if (!sceneObject) {
+				Debug.LogWarning("Doors we have: " + string.Join(", ", tObjects.Select(x => 
+					$"{x.name} - {x.entryPoint} - {x.targetScene}"
+				)));
+				Debug.LogWarning($"Objects w/ name? {GameObject.Find(randoTransition.Name)}");
+				throw new Exception($"Can't find door for {randoTransition.Name}");
+			}
+
+			ret.transitions.Add(kvp.Value.Name, new RoomTransition {
+				id = randoTransition.Name,
+				Position = sceneObject.transform.position,
+			});
+		}
+
+		return ret;
 	}
 
 	public void LateUpdate() {
@@ -218,13 +277,24 @@ public class MappingCamera : MonoBehaviour {
 
 		transform.position = Hero.transform.position;
 
-		if (heroLight) {
-			// Debug.Log($"Light was {heroLight.color}");
-			heroLight.color = new Color(1, 1, 1, 0);
+		foreach (var light in heroLights) {
+			if (light) light.color = new Color(1, 1, 1, 0);
 		}
 
 		if (Input.GetKeyDown(KeyCode.F11) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftShift)) {
 			StartCoroutine(DoGrandTour());
+		}
+
+		if (Input.GetKeyDown(KeyCode.F9)) {
+			foreach (var renderer in Hero.GetComponentsInChildren<Renderer>()) {
+				var path = "";
+				var p = renderer.transform;
+				while (p != Hero.transform) {
+					path += p.name + "<-";
+					p = p.parent;
+				}
+				Debug.Log($"Renderer: {path} it's a {renderer.GetType().FullName}");
+			}
 		}
 	}
 
@@ -239,7 +309,8 @@ public class MappingCamera : MonoBehaviour {
 			case "Quit_To_Menu":
 			case "Dream_Room_Believer_Shrine":
 			case "Dream_Backer_Shrine":
-			// case "Room_Jinn":
+			case "PermaDeath":
+			case "Menu_Title":
 				return false;
 			case "GG_Lurker":
 			case "GG_Pipeway":
@@ -247,39 +318,48 @@ public class MappingCamera : MonoBehaviour {
 				return true;
 		}
 
+		if (name.StartsWith("_")) return false;
+		if (name.StartsWith("Cutscene")) return false;
 		if (name.StartsWith("Cinematic")) return false;
 		if (name.StartsWith("End")) return false;
 		if (name.StartsWith("Menu")) return false;
 		if (name.StartsWith("GG_")) return false;
+		if (name.EndsWith("_preload")) return false;
+		if (name.EndsWith("_boss")) return false;
+		if (name.EndsWith("_boss_defeated")) return false;
 
 		return true;
 	}
 
 	private IEnumerator DoGrandTour() {
-		for (int i = 6; i < USceneManager.sceneCountInBuildSettings; i++) {
-			var scene = USceneManager.GetSceneByBuildIndex(i);
+		//Can't use UnitySceneManager to grab data, unloaded scenes don't have names.
+		//So we'll...just steal the list from ItemChanger.
 
-			//Unity is annoying, it doesn't include names for unloaded scenes. :facepalm:
-			if (!scene.IsValid()) {
-				Debug.Log($"Blind load scene {i} {scene.name}");
-				USceneManager.LoadScene(i, LoadSceneMode.Single);
-				yield return null;
-				scene = USceneManager.GetSceneByBuildIndex(i);
-				Debug.Log($"Loaded scene, now it's {i} {scene.name}, loaded? {scene.isLoaded}");
-				yield return new WaitForSeconds(.2f);
-			}
+		doingGrandTour = true;
 
-			if (!WantScene(scene.name)) continue;
+		var consts = typeof(ItemChanger.SceneNames).GetFields(BindingFlags.Public | BindingFlags.Static);
+		foreach (var fieldInfo in consts) {
+			if (fieldInfo.FieldType != typeof(string)) continue;
+			var name = fieldInfo.GetRawConstantValue() as string;
+			if (string.IsNullOrEmpty(name)) continue;
+
+			// Debug.Log($"Consider ye {name}");
+			if (!WantScene(name)) continue;
 			if (File.Exists($"{OutFolder}/{name}.png")) continue;
 
-			if (!scene.isLoaded) {
-				Debug.Log($"Normal load scene {i} {scene.name}");
-				USceneManager.LoadScene(i, LoadSceneMode.Single);
-			}
+			Debug.Log($"Load scene for image grab: {name}");
+			USceneManager.LoadScene(name, LoadSceneMode.Single);
 
-			//wait for thing to do the thing
-			yield return new WaitForSeconds(1);
+			yield return StartCoroutine(SnapScene());
+			yield return new WaitForSeconds(.1f);
+
+			if (Input.anyKey) break;
 		}
+
+		Debug.Log("Ended the grand tour!");
+
+		doingGrandTour = false;
 	}
+
 }
 }

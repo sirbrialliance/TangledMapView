@@ -70,13 +70,23 @@ To help visualize the room arrangement a few different view options are provided
 
 ## Building
 
-- Install the modding API and Randomizer3.0
+- Install the modding API and Randomizer4.0
 - If needed: crack open `Mod/TangledMapView.csproj` and make sure the paths to the Hollow Knight installation match up with your installation
 - Build `Mod/TangledMapView.csproj`
-- Copy/symlink/etc. `Mod/bin/(Debug or Release)/TangledMapView.dll` and `websocket-sharp.dll` to your mods directory.
+- Copy/symlink/etc. `Mod/bin/(Debug or Release)/TangledMapView.dll` to your mods directory.
 
 
-## Misc
+## Data Build
+
+Map:
+
+- Enable MappingCamera in local build
+- Symlink exported .unity scenes folder to [hollow knight dir]/SrcScenes
+- Start game, load a save
+- Enable noclip and invincible via DebugMod
+- ctrl+shift+F11
+- Get lunch
+- Inspect [hollow knight dir]/MappingTiles
 
 To rebuild map/game metadata follow the information in metadata/config.py then run the builddata.py script.
 
