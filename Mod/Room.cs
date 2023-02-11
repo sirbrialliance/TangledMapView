@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
+using System.IO;
+using System.Linq;
+using RandomizerMod.RandomizerData;
 using UnityEngine;
 
 namespace TangledMapView {
@@ -24,24 +26,24 @@ public class Room {
 	/// map of door in room -> where it goes (normally)
 	/// </summary>
 	public Dictionary<string, RoomTransition> transitions = new Dictionary<string, RoomTransition>();
-}
 
 
-public class RoomTransition {
-	public string id;
-	public float x, y, z;
+	static Dictionary<string, Room> rooms;
+	static Room() {
+		var assembly = typeof(TangledMapViewMod).Assembly;
+		using var resourceStream = assembly.GetManifestResourceStream("mapData.json");
+		using var sr = new StreamReader(resourceStream);
+		var json = sr.ReadToEnd();
 
-	[JsonIgnore]
-	public Vector3 Position {
-		get => new Vector3(x, y, z);
-		set {
-			x = value.x;
-			y = value.y;
-			z = value.z;
-		}
+		var roomsList = JsonUtil.DeserializeString<List<Room>>(json);
+		rooms = roomsList.ToDictionary(x => x.id, x => x);
+	}
+
+	public static Room Get(string name) {
+		rooms.TryGetValue(name, out var ret);
+		return ret;
 	}
 }
-
 
 
 // public class Vector3Converter : JsonConverter {

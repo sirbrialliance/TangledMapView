@@ -6,15 +6,43 @@ Next
 
 
 - mega revamp
-	- get datas
+	- xx trim trailing whitespace
 
-	- map tiles
+	- compile data
+		- with all base transitions
+		- with thumbnail dimensions
+		- regen
+	- start rendering something
+
+	- events:
+		- OnGiveItem
+		- player moved to new area
+
 
 
 - things:
+	- show number of new checks accessible when you grab an item (that unlocks things)
+	- show arrows/markers to all undiscovered checks in room
+		- and doors
+	- show logic for a given check and ehich conditions are true
 	- update visuals when get item
 	- works right with new game or loaded game
-	-
+	- auto-reveal geo/grub (or secret fake)/soul world items if oyu are close enough
+	- shade location
+
+- need a tracker
+	- grub and other currency count
+		- include depositied rancid eggs
+		- dream essence, even if we don't have the nail
+
+	- dreamer count
+	- keys
+
+
+- ItemChanger + benchwarp and no preload - try warp:
+	NullReferenceException: Object reference not set to an instance of an object
+  at ItemChanger.StartDef+<OnRespawn>d__38.MoveNext () [0x0021c] in C:\dev\ItemChanger\ItemChanger\StartDef.cs:167
+  at UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) [0x00026] in <047294ce45cf4b9a9441e48d2b8435e4>:0
 
 -------------------------------------------------------------------------
 Unsorted
@@ -26,7 +54,7 @@ Unsorted
 		- some way to deal with the massive useless margins
 			- automated GIMP filter?
 
-		- maybe put a punch of successive backplanes in so it looks like fog?
+		- maybe put a bunch of successive backplanes in so it looks like fog?
 
 
 - Issues

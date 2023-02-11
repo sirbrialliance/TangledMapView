@@ -23,8 +23,6 @@ public class MappingCamera : MonoBehaviour {
 	/// GameObject layer we use for our purposes.
 	/// </summary>
 	public const int Layer = 6;
-	// public const string SrcScenesFolder = "SrcScenes";
-	public const string OutFolder = "MappingTiles";
 	public const float MapTileScale = 10f;//how world size is scaled to pixel size in exported tiles
 	public const float LiveViewZoom = 100;
 
@@ -119,7 +117,7 @@ public class MappingCamera : MonoBehaviour {
 		USceneManager.activeSceneChanged += SceneChanged;
 		ModHooks.DrawBlackBordersHook += OnDrawBorders;
 
-		Directory.CreateDirectory(OutFolder);
+		Directory.CreateDirectory(DataExport.OutFolder);
 	}
 
 
@@ -228,11 +226,11 @@ public class MappingCamera : MonoBehaviour {
 		camera.orthographicSize = LiveViewZoom;
 
 		var roomData = GetRoomData();
-		var dataFileName = $"{OutFolder}/{SceneName}.json";
+		var dataFileName = $"{DataExport.OutFolder}/{SceneName}.json";
 		File.WriteAllText(dataFileName, JsonUtil.Serialize(roomData));
 
 		//Write
-		var imgFileName = $"{OutFolder}/{SceneName}.png";
+		var imgFileName = $"{DataExport.OutFolder}/{SceneName}.png";
 		File.WriteAllBytes(imgFileName, data);
 		mod.Log($"Wrote {imgFileName}");
 	}
@@ -241,8 +239,7 @@ public class MappingCamera : MonoBehaviour {
 		var sceneName = SceneName;
 		var ret = new Room {id = sceneName};
 
-		var placements = Finder.GetFullLocationList().Where(kvp => kvp.Value.sceneName == sceneName)
-		;
+		var placements = Finder.GetFullLocationList().Where(kvp => kvp.Value.sceneName == sceneName);
 		foreach (var kvp in placements) {
 			ret.locations.Add(RoomLocation.From(kvp.Value));
 		}
@@ -256,7 +253,7 @@ public class MappingCamera : MonoBehaviour {
 			;
 
 			if (!sceneObject) {
-				Debug.LogWarning("Doors we have: " + string.Join(", ", tObjects.Select(x => 
+				Debug.LogWarning("Doors we have: " + string.Join(", ", tObjects.Select(x =>
 					$"{x.name} - {x.entryPoint} - {x.targetScene}"
 				)));
 				Debug.LogWarning($"Objects w/ name? {GameObject.Find(randoTransition.Name)}");
@@ -266,6 +263,7 @@ public class MappingCamera : MonoBehaviour {
 			ret.transitions.Add(kvp.Value.Name, new RoomTransition {
 				id = randoTransition.Name,
 				Position = sceneObject.transform.position,
+				target = randoTransition.VanillaTarget,
 			});
 		}
 
@@ -298,54 +296,12 @@ public class MappingCamera : MonoBehaviour {
 		}
 	}
 
-	private bool WantScene(string name) {
-		if (string.IsNullOrEmpty(name)) return false;
-		switch (name) {
-			case "BetaEnd":
-			case "Opening_Sequence":
-			case "Beta":
-			case "Pre_Menu_Intro":
-			case "PermaDeath_Unlock":
-			case "Quit_To_Menu":
-			case "Dream_Room_Believer_Shrine":
-			case "Dream_Backer_Shrine":
-			case "PermaDeath":
-			case "Menu_Title":
-				return false;
-			case "GG_Lurker":
-			case "GG_Pipeway":
-			case "GG_Waterways":
-				return true;
-		}
-
-		if (name.StartsWith("_")) return false;
-		if (name.StartsWith("Cutscene")) return false;
-		if (name.StartsWith("Cinematic")) return false;
-		if (name.StartsWith("End")) return false;
-		if (name.StartsWith("Menu")) return false;
-		if (name.StartsWith("GG_")) return false;
-		if (name.EndsWith("_preload")) return false;
-		if (name.EndsWith("_boss")) return false;
-		if (name.EndsWith("_boss_defeated")) return false;
-
-		return true;
-	}
 
 	private IEnumerator DoGrandTour() {
-		//Can't use UnitySceneManager to grab data, unloaded scenes don't have names.
-		//So we'll...just steal the list from ItemChanger.
-
 		doingGrandTour = true;
 
-		var consts = typeof(ItemChanger.SceneNames).GetFields(BindingFlags.Public | BindingFlags.Static);
-		foreach (var fieldInfo in consts) {
-			if (fieldInfo.FieldType != typeof(string)) continue;
-			var name = fieldInfo.GetRawConstantValue() as string;
-			if (string.IsNullOrEmpty(name)) continue;
-
-			// Debug.Log($"Consider ye {name}");
-			if (!WantScene(name)) continue;
-			if (File.Exists($"{OutFolder}/{name}.png")) continue;
+		foreach (var name in DataExport.GetGameScenes()) {
+			if (File.Exists($"{DataExport.OutFolder}/{name}.png")) continue;
 
 			Debug.Log($"Load scene for image grab: {name}");
 			USceneManager.LoadScene(name, LoadSceneMode.Single);
@@ -357,6 +313,8 @@ public class MappingCamera : MonoBehaviour {
 		}
 
 		Debug.Log("Ended the grand tour!");
+
+		DataExport.ExportData();
 
 		doingGrandTour = false;
 	}
