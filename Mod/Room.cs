@@ -23,20 +23,29 @@ public class Room {
 	// public string[][] splitRoom;
 
 	/// <summary>
-	/// map of door in room -> where it goes (normally)
+	/// Transitions leaving this room.
 	/// </summary>
-	public Dictionary<string, RoomTransition> transitions = new Dictionary<string, RoomTransition>();
+	public List<RoomTransition> transitions = new List<RoomTransition>();
 
+	/// <summary>
+	/// World-space coordinates for the corners of our thumbnail image.
+	/// </summary>
+	public float x1, y1, x2, y2;
 
 	static Dictionary<string, Room> rooms;
 	static Room() {
-		var assembly = typeof(TangledMapViewMod).Assembly;
-		using var resourceStream = assembly.GetManifestResourceStream("mapData.json");
-		using var sr = new StreamReader(resourceStream);
-		var json = sr.ReadToEnd();
+		try {
+			var assembly = typeof(TangledMapViewMod).Assembly;
+			using var resourceStream = assembly.GetManifestResourceStream("TangledMapView.Resources.MapData.json");
+			using var sr = new StreamReader(resourceStream);
+			var json = sr.ReadToEnd();
 
-		var roomsList = JsonUtil.DeserializeString<List<Room>>(json);
-		rooms = roomsList.ToDictionary(x => x.id, x => x);
+			var roomsList = JsonUtil.DeserializeString<List<Room>>(json);
+			rooms = roomsList.ToDictionary(x => x.id, x => x);
+		} catch (Exception ex) {
+			Debug.LogException(ex);
+			rooms = new Dictionary<string, Room>();
+		}
 	}
 
 	public static Room Get(string name) {
@@ -45,28 +54,5 @@ public class Room {
 	}
 }
 
-
-// public class Vector3Converter : JsonConverter {
-// 	public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) {
-// 		var v = (Vector3)value;
-// 		writer.WriteStartObject();
-// 		writer.writ
-// 		writer.WriteEndObject();
-// 		return new Vector3(
-// 			(float)token["x"],
-// 			(float)token["y"],
-// 			(float)token["z"]
-// 		);
-//
-// 	}
-//
-// 	public override object? ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer) {
-// 		throw new NotImplementedException();
-// 	}
-//
-// 	public override bool CanConvert(Type objectType) {
-// 		return objectType == typeof(Vector3);
-// 	}
-// }
 
 }

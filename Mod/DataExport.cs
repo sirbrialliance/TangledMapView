@@ -65,7 +65,7 @@ public class DataExport {
 		}
 
 		var allData = JsonUtil.Serialize(allRooms);
-		File.WriteAllText($"{OutFolder}/mapData.json", allData);
+		File.WriteAllText($"{OutFolder}/MapData.json", allData);
 	}
 }
 }

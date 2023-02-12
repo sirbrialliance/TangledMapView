@@ -76,7 +76,8 @@ public class MappingCamera : MonoBehaviour {
 			30 -> Map Pin
 			31 -> Orbit Shield
 		*/
-		cam.cullingMask = (1 << 0) | (1 << 4) | (1 << Layer) | (1 << 8) | (1 << 21);
+		// cam.cullingMask = (1 << 0) | (1 << 4) | (1 << Layer) | (1 << 8) | (1 << 21);
+		cam.cullingMask = ~(1 << 9);
 
 
 		//Make a "backplane" to make it easier to see terrain and stuff
@@ -90,6 +91,10 @@ public class MappingCamera : MonoBehaviour {
 		var bren = back.GetComponent<Renderer>();
 		bren.material = new Material(Shader.Find("Sprites/Default-ColorFlash"));
 		bren.material.color = new Color(.5f, .5f, .5f, .7f);
+
+		if (Camera.main) {
+			Camera.main.cullingMask &= ~(1 << Layer);
+		}
 
 		return ret;
 	}
@@ -126,6 +131,7 @@ public class MappingCamera : MonoBehaviour {
 		USceneManager.activeSceneChanged -= SceneChanged;
 		ModHooks.DrawBlackBordersHook -= OnDrawBorders;
 	}
+
 	private void OnDrawBorders(List<GameObject> borders) {
 		if (borders.Count == 0) {
 			currentBorders = new Bounds();
@@ -237,7 +243,13 @@ public class MappingCamera : MonoBehaviour {
 
 	private Room GetRoomData() {
 		var sceneName = SceneName;
-		var ret = new Room {id = sceneName};
+		var ret = new Room {
+			id = sceneName,
+			x1 = currentBorders.min.x,
+			y1 = currentBorders.min.y,
+			x2 = currentBorders.max.x,
+			y2 = currentBorders.max.y,
+		};
 
 		var placements = Finder.GetFullLocationList().Where(kvp => kvp.Value.sceneName == sceneName);
 		foreach (var kvp in placements) {
@@ -260,8 +272,9 @@ public class MappingCamera : MonoBehaviour {
 				throw new Exception($"Can't find door for {randoTransition.Name}");
 			}
 
-			ret.transitions.Add(kvp.Value.Name, new RoomTransition {
+			ret.transitions.Add(new RoomTransition {
 				id = randoTransition.Name,
+				doorId = randoTransition.DoorName,
 				Position = sceneObject.transform.position,
 				target = randoTransition.VanillaTarget,
 			});
@@ -303,7 +316,7 @@ public class MappingCamera : MonoBehaviour {
 		foreach (var name in DataExport.GetGameScenes()) {
 			if (File.Exists($"{DataExport.OutFolder}/{name}.png")) continue;
 
-			Debug.Log($"Load scene for image grab: {name}");
+			mod.Log($"Load scene for image grab: {name}");
 			USceneManager.LoadScene(name, LoadSceneMode.Single);
 
 			yield return StartCoroutine(SnapScene());
@@ -312,10 +325,11 @@ public class MappingCamera : MonoBehaviour {
 			if (Input.anyKey) break;
 		}
 
-		Debug.Log("Ended the grand tour!");
+		mod.Log("Ended the grand tour!");
 
 		DataExport.ExportData();
 
+		mod.Log("Exported data");
 		doingGrandTour = false;
 	}
 
