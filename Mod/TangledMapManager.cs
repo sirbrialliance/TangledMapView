@@ -63,11 +63,24 @@ internal class TangledMapManager : MonoBehaviour {
 	private CheckState GetState(TransitionDef transition) {
 		var name = transition.Name;
 		var tracker = RandoMod.RS.TrackerData;
-		if (tracker.visitedTransitions.ContainsKey(name)) return CheckState.Obtained;
-		else if (tracker.uncheckedReachableTransitions.Contains(name)) return CheckState.Reachable;
-		//Non-randomized transitions aren't tracked, so just treat them as unreachable or obtained
-		else if (tracker.pm.Get(name) > 0) return CheckState.Obtained;
-		else return CheckState.Unreachable;
+
+		if (transition.Sides == TransitionSides.OneWayOut) {
+			//If you can't travel through it from here at all, it's moot to show any state.
+			return CheckState.OneWay;
+		}
+
+		var isRandomized = RandoMod.RS.Context.transitionPlacements.Any(
+			x => x.Source.TransitionDef == transition
+		);
+
+		if (isRandomized) {
+			if (tracker.visitedTransitions.ContainsKey(name)) return CheckState.Obtained;
+			else if (tracker.uncheckedReachableTransitions.Contains(name)) return CheckState.Reachable;
+			else return CheckState.Unreachable;
+		} else {
+			if (tracker.pm.Get(name) > 0) return CheckState.Unchanged;
+			else return CheckState.UnchangedUnreachable;
+		}
 	}
 
 	private void UpdateMarkers() {
@@ -214,6 +227,18 @@ internal class TangledMapManager : MonoBehaviour {
 		var progress = RS.TrackerData.pm;
 
 
+		var locationList = new List<string>();
+		foreach (var location in RS.TrackerData.uncheckedReachableLocations) {
+			var data = Data.Locations[location];
+			locationList.Add($"{data.SceneName} -> {data.Name}");
+		}
+		locationList.Sort();
+		sb.Append("Reachable:\n");
+		sb.Append(string.Join("\n", locationList));
+
+
+
+		sb.Append("\n\nLogic details:\n");
 		var usedTerms = new HashSet<int>();
 
 		void DumpDef(string logicName) {

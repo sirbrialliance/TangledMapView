@@ -30,17 +30,37 @@ public class WorldCheckMarker : MonoBehaviour {
 
 	public Color StateColor(CheckState state) {
 		switch (state) {
-			case CheckState.Unreachable: return new Color(1, 0, 0, .6f);
-			case CheckState.Reachable: return new Color(0, 1, 0, .7f);
-			case CheckState.Previewed: return new Color(1, 1, 0, .5f);
-			case CheckState.Obtained: return new Color(.5f, .5f, .5f, .4f);
-			default: return Color.red;
+			case CheckState.Unreachable:
+			case CheckState.UnchangedUnreachable:
+				return new Color(1, 0, 0, .6f);
+			case CheckState.Reachable:
+				return new Color(0, 1, 0, .7f);
+			case CheckState.Previewed:
+				return new Color(1, 1, 0, .5f);
+			case CheckState.Obtained:
+			case CheckState.Unchanged:
+			case CheckState.OneWay:
+				return new Color(.5f, .5f, .5f, .4f);
+			default:
+				return Color.red;
 		}
 	}
 
 	public Texture2D StateTexture(CheckState state) {
-		var name = forTransition ? $"Transition{state}" : $"Item{state}";
+		string graphic;
+		switch (state) {
+			case CheckState.UnchangedUnreachable:
+				graphic = "Unchanged";
+				break;
+			default:
+				graphic = state.ToString();
+				break;
+		}
 
+		return LoadTexture(forTransition ? $"Transition{graphic}" : $"Item{graphic}");
+	}
+
+	private Texture2D LoadTexture(string name) {
 		if (!images.TryGetValue(name, out var ret)) {
 			using var resourceStream = typeof(TangledMapViewMod).Assembly.GetManifestResourceStream($"TangledMapView.Resources.Images.{name}.png");
 			if (resourceStream == null) {

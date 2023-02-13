@@ -15,41 +15,78 @@ Next
 	- start rendering something
 
 	- live check indicators:
-		- "They help you determine if you need to learn something new, come back later, or get gud."
-		- kinda a bit too hand-holdy?
+		- xx not a late enough LateUpdate, lags behind camera pos a bit
+		- zz directional arrorw pointing, unless resting on the object
+		- zz kinda a bit too hand-holdy?
 			- maybe make a little radar instead of putting direction arrows all oaver the screen.
-		- not a late enough LateUpdate, lags behind camera pos a bit
-		- directional arrorw pointing, unless resting on the object
-		- make cleared semi transparent
+		- xx make cleared semi transparent
+
 		- handle one-way doors
 		- test with not all item types randomized
+		- show shade?
+		- could add anotother icon/color/target for pathing the user
+		- items stacking on shopkeepers
+		- maybe have different random margin offsets per axis
 
 
-	- "Couldn't find item location Boss_Essence-Gorb"
-	- Does Bretta appear as a check?
 
 	- Better handling of things on top of each other? (Maybe just give every arrow a slightly different margin)
 	- auto-reveal geo/grub (or secret fake)/soul world items if oyu are close enough
 		- set to previewed if in camera view frustum for 500ms
 	- state icons: eye, lock, checkmark, ??
 	- hide added HUD stuff during boss/miniboss fights
+	- may need to seperate my "previews" from logic previews. e.g. grub vs. mimic. "geo rock", but is it 15 geo? 420 geo?
+	- maybe indicate when you enter a room you shouldn't be able to get to?
+	- maybe a list with the map of previewed items and their locations, most important first
+		- maybe importance = number of times there's a logic condition that requires it
 
-	- events:
-		- OnGiveItem
-		- player moved to new area
+- Data issues:
+	- "Couldn't find item location Boss_Essence-Gorb"
+	- Bretta doesn't appear as a check/task...but neither do levers...
+		- White palace entrance
+	- [WARN]:[TangledMapViewMod] - Couldn't find item location Boss_Essence-Gorb
+	- [WARN]:[TangledMapViewMod] - Couldn't find item location Boss_Essence-Grey_Prince_Zote
+	- [WARN]:[TangledMapViewMod] - Couldn't find item location Boss_Essence-Xero
+	- [WARN]:[TangledMapViewMod] - Couldn't find item location Lore_Tablet-World_Sense
+	- [WARN]:[TangledMapViewMod] - Couldn't find item location Nailmaster's_Glory
+	- [WARN]:[TangledMapViewMod] - Unknown room Cinematic_Stag_travel
+	- [WARN]:[TangledMapViewMod] - Unknown room Dream_Final
+	- [WARN]:[TangledMapViewMod] - Unknown room Dream_Final
+	- [WARN]:[TangledMapViewMod] - Unknown room Cinematic_Ending_C
+	- Colosseum rewards
+	- [WARN]:[TangledMapViewMod] - Couldn't find item location Boss_Essence-Soul_Tyrant
+	- [WARN]:[TangledMapViewMod] - Couldn't find item location Lurien
+	- Somehow got Geo_Rock-Ancestral_Mound or Geo_Rock-Ancestral_Mound_Dupe to stay marked as uncollected onscreen...maybe because both rock might have burst the same frame?
+		- No...the rock higher up was actually the item we were tracking? Ancestral_Mound_Tree(_Dupe)? Bad position data?
 
+
+- docs
+	- Live icons: "They help you determine if you need to learn something new, come back later, or git gud."
 
 
 - things:
 	- show number of new checks accessible when you grab an item (that unlocks things)
 	- show arrows/markers to all undiscovered checks in room
 		- and doors
-	- show logic for a given check and ehich conditions are true
+	- show logic for a given check and which conditions are true
 	- update visuals when get item
 	- works right with new game or loaded game
 	- shade location
 	- maybe distinguish between previewed junk and progression items
 	- "xxyy transitions/locations became available" when you get something
+	- Spoilers: Off, Off (strict), Thematic, Truly Thematic, Casual, On
+		- Strict disables auto-preview
+		- Thematic reaveals information based on in-game informatoin items (e.g. area maps reveals corrosponding rooms and outgoing transitions between mapped rooms), grub map reveals grub locations
+		- Truly Thematic only updates the map once you find the quill, reveals rooms from maps you find.
+		- Casual allows buying hints
+		- On just shows everything
+	- Maybe have live view option
+		- that's "memory only" - only indicates what you've done, what what you could/can't do
+		- that only shows the markers when you're focusing soul - might be a good default
+	- Unrandomized transitinos:
+		- Mabe just record the transitions oyu visit that aren't randomized?
+		- Or perhaps just use a different icon for unrandomized transitions: Maybe just a gray "=" icon. Or red if unchanged and unreachable.
+	- Maybe always sort items by name since some things will render on top of others.
 
 - need a tracker
 	- grub and other currency count
