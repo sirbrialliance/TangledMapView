@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using RandomizerMod.RandomizerData;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace TangledMapView {
@@ -15,7 +15,7 @@ public class Room {
 	/// List of items or "checks" that are in this room,
 	/// typically named by what is normally there.
 	/// </summary>
-	public List<RoomLocation> locations = new List<RoomLocation>();
+	public List<RoomItemLocation> locations = new List<RoomItemLocation>();
 	/// <summary>
 	/// Room can't be fully accessed from any entrance.
 	/// List of entrances that can be accessed together.
@@ -32,15 +32,19 @@ public class Room {
 	/// </summary>
 	public float x1, y1, x2, y2;
 
-	static Dictionary<string, Room> rooms;
+	public static readonly Dictionary<string, Room> rooms;
 	static Room() {
 		try {
-			var assembly = typeof(TangledMapViewMod).Assembly;
-			using var resourceStream = assembly.GetManifestResourceStream("TangledMapView.Resources.MapData.json");
-			using var sr = new StreamReader(resourceStream);
-			var json = sr.ReadToEnd();
+			#if UNITY_EDITOR
+				var json = File.ReadAllText("../Mod/Resources/MapData.json");
+			#else
+				var assembly = typeof(Room).Assembly;
+				using var resourceStream = assembly.GetManifestResourceStream("TangledMapView.Resources.MapData.json");
+				using var sr = new StreamReader(resourceStream);
+				var json = sr.ReadToEnd();
+			#endif
 
-			var roomsList = JsonUtil.DeserializeString<List<Room>>(json);
+			var roomsList = JsonConvert.DeserializeObject<List<Room>>(json);
 			rooms = roomsList.ToDictionary(x => x.id, x => x);
 		} catch (Exception ex) {
 			Debug.LogException(ex);

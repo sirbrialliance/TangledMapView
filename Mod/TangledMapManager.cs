@@ -23,7 +23,7 @@ internal class TangledMapManager : MonoBehaviour {
 
 	public static LogicManager RandoLogic => RandoMod.RS?.Context?.LM;
 
-	private List<WorldCheckMarker> markers = new List<WorldCheckMarker>();
+	private List<CheckMarkerWorld> markers = new List<CheckMarkerWorld>();
 
 	public Camera overlayCamera;
 
@@ -87,7 +87,7 @@ internal class TangledMapManager : MonoBehaviour {
 
 	private void UpdateMarkers() {
 		UpdateCamera(true);
-		var keepMarkers = new List<WorldCheckMarker>();
+		var keepMarkers = new List<CheckMarkerWorld>();
 		var room = Room.Get(GameManager.instance.sceneName);
 
 		if (room == null) {
@@ -100,15 +100,15 @@ internal class TangledMapManager : MonoBehaviour {
 
 		// mod.LogDebug($"UpdateMarkers scene: {room.id}");
 
-		WorldCheckMarker GetMarker(string placementId) {
-			var marker = markers.FirstOrDefault(x => x.placementId == placementId);
+		CheckMarkerWorld GetMarker(RoomElement element) {
+			var marker = markers.FirstOrDefault(x => x.element == element);
 			if (!marker) {
 				// var go = new GameObject("Marker for " + placement.Location.Name);
 				var go = GameObject.CreatePrimitive(PrimitiveType.Quad);
-				go.name = "Marker for " + placementId;
+				go.name = "Marker for " + element.id;
 				go.layer = Layer;
-				marker = go.AddComponent<WorldCheckMarker>();
-				marker.placementId = placementId;
+				marker = go.AddComponent<CheckMarkerWorld>();
+				marker.element = element;
 				markers.Add(marker);
 			}
 			keepMarkers.Add(marker);
@@ -122,17 +122,15 @@ internal class TangledMapManager : MonoBehaviour {
 				continue;
 			}
 
-			var marker = GetMarker(placement.Location.Name);
-
-			marker.state = GetState(placement);
 			//(Even though the scene is loaded, can't use RoomLocation.From here as items have already been swapped.)
 			var loc = room.locations.FirstOrDefault(x => x.id == placement.Location.Name);
 			if (loc == null) {
 				mod.LogWarn($"Couldn't find item location {placement.Location.Name}");
-				marker.targetLocation = Vector3.zero;
-			} else {
-				marker.targetLocation = loc.Position;
+				continue;
 			}
+
+			var marker = GetMarker(loc);
+			marker.state = GetState(placement);
 
 			//Make everything clamp a little different so it's easier to see multiple items at the edge.
 			//...using random because itemPlacements might have spoiler biases and I'm too lazy to do a deterministic thing.
@@ -147,10 +145,7 @@ internal class TangledMapManager : MonoBehaviour {
 			var randoTransition = kvp.Value;
 			if (randoTransition.SceneName != room.id) continue;
 
-			var marker = GetMarker(kvp.Key);
-			marker.forTransition = true;
 
-			marker.state = GetState(randoTransition);
 
 			var tangledTransition = room.transitions.FirstOrDefault(x => x.id == kvp.Key);
 			if (tangledTransition == null || tangledTransition.Position == Vector3.zero) {
@@ -158,11 +153,21 @@ internal class TangledMapManager : MonoBehaviour {
 				var door = FindObjectsOfType<TransitionPoint>(true)
 					.FirstOrDefault(x => x.name == randoTransition.DoorName)
 				;
-				if (door) marker.targetLocation = door.transform.position;
-				else mod.LogError($"Failed to find location for {randoTransition.Name}");
-			} else {
-				marker.targetLocation = tangledTransition.Position;
+				if (door) {
+					mod.LogWarn($"Failed to find location for {randoTransition.Name}, but can late-add");
+					room.transitions.Add(new RoomTransition {
+						id = kvp.Key,
+						doorId = door.name,
+						Position = door.transform.position,
+					});
+				} else {
+					mod.LogError($"Failed to find location for {randoTransition.Name}");
+					continue;
+				}
 			}
+
+			var marker = GetMarker(tangledTransition);
+			marker.state = GetState(randoTransition);
 
 			marker.inset = Random.Range(-.2f, .2f) + 1.1f;
 

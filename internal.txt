@@ -1,27 +1,15 @@
 
-
 -------------------------------------------------------------------------
 Next
 -------------------------------------------------------------------------
 
-
 - mega revamp
-	- xx trim trailing whitespace
-
 	- compile data
-		- xx with all base transitions
-		- xx with thumbnail dimensions
-		- regen
+		- exported images have transparency, should be opaque
+
 	- start rendering something
 
 	- live check indicators:
-		- xx not a late enough LateUpdate, lags behind camera pos a bit
-		- zz directional arrorw pointing, unless resting on the object
-		- zz kinda a bit too hand-holdy?
-			- maybe make a little radar instead of putting direction arrows all oaver the screen.
-		- xx make cleared semi transparent
-
-		- handle one-way doors
 		- test with not all item types randomized
 		- show shade?
 		- could add anotother icon/color/target for pathing the user
@@ -65,6 +53,7 @@ Next
 	- Remember:
 		- green means you can get there from where you started the game, not necessarily from where you are standing right now.
 		- red means logic doesn't expect you to, or can't prove that you can, reach it right now.
+	- for file in *.png; do convert $file -colorspace RGB -resize 50% -colorspace sRGB -quality 95 "`basename $file .png`.jpg"; done
 
 
 - things:
@@ -88,9 +77,6 @@ Next
 	- live view option
 		- that's "memory only" - only indicates what you've done, what what you could/can't do
 		- that only shows the markers when you're focusing soul - might be a good default
-	- Unrandomized transitinos:
-		- Mabe just record the transitions oyu visit that aren't randomized?
-		- Or perhaps just use a different icon for unrandomized transitions: Maybe just a gray "=" icon. Or red if unchanged and unreachable.
 	- Maybe always sort items by name since some things will render on top of others.
 	- Item names above previewed items?
 	- pathfinding: RCPathfinder

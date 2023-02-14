@@ -79,20 +79,28 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataExport.cs" />
-    <Compile Include="Misc.cs" />
-    <Compile Include="Room.cs" />
+    <Compile Include="MapGen\CheckMarker.cs" />
+    <Compile Include="MapGen\CheckMarkerMap.cs" />
+    <Compile Include="MapGen\MapManager.cs" />
+    <Compile Include="MapGen\ResourceUtil.cs" />
+    <Compile Include="MapGen\RoomElement.cs" />
+    <Compile Include="MapGen\RoomMB.cs" />
+    <Compile Include="MapGen\Misc.cs" />
+    <Compile Include="MapGen\Room.cs" />
+    <Compile Include="MapGen\TransitionLinkMarker.cs" />
     <Compile Include="MappingCamera.cs" />
-    <Compile Include="RoomLocation.cs" />
-    <Compile Include="RoomTransition.cs" />
+    <Compile Include="MapGen\RoomItemLocation.cs" />
+    <Compile Include="MapGen\RoomTransition.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="TangledMapManager.cs" />
     <Compile Include="TangledMapViewMod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WorldCheckMarker.cs" />
+    <Compile Include="CheckMarkerWorld.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\*.json" />
     <EmbeddedResource Include="Resources\Images\*.png" />
+    <EmbeddedResource Include="Resources\MapTiles\*.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

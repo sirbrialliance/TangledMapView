@@ -253,7 +253,7 @@ public class MappingCamera : MonoBehaviour {
 
 		var placements = Finder.GetFullLocationList().Where(kvp => kvp.Value.sceneName == sceneName);
 		foreach (var kvp in placements) {
-			ret.locations.Add(RoomLocation.From(kvp.Value));
+			ret.locations.Add(DataExport.RoomFrom(kvp.Value));
 		}
 
 		var transitions = Data.Transitions.Where(kvp => kvp.Value.SceneName == sceneName);
