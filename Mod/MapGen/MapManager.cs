@@ -14,9 +14,9 @@ public class MapManager : MonoBehaviour {
 
 	internal HashSet<RoomMB> wantsLoadImage = new HashSet<RoomMB>();
 	private Dictionary<string, CheckMarkerMap> transitions;
-	private TransformAccessArray transformAccess;
 	private JobHandle? jobHandle;
 	private NativeArray<RoomPusher.Data> pusherData, prevPusherData;
+	private Transform[] roomTransforms;
 
 	public void Awake() {
 		instance = this;
@@ -24,9 +24,9 @@ public class MapManager : MonoBehaviour {
 		roomsGO = new GameObject("Rooms");
 		linksGO = new GameObject("Links");
 
-		transformAccess = new TransformAccessArray(Room.rooms.Count);
 		pusherData = new NativeArray<RoomPusher.Data>(Room.rooms.Count, Allocator.Persistent);
 		prevPusherData = new NativeArray<RoomPusher.Data>(Room.rooms.Count, Allocator.Persistent);
+		roomTransforms = new Transform[Room.rooms.Count];
 
 		int i = 0;
 		foreach (var kvp in Room.rooms) {
@@ -36,8 +36,6 @@ public class MapManager : MonoBehaviour {
 
 			roomMB.transform.position = Random.onUnitSphere * 2000;
 
-			transformAccess.Add(roomMB.transform);
-
 			var bounds = new Bounds(
 				//todo: not yet correctly centered on the object
 				roomMB.transform.position,
@@ -45,8 +43,11 @@ public class MapManager : MonoBehaviour {
 			);
 
 			pusherData[i] = prevPusherData[i] = new RoomPusher.Data {
+				p = roomMB.transform.position,
 				worldBounds = bounds,
 			};
+
+			roomTransforms[i] = roomMB.transform;
 
 			++i;
 		}
@@ -57,7 +58,6 @@ public class MapManager : MonoBehaviour {
 	}
 
 	public void OnDestroy() {
-		transformAccess.Dispose();
 		pusherData.Dispose();
 		prevPusherData.Dispose();
 	}
@@ -112,16 +112,16 @@ public class MapManager : MonoBehaviour {
 
 	public void Update() {
 		var job = new RoomPusher{roomsData = pusherData, prevRoomsData = prevPusherData};
-
-
-		jobHandle = job.Schedule(transformAccess);
-
-		// job.Execute(0, transformAccess.););
+		jobHandle = job.Schedule(pusherData.Length, 16);
 	}
 
 	public void LateUpdate() {
 		jobHandle?.Complete();
 		jobHandle = null;
+
+		for (int i = 0; i < pusherData.Length; i++) {
+			roomTransforms[i].position = pusherData[i].p;
+		}
 
 		var t = pusherData;
 		pusherData = prevPusherData;

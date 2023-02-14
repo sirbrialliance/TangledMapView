@@ -1,9 +1,10 @@
 ﻿using Unity.Collections;
+using Unity.Jobs;
 using UnityEngine;
 using UnityEngine.Jobs;
 
 namespace TangledMapView {
-public struct RoomPusher : IJobParallelForTransform {
+public struct RoomPusher : IJobParallelFor {
 	public struct Data {
 		/// <summary>
 		/// Position/velocity
@@ -18,15 +19,12 @@ public struct RoomPusher : IJobParallelForTransform {
 
 	public NativeArray<Data> roomsData;
 
-
-	public void Execute(int i, TransformAccess transform) {
+	public void Execute(int i) {
 		var data = prevRoomsData[i];
-		data.p = transform.position;
 
 		_Execute(i, ref data);
 
 		roomsData[i] = data;
-		transform.position = data.p;
 	}
 
 	public void _Execute(int i, ref Data data) {
