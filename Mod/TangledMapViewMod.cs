@@ -30,7 +30,7 @@ public class TangledMapViewMod : Mod, IMenuMod,
 	public static event Action onDataChange;
 
 	public TangledMapViewMod() : base("TangledMapView") {}
-	public override string GetVersion() => "0.4.0";
+	public override string GetVersion() => Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
 
 	public override int LoadPriority() {
 		return 100;//want randomizer to load before us

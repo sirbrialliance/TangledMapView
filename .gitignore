@@ -9,10 +9,10 @@ Metadata/yamap*
 .vs/
 __pycache__
 TangledMapView.sln.DotSettings.user
-MapView/Library/
-MapView/Temp/
-MapView/.vsconfig
-MapView/UserSettings/
-MapView/*.csproj
-MapView/MapView.sln
-MapView/Logs/ApiUpdaterCheck.txt
+MapViewUnity/Library/
+MapViewUnity/Temp/
+MapViewUnity/.vsconfig
+MapViewUnity/UserSettings/
+MapViewUnity/*.csproj
+MapViewUnity/MapView.sln
+MapViewUnity/Logs/ApiUpdaterCheck.txt
