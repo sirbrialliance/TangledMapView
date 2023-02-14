@@ -62,10 +62,14 @@ Next
 
 - docs
 	- Live icons: "They help you determine if you need to learn something new, come back later, or git gud."
+	- Remember:
+		- green means you can get there from where you started the game, not necessarily from where you are standing right now.
+		- red means logic doesn't expect you to, or can't prove that you can, reach it right now.
 
 
 - things:
 	- show number of new checks accessible when you grab an item (that unlocks things)
+		- and bonus points if it shows a summarized list of areas you can reach now
 	- show arrows/markers to all undiscovered checks in room
 		- and doors
 	- show logic for a given check and which conditions are true
@@ -80,13 +84,16 @@ Next
 		- Truly Thematic only updates the map once you find the quill, reveals rooms from maps you find.
 		- Casual allows buying hints
 		- On just shows everything
-	- Maybe have live view option
+	- Or have a "Maps are:" option: Useless, Useful, Critical
+	- live view option
 		- that's "memory only" - only indicates what you've done, what what you could/can't do
 		- that only shows the markers when you're focusing soul - might be a good default
 	- Unrandomized transitinos:
 		- Mabe just record the transitions oyu visit that aren't randomized?
 		- Or perhaps just use a different icon for unrandomized transitions: Maybe just a gray "=" icon. Or red if unchanged and unreachable.
 	- Maybe always sort items by name since some things will render on top of others.
+	- Item names above previewed items?
+	- pathfinding: RCPathfinder
 
 - need a tracker
 	- grub and other currency count
@@ -97,12 +104,13 @@ Next
 	- keys
 
 
-- ItemChanger + benchwarp and no preload - try warp:
-	NullReferenceException: Object reference not set to an instance of an object
-  at ItemChanger.StartDef+<OnRespawn>d__38.MoveNext () [0x0021c] in C:\dev\ItemChanger\ItemChanger\StartDef.cs:167
-  at UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) [0x00026] in <047294ce45cf4b9a9441e48d2b8435e4>:0
-- Geo_Rock-Mantis_Outskirts_Alcove, IMO, should require difficult skips when itemless, not just precise movement
-
+- Randomizer:
+	- ItemChanger + benchwarp and no preload - try warp:
+		NullReferenceException: Object reference not set to an instance of an object
+	  at ItemChanger.StartDef+<OnRespawn>d__38.MoveNext () [0x0021c] in C:\dev\ItemChanger\ItemChanger\StartDef.cs:167
+	  at UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) [0x00026] in <047294ce45cf4b9a9441e48d2b8435e4>:0
+	- Geo_Rock-Mantis_Outskirts_Alcove, IMO, should require difficult skips when itemless, not just precise movement
+	- Stag egg should be lore. :-)
 
 -------------------------------------------------------------------------
 Unsorted

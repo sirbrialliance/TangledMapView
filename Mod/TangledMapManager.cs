@@ -69,7 +69,9 @@ internal class TangledMapManager : MonoBehaviour {
 			return CheckState.OneWay;
 		}
 
-		var isRandomized = RandoMod.RS.Context.transitionPlacements.Any(
+		var isRandomized = false;
+		var transitionPlacements = RandoMod.RS.Context.transitionPlacements;
+		if (transitionPlacements != null) isRandomized = transitionPlacements.Any(
 			x => x.Source.TransitionDef == transition
 		);
 
