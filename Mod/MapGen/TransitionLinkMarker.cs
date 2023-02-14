@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
 namespace TangledMapView {
+[DefaultExecutionOrder(10)]
 public class TransitionLinkMarker : MonoBehaviour {
 
 	private static AnimationCurve widthCurve;

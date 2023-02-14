@@ -135,7 +135,8 @@ internal class TangledMapManager : MonoBehaviour {
 			//Make everything clamp a little different so it's easier to see multiple items at the edge.
 			//...using random because itemPlacements might have spoiler biases and I'm too lazy to do a deterministic thing.
 			//...like based on the item name.
-			marker.inset = Random.Range(-.2f, .2f) + 2.1f;
+			marker.offset = new Vector2(Random.Range(-.2f, .2f), Random.Range(-.2f, .2f));
+			marker.inset = 2.1f;
 
 			marker.UpdateVisuals();
 			// mod.LogDebug($"Maker for {marker.placementId} in state {marker.state}");
@@ -169,7 +170,8 @@ internal class TangledMapManager : MonoBehaviour {
 			var marker = GetMarker(tangledTransition);
 			marker.state = GetState(randoTransition);
 
-			marker.inset = Random.Range(-.2f, .2f) + 1.1f;
+			marker.offset = new Vector2(Random.Range(-.2f, .2f), Random.Range(-.2f, .2f));
+			marker.inset = 1.1f;
 
 			marker.UpdateVisuals();
 

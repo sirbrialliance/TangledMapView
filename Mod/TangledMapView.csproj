@@ -87,6 +87,7 @@
     <Compile Include="MapGen\RoomMB.cs" />
     <Compile Include="MapGen\Misc.cs" />
     <Compile Include="MapGen\Room.cs" />
+    <Compile Include="MapGen\RoomPusher.cs" />
     <Compile Include="MapGen\TransitionLinkMarker.cs" />
     <Compile Include="MappingCamera.cs" />
     <Compile Include="MapGen\RoomItemLocation.cs" />

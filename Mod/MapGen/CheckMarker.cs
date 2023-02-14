@@ -8,6 +8,10 @@ namespace TangledMapView {
 public class CheckMarker : MonoBehaviour {
 	public RoomElement element;
 	public CheckState state;
+	/// <summary>
+	/// Physical position offset to apply to where we normally would render.
+	/// </summary>
+	public Vector3 offset;
 
 	protected static Dictionary<string, Texture2D> icons = new Dictionary<string, Texture2D>();
 	protected Renderer markRenderer;

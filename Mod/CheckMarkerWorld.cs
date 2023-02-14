@@ -33,7 +33,7 @@ public class CheckMarkerWorld : CheckMarker {
 		pos.x = Mathf.Clamp(pos.x, rectMin.x, rectMax.x);
 		pos.y = Mathf.Clamp(pos.y, rectMin.y, rectMax.y);
 
-		transform.localPosition = pos;
+		transform.localPosition = pos + offset;
 	}
 }
 }
