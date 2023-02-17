@@ -34,6 +34,10 @@ public class MapManager : MonoBehaviour {
 
 			roomMB.transform.position = Random.onUnitSphere * 2000;
 
+			foreach (var transition in room.transitions) {
+				transition.UpdateDetails();
+			}
+
 			var bounds = new Bounds(
 				new Vector3((room.x2 + room.x1) / 2f, (room.y2 + room.y1) / 2f, 0),
 				new Vector3(room.x2 - room.x1, room.y2 - room.y1, 35)
@@ -41,7 +45,8 @@ public class MapManager : MonoBehaviour {
 			var offset = -bounds.center;
 
 			var pos = roomMB.transform.position;
-			var data = new RoomPusher.Data {
+			var data = new RoomPusher.Room {
+				id = room.id,
 				transform = roomMB.transform,
 				X = pos.x - offset.x,
 				Y = pos.y - offset.y,
@@ -52,34 +57,46 @@ public class MapManager : MonoBehaviour {
 			};
 			pusher.Add(data);
 
-			roomMB.data = data;
+			roomMB.pusherData = data;
 
 			++i;
 		}
 
-		// LinkTransitions();
+		LinkTransitions();
 
 		StartCoroutine(LoadImages());
 	}
 
 	private void LinkTransitions() {
 
+		//All the rooms we created contain their item locations and transitions, grab the transitions.
 		transitions = FindObjectsOfType<CheckMarkerMap>()
 			.Where(x => x.element is RoomTransition)
 			.ToDictionary(x => x.element.id, x => x)
 		;
 
+		var handledLinks = new HashSet<string>();
+
 		foreach (var kvp in transitions) {
 			var transition = (RoomTransition)kvp.Value.element;
-			if (transition.target == null) continue;
+			if (transition.Target == null) continue;
 
-			if (!transitions.TryGetValue(transition.target, out var dest)) {
-				Debug.LogWarning($"No such transition: {transition.target}");
+			if (!transitions.TryGetValue(transition.Target, out var dest)) {
+				Debug.LogWarning($"No such transition: {transition.Target}, which {transition.id} targets");
 				continue;
 			}
 
-			var link = TransitionLinkMarker.Create(kvp.Value, dest);
-			link.transform.parent = linksGO.transform;
+			var line = TransitionLineMarker.Create(kvp.Value, dest);
+			line.transform.parent = linksGO.transform;
+
+			var link = new RoomPusher.Link(transition, (RoomTransition)dest.element);
+
+			if (!handledLinks.Contains(link.Id)) {
+				link.Init(pusher);
+				pusher.links.Add(link);
+				handledLinks.Add(link.Id);
+			}
+
 		}
 
 	}
@@ -114,7 +131,7 @@ public class MapManager : MonoBehaviour {
 		pusher.Tick();
 
 		if (Input.GetKeyDown(KeyCode.Space)) {
-			var pokeTarget = pusher.data[Random.Range(0, pusher.data.Count)];
+			var pokeTarget = pusher.rooms[Random.Range(0, pusher.rooms.Count)];
 			var pos = Random.onUnitSphere * 2000;
 			pokeTarget.X = pos.x;
 			pokeTarget.Y = pos.y;

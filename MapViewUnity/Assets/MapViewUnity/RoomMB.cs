@@ -35,7 +35,7 @@ public class RoomMB : MonoBehaviour {
 
 
 		var renderer = go.AddComponent<MeshRenderer>();
-		var mat = new Material(ResourceUtil.UnlitTransparentShader());
+		var mat = new Material(ResourceUtil.LoadAsset<Material>("RoomThumbnail.mat"));
 		mat.color = Color.black;
 		mat.mainTexture = Texture2D.whiteTexture;//will load later
 		renderer.material = mat;
@@ -50,7 +50,7 @@ public class RoomMB : MonoBehaviour {
 	public Room room;
 
 	public bool textureLoaded;
-	public RoomPusher.Data data;
+	public RoomPusher.Room pusherData;
 
 	public void OnWillRenderObject() {
 		if (!textureLoaded) MapManager.instance.wantsLoadImage.Add(this);
@@ -79,7 +79,7 @@ public class RoomMB : MonoBehaviour {
 
 		foreach (var transition in room.transitions) {
 			var marker = MakeMarker(transition);
-			marker.state = transition.target == null ? CheckState.OneWay : CheckState.Reachable;
+			marker.state = transition.Target == null ? CheckState.OneWay : CheckState.Reachable;
 			marker.UpdateVisuals();
 		}
 
@@ -87,7 +87,7 @@ public class RoomMB : MonoBehaviour {
 
 	public void OnDrawGizmosSelected() {
 		Gizmos.color = Color.cyan;
-		Gizmos.DrawWireSphere(data.XYZ, data.levelBounds.extents.magnitude);
+		Gizmos.DrawWireSphere(pusherData.XYZ, pusherData.levelBounds.extents.magnitude);
 	}
 
 }

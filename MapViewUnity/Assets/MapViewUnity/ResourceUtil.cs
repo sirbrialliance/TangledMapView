@@ -1,6 +1,9 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.Profiling;
+using Object = UnityEngine.Object;
 
 namespace TangledMapView {
 public class ResourceUtil {
@@ -12,7 +15,7 @@ public class ResourceUtil {
 			if (!File.Exists(localPath)) data = null;
 			else data = File.ReadAllBytes(localPath);
 		#else
-			var assembly = typeof(ResourceUtil).Assembly;
+			var assembly = Assembly.GetExecutingAssembly();
 			var resName = $"TangledMapView.Resources.{path.Replace("/", ".")}";
 			using var resourceStream = assembly.GetManifestResourceStream(resName);
 			if (resourceStream != null) {
@@ -58,6 +61,24 @@ public class ResourceUtil {
 		}
 
 		return _quad;
+	}
+
+	private static AssetBundle assets;
+
+	public static T LoadAsset<T>(string path) where T: Object {
+		#if UNITY_EDITOR
+			return UnityEditor.AssetDatabase.LoadAssetAtPath<T>("Assets/Bundle/" + path);
+		#else
+			if (!assets) {
+				var assembly = Assembly.GetExecutingAssembly();
+				var resName = $"TangledMapView.Resources.UnityBundle";
+				using var resourceStream = assembly.GetManifestResourceStream(resName);
+				if (resourceStream == null) throw new Exception("Failed to load embedded asset bundle");
+				assets = AssetBundle.LoadFromStream(resourceStream);
+			}
+
+			return assets.LoadAsset<T>(path);
+		#endif
 	}
 }
 }

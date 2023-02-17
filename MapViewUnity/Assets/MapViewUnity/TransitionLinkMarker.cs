@@ -2,14 +2,14 @@
 
 namespace TangledMapView {
 [DefaultExecutionOrder(10)]
-public class TransitionLinkMarker : MonoBehaviour {
+public class TransitionLineMarker : MonoBehaviour {
 
 	private static AnimationCurve widthCurve;
 	private static Gradient gradient;
 
 	private const int PointCount = 100;
 
-	static TransitionLinkMarker() {
+	static TransitionLineMarker() {
 		widthCurve = AnimationCurve.EaseInOut(0, 1, 1, .5f);
 		gradient = new Gradient {
 			colorKeys = new[] {
@@ -19,9 +19,9 @@ public class TransitionLinkMarker : MonoBehaviour {
 		};
 	}
 
-	public static TransitionLinkMarker Create(CheckMarker src, CheckMarker dest) {
+	public static TransitionLineMarker Create(CheckMarker src, CheckMarker dest) {
 		var go = new GameObject($"{src.element.id} -> {dest.element.id}");
-		var ret = go.AddComponent<TransitionLinkMarker>();
+		var ret = go.AddComponent<TransitionLineMarker>();
 		ret.src = src;
 		ret.dest = dest;
 
@@ -45,12 +45,13 @@ public class TransitionLinkMarker : MonoBehaviour {
 		var transition = el as RoomTransition;
 		if (transition == null) return Vector3.zero;
 
-		switch (transition.doorId[0]) {
+		switch (transition.srcSide[0]) {
 			case 't': return Vector3.up;
 			case 'b': return Vector3.down;
 			case 'l': return Vector3.left;
 			case 'r': return Vector3.right;
-			default: return Vector3.zero;//doors, mostly
+			// default: return Vector3.zero;//doors, mostly
+			default: return Vector3.back;//doors, mostly
 		}
 	}
 
