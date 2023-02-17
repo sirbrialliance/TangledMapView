@@ -53,7 +53,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="$(MapViewUnity)\*.cs" />
+    <Compile Include="$(MapViewUnity)\**\*.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\*.json" />

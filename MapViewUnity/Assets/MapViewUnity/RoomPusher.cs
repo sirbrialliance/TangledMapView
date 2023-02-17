@@ -1,56 +1,76 @@
-﻿using Unity.Collections;
+﻿using System.Collections.Generic;
+using D3Sharp.Force;
+using Unity.Collections;
 using Unity.Jobs;
 using UnityEngine;
 using UnityEngine.Jobs;
+using UnityEngine.Profiling;
 
 namespace TangledMapView {
-public struct RoomPusher : IJobParallelFor {
-	public struct Data {
+
+public class RoomPusher {
+	public class Data : INode {
+		public int Index { get; set; }
+		public double Fx { get; set; } = double.NaN;
+		public double Fy { get; set; } = double.NaN;
+		public double Vx { get; set; } = double.NaN;
+		public double Vy { get; set; } = double.NaN;
+		public double X { get; set; } = double.NaN;
+		public double Y { get; set; } = double.NaN;
+		public double Z { get; set; } = double.NaN;
+		public Vector3 XYZ => new Vector3((float)X, (float)Y, (float)Z);
+
 		/// <summary>
-		/// Position/velocity
+		/// Bounds of the level thumbnail in its local world space.
 		/// </summary>
-		public Vector3 p, v;
+		public Bounds levelBounds;
+		public Transform transform;
 
-		public Bounds worldBounds;
+		/// <summary>
+		/// offset from object's center
+		/// transform.position is where (0, 0, 0) is in the level, but
+		/// this.X,Y,Z are for the center.
+		/// </summary>
+		public Vector3 nodeOffset;
 	}
 
-	[ReadOnly]
-	public NativeArray<Data> prevRoomsData;
+	private Simulation<Data> simulation;
+	public readonly List<Data> data;
 
-	public NativeArray<Data> roomsData;
 
-	public void Execute(int i) {
-		var data = prevRoomsData[i];
-
-		_Execute(i, ref data);
-
-		roomsData[i] = data;
+	public RoomPusher(int capacity) {
+		data = new List<Data>(capacity);
 	}
 
-	public void _Execute(int i, ref Data data) {
-		data.worldBounds.center = data.p;
-
-		BiasCenter(ref data);
-		Collide(i, ref data);
-
-		data.p += data.v * 1 / 60f;
+	public void Add(Data item) {
+		data.Add(item);
 	}
 
-	private void BiasCenter(ref Data data) {
-		data.v += -data.p * .01f;
-	}
-
-	private void Collide(int myIdx, ref Data data) {
-		//fixme: n^2 algo, slow
-		//fixme: accessing data that may be getting mutated on another thread
-		for (int i = 0; i < roomsData.Length; i++) {
-			if (i == myIdx) continue;
-			if (!prevRoomsData[i].worldBounds.Intersects(data.worldBounds)) continue;
-
-			//push apart
-			//fixme: should be based on overlap
-			data.v += (prevRoomsData[i].worldBounds.center - data.worldBounds.center) * 1.2f;
+	public void Tick() {
+		if (simulation == null) {
+			simulation = new Simulation<Data>(data)
+				{AlphaDecay = .005, AlphaMin = .09}
+				.AddForce("center", new ForceCenter<Data>(0, 0).SetStrength(.01f))
+				.AddForce("collide", new ForceCollide<Data>
+					((room, i, list) => room.levelBounds.extents.magnitude)
+					{Strength = 1}
+				)
+				.AddForce("manyBody", new ForceManyBody<Data>().SetStrength(20))
+			;
 		}
+		Profiler.BeginSample("Simulation.Tick");
+		simulation.Tick();
+		Profiler.EndSample();
+	}
+
+	public void UpdateTransforms() {
+		for (int i = 0; i < data.Count; i++) {
+			data[i].transform.position = data[i].nodeOffset + data[i].XYZ;
+		}
+	}
+
+	public void Kick() {
+		simulation.Alpha = .3;
 	}
 }
 }

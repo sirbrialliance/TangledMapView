@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Collections;
-using Unity.Jobs;
 using UnityEngine;
-using UnityEngine.Jobs;
 
 namespace TangledMapView {
+/// <summary>
+/// Main handler for the main, full map view.
+/// </summary>
 public class MapManager : MonoBehaviour {
 	public static MapManager instance;
 
@@ -14,9 +15,8 @@ public class MapManager : MonoBehaviour {
 
 	internal HashSet<RoomMB> wantsLoadImage = new HashSet<RoomMB>();
 	private Dictionary<string, CheckMarkerMap> transitions;
-	private JobHandle? jobHandle;
-	private NativeArray<RoomPusher.Data> pusherData, prevPusherData;
-	private Transform[] roomTransforms;
+
+	private RoomPusher pusher;
 
 	public void Awake() {
 		instance = this;
@@ -24,9 +24,7 @@ public class MapManager : MonoBehaviour {
 		roomsGO = new GameObject("Rooms");
 		linksGO = new GameObject("Links");
 
-		pusherData = new NativeArray<RoomPusher.Data>(Room.rooms.Count, Allocator.Persistent);
-		prevPusherData = new NativeArray<RoomPusher.Data>(Room.rooms.Count, Allocator.Persistent);
-		roomTransforms = new Transform[Room.rooms.Count];
+		pusher = new RoomPusher(Room.rooms.Count);
 
 		int i = 0;
 		foreach (var kvp in Room.rooms) {
@@ -37,29 +35,31 @@ public class MapManager : MonoBehaviour {
 			roomMB.transform.position = Random.onUnitSphere * 2000;
 
 			var bounds = new Bounds(
-				//todo: not yet correctly centered on the object
-				roomMB.transform.position,
-				new Vector3(room.x2 - room.x1, room.y2 - room.y1, 35) * .5f
+				new Vector3((room.x2 + room.x1) / 2f, (room.y2 + room.y1) / 2f, 0),
+				new Vector3(room.x2 - room.x1, room.y2 - room.y1, 35)
 			);
+			var offset = -bounds.center;
 
-			pusherData[i] = prevPusherData[i] = new RoomPusher.Data {
-				p = roomMB.transform.position,
-				worldBounds = bounds,
+			var pos = roomMB.transform.position;
+			var data = new RoomPusher.Data {
+				transform = roomMB.transform,
+				X = pos.x - offset.x,
+				Y = pos.y - offset.y,
+				// Z = pos.z,
+				Z = 0,
+				levelBounds = bounds,
+				nodeOffset = offset,
 			};
+			pusher.Add(data);
 
-			roomTransforms[i] = roomMB.transform;
+			roomMB.data = data;
 
 			++i;
 		}
 
-		LinkTransitions();
+		// LinkTransitions();
 
 		StartCoroutine(LoadImages());
-	}
-
-	public void OnDestroy() {
-		pusherData.Dispose();
-		prevPusherData.Dispose();
 	}
 
 	private void LinkTransitions() {
@@ -111,21 +111,19 @@ public class MapManager : MonoBehaviour {
 	}
 
 	public void Update() {
-		var job = new RoomPusher{roomsData = pusherData, prevRoomsData = prevPusherData};
-		jobHandle = job.Schedule(pusherData.Length, 16);
+		pusher.Tick();
+
+		if (Input.GetKeyDown(KeyCode.Space)) {
+			var pokeTarget = pusher.data[Random.Range(0, pusher.data.Count)];
+			var pos = Random.onUnitSphere * 2000;
+			pokeTarget.X = pos.x;
+			pokeTarget.Y = pos.y;
+			pusher.Kick();
+		}
 	}
 
 	public void LateUpdate() {
-		jobHandle?.Complete();
-		jobHandle = null;
-
-		for (int i = 0; i < pusherData.Length; i++) {
-			roomTransforms[i].position = pusherData[i].p;
-		}
-
-		var t = pusherData;
-		pusherData = prevPusherData;
-		prevPusherData = t;
+		pusher.UpdateTransforms();
 	}
 }
 

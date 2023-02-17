@@ -50,6 +50,7 @@ public class RoomMB : MonoBehaviour {
 	public Room room;
 
 	public bool textureLoaded;
+	public RoomPusher.Data data;
 
 	public void OnWillRenderObject() {
 		if (!textureLoaded) MapManager.instance.wantsLoadImage.Add(this);
@@ -82,6 +83,11 @@ public class RoomMB : MonoBehaviour {
 			marker.UpdateVisuals();
 		}
 
+	}
+
+	public void OnDrawGizmosSelected() {
+		Gizmos.color = Color.cyan;
+		Gizmos.DrawWireSphere(data.XYZ, data.levelBounds.extents.magnitude);
 	}
 
 }

@@ -35,6 +35,8 @@ Next
 	- maybe indicate when you enter a room you shouldn't be able to get to?
 	- maybe a list with the map of previewed items and their locations, most important first
 		- maybe importance = number of times there's a logic condition that requires it
+	- add an icon if previewed location has a progresson item of any sort
+	- maybe add stats/number on outgoing transitins about what's available there?
 
 - Data issues:
 	- "Couldn't find item location Boss_Essence-Gorb"
@@ -52,15 +54,17 @@ Next
 	- Colosseum rewards
 	- [WARN]:[TangledMapViewMod] - Couldn't find item location Boss_Essence-Soul_Tyrant
 	- [WARN]:[TangledMapViewMod] - Couldn't find item location Lurien
-	- Somehow got Geo_Rock-Ancestral_Mound or Geo_Rock-Ancestral_Mound_Dupe to stay marked as uncollected onscreen...maybe because both rock might have burst the same frame?
-		- No...the rock higher up was actually the item we were tracking? Ancestral_Mound_Tree(_Dupe)? Bad position data?
-
+	- [WARN]:[TangledMapViewMod] - Couldn't find item location Nailmaster's_Glory
+	- Void Heart
+	- Wrong location:
+		- Geo_Rock-Ancestral_Mound or Geo_Rock-Ancestral_Mound_Dupe
+		- Geo_Rock-Abyss_2
 
 - docs
 	- Live icons: "They help you determine if you need to learn something new, come back later, or git gud."
 	- Remember:
 		- green means you can get there from where you started the game, not necessarily from where you are standing right now.
-		- red means logic doesn't expect you to, or can't prove that you can, reach it right now.
+		- red means logic doesn't expect you to, or can't prove that you can, reach it right now. In particular, simple key areas may be marked inaccessible until you have access to all keys.
 	- for file in *.png; do convert $file -colorspace RGB -resize 50% -colorspace sRGB -quality 95 "`basename $file .png`.jpg"; done
 
 
@@ -105,6 +109,7 @@ Next
 	  at UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) [0x00026] in <047294ce45cf4b9a9441e48d2b8435e4>:0
 	- Geo_Rock-Mantis_Outskirts_Alcove, IMO, should require difficult skips when itemless, not just precise movement
 	- Stag egg should be lore. :-)
+	- How does one Deepnest_East_07[left1] with lust leftclaw?!
 
 -------------------------------------------------------------------------
 Unsorted
