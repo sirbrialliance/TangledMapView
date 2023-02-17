@@ -76,5 +76,27 @@ public class RoomTransition : RoomElement {
 
 		return ret;
 	}
+
+
+	public static Vector3 DoorDirection(RoomElement el) {
+		var transition = el as RoomTransition;
+		if (transition == null) return Vector3.zero;
+
+		return DoorDirection(transition.srcSide);
+	}
+
+	public static Vector3 DoorDirection(string side) {
+		if (string.IsNullOrEmpty(side)) return Vector3.zero;
+
+		switch (side[0]) {
+			case 't': return Vector3.up;
+			case 'b': return Vector3.down;
+			case 'l': return Vector3.left;
+			case 'r': return Vector3.right;
+			// default: return Vector3.zero;//doors, mostly
+			default: return Vector3.back;//doors, mostly
+		}
+	}
+
 }
 }

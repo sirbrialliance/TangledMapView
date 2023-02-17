@@ -18,10 +18,18 @@ public class RoomPusher {
 		public double Fy { get; set; } = double.NaN;
 		public double Vx { get; set; } = double.NaN;
 		public double Vy { get; set; } = double.NaN;
+		public double Vz { get; set; } = double.NaN;
 		public double X { get; set; } = double.NaN;
 		public double Y { get; set; } = double.NaN;
 		public double Z { get; set; } = double.NaN;
-		public Vector3 XYZ => new Vector3((float)X, (float)Y, (float)Z);
+		public Vector3 XYZ {
+			get => new Vector3((float)X, (float)Y, (float)Z);
+			set { X = value.x; Y = value.y; Z = value.z; }
+		}
+		public Vector3 VXYZ {
+			get => new Vector3((float)Vx, (float)Vy, (float)Vz);
+			set { Vx = value.x; Vy = value.y; Vz = value.z; }
+		}
 
 		/// <summary>
 		/// Bounds of the level thumbnail in its local world space.
@@ -85,15 +93,16 @@ public class RoomPusher {
 
 	protected void SetupSimulation() {
 		simulation = new Simulation<Room>(rooms)
-			{AlphaDecay = .005, AlphaMin = .09}
+			// {AlphaDecay = .005, AlphaMin = .09}
+			{AlphaDecay = .0005, AlphaMin = .09}
 			.AddForce("center", new ForceCenter<Room>(0, 0).SetStrength(.01f))
-			.AddForce("collide", new ForceCollide<Room>
-				((room, i, list) => room.levelBounds.extents.magnitude)
-				// {Strength = 1}
-				{Strength = .01}
-			)
-			.AddForce("manyBody", new ForceManyBody<Room>().SetStrength(20))
-			.AddForce("doorAlign", new ForceDoorAlign(links).SetStrengths(.5, .6))
+			// .AddForce("collide", new ForceCollide<Room>
+			// 	((room, i, list) => room.levelBounds.extents.magnitude)
+			// 	// {Strength = 1}
+			// 	{Strength = .01}
+			// )
+			// .AddForce("manyBody", new ForceManyBody<Room>().SetStrength(20))
+			.AddForce("doorAlign", new ForceDoorAlign(links).SetStrengths(.1, .6))
 		;
 	}
 
@@ -118,6 +127,7 @@ public class RoomPusher {
 public class ForceDoorAlign : Force<RoomPusher.Room> {
 	public double alignStrength = 1;
 	public double sideShiftStrength = .1;
+	public double targetDistance = 90;
 	public List<RoomPusher.Link> links;
 
 	public ForceDoorAlign(List<RoomPusher.Link> links) {
@@ -136,7 +146,26 @@ public class ForceDoorAlign : Force<RoomPusher.Room> {
 		for (int i = 0, len = links.Count; i < len; i++) {
 			var link = links[i];
 
-			void PushLink(string side, RoomPusher.Room room, RoomPusher.Room otherRoom) {
+			if (link.roomA == null || link.roomB == null) continue;//todo
+			//todo: is this symmetric if A/B are swapped?
+
+			//Pick a "meeting point" off the edge of each door and try to draw them together.
+			var pointA = (
+				link.roomA.XYZ + link.roomA.nodeOffset + link.transitionA.Position +
+				RoomTransition.DoorDirection(link.transitionA.srcSide) * (float)targetDistance
+			);
+			var pointB = (
+				link.roomB.XYZ + link.roomB.nodeOffset + link.transitionB.Position +
+				RoomTransition.DoorDirection(link.transitionA.destSide) * (float)targetDistance
+			);
+
+			var force = (pointB - pointA) * (float)alignStrength * (float)alpha;
+
+			link.roomA.VXYZ += force;
+			link.roomB.VXYZ -= force;
+
+
+			/*void PushLink(string side, RoomPusher.Room room, RoomPusher.Room otherRoom) {
 				if (side == null || otherRoom == null) return;//fixme: one-way, should still apply force, though
 				if (side[0] == 'd') return;//for side.startsWith(door), don't apply forces to them
 
@@ -165,7 +194,7 @@ public class ForceDoorAlign : Force<RoomPusher.Room> {
 			}
 
 			PushLink(link.transitionA.srcSide, link.roomA, link.roomB);
-			PushLink(link.transitionA.destSide, link.roomB, link.roomA);
+			PushLink(link.transitionA.destSide, link.roomB, link.roomA);*/
 		}
 
 

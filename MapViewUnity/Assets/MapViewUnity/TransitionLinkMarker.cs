@@ -35,24 +35,10 @@ public class TransitionLineMarker : MonoBehaviour {
 		var mat = new Material(Shader.Find("Unlit/Color"));
 		ret.lineRenderer.material = mat;
 
-		ret.srcDir = Direction(src.element);
-		ret.destDir = -Direction(dest.element);
+		ret.srcDir = RoomTransition.DoorDirection(src.element);
+		ret.destDir = -RoomTransition.DoorDirection(dest.element);
 
 		return ret;
-	}
-
-	private static Vector3 Direction(RoomElement el) {
-		var transition = el as RoomTransition;
-		if (transition == null) return Vector3.zero;
-
-		switch (transition.srcSide[0]) {
-			case 't': return Vector3.up;
-			case 'b': return Vector3.down;
-			case 'l': return Vector3.left;
-			case 'r': return Vector3.right;
-			// default: return Vector3.zero;//doors, mostly
-			default: return Vector3.back;//doors, mostly
-		}
 	}
 
 

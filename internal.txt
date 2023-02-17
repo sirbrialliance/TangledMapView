@@ -6,11 +6,17 @@ Next
 - mega revamp
 
 	- start rendering something
+		- Current QuadTree impl is slow and is rebuilt every frame(!) per force that uses it
+			- can we hijack maybe a corner of the Unity 3d physics scene and just get trigger overlaps?
+			- or do we need to import some wort of physics broadphase collision hander? (I like bullet, but don't want to deal with native)
+			- nn can't use normal Unity physics, can't have seperate settings for our scene, and don't want to break any base game stuff
+		- maybe adjust door align to act like a spring joint in a certain distance and angle
+
+
 		- shader for lines, so they get gradient
 		- shader for tiles, so they are z-buffer and normal opaque
 		- need to use fancy smart "line" shaders for better performance?
 
-		- shift and move based on connections
 
 	- rename TangledMapManager -> LiveMarkerManager
 

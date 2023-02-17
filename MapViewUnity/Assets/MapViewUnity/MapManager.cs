@@ -60,6 +60,8 @@ public class MapManager : MonoBehaviour {
 			roomMB.pusherData = data;
 
 			++i;
+
+			// if (i > 100) break;
 		}
 
 		LinkTransitions();
