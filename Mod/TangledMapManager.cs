@@ -155,12 +155,12 @@ internal class TangledMapManager : MonoBehaviour {
 					.FirstOrDefault(x => x.name == randoTransition.DoorName)
 				;
 				if (door) {
-					mod.LogWarn($"Failed to find location for {randoTransition.Name}, but can late-add");
-					room.transitions.Add(new RoomTransition {
-						id = kvp.Key,
-						doorId = door.name,
-						Position = door.transform.position,
-					});
+					mod.LogWarn($"Failed to find location for {randoTransition.Name}, but is in scene");
+					// room.transitions.Add(new RoomTransition {
+					// 	id = kvp.Key,
+					// 	doorId = door.name,
+					// 	Position = door.transform.position,
+					// });
 				} else {
 					mod.LogError($"Failed to find location for {randoTransition.Name}");
 					continue;

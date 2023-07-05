@@ -3,68 +3,60 @@
 Next
 -------------------------------------------------------------------------
 
-- mega revamp
-
-	- start rendering something
-		- Current QuadTree impl is slow and is rebuilt every frame(!) per force that uses it
-			- can we hijack maybe a corner of the Unity 3d physics scene and just get trigger overlaps?
-			- or do we need to import some wort of physics broadphase collision hander? (I like bullet, but don't want to deal with native)
-			- nn can't use normal Unity physics, can't have seperate settings for our scene, and don't want to break any base game stuff
-		- maybe adjust door align to act like a spring joint in a certain distance and angle
+- map revamp
+	- Current QuadTree impl is slow and is rebuilt every frame(!) per force that uses it
+		- can we hijack maybe a corner of the Unity 3d physics scene and just get trigger overlaps?
+		- or do we need to import some wort of physics broadphase collision hander? (I like bullet, but don't want to deal with native)
+		- nn can't use normal Unity physics, can't have seperate settings for our scene, and don't want to break any base game stuff
+	- maybe adjust door align to act like a spring joint in a certain distance and angle
 
 
-		- shader for lines, so they get gradient
-		- shader for tiles, so they are z-buffer and normal opaque
-		- need to use fancy smart "line" shaders for better performance?
+	- shader for lines, so they get gradient
+	- shader for tiles, so they are z-buffer and normal opaque
+	- need to use fancy smart "line" shaders for better performance?
 
-
-	- rename TangledMapManager -> LiveMarkerManager
-
-	- live check indicators:
-		- test with not all item types randomized
-		- show shade?
-		- could add anotother icon/color/target for pathing the user
-		- items stacking on shopkeepers
-			- may not be easy to solve, since there's one location for many items and we render by location...
-		- maybe have different random margin offsets per axis
-
-	- compile data
-		- exported images have transparency, should be opaque
-
-
-	- Better handling of things on top of each other? (Maybe just give every arrow a slightly different margin)
-	- auto-reveal geo/grub (or secret fake)/soul world items if oyu are close enough
-		- set to previewed if in camera view frustum for 500ms
-	- state icons: eye, lock, checkmark, ??
-	- hide added HUD stuff during boss/miniboss fights
-	- may need to seperate my "previews" from logic previews. e.g. grub vs. mimic. "geo rock", but is it 15 geo? 420 geo?
-	- maybe indicate when you enter a room you shouldn't be able to get to?
 	- maybe a list with the map of previewed items and their locations, most important first
 		- maybe importance = number of times there's a logic condition that requires it
-	- add an icon if previewed location has a progresson item of any sort
-	- maybe add stats/number on outgoing transitins about what's available there?
 
-- Data issues:
-	- "Couldn't find item location Boss_Essence-Gorb"
-	- Bretta doesn't appear as a check/task...but neither do levers...
-		- White palace entrance
-	- [WARN]:[TangledMapViewMod] - Couldn't find item location Boss_Essence-Gorb
-	- [WARN]:[TangledMapViewMod] - Couldn't find item location Boss_Essence-Grey_Prince_Zote
-	- [WARN]:[TangledMapViewMod] - Couldn't find item location Boss_Essence-Xero
-	- [WARN]:[TangledMapViewMod] - Couldn't find item location Lore_Tablet-World_Sense
-	- [WARN]:[TangledMapViewMod] - Couldn't find item location Nailmaster's_Glory
-	- [WARN]:[TangledMapViewMod] - Unknown room Cinematic_Stag_travel
-	- [WARN]:[TangledMapViewMod] - Unknown room Dream_Final
-	- [WARN]:[TangledMapViewMod] - Unknown room Dream_Final
-	- [WARN]:[TangledMapViewMod] - Unknown room Cinematic_Ending_C
-	- Colosseum rewards
-	- [WARN]:[TangledMapViewMod] - Couldn't find item location Boss_Essence-Soul_Tyrant
-	- [WARN]:[TangledMapViewMod] - Couldn't find item location Lurien
-	- [WARN]:[TangledMapViewMod] - Couldn't find item location Nailmaster's_Glory
-	- Void Heart
+- Data
+	- Missing items:
+		- All Boss essence aren't pulled in (e.g. Gorb, Xero, Zote)
+		- Lore_Tablet-World_Sense
+		- sub-level grabs:
+			- Nailmaster's_Glory
+			- Colosseum rewards
+			- Void Heart
+			- Dreamers
 	- Wrong location:
 		- Geo_Rock-Ancestral_Mound or Geo_Rock-Ancestral_Mound_Dupe
 		- Geo_Rock-Abyss_2
+
+	- skip scenes
+		- Cinematic_*, Dream_Final,
+
+	- exported images have transparency from the in-game buffer, should be opaque
+	- probably burn off all the black around the edges and just add back some border
+
+- Live view
+	- rename TangledMapManager -> LiveMarkerManager
+	- add "waypoints" from logic
+
+	- test with not all item types randomized
+
+	- show shade
+	- fix brief blip with thing in wrong place when changing scenes
+	- don't re-roll random offset every update
+	- compound icons (previewed AND readable/unreachable)
+		- add an icon if previewed location has a progresson item of any sort?
+
+
+	- maybe add stats/number on outgoing transitins about what's available there?
+
+- Auto item preview?
+	- auto-reveal geo/grub (or secret fake)/soul world items if oyu are close enough
+		- set to previewed if in camera view frustum for 500ms
+	- may need to seperate my "previews" from logic previews. e.g. grub vs. mimic. "geo rock", but is it 15 geo? 420 geo?
+
 
 - docs
 	- Live icons: "They help you determine if you need to learn something new, come back later, or git gud."
@@ -76,15 +68,10 @@ Next
 
 - things:
 	- show number of new checks accessible when you grab an item (that unlocks things)
+		- "xxyy transitions/locations became available" when you get something
 		- and bonus points if it shows a summarized list of areas you can reach now
-	- show arrows/markers to all undiscovered checks in room
-		- and doors
 	- show logic for a given check and which conditions are true
-	- update visuals when get item
-	- works right with new game or loaded game
-	- shade location
 	- maybe distinguish between previewed junk and progression items
-	- "xxyy transitions/locations became available" when you get something
 	- Spoilers: Off, Off (strict), Thematic, Truly Thematic, Casual, On
 		- Strict disables auto-preview
 		- Thematic reaveals information based on in-game informatoin items (e.g. area maps reveals corrosponding rooms and outgoing transitions between mapped rooms), grub map reveals grub locations
@@ -97,7 +84,7 @@ Next
 		- that only shows the markers when you're focusing soul - might be a good default
 	- Maybe always sort items by name since some things will render on top of others.
 	- Item names above previewed items?
-	- pathfinding: RCPathfinder
+	- pathfinding: see RCPathfinder
 
 - need a tracker
 	- grub and other currency count
@@ -115,7 +102,8 @@ Next
 	  at UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) [0x00026] in <047294ce45cf4b9a9441e48d2b8435e4>:0
 	- Geo_Rock-Mantis_Outskirts_Alcove, IMO, should require difficult skips when itemless, not just precise movement
 	- Stag egg should be lore. :-)
-	- How does one Deepnest_East_07[left1] with lust leftclaw?!
+	- Started in Crossroads_ShamanTemple, but items right next to start point marked unreachable
+	- Charm_Notch-Shrumal_Ogres is super-attainable with just a down nail attack (may be obscure, though)
 
 -------------------------------------------------------------------------
 Unsorted
