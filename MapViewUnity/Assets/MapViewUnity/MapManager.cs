@@ -48,10 +48,10 @@ public class MapManager : MonoBehaviour {
 			var data = new RoomPusher.Room {
 				id = room.id,
 				transform = roomMB.transform,
-				X = pos.x - offset.x,
-				Y = pos.y - offset.y,
-				// Z = pos.z,
-				Z = 0,
+				// X = pos.x - offset.x,
+				// Y = pos.y - offset.y,
+				// // Z = pos.z,
+				// Z = 0,
 				levelBounds = bounds,
 				nodeOffset = offset,
 			};
@@ -62,6 +62,7 @@ public class MapManager : MonoBehaviour {
 			++i;
 
 			// if (i > 100) break;
+			// if (i > 10) break;
 		}
 
 		LinkTransitions();
@@ -135,8 +136,7 @@ public class MapManager : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.Space)) {
 			var pokeTarget = pusher.rooms[Random.Range(0, pusher.rooms.Count)];
 			var pos = Random.onUnitSphere * 2000;
-			pokeTarget.X = pos.x;
-			pokeTarget.Y = pos.y;
+			pokeTarget.XYZ = pos;
 			pusher.Kick();
 		}
 	}

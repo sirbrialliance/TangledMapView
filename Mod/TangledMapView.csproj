@@ -16,6 +16,12 @@
     <Reference Include="Assembly-CSharp">
       <HintPath>$(HollowKnightRefs)\Assembly-CSharp.dll</HintPath>
     </Reference>
+    <Reference Include="BEPUphysics">
+      <HintPath>..\MapViewUnity\Assets\BEPU\BEPUphysics.dll</HintPath>
+    </Reference>
+    <Reference Include="BEPUutilities">
+      <HintPath>..\MapViewUnity\Assets\BEPU\BEPUutilities.dll</HintPath>
+    </Reference>
     <Reference Include="ItemChanger">
       <HintPath>$(HollowKnightRefs)\Mods\ItemChanger\ItemChanger.dll</HintPath>
     </Reference>

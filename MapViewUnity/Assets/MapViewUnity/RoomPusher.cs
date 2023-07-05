@@ -1,34 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using D3Sharp.Force;
-using Unity.Collections;
-using Unity.Jobs;
+using BEPUphysics.Constraints.TwoEntity.Joints;
+using BEPUphysics.Entities;
+using BEPUphysics.Entities.Prefabs;
+using BEPUphysics.UpdateableSystems.ForceFields;
 using UnityEngine;
-using UnityEngine.Jobs;
 using UnityEngine.Profiling;
+using Space = BEPUphysics.Space;
+using BVector3 = BEPUutilities.Vector3;
+using BQuaternion = BEPUutilities.Quaternion;
 
 namespace TangledMapView {
 
 public class RoomPusher {
-	public class Room : INode {
+	public class Room {//: INode {
 		public string id;
-		public int Index { get; set; }
-		public double Fx { get; set; } = double.NaN;
-		public double Fy { get; set; } = double.NaN;
-		public double Vx { get; set; } = double.NaN;
-		public double Vy { get; set; } = double.NaN;
-		public double Vz { get; set; } = double.NaN;
-		public double X { get; set; } = double.NaN;
-		public double Y { get; set; } = double.NaN;
-		public double Z { get; set; } = double.NaN;
+		// public int Index { get; set; }
+		// public double Fx { get; set; } = double.NaN;
+		// public double Fy { get; set; } = double.NaN;
+		// public double Vx { get; set; } = double.NaN;
+		// public double Vy { get; set; } = double.NaN;
+		// public double Vz { get; set; } = double.NaN;
+		// public double X { get; set; } = double.NaN;
+		// public double Y { get; set; } = double.NaN;
+		// public double Z { get; set; } = double.NaN;
+		// public Vector3 XYZ {
+		// 	get => new Vector3((float)X, (float)Y, (float)Z);
+		// 	set { X = value.x; Y = value.y; Z = value.z; }
+		// }
+		// public Vector3 VXYZ {
+		// 	get => new Vector3((float)Vx, (float)Vy, (float)Vz);
+		// 	set { Vx = value.x; Vy = value.y; Vz = value.z; }
+		// }
+
+		public Entity rb;
+
 		public Vector3 XYZ {
-			get => new Vector3((float)X, (float)Y, (float)Z);
-			set { X = value.x; Y = value.y; Z = value.z; }
-		}
-		public Vector3 VXYZ {
-			get => new Vector3((float)Vx, (float)Vy, (float)Vz);
-			set { Vx = value.x; Vy = value.y; Vz = value.z; }
+			get => new Vector3(rb.Position.X, rb.Position.Y, rb.Position.Z);
+			set => rb.Position = new BVector3(value.x, value.y, value.z);
 		}
 
 		/// <summary>
@@ -77,14 +87,22 @@ public class RoomPusher {
 		}
 	}
 
+	public static BVector3 Convert(Vector3 v) {
+		return new BVector3(v.x, v.y, v.z);
+	}
+	public static Quaternion Convert(BQuaternion v) {
+		return new Quaternion(v.X, v.Y, v.Z, v.W);
+	}
 
-	private Simulation<Room> simulation;
+	// private Simulation<Room> simulation;
 	public readonly List<Room> rooms;
 	public List<Link> links;
 
+	private Space physicsWorld;
+
 	public RoomPusher(int capacity) {
 		rooms = new List<Room>(capacity);
-		links= new List<Link>();
+		links = new List<Link>();
 	}
 
 	public void Add(Room item) {
@@ -92,7 +110,7 @@ public class RoomPusher {
 	}
 
 	protected void SetupSimulation() {
-		simulation = new Simulation<Room>(rooms)
+		/*simulation = new Simulation<Room>(rooms)
 			// {AlphaDecay = .005, AlphaMin = .09}
 			{AlphaDecay = .0005, AlphaMin = .09}
 			.AddForce("center", new ForceCenter<Room>(0, 0).SetStrength(.01f))
@@ -103,27 +121,92 @@ public class RoomPusher {
 			// )
 			// .AddForce("manyBody", new ForceManyBody<Room>().SetStrength(20))
 			.AddForce("doorAlign", new ForceDoorAlign(links).SetStrengths(.1, .6))
-		;
+		;*/
+
+		physicsWorld = new Space();
+
+		foreach (var room in rooms) {
+			var pos = Convert(room.transform.position - room.nodeOffset);
+			var box = new Box(pos, room.levelBounds.size.x, room.levelBounds.size.y, room.levelBounds.size.z);
+			// var box = new Box(pos, room.levelBounds.size.x, room.levelBounds.size.y, 5);
+			// var box = new Box(pos, 1, 1, 1);
+			room.rb = box;
+
+			box.Mass = 1;
+			box.LocalInertiaTensorInverse = default;//no rotation, NB: set after Mass
+
+			physicsWorld.Add(box);
+		}
+
+		const float targetDistance = 200;
+		foreach (var link in links) {
+			if (link.roomA == null || link.roomB == null) continue;
+
+			var joint = new BallSocketJoint(link.roomA.rb, link.roomB.rb, BVector3.Zero);
+			joint.SpringSettings.Stiffness = .6f;
+			joint.SpringSettings.Damping = .9f;
+
+			var pointA = (
+				// link.roomA.XYZ + link.roomA.nodeOffset +
+				link.transitionA.Position +
+				RoomTransition.DoorDirection(link.transitionA.srcSide) * targetDistance
+			);
+			var pointB = (
+				// link.roomB.XYZ + link.roomB.nodeOffset +
+				link.transitionB.Position +
+				RoomTransition.DoorDirection(link.transitionA.destSide) * targetDistance
+			);
+
+			Debug.Log($"Set local offsets to {pointA} and {pointB}, offsetets were {joint.OffsetA} and {joint.OffsetB}");
+			joint.LocalOffsetA = Convert(pointA);
+			joint.LocalOffsetB = Convert(pointB);
+			Debug.Log($"offsetets now {joint.OffsetA} and {joint.OffsetB}");
+
+			physicsWorld.Add(joint);
+		}
+
+		physicsWorld.Add(new CenteringForce(new InfiniteForceFieldShape()));
+
+		// var ground = new Box(new BVector3(0, -2500, 0), 10000, 500, 10000);
+		// ground.BecomeKinematic();
+		// ground.Orientation = BQuaternion.CreateFromYawPitchRoll(0, 0, 1.1f);
+		// physicsWorld.Add(ground);
+		//
+		// physicsWorld.ForceUpdater.Gravity = new BVector3(0, -91.8f, 0);
 	}
 
 	public void Tick() {
-		if (simulation == null) SetupSimulation();
-		Profiler.BeginSample("Simulation.Tick");
-		simulation.Tick();
+		if (physicsWorld == null) SetupSimulation();
+		Profiler.BeginSample("RoomPusher.Tick");
+		physicsWorld.Update(Time.deltaTime);
 		Profiler.EndSample();
 	}
 
 	public void UpdateTransforms() {
+		// Debug.Log($"Item is at {rooms[0].XYZ}");
 		for (int i = 0; i < rooms.Count; i++) {
 			rooms[i].transform.position = rooms[i].nodeOffset + rooms[i].XYZ;
+			rooms[i].transform.rotation = Convert(rooms[i].rb.Orientation);
 		}
 	}
 
 	public void Kick() {
-		simulation.Alpha = .3;
 	}
 }
 
+public class CenteringForce : ForceField {
+	public CenteringForce(ForceFieldShape shape) : base(shape) {}
+
+	protected override void CalculateImpulse(Entity e, float dt, out BVector3 impulse) {
+		var dir = -e.Position;
+		dir.Normalize();
+
+		// impulse = dir * dt * 50f;
+		impulse = dir * dt * .3f;
+	}
+}
+
+#if false
 public class ForceDoorAlign : Force<RoomPusher.Room> {
 	public double alignStrength = 1;
 	public double sideShiftStrength = .1;
@@ -201,4 +284,6 @@ public class ForceDoorAlign : Force<RoomPusher.Room> {
 		return this;
 	}
 }
+
+#endif
 }

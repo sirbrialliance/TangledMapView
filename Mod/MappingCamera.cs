@@ -274,9 +274,9 @@ public class MappingCamera : MonoBehaviour {
 
 			ret.transitions.Add(new RoomTransition {
 				id = randoTransition.Name,
-				doorId = randoTransition.DoorName,
+				srcDoor = randoTransition.DoorName,
 				Position = sceneObject.transform.position,
-				target = randoTransition.VanillaTarget,
+				destDoor = randoTransition.VanillaTarget,
 			});
 		}
 
