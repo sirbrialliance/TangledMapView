@@ -12,7 +12,6 @@ using UnityEngine;
 
 namespace TangledMapView {
 public class DataExport {
-	// public const string SrcScenesFolder = "SrcScenes";
 	public const string OutFolder = "MappingTiles";
 
 	public static bool WantScene(string name) {
@@ -205,7 +204,11 @@ public class DataExport {
 
 			return ret;
 		} catch (Exception ex) {
-			throw new Exception($"Failed to locate {icLocation.name} in {icLocation.sceneName} ({icLocation.GetType().FullName})", ex);
+			Debug.LogException(ex);
+			Debug.LogError($"Failed to locate {icLocation.name} in {icLocation.sceneName} ({icLocation.GetType().FullName})");
+			var ret = new RoomItemLocation {id = icLocation.name};
+			ret.Position = new Vector3(-100, -100, -100);
+			return ret;
 		}
 	}
 }

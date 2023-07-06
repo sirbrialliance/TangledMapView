@@ -80,9 +80,9 @@ To help visualize the room arrangement a few different view options are provided
 
 Map:
 
-- Enable MappingCamera in local build
-- Symlink exported .unity scenes folder to [hollow knight dir]/SrcScenes
-- Start game, load a save
+- Uncomment the bit about the MappingCamera in TangledMapManager.Start and make a local build
+- Make sure you have more than one monitor
+- Start game, load an unrandomized save
 - Enable noclip and invincible via DebugMod
 - ctrl+shift+F11
 - Get lunch
