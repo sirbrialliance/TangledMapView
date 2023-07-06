@@ -31,7 +31,7 @@
     <Reference Include="PlayMaker, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>$(HollowKnightRefs)\PlayMaker.dll</HintPath>
     </Reference>
-    <Reference Include="RandomizerCore, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="RandomizerCore, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>$(HollowKnightRefs)\Mods\RandomizerCore\RandomizerCore.dll</HintPath>
     </Reference>
     <Reference Include="RandomizerMod">
