@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Modding;
@@ -7,6 +8,7 @@ using RandomizerMod.Logging;
 using RandomizerMod.RandomizerData;
 using RandomizerMod.RC;
 using UnityEngine;
+using Random = UnityEngine.Random;
 using USceneManager = UnityEngine.SceneManagement.SceneManager;
 using RandoMod = RandomizerMod.RandomizerMod;
 
@@ -132,13 +134,10 @@ internal class TangledMapManager : MonoBehaviour {
 			var marker = GetMarker(loc);
 			marker.state = GetState(placement);
 
-			//Make everything clamp a little different so it's easier to see multiple items at the edge.
 			//...using random because itemPlacements might have spoiler biases and I'm too lazy to do a deterministic thing.
 			//...like based on the item name.
 			marker.offset = new Vector2(Random.Range(-.2f, .2f), Random.Range(-.2f, .2f));
 			marker.inset = 2.1f;
-
-			marker.UpdateVisuals();
 			// mod.LogDebug($"Maker for {marker.placementId} in state {marker.state}");
 		}
 
@@ -169,14 +168,27 @@ internal class TangledMapManager : MonoBehaviour {
 
 			var marker = GetMarker(tangledTransition);
 			marker.state = GetState(randoTransition);
-
-			marker.offset = new Vector2(Random.Range(-.2f, .2f), Random.Range(-.2f, .2f));
 			marker.inset = 1.1f;
-
-			marker.UpdateVisuals();
-
 		}
 
+		//Sort deterministically.
+		keepMarkers.Sort((a, b) =>
+			string.Compare(a.element.id, b.element.id, StringComparison.Ordinal)
+		);
+
+		//Set marker offsets (now that we know how many we have) and update visuals.
+		//(Makes everything clamp a little different so it's easier to see multiple items at the edge.)
+		for (int i = 0; i < keepMarkers.Count; i++) {
+			var marker = keepMarkers[i];
+			var angle = i / (float)keepMarkers.Count * 2 * Mathf.PI;
+			marker.offset = new Vector2(
+				.2f * Mathf.Cos(angle),
+				.2f * Mathf.Sin(angle)
+			);
+			marker.UpdateVisuals();
+		}
+
+		//Delete old.
 		for (int i = 0; i < markers.Count; i++) {
 			var marker = markers[i];
 			if (!marker || !keepMarkers.Contains(marker)) {
