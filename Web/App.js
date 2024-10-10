@@ -92,7 +92,7 @@ class App {
 
 		this._ready = true
 
-		if (location.protocol === "file:") {
+		if (localStorage.testSaveId) {
 			await this.loadTestData()
 			this._render()
 		} else {
@@ -434,7 +434,12 @@ class App {
 	}
 
 	async loadTestData() {
-		this.data.load(testSaveData[localStorage.testSaveId || "a3"])
+		var baseData = await (await fetch("TestSaves/" + localStorage.testSaveId + ".json")).json()
+
+		var modData = await (await fetch("TestSaves/" + localStorage.testSaveId + ".modded.json")).json()
+		baseData["modData"] = modData.modData
+
+		this.data.load(baseData)
 	}
 
 	unloadSave() {

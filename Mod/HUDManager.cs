@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,7 @@ using RandoMod = RandomizerMod.RandomizerMod;
 namespace TangledMapView {
 
 [DefaultExecutionOrder(1050)]
-internal class TangledMapManager : MonoBehaviour {
+internal class HUDManager : MonoBehaviour {
 	/// <summary>
 	/// GameObject layer we use for our purposes.
 	/// </summary>
@@ -30,9 +31,7 @@ internal class TangledMapManager : MonoBehaviour {
 	public Camera overlayCamera;
 
 	public void Start() {
-		// if (Display.displays.Length > 1) {
-		// 	MappingCamera.Create(mod);
-		// }
+		// MappingCamera.Create(mod);
 
 		var go = new GameObject("TangledMapView Overlay");
 		DontDestroyOnLoad(go);
@@ -42,6 +41,10 @@ internal class TangledMapManager : MonoBehaviour {
 		TangledMapViewMod.onDataChange += OnDataChange;
 	}
 
+
+
+	public void OnApplicationQuit() => mod?.GameExiting();
+	public void OnDisable() => mod?.GameExiting();
 
 	private void OnDataChange() {
 		// mod.LogDebug($"OnDataChange");

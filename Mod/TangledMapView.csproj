@@ -3,7 +3,7 @@
     <ProjectGuid>{64C73EB6-F0ED-4D17-9827-23236199DA15}</ProjectGuid>
     <AssemblyTitle>TangledMapView</AssemblyTitle>
     <RootNamespace>TangledMapView</RootNamespace>
-    <AssemblyVersion>0.4.0</AssemblyVersion>
+    <AssemblyVersion>0.5.0</AssemblyVersion>
 
     <TargetFramework>net472</TargetFramework>
     <Deterministic>true</Deterministic>
@@ -31,6 +31,9 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="PlayMaker, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="WebSocketSharp">
+      <HintPath>websocket-sharp.dll</HintPath>
+    </Reference>
     <Reference Include="RandomizerCore, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>$(HollowKnightRefs)\Mods\RandomizerCore\RandomizerCore.dll</HintPath>
     </Reference>
@@ -54,6 +57,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\*.json" />
     <EmbeddedResource Include="Resources\Images\*.png" />
-    <EmbeddedResource Include="Resources\MapTiles\*.jpg" />
+    <EmbeddedResource Include="Resources\MapTiles\*.webp" />
+    <EmbeddedResource Include="..\Web\*">
+      <LogicalName>Web\%(filename)%(extension)</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

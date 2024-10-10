@@ -1,16 +1,25 @@
 
--------------------------------------------------------------------------
-Next
--------------------------------------------------------------------------
-
 - Let's simplify the code I have to do:
 	- Ditch trying to render in Unity
 	- Get everything working with current version
 	- (Maybe) Switch from SVG to WebGL rendering
 
+-------------------------------------------------------------------------
+Next
+-------------------------------------------------------------------------
+
+- Web restore
+	- xx base stuff
+	- Cope with replaced items being the item type and not the original location
+		- and that there may be more than one
+	- delete testSaveData.js
+	- commit some TestSaves
+
+
 - Map tiles
 	- xx base Postprocess
-	- Would be nice to have light areas for entrance/exits
+	- xx Would be nice to have light areas for entrance/exits
+	- regen
 
 
 	- Empty images:
@@ -25,17 +34,14 @@ Next
 - Path finding
 	- Use actual logic for each room-to-room connection
 
+- StandaloneTest fails to run do to some sort of lib loading issue
+	- but we can test by browsing to file://, do we need it?
+
 
 - Data
-	- Additive load and {sceneName}_Boss if it exists as we go
-	- Missing items:
-		- All Boss essence aren't pulled in (e.g. Gorb, Xero, Zote)
-		- Lore_Tablet-World_Sense
-		- sub-level grabs:
-			- Nailmaster's_Glory
-			- Colosseum rewards
-			- Void Heart
-			- Dreamers
+	- xx Additive load and {sceneName}_Boss if it exists as we go
+	- may be able to use clues in itemchanger data for unknown positions?
+	- Missing items: check again
 	- Wrong location:
 		- Geo_Rock-Ancestral_Mound or Geo_Rock-Ancestral_Mound_Dupe
 		- Geo_Rock-Abyss_2
@@ -43,14 +49,10 @@ Next
 	- skip scenes
 		- Cinematic_*, Dream_Final,
 
-	- xx exported images have transparency from the in-game buffer, should be opaque
-	- xx probably burn off all the black around the edges and just add back some border
-
 
 - Works with Archipelago?
 
 - Live view
-	- rename TangledMapManager -> LiveMarkerManager
 	- add "waypoints" from logic
 
 	- test with not all item types randomized
@@ -314,3 +316,21 @@ Wishes
 
 	- use better map icons (Cornifer icons)
 	- assorted room metadata feedback
+
+-------------------------------------------------------------------------
+Testing map w/out the game
+-------------------------------------------------------------------------
+
+- Open:
+	- from Web folder: python3 -m http.server
+	- Open up http://localhost:8000
+
+- Pick a use case:
+  - JS console: localStorage.testSaveId = "foo"
+    - Where "foo" is the name of something from the TestCases folder, e.g. "user4"
+	- reload
+
+- To add a test:
+	- Copy SAVENAME.json and SAVENAME.modded.json to the TestCases folder, perhaps renaming as desired.
+
+

@@ -15,7 +15,7 @@ class DataGen {
 
 
 	/** Map of item pool name => randomizer bool setting */
-	static allItemPools = {
+	/*static allItemPools = {
 		// Get pool list from data: Object.keys(Object.values(data.rooms).map(x => Object.values(x.items)).flat().reduce((res, item) => {res[item.randPool] = true; return res}, {}))
 
 		// See RandomizerMod.Randomization.ItemManager.GetRandomizedItems()
@@ -46,7 +46,7 @@ class DataGen {
 		Stag: "RandomizeStags",
 		Vessel: "RandomizeVesselFragments",
 		//note we have pools for SplitClaw, SplitCloak, and SplitCloakLocation that aren't in that list
-	}
+	}*/
 
 	// centerPos = [0, 0]
 	rooms = {}//map of room id => RoomNode
@@ -56,7 +56,7 @@ class DataGen {
 	/** set of doors we've used including src and dst door, door id => true */
 	visitedDoors = {}
 
-	/** Map of pool name => true for items pools active in our save file */
+	/** Map of pool name => true for items pool randomization active in our save file */
 	itemPools = {}
 	/**
 	 * Map of item id => true or false if we have it or not
@@ -64,8 +64,8 @@ class DataGen {
 	 */
 	items = {}
 	/**
-	 * What item is at each given item location (NB: K/V is swapped from randomizerData["StringValues"]["_itemPlacements"])
-	 * Map of item id (some item's original location) => item id for item that is there (after randomization)
+	 * What item is at each given item location
+	 * Map of location id => array of item ids you get at this location
 	 */
 	itemPlacements = {}
 
@@ -86,6 +86,7 @@ class DataGen {
 	clear() {
 		this.saveData = null
 		this.randomizerData = null
+		this.itemChangerData = null
 		this.transitions = {}
 		this.visitedDoors = {}
 		this.rooms = {}
@@ -108,11 +109,11 @@ class DataGen {
 
 	load(saveData) {
 		this.saveData = saveData
-		var randomizerDataJSON = saveData["PolymorphicModData"]["RandomizerMod"]
-		this.randomizerData = JSON.parse(randomizerDataJSON)
+		this.randomizerData = saveData.modData["Randomizer 4"]
+		this.itemChangerData = saveData.modData["ItemChangerMod"]["value"]
 
-		this.startRoom = this.randomizerData.StringValues.StartSceneName
-		this.currentPlayerRoom = this.startRoom //if we wanted to send more data could read from save file, but nah
+		this.startRoom = this.itemChangerData?.Start?.SceneName || "Tutorial_01"
+		this.currentPlayerRoom = saveData.playerData.respawnScene || this.startRoom
 
 		this.transitions = {}
 		this.visitedDoors = {}
@@ -128,17 +129,20 @@ class DataGen {
 		}
 
 		//item pools
-		this.itemPools = {}
-		for (let k in DataGen.allItemPools) {
-			let saveKey = DataGen.allItemPools[k]
-			if (this.randomizerData["BoolValues"][saveKey]) this.itemPools[k] = true
+		this.itemPools = {
+			... this.randomizerData["GenerationSettings"]["PoolSettings"],
+			... this.randomizerData["GenerationSettings"]["NoveltySettings"],
 		}
 
 		//items
-		this.itemPlacements = DataGen.inflate(this.randomizerData["StringValues"]["_itemPlacements"]) || {}
-		//flip src/dst
-		this.itemPlacements = Object.fromEntries(Object.entries(this.itemPlacements).map(a => a.reverse()))
-		this.items = DataGen.inflate(this.randomizerData["StringValues"]["_obtainedItems"]) || {}
+		this.itemPlacements = {}
+		for (let locationId in this.itemChangerData["Placements"]) {
+			let placement = this.itemChangerData["Placements"][locationId]
+			let items = placement.Items.map(itemInfo => itemInfo.name)
+
+			this.itemPlacements[locationId] = items
+		}
+		console.log("itemPlacements", this.itemPlacements)
 
 		//all items list
 		this.allItems = {}
@@ -174,10 +178,11 @@ class DataGen {
 			return room
 		}
 
-		// map of doorId => doorId
+		// All transition placements including default/unrandomized transitions
+		// map of doorId => doorId (a doorId is something like "Fungus2_14[bot1]")
 		var tPlacements = {}
 
-		//first fill with standard transitions
+		//first fill tPlacements with standard transitions
 		for (let roomId in window.mapData.rooms) {
 			let roomData = window.mapData.rooms[roomId]
 			for (let doorSide in roomData.transitions) {
@@ -187,14 +192,18 @@ class DataGen {
 		}
 
 		//Then update with any transitions that have been randomized:
-		let randomizedPlacements = this.randomizerData["_transitionPlacements"]
-		for (let srcDoorId in randomizedPlacements) {
+		let randomizedPlacements = {}
+		for (let kvp of this.itemChangerData["TransitionOverrides"]) {
+			let srcDoorId = `${kvp.Key.SceneName}[${kvp.Key.GateName}]`
+			let destDoorId = `${kvp.Value.SceneName}[${kvp.Value.GateName}]`
+			randomizedPlacements[srcDoorId] = destDoorId
+
 			if (!tPlacements[srcDoorId]) {
 				//Not in the original map data, so skip (e.g. Fungus2_14[bot2] and bot3 which are redundant and not included)
 				console.warn("No initial door for " + srcDoorId)
 				continue
 			}
-			tPlacements[srcDoorId] = this.randomizerData["_transitionPlacements"][srcDoorId]
+			tPlacements[srcDoorId] = destDoorId
 		}
 
 		// console.log("tPlacements", tPlacements)
@@ -261,7 +270,7 @@ class DataGen {
 			}
 		}
 
-		var obtainedTransitions = DataGen.inflate(this.randomizerData["StringValues"]["_obtainedTransitions"])
+		var obtainedTransitions = this.randomizerData["TrackerData"]["visitedTransitions"]
 
 		//mark what's been visited from _obtainedTransitions)
 		for (let doorId in obtainedTransitions) {
@@ -290,9 +299,14 @@ class DataGen {
 		}
 	}
 
-	/** Returns the item id that can be found at the given source item location. */
+	/** Returns the first item id that can be found at the given source item location. */
 	getItemAt(locationItemId) {
-		return this.itemPlacements[locationItemId] || locationItemId
+		//todo: migrate callers to getItemsAt
+		return this.itemPlacements[locationItemId] ? this.itemPlacements[locationItemId][0] : locationItemId
+	}
+
+	getItemsAt(locationItemId) {
+		return this.itemPlacements[locationItemId] || [locationItemId]
 	}
 
 	/** Returns true if we should reveal to the user what item is at the given location. */
