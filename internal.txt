@@ -10,8 +10,14 @@ Next
 
 - Web restore
 	- xx base stuff
-	- Cope with replaced items being the item type and not the original location
-		- and that there may be more than one
+	- xx Cope with replaced items being the item type and not the original location
+		- xx and that there may be more than one
+	- xx include map tiles in build
+
+	- items don't update as you grab them
+	- enter new transition doen''t reveal room
+
+
 	- delete testSaveData.js
 	- commit some TestSaves
 
@@ -31,16 +37,20 @@ Next
 		- Hive_04
 	- Black boxes in dark rooms (no lantern?)
 
+	- no Cinematic_Stag_travel.webp
+
 - Path finding
 	- Use actual logic for each room-to-room connection
 
 - StandaloneTest fails to run do to some sort of lib loading issue
 	- but we can test by browsing to file://, do we need it?
 
+- match color conventions (reachable, visited, etc.) between map and in-game
 
 - Data
 	- xx Additive load and {sceneName}_Boss if it exists as we go
 	- may be able to use clues in itemchanger data for unknown positions?
+	- Pool names in randomizer don't match my old data export
 	- Missing items: check again
 	- Wrong location:
 		- Geo_Rock-Ancestral_Mound or Geo_Rock-Ancestral_Mound_Dupe

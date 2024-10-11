@@ -100,32 +100,33 @@ svg { user-select: none; }
 	stroke-width: 1px;
 }
 
-body.showItemsInPool-Boss_Geo .pool-Boss_Geo { display: unset; }
-body.showItemsInPool-Charm .pool-Charm { display: unset; }
-body.showItemsInPool-Cocoon .pool-Cocoon { display: unset; }
-body.showItemsInPool-Cursed .pool-Cursed { display: unset; }
-body.showItemsInPool-CursedNail .pool-CursedNail { display: unset; }
-body.showItemsInPool-Dreamer .pool-Dreamer { display: unset; }
-body.showItemsInPool-Egg .pool-Egg { display: unset; }
-body.showItemsInPool-Essence_Boss .pool-Essence_Boss { display: unset; }
-body.showItemsInPool-Flame .pool-Flame { display: unset; }
-body.showItemsInPool-Geo .pool-Geo { display: unset; }
-body.showItemsInPool-Grub .pool-Grub { display: unset; }
-body.showItemsInPool-Key .pool-Key { display: unset; }
-body.showItemsInPool-Lore .pool-Lore { display: unset; }
-body.showItemsInPool-Map .pool-Map { display: unset; }
-body.showItemsInPool-Mask .pool-Mask { display: unset; }
-body.showItemsInPool-Notch .pool-Notch { display: unset; }
-body.showItemsInPool-Ore .pool-Ore { display: unset; }
-body.showItemsInPool-PalaceLore .pool-PalaceLore { display: unset; }
-body.showItemsInPool-PalaceSoul .pool-PalaceSoul { display: unset; }
-body.showItemsInPool-Relic .pool-Relic { display: unset; }
-body.showItemsInPool-Rock .pool-Rock { display: unset; }
-body.showItemsInPool-Root .pool-Root { display: unset; }
-body.showItemsInPool-Skill .pool-Skill { display: unset; }
-body.showItemsInPool-Soul .pool-Soul { display: unset; }
-body.showItemsInPool-Stag .pool-Stag { display: unset; }
-body.showItemsInPool-Vessel .pool-Vessel { display: unset; }
+#mainMap.showItemsInPool-all .roomItem { display: unset; }
+
+#mainMap.showItemsInPool-Charm .pool-Charm { display: unset; }
+#mainMap.showItemsInPool-Cocoon .pool-Cocoon { display: unset; }
+#mainMap.showItemsInPool-Cursed .pool-Cursed { display: unset; }
+#mainMap.showItemsInPool-CursedNail .pool-CursedNail { display: unset; }
+#mainMap.showItemsInPool-Dreamer .pool-Dreamer { display: unset; }
+#mainMap.showItemsInPool-Egg .pool-Egg { display: unset; }
+#mainMap.showItemsInPool-Essence_Boss .pool-Essence_Boss { display: unset; }
+#mainMap.showItemsInPool-Flame .pool-Flame { display: unset; }
+#mainMap.showItemsInPool-Geo .pool-Geo { display: unset; }
+#mainMap.showItemsInPool-Grub .pool-Grub { display: unset; }
+#mainMap.showItemsInPool-Key .pool-Key { display: unset; }
+#mainMap.showItemsInPool-Lore .pool-Lore { display: unset; }
+#mainMap.showItemsInPool-Map .pool-Map { display: unset; }
+#mainMap.showItemsInPool-Mask .pool-Mask { display: unset; }
+#mainMap.showItemsInPool-Notch .pool-Notch { display: unset; }
+#mainMap.showItemsInPool-Ore .pool-Ore { display: unset; }
+#mainMap.showItemsInPool-PalaceLore .pool-PalaceLore { display: unset; }
+#mainMap.showItemsInPool-PalaceSoul .pool-PalaceSoul { display: unset; }
+#mainMap.showItemsInPool-Relic .pool-Relic { display: unset; }
+#mainMap.showItemsInPool-Rock .pool-Rock { display: unset; }
+#mainMap.showItemsInPool-Root .pool-Root { display: unset; }
+#mainMap.showItemsInPool-Skill .pool-Skill { display: unset; }
+#mainMap.showItemsInPool-Soul .pool-Soul { display: unset; }
+#mainMap.showItemsInPool-Stag .pool-Stag { display: unset; }
+#mainMap.showItemsInPool-Vessel .pool-Vessel { display: unset; }
 
 #icon-bench {
 	stroke: black;

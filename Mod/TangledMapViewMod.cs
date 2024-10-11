@@ -188,13 +188,27 @@ public class TangledMapViewMod : Mod, IMenuMod,
 			}).ToString();
 		}
 
+		//No good clean way to get the Item Changer save data short of re-reading the file off
+		//the disk so...hacks.
+		var changerData =
+			typeof(ItemChangerMod)
+			.GetField("SET", BindingFlags.NonPublic | BindingFlags.Static)!
+			.GetValue(null)
+		;
+
+
 		return JsonConvert.SerializeObject(
 			new {
 				type = "loadSave",
+				//this is more-or-less the normal save file data as it is on disk with the
+				//mod data from foo.modding.json interpolated in.
+				//Except we don't need everything.
 				data = new {
-					//this is more-or-less the normal save file data, but not everything
 					playerData = GameManager.instance.playerData,
-					PolymorphicModData = new {RandomizerMod = JsonConvert.SerializeObject(RandomizerMod.RandomizerMod.RS)},
+					modData = new Dictionary<string, object>() {
+						{"Randomizer 4", RandomizerMod.RandomizerMod.RS},
+						{"ItemChangerMod", new {value = changerData}},
+					},
 				},
 			},
 			Formatting.None, new JsonSerializerSettings {

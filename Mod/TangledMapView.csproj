@@ -61,5 +61,8 @@
     <EmbeddedResource Include="..\Web\*">
       <LogicalName>Web\%(filename)%(extension)</LogicalName>
     </EmbeddedResource>
+    <EmbeddedResource Include="..\Web\MapTiles\*.webp">
+      <LogicalName>Web\MapTiles\%(filename)%(extension)</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

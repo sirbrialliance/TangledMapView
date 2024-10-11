@@ -56,7 +56,7 @@ class DataGen {
 	/** set of doors we've used including src and dst door, door id => true */
 	visitedDoors = {}
 
-	/** Map of pool name => true for items pool randomization active in our save file */
+	/** Map of pool name => enabled for all items pools */
 	itemPools = {}
 	/**
 	 * Map of item id => true or false if we have it or not
@@ -70,7 +70,7 @@ class DataGen {
 	itemPlacements = {}
 
 	/** Map of item id => mapData information about that item */
-	allItems = {}
+	allLocations = {}
 
 	currentPlayerRoom = "Tutorial_01"
 	selectedRoom = null
@@ -145,12 +145,12 @@ class DataGen {
 		console.log("itemPlacements", this.itemPlacements)
 
 		//all items list
-		this.allItems = {}
+		this.allLocations = {}
 		for (let room of [...Object.values(this.rooms), window.mapData.rooms.__orphans__]) {
-			for (let itemId in room.items) {
-				let item = room.items[itemId]
-				item.id = itemId
-				this.allItems[item.id] = item
+			for (let locationId in room.items) {
+				let item = room.items[locationId]
+				item.id = locationId
+				this.allLocations[item.id] = item
 			}
 		}
 	}
@@ -299,12 +299,11 @@ class DataGen {
 		}
 	}
 
-	/** Returns the first item id that can be found at the given source item location. */
-	getItemAt(locationItemId) {
-		//todo: migrate callers to getItemsAt
-		return this.itemPlacements[locationItemId] ? this.itemPlacements[locationItemId][0] : locationItemId
-	}
-
+	/**
+	 * Returns an array of items ids that can be found at the given source location.
+	 * Note that these may not be original item ids that include location information like
+	 * "Grub-Basin_Requires_Dive", but instead a generic item like "Grub".
+	 */
 	getItemsAt(locationItemId) {
 		return this.itemPlacements[locationItemId] || [locationItemId]
 	}
@@ -312,13 +311,13 @@ class DataGen {
 	/** Returns true if we should reveal to the user what item is at the given location. */
 	shouldRevealItemAt(locationItemId) {
 		if (this.showAllItems) return true
-		return this.hasItemAt(locationItemId)
+		return this.hasClearedLocation(locationItemId)
 	}
 
-	/** true/false if we have the item (whatever it is) that's located at the given item id location */
-	hasItemAt(locationItemId) {
-		let itemId = this.getItemAt(locationItemId)
-		return this.items[itemId]
+	/** true/false if we have checked the given location. */
+	hasClearedLocation(locationId) {
+		let idx = this.randomizerData["TrackerData"]["clearedLocations"].indexOf(locationId)
+		return idx >= 0
 	}
 
 	/** Marks the given item (not location) as collected. */
@@ -332,8 +331,11 @@ class DataGen {
 			itemId = itemId.substring(0, itemId.length - 4)
 		}
 
-		let item = this.allItems[itemId] || null
-		if (!item) console.warn("No item: " + itemId)
+		let item = this.allLocations[itemId] || null
+		if (!item) {
+			//generic item (e.g. "Geo_Rock-Deepnest")
+			item = {id: itemId}
+		}
 		return item
 	}
 

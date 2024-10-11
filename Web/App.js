@@ -198,7 +198,7 @@ class App {
 		var allMatchReasons = {}
 
 		let itemMatch = (regex, item) => {
-			if (item == undefined) return false
+			if (!item) return false
 			if (regex.test(item.id)) return true
 			if (regex.test(DataRender.getItemDescription(item))) return true
 			return false
@@ -226,8 +226,10 @@ class App {
 					if (itemMatch(regex, item)) reasons.push(['itemLocation', item])
 
 					if (this.data.shouldRevealItemAt(item.id)) {
-						let realItem = this.data.getNormalItemInfo(this.data.getItemAt(item.id))
-						if (itemMatch(regex, realItem)) reasons.push(['itemPlaced', realItem])
+						for (let currentItemId of this.data.getItemsAt(item.id)) {
+							let realItem = this.data.getNormalItemInfo(currentItemId)
+							if (itemMatch(regex, realItem)) reasons.push(['itemPlaced', realItem])
+						}
 					}
 				}
 			}
@@ -290,7 +292,7 @@ class App {
 					case "itemPlaced": {
 						let isLocation = reason[0] === "itemLocation"
 						let item = reason[1]
-						let has = isLocation ? this.data.hasItemAt(item.id) : this.data.items[item.id]
+						let has = isLocation ? this.data.hasClearedLocation(item.id) : this.data.items[item.id]
 
 						let desc = isLocation ? "Normal item: " : "Current item: "
 						desc += DataRender.getItemDescription(item)

@@ -5,7 +5,7 @@ from os.path import exists
 
 import TileHandler
 
-outputFolder = os.path.dirname(os.path.dirname(os.path.realpath(__file__))) + "/Mod/Resources/MapTiles"
+outputFolder = os.path.dirname(os.path.dirname(os.path.realpath(__file__))) + "/Web/MapTiles"
 
 
 def processData(tile: str):

@@ -115,6 +115,16 @@ class DataRender {
 			.attr("x", d => d.x * roomScale - room.aabb.cx * roomScale)
 			.attr("y", d => d.y * roomScale - room.aabb.cy * roomScale)
 
+		//bg image
+		d3.select(el)
+			.selectAll("image.mapTile")
+			.data([room.id])
+			.join("image")
+			.attr("href", "MapTiles/" + room.id + ".webp")
+			.attr("x", -room.aabb.width / 2 * roomScale)
+			.attr("y", -room.aabb.height / 2 * roomScale)
+			.attr("width", room.aabb.width * roomScale)
+			.attr("height", room.aabb.height * roomScale)
 
 		//edge stubs
 		let c = {x: room.aabb.cx * roomScale, y: room.aabb.cy * roomScale}
@@ -195,9 +205,12 @@ class DataRender {
 
 				let currentDesc = "???"
 				if (this.data.shouldRevealItemAt(item.id)) {
-					let realItemId = this.data.getItemAt(item.id)
-					let realItem = this.data.getNormalItemInfo(realItemId)
-					currentDesc = DataRender.getItemDescription(realItem)
+					let descriptions = []
+					for (let itemId of this.data.getItemsAt(item.id)) {
+						let realItem = this.data.getNormalItemInfo(itemId)
+						descriptions.push(DataRender.getItemDescription(realItem))
+					}
+					currentDesc = descriptions.join(", ")
 				}
 
 				mkEl("currentItem", currentDesc)
@@ -295,7 +308,7 @@ class DataRender {
 			//update collected items
 			for (let itemId in room.items) {
 				//do we have the item that's randomized into that location?
-				let got = this_.data.hasItemAt(itemId)
+				let got = this_.data.hasClearedLocation(itemId)
 				if (got) {
 					let el = room.items[itemId].__el
 					el.setAttribute("href", "#icon-item-got")
@@ -436,8 +449,9 @@ class DataRender {
 	}
 
 	updateVisibleItems() {
-		for (let cls of Array.from(document.body.classList)) {
-			if (cls.startsWith("showItemsInPool-")) document.body.classList.remove(cls)
+		var mainMap = this._holder.node()
+		for (let cls of Array.from(mainMap.classList)) {
+			if (cls.startsWith("showItemsInPool-")) mainMap.classList.remove(cls)
 		}
 
 		let pools = []
@@ -446,15 +460,15 @@ class DataRender {
 			case "none":
 				break
 			case "all":
-				pools = Object.keys(DataGen.allItemPools)
+				pools.push("all")
 				break
 			case "relevant":
-				pools = Object.keys(this.data.itemPools)
+				pools = Object.keys(this.data.itemPools).filter(x => this.data.itemPools[x])
 				break
 		}
 
 		for (let pool of pools) {
-			document.body.classList.add("showItemsInPool-" + pool)
+			mainMap.classList.add("showItemsInPool-" + pool)
 		}
 	}
 
@@ -527,15 +541,21 @@ class DataRender {
 			SplitCloak: null,
 			SplitCloakLocation: null,
 			Fake: null,
+			Mask_Shard: null,
 		}
 
-		var simpleResult = simpleMapping[item.randPool]
+		var simpleResult = simpleMapping[item.randPool] || simpleMapping[item.id]
 		if (typeof simpleResult !== "undefined") {
 			if (simpleResult) return simpleResult
 			else return item.id.replace(/_/g, " ")
 		}
 
 		switch (item.randPool) {
+			case "Skill":
+			case "Spell":
+			case "Charm":
+				return item.id.replace(/_/g, " ")
+				break
 			case "Dreamer":
 				if (item.id === "World_Sense") return "World Sense"
 				else if (item.id === "Dreamer") return "Dreamer (wildcard)"
@@ -561,6 +581,15 @@ class DataRender {
 				if (item.id === "Deepnest_Map-Upper") return "Deepnest Map"
 				else if (item.id === "Deepnest_Map-Right_[Gives_Quill]") return "Quill"
 				else return item.id.replace(/_/g, " ")
+		}
+
+		if (item.id.match(/^Geo_Rock-/)) return "Geo Rock"
+		if (item.id.match(/^Geo_Chest-/)) return "Geo Chest"
+		if (item.id.match(/^Soul_Totem-/)) return "Soul Refill"
+		if (item.id.match(/^Journal_Entry-/)) return "Journal Entry"
+
+		if (item.id.indexOf("-") < 0) {
+			return item.id.replace(/_/g, " ")
 		}
 
 		// //`${item.id} (${item.randType}/${item.randAction}/${item.randPool})`
