@@ -42,6 +42,26 @@ body, html {margin: 0;padding: 0;height: 100%;width: 100%;background: #4e4e4e;}
 
 svg { user-select: none; }
 
+image.mapIcon {
+	width: 10px;
+	x: -5px;
+	y: -5px;
+}
+
+#icon-transition-obtained,
+#icon-transition-oneWay,
+#icon-transition-unchanged {
+	filter: url(#filter-icon-gray);
+}
+#icon-transition-unreachable {
+	filter: url(#filter-icon-red);
+}
+#icon-transition-reachable {
+	filter: url(#filter-icon-green);
+}
+
+
+
 .roomLink {
 	fill: none;
 	stroke: black;

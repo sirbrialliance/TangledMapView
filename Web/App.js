@@ -59,7 +59,7 @@ class App {
 		var svg = this.svg = d3.select("svg")
 
 		var zoom = this.zoom = d3.zoom()
-			.scaleExtent([.1, 5])
+			.scaleExtent([.1, 10])
 			.filter(ev => {
 				if (ev.ctrlKey && ev.type === "wheel") return false
 				if (!ev.type.startsWith("mouse")) return true
@@ -529,6 +529,10 @@ class App {
 				console.log(`Got item ${msg.item} at ${msg.location}`)
 				this.data.markItemAcquired(msg.item)
 				if (this.prefs.visibleItems !== "none") this._updateView()
+				break
+			case "logicUpdate":
+				this.data.updateLogicStates(msg.items, msg.transitions)
+				this._updateView()
 				break
 			default:
 				console.warn("Unknown message: ", msg)

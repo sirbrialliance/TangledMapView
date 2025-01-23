@@ -1,5 +1,5 @@
 const roomScale = .5 //in-game room size time this = SVG pixel size
-const roomLeadOutLen = 10//length of "leaving this room" stub lines
+const roomLeadOutLen = 6//length of "leaving this room" stub lines
 
 const roomDirections = {
 	top: {x: 0, y: -1, r: 0},
@@ -146,18 +146,40 @@ class DataRender {
 			.data(edgeDoors)
 			.join("use")
 			.attr("href", d => {
+				// let testList = [
+				// 	"#icon-transition-oneWay",
+				// 	"#icon-transition-unchanged",
+				// 	"#icon-transition-obtained",
+				// 	"#icon-transition-reachable",
+				// 	"#icon-transition-unreachable",
+				// ]
+				// window.__rotateThing = window.__rotateThing + 1 || 0
+				// return testList[window.__rotateThing % 5]
+
 				let transition = this.data.transitions[d.door.doorId]
-				if (!transition) return "#icon-entrance-oneWay"
-				else if (transition.srcSplit !== 0) return "#icon-entrance-split"
-				else return "#icon-entrance"
+				if (!transition) return "#icon-transition-oneWay"
+
+				let state = this.data.getTransitionLogicState(d.door.doorId)
+
+				switch (state) {
+					case LogicState.NOT_RANDOMIZED: return "#icon-transition-unchanged"
+					case LogicState.OBTAINED: return "#icon-transition-obtained"
+					case LogicState.IN_LOGIC: return "#icon-transition-reachable"
+					case LogicState.OUT_OF_LOGIC: return "#icon-transition-unreachable"
+				}
+				return "#icon-entrance-unchanged"
+				//else if (transition.srcSplit !== 0) return "#icon-entrance-split"
 			})
 			.classed("roomLeadOut", true)
 			.attr("x", d => d.x1)
 			.attr("y", d => d.y1)
 			.attr("transform", d => {
 				let door = d.door
-				let angle = roomDirections[door.side].r
-				return `rotate(${angle} ${d.x1} ${d.y1})`
+				// let angle = roomDirections[door.side].r
+				// return `rotate(${angle} ${d.x1} ${d.y1})`
+
+				let offset = roomDirections[door.side]
+				return `translate(${offset.x * 2.5} ${offset.y * 2.5})`
 			})
 			.each(function(d) { d.door.__el = this })
 

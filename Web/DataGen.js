@@ -10,6 +10,13 @@ door_*: 13
 
 */
 
+const LogicState = Object.freeze({
+	NOT_RANDOMIZED: 1,//unrandomized items are always this
+	OUT_OF_LOGIC: 2,
+	IN_LOGIC: 3,
+	OBTAINED: 4,//if item is obtained, even if it's not in logic
+})
+
  /** Loads data from the save file and hands general information about that data */
 class DataGen {
 
@@ -55,6 +62,11 @@ class DataGen {
 	doorTransitions = {}
 	/** set of doors we've used including src and dst door, door id => true */
 	visitedDoors = {}
+	/**
+	 * Map of door id => [doors in the room you can get to from that door]
+	 * Missing items are assumed inaccessible.
+	 */
+	accessibleTransitions = {}
 
 	/** Map of pool name => enabled for all items pools */
 	itemPools = {}
@@ -68,6 +80,13 @@ class DataGen {
 	 * Map of location id => array of item ids you get at this location
 	 */
 	itemPlacements = {}
+	/**
+	 * Map of item id => bool if we should be able to get to the item/it's in logic
+	 * Missing randomized items are assumed inaccessible.
+	 */
+	accessibleItems = {}
+
+
 
 	/** Map of item id => mapData information about that item */
 	allLocations = {}
@@ -89,10 +108,12 @@ class DataGen {
 		this.itemChangerData = null
 		this.transitions = {}
 		this.visitedDoors = {}
+		this.accessibleTransitions = {}
 		this.rooms = {}
 		this.itemPools = {}
 		this.items = {}
 		this.itemPlacements = {}
+		this.accessibleItems = {}
 		this.selectedRoom = null
 	}
 
@@ -360,6 +381,60 @@ class DataGen {
 		return item
 	}
 
+	/**
+	 * Call with some or all of the changes to what is/isn't in logic.
+	 * itemChanges = {itemId: bool, ...}
+	 * transitionChanges = {destDoorId: [accessibleDoorInRoom, ...]}
+	 */
+	updateLogicStates(itemChanges, transitionChanges) {
+		for (let itemId in itemChanges) {
+			this.accessibleItems[itemId] = itemChanges[itemId]
+		}
+		for (let doorId in transitionChanges) {
+			this.accessibleTransitions[doorId] = transitionChanges[doorId]
+		}
+	}
+
+	/**
+	 * Should we be able to access the given item location right now?
+	 * @returns {number} which LogicState
+	 */
+	getLocationLogicState(itemId) {
+		if (!this.itemPlacements[itemId]) return LogicState.NOT_RANDOMIZED
+		if (this.items[itemId]) return LogicState.OBTAINED
+		if (this.accessibleItems[itemId]) return LogicState.IN_LOGIC
+		return LogicState.OUT_OF_LOGIC
+	}
+
+	/**
+	 * Is visiting the given transition in logic right now?
+	 * (Also, we must know about the transition.)
+	 * @returns {number} which LogicState
+	 */
+	getTransitionLogicState(doorId) {
+		if (!this.transitions[doorId]?.randomized) return LogicState.NOT_RANDOMIZED
+		if (this.visitedDoors[doorId]) return LogicState.OBTAINED
+
+		//does any door in this room allow accessing this door?
+		let doorInfo = DataGen.parseDoorId(doorId)
+		var room = this.rooms[doorInfo.roomId]
+		if (!room) return LogicState.NOT_RANDOMIZED
+
+		for (let otherDoorId in room.doors) {
+			if (doorId === otherDoorId) continue//ignore self
+			if (!this.visitedDoors[doorId]) continue//ignore places we haven't gone
+
+			let accessDoors = this.accessibleTransitions[doorId]
+			if (!accessDoors) continue
+
+			for (let passToDoor of accessDoors) {
+				if (passToDoor === doorId) return LogicState.IN_LOGIC
+			}
+		}
+
+		return LogicState.OUT_OF_LOGIC
+	}
+
 	getRoomGraph(allRooms = false, splitSplitRooms = true) {
 		let ret = window.createGraph()
 
@@ -387,6 +462,11 @@ class DataGen {
 	}
 
 
+	/**
+	 *
+	 * @param doorId
+	 * @returns {{doorId: string, roomId: string, doorName: string, side: string, side: string|number}}
+	 */
 	static parseDoorId(doorId) {
 		var parts = doorId.match(/^(\w+)\[(([a-zA-Z_]+)(\d*))\]$/)
 

@@ -9,15 +9,16 @@ Next
 -------------------------------------------------------------------------
 
 - Things
+	- xx enter new transition doesn't reveal room
+
+	- Sync icon sets/colors used
 
 	- Wrong text before loading save
 	- items don't update as you grab them
-	- enter new transition doesn't reveal room
 
 	- New data crunch
 
 	- Use bounds from images
-	- Sync icon sets/colors used
 
 	- Setting to show none/locatoins/all/transitions live ingame view
 
