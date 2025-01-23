@@ -81,8 +81,11 @@ public class TangledMapViewMod : Mod, IMenuMod,
 			server.Send(PrepareSaveDataMessage());
 		};
 
+		Events.OnBeginSceneTransition += OnSceneTransition;
+
 		hud.StartCoroutine(StartWebServer());
 	}
+
 
 	private IEnumerator StartWebServer() {
 		Log("Started start coroutine");
@@ -220,7 +223,8 @@ public class TangledMapViewMod : Mod, IMenuMod,
 		);
 	}
 
-	private void OnTransitionVisited(string srcDoor, string destDoor) {
+	private void SendRevealTransition(string destDoor) {
+		Log($"SendRevealTransition {destDoor}");
 		server.Send(JsonConvert.SerializeObject(
 			new {
 				type = "revealTransition",
@@ -229,6 +233,14 @@ public class TangledMapViewMod : Mod, IMenuMod,
 		).ToString());
 	}
 
+	private void OnTransitionVisited(string srcDoor, string destDoor) {
+		SendRevealTransition(destDoor);
+	}
+
+	private void OnSceneTransition(Transition t) {
+		if (string.IsNullOrEmpty(t.GateName)) return;
+		SendRevealTransition($"{t.SceneName}[{t.GateName}]");
+	}
 
 }
 }

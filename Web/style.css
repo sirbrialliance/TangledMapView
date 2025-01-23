@@ -403,6 +403,11 @@ fieldset {
 	margin: 3px 0px;
 }
 
+.roomNav button {
+	font-size: 80%;
+	margin: 0;
+}
+
 .roomNav:has(> span.roomName:empty) {
 	display: none;
 }
