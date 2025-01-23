@@ -90,3 +90,14 @@ Map:
 
 To rebuild map/game metadata follow the information in metadata/config.py then run the builddata.py script.
 
+## Test Web Stuff Without the Game
+
+- `cd Web`
+- `python3 -m http.server`
+- Open browser
+- In the JavaScript console `localStorage.testSaveId = "someId"` 
+  - where `someId` is something from the TestSaves folder without the extension
+- Refresh
+
+If desired, you might consider symlinking the save data from the game's save folder.
+

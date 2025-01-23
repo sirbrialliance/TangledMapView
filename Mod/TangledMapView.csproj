@@ -57,7 +57,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\*.json" />
     <EmbeddedResource Include="Resources\Images\*.png" />
-    <EmbeddedResource Include="Resources\MapTiles\*.webp" />
+<!--    <EmbeddedResource Include="Resources\MapTiles\*.webp" />-->
     <EmbeddedResource Include="..\Web\*">
       <LogicalName>Web\%(filename)%(extension)</LogicalName>
     </EmbeddedResource>

@@ -103,37 +103,34 @@
 				</label>
 			</fieldset>
 			<fieldset>
+				<div class="roomNav">
+					<h2>Current Room</h2>
+					<span class="roomName" id="currentRoomIdText"></span>
+					<button id="framePlayer"
+						title="Center the current player room in the view."
+						onclick="app.zoomToRoom(app.data.currentPlayerRoom)"
+					>View</button>
+					<br/>
+
+				</div>
+				<div class="roomNav">
+					<h2>Selected Room</h2>
+					<span class="roomName" id="selectedRoomIdText"></span>
+					<button id="frameSelection"
+						title="Center the currently selected room in the view, if any."
+						onclick="app.zoomToRoom(app.data.selectedRoom)"
+					>View</button>
+					<button onclick="app.selectRoom(null)">Clear</button><br>
+					<button onclick="app.enterRoom(app.data.selectedRoom)">Enter</button>
+				</div>
+
+				<br>
+
 				<legend>Search</legend>
 
 				<input type="text" placeholder="Search... (regex)" id="searchInput"></select>
 
 				<br>
-				<br>
-
-				<table class="currentRoomTable">
-					<thead><tr><th>Current</th><th>Selected</th></tr></thead>
-					<tbody>
-						<tr>
-							<td class="roomNav">
-								<span id="currentRoomIdText"></span>
-								<button id="framePlayer"
-									title="Center the current player room in the view."
-									onclick="app.zoomToRoom(app.data.currentPlayerRoom)"
-								>Frame</button>
-							</td>
-							<td class="roomNav">
-								<span id="selectedRoomIdText"></span>
-								<button id="frameSelection"
-									title="Center the currently selected room in the view, if any."
-									onclick="app.zoomToRoom(app.data.selectedRoom)"
-								>Frame</button>
-								<button onclick="app.selectRoom(null)">Clear</button><br>
-								<button onclick="app.enterRoom(app.data.selectedRoom)">Enter</button>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-
 				<br>
 
 				<div id="routeState"></div>

@@ -328,8 +328,8 @@ body.noAnimate .currentRoom > rect.roomShape {
 }
 
 @keyframes pulseStroke {
-	from { stroke: black; }
-	to { stroke: white; }
+	from { stroke: #0057cf; }
+	to { stroke: #4391ff; }
 }
 
 button {
@@ -399,18 +399,11 @@ fieldset {
 }
 
 
-.currentRoomTable td {
-	border-collapse: collapse;
-	border: 1px solid gray;
-	vertical-align: top;
-	font-family: monospace;
-	text-align: center;
-	font-size: 14px;
+.roomNav h2 {
+	margin: 3px 0px;
 }
 
-td.roomNav > span { display: block; }
-
-td.roomNav > span:empty ~ button {
+.roomNav:has(> span.roomName:empty) {
 	display: none;
 }
 

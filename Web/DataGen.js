@@ -112,6 +112,27 @@ class DataGen {
 		this.randomizerData = saveData.modData["Randomizer 4"]
 		this.itemChangerData = saveData.modData["ItemChangerMod"]["value"]
 
+		if (!this.randomizerData || !this.itemChangerData) {
+			//not randomized
+			this.randomizerData = {
+				GenerationSettings: {},
+				PoolSettings: {},
+				NoveltySettings: {},
+				TrackerData: {
+					obtainedItems: [],
+					visitedTransitions: {},
+					clearedLocations: [],
+				}
+			}
+			this.itemChangerData = {
+				mods: {},
+				Placements: {},
+				TransitionOverrides: [],
+				Deployers: [],
+				Start: null,
+			}
+		}
+
 		this.startRoom = this.itemChangerData?.Start?.SceneName || "Tutorial_01"
 		this.currentPlayerRoom = saveData.playerData.respawnScene || this.startRoom
 
@@ -270,7 +291,7 @@ class DataGen {
 			}
 		}
 
-		var obtainedTransitions = this.randomizerData["TrackerData"]["visitedTransitions"]
+		var obtainedTransitions = this.randomizerData["TrackerData"]?.["visitedTransitions"]
 
 		//mark what's been visited from _obtainedTransitions)
 		for (let doorId in obtainedTransitions) {

@@ -8,24 +8,20 @@
 Next
 -------------------------------------------------------------------------
 
-- Web restore
-	- xx base stuff
-	- xx Cope with replaced items being the item type and not the original location
-		- xx and that there may be more than one
-	- xx include map tiles in build
+- Things
 
+	- Wrong text before loading save
 	- items don't update as you grab them
-	- enter new transition doen''t reveal room
+	- enter new transition doesn't reveal room
 
+	- New data crunch
 
-	- delete testSaveData.js
-	- commit some TestSaves
+	- Use bounds from images
+	- Sync icon sets/colors used
 
+	- Setting to show none/locatoins/all/transitions live ingame view
 
 - Map tiles
-	- xx base Postprocess
-	- xx Would be nice to have light areas for entrance/exits
-	- regen
 
 
 	- Empty images:
@@ -39,13 +35,12 @@ Next
 
 	- no Cinematic_Stag_travel.webp
 
+- delete testSaveData.js
+- commit some TestSaves
+
 - Path finding
 	- Use actual logic for each room-to-room connection
 
-- StandaloneTest fails to run do to some sort of lib loading issue
-	- but we can test by browsing to file://, do we need it?
-
-- match color conventions (reachable, visited, etc.) between map and in-game
 
 - Data
 	- xx Additive load and {sceneName}_Boss if it exists as we go
@@ -123,6 +118,9 @@ Next
 	- Stag egg should be lore. :-)
 	- Started in Crossroads_ShamanTemple, but items right next to start point marked unreachable
 	- Charm_Notch-Shrumal_Ogres is super-attainable with just a down nail attack (may be obscure, though)
+
+- StandaloneTest fails to run do to some sort of lib loading issue
+	- but we can test by browsing to file://, do we need it?
 
 -------------------------------------------------------------------------
 Unsorted

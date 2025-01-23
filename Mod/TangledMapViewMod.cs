@@ -62,6 +62,7 @@ public class TangledMapViewMod : Mod, IMenuMod,
 
 		USceneManager.sceneLoaded += OnSceneLoaded;
 		TrackerUpdate.OnFinishedUpdate += TriggerDataChange;
+		TrackerUpdate.OnTransitionVisited += OnTransitionVisited;
 
 		ModHooks.AfterSavegameLoadHook += data => {
 			// Log("get load");
@@ -84,7 +85,7 @@ public class TangledMapViewMod : Mod, IMenuMod,
 	}
 
 	private IEnumerator StartWebServer() {
-		Log("Startted start coroutine");
+		Log("Started start coroutine");
 		//game crashes if we start server right away
 		yield return null;
 		yield return null;
@@ -124,7 +125,7 @@ public class TangledMapViewMod : Mod, IMenuMod,
 			new IMenuMod.MenuEntry(
 				"Open Map",
 				new [] {""},
-				"Open the map in your browser",
+				"Open the map (in your browser)",
 				v => {
 					Application.OpenURL($"http://localhost:{MapServer.MapPort}/");
 				},
@@ -217,6 +218,15 @@ public class TangledMapViewMod : Mod, IMenuMod,
 				Converters = JsonConverterTypes.ConverterTypes,
 			}
 		);
+	}
+
+	private void OnTransitionVisited(string srcDoor, string destDoor) {
+		server.Send(JsonConvert.SerializeObject(
+			new {
+				type = "revealTransition",
+				to = destDoor,
+			}
+		).ToString());
 	}
 
 
