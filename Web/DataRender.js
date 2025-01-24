@@ -329,13 +329,26 @@ class DataRender {
 
 			//update collected items
 			for (let itemId in room.items) {
-				//do we have the item that's randomized into that location?
-				let got = this_.data.hasClearedLocation(itemId)
-				if (got) {
-					let el = room.items[itemId].__el
-					el.setAttribute("href", "#icon-item-got")
-					el.classList.add("got")
+				// let testList = [
+				// 	"#icon-item-obtained",
+				// 	"#icon-item-previewed",
+				// 	"#icon-item-reachable",
+				// 	"#icon-item-unreachable",
+				// ]
+				// window.__rotateThing = window.__rotateThing + 1 || 0
+				// let image = testList[window.__rotateThing % testList.length]
+
+				let image = ""
+				let state = this_.data.getLocationLogicState(itemId)
+				switch (state) {
+					case LogicState.OUT_OF_LOGIC: image = "#icon-item-unreachable"; break
+					case LogicState.IN_LOGIC: image = "#icon-item-reachable"; break
+					case LogicState.PREVIEWED: image = "#icon-item-previewed"; break
+					case LogicState.OBTAINED: image = "#icon-item-obtained"; break
 				}
+
+				let el = room.items[itemId].__el
+				el.setAttribute("href", image)
 			}
 		})
 

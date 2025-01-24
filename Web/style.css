@@ -60,6 +60,9 @@ image.mapIcon {
 	filter: url(#filter-icon-green);
 }
 
+#icon-bench {
+	display: none;
+}
 
 
 .roomLink {
@@ -105,19 +108,23 @@ image.mapIcon {
 
 .roomItem { display: none; }
 .roomItem {
-	stroke: none;
-	fill: white;
 	opacity: .8;
-}
-.roomItem.got {
-	/* fill: green; */
-	fill: black;
-	filter: url(#filter-item-got-shadow);
 }
 .roomItem:hover {
 	opacity: 1;
-	stroke: white;
-	stroke-width: 1px;
+}
+
+#icon-item-obtained {
+	filter: url(#filter-icon-gray);
+}
+#icon-item-previewed {
+	filter: url(#filter-icon-previewed);
+}
+#icon-item-reachable {
+	filter: url(#filter-icon-green);
+}
+#icon-item-unreachable {
+	filter: url(#filter-icon-red);
 }
 
 #mainMap.showItemsInPool-all .roomItem { display: unset; }

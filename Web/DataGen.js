@@ -14,7 +14,8 @@ const LogicState = Object.freeze({
 	NOT_RANDOMIZED: 1,//unrandomized items are always this
 	OUT_OF_LOGIC: 2,
 	IN_LOGIC: 3,
-	OBTAINED: 4,//if item is obtained, even if it's not in logic
+	PREVIEWED: 4,//in logic and we know what it is, just haven't gotten it
+	OBTAINED: 5,//if item is obtained, even if it's not in logic
 })
 
  /** Loads data from the save file and hands general information about that data */
@@ -81,10 +82,10 @@ class DataGen {
 	 */
 	itemPlacements = {}
 	/**
-	 * Map of item id => bool if we should be able to get to the item/it's in logic
+	 * Map of location id => LogicState (in logic, out of logic, or previewed)
 	 * Missing randomized items are assumed inaccessible.
 	 */
-	accessibleItems = {}
+	accessibleLocations = {}
 
 
 
@@ -113,7 +114,7 @@ class DataGen {
 		this.itemPools = {}
 		this.items = {}
 		this.itemPlacements = {}
-		this.accessibleItems = {}
+		this.accessibleLocations = {}
 		this.selectedRoom = null
 	}
 
@@ -383,12 +384,12 @@ class DataGen {
 
 	/**
 	 * Call with some or all of the changes to what is/isn't in logic.
-	 * itemChanges = {itemId: bool, ...}
+	 * itemChanges = {itemId: number 0-2, ...}
 	 * transitionChanges = {destDoorId: [accessibleDoorInRoom, ...]}
 	 */
 	updateLogicStates(itemChanges, transitionChanges) {
 		for (let itemId in itemChanges) {
-			this.accessibleItems[itemId] = itemChanges[itemId]
+			this.accessibleLocations[itemId] = itemChanges[itemId]
 		}
 		for (let doorId in transitionChanges) {
 			this.accessibleTransitions[doorId] = transitionChanges[doorId]
@@ -399,10 +400,10 @@ class DataGen {
 	 * Should we be able to access the given item location right now?
 	 * @returns {number} which LogicState
 	 */
-	getLocationLogicState(itemId) {
-		if (!this.itemPlacements[itemId]) return LogicState.NOT_RANDOMIZED
-		if (this.items[itemId]) return LogicState.OBTAINED
-		if (this.accessibleItems[itemId]) return LogicState.IN_LOGIC
+	getLocationLogicState(locationId) {
+		if (!this.itemPlacements[locationId]) return LogicState.NOT_RANDOMIZED
+		if (this.hasClearedLocation(locationId)) return LogicState.OBTAINED
+		if (this.accessibleLocations[locationId]) return LogicState.IN_LOGIC
 		return LogicState.OUT_OF_LOGIC
 	}
 
