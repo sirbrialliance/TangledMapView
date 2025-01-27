@@ -384,12 +384,12 @@ class DataGen {
 
 	/**
 	 * Call with some or all of the changes to what is/isn't in logic.
-	 * itemChanges = {itemId: number 0-2, ...}
+	 * locationChanges = {locationId: (0 out of logic, 1 in logic, 2 previewed), ...}
 	 * transitionChanges = {destDoorId: [accessibleDoorInRoom, ...]}
 	 */
-	updateLogicStates(itemChanges, transitionChanges) {
-		for (let itemId in itemChanges) {
-			this.accessibleLocations[itemId] = itemChanges[itemId]
+	updateLogicStates(locationChanges, transitionChanges) {
+		for (let locationId in locationChanges) {
+			this.accessibleLocations[locationId] = locationChanges[locationId]
 		}
 		for (let doorId in transitionChanges) {
 			this.accessibleTransitions[doorId] = transitionChanges[doorId]

@@ -40,6 +40,7 @@ public class TangledMapViewMod : Mod, IMenuMod,
 	public string CurrentRoom { get; private set; }
 	internal MapServer server;
 	private HUDManager hud;
+	private MapTrackerData mapTracker;
 
 
 	public TangledMapViewMod() : base("TangledMapView") {}
@@ -62,12 +63,14 @@ public class TangledMapViewMod : Mod, IMenuMod,
 
 		USceneManager.sceneLoaded += OnSceneLoaded;
 		TrackerUpdate.OnFinishedUpdate += TriggerDataChange;
-		TrackerUpdate.OnTransitionVisited += OnTransitionVisited;
+		// TrackerUpdate.OnTransitionVisited += OnTransitionVisited;
+		mapTracker = new MapTrackerData(this);
 
 		ModHooks.AfterSavegameLoadHook += data => {
 			// Log("get load");
 			saveLoaded = true;
 			server.Send(PrepareSaveDataMessage());
+			// mapTracker.SendUpdate();
 		};
 		// On.UIManager.StartNewGame += (orig, self, death, rush) => {
 		// 	startingSave = true;//we will actually push data once a scene loads
@@ -79,6 +82,7 @@ public class TangledMapViewMod : Mod, IMenuMod,
 			Log("NewGameHook called");
 			saveLoaded = true;
 			server.Send(PrepareSaveDataMessage());
+			// mapTracker.SendUpdate();
 		};
 
 		Events.OnBeginSceneTransition += OnSceneTransition;
@@ -173,6 +177,7 @@ public class TangledMapViewMod : Mod, IMenuMod,
 			startingSave = false;
 			saveLoaded = true;
 			server.Send(PrepareSaveDataMessage());
+			mapTracker.SendUpdate();
 		}
 
 		server.Send(PreparePlayerMoveMessage());
