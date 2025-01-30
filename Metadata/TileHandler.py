@@ -6,6 +6,7 @@ import numpy as np
 from matplotlib import pyplot
 
 from processData import outputFolder
+import roomInfo
 
 DEBUG_IMAGE = False
 
@@ -112,6 +113,7 @@ class TileHandler:
 
 
 	def process(self):
+		"""Processes the source image to the final image."""
 		print(f"Looking at {self.tileName} image is {self.image.shape[1]}x{self.image.shape[0]}")
 
 		# kill any existing alpha
@@ -191,6 +193,57 @@ class TileHandler:
 
 		if DEBUG_IMAGE:
 			pyplot.show()
+
+
+	def getData(self):
+		"""Returns the JSONable data to include for this tile/room."""
+		
+		baseData = roomInfo.getRoom(self.tileName)
+		if DEBUG_IMAGE:
+			print(self.tileName, "baseData", json.dumps(baseData, indent=2))
+
+		locations = {}
+		for loc in self.data["locations"]:
+			#todo: better sharing of what the orginal item would be?
+			#old system had randAction/randPool/randType/geo
+			locations[loc["id"]] = {
+				"x": loc["x"],
+				"y": loc["y"],
+			}
+
+		transitions = {}
+		for t in self.data["transitions"]:
+			try:
+				randoT = baseData["transitions"][t["id"]]
+			except KeyError:
+				continue
+
+			transitions[randoT["DoorName"]] = {
+				"x": t["x"],
+				"y": t["y"],
+				"to": randoT["VanillaTarget"],
+			}
+
+		ret = {
+			"area": baseData["area"],
+			"randomizerArea": baseData.get("randomizerArea"),
+			"benches": baseData["benches"],
+			"name": baseData.get("name"),
+			"items": locations,# I'm good at consistent naming. This is a list of locations you can get items at.
+			"transitions": transitions,
+			"tileBounds": {
+				"x1": self.data["x1"],
+				"y1": self.data["y1"],
+				"x2": self.data["x2"],
+				"y2": self.data["y2"],
+			}
+		}
+
+		if DEBUG_IMAGE:
+			print(self.tileName, "getData()", json.dumps(ret, indent=2))
+
+		return ret
+
 
 
 

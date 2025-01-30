@@ -269,7 +269,7 @@ class App {
 			let area = room.mapData.area
 			let areaEl = document.createElement("span")
 			areaEl.className = "areaName"
-			areaEl.textContent = window.mapData.areas[area]
+			areaEl.textContent = MapDataAreas[area]
 			areaEl.setAttribute("data-area", area)
 			el.appendChild(areaEl)
 
@@ -453,6 +453,7 @@ class App {
 		if (this.ws || location.protocol === "file:") return
 
 		this.ws = new WebSocket("ws://" + location.host + "/ws")
+		console.log("Connecting to server...")
 		this.ws.addEventListener("open", ev => {
 			console.log("Connected to server")
 			this._render()
@@ -531,7 +532,7 @@ class App {
 				if (this.prefs.visibleItems !== "none") this._updateView()
 				break
 			case "logicUpdate":
-				this.data.updateLogicStates(msg.items, msg.transitions)
+				this.data.updateLogicStates(msg.locations || {}, msg.transitions || {})
 				this._updateView()
 				break
 			default:

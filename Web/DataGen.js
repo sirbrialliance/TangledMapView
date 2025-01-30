@@ -18,6 +18,27 @@ const LogicState = Object.freeze({
 	OBTAINED: 5,//if item is obtained, even if it's not in logic
 })
 
+const MapDataAreas = Object.freeze({
+	"Abyss": "Ancient Basin",
+	"Cliffs": "Howling Cliffs",
+	"Crossroads": "Forgotten Crossroads",
+	"Deepnest": "Deepnest",
+	"Deepnest_East": "Kingdom's Edge",
+	"FogCanyon": "Fog Canyon",
+	"Fungus1": "Greenpath",
+	"Fungus2": "Fungal Wastes",
+	"Fungus3": "Queen's Gardens",
+	"Hive": "The Hive",
+	"Mines": "Crystal Peak",
+	"RestingGrounds": "Resting Grounds",
+	"Room": "Room",
+	"Ruins1": "City of Tears",
+	"Ruins2": "City of Tears",
+	"Town": "Dirtmouth",
+	"Waterways": "Royal Waterways",
+	"White_Palace": "White Palace"
+})
+
  /** Loads data from the save file and hands general information about that data */
 class DataGen {
 

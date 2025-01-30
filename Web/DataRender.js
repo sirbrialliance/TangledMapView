@@ -223,7 +223,10 @@ class DataRender {
 					itemInfoEl.appendChild(el)
 				}
 
-				mkEl("normalItem", DataRender.getItemDescription(item))
+				mkEl("locationId", item.id)
+
+				//todo: add more data about vanilla item to locations data
+				// mkEl("normalItem", DataRender.getItemDescription(item))
 
 				let currentDesc = "???"
 				if (this.data.shouldRevealItemAt(item.id)) {
@@ -292,7 +295,7 @@ class DataRender {
 				roomInfoEl.style.display = "block"
 				let areaEl = roomInfoEl.querySelector(".areaName")
 				areaEl.setAttribute("data-area", roomInfo.area)
-				areaEl.textContent =  window.mapData.areas[roomInfo.area]
+				areaEl.textContent = MapDataAreas[roomInfo.area]
 				roomInfoEl.querySelector(".roomName").textContent = roomInfo.name
 				roomInfoEl.querySelector(".roomId").textContent = room.id
 			})

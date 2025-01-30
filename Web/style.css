@@ -328,6 +328,11 @@ body.noAnimate .mapNode > rect.currentRoute, body.noAnimate .roomLink.currentRou
 	display: none;
 }
 
+.itemInfo > .locationId {
+	font-family: monospace;
+	margin-right: 7px;
+}
+
 .itemInfo > .normalItem {
 	margin-right: 7px;
 }
