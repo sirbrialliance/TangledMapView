@@ -116,15 +116,26 @@ class DataRender {
 			.attr("y", d => d.y * roomScale - room.aabb.cy * roomScale)
 
 		//bg image
+		var imgBounds = room.mapData.tileBounds || {}
 		d3.select(el)
 			.selectAll("image.mapTile")
 			.data([room.id])
 			.join("image")
 			.attr("href", "MapTiles/" + room.id + ".webp")
-			.attr("x", -room.aabb.width / 2 * roomScale)
-			.attr("y", -room.aabb.height / 2 * roomScale)
-			.attr("width", room.aabb.width * roomScale)
-			.attr("height", room.aabb.height * roomScale)
+			.attr("x", (imgBounds.x1 - room.aabb.cx) * roomScale)
+			.attr("y", -(imgBounds.y2 + room.aabb.cy) * roomScale)
+			.attr("width", (imgBounds.x2 - imgBounds.x1) * roomScale)
+			.attr("height", (imgBounds.y2 - imgBounds.y1) * roomScale)
+
+			// .attr("x", (imgBounds.x1 - room.aabb.cx) * roomScale)
+			// .attr("y", -(imgBounds.y1 - room.aabb.cy) * roomScale)
+			// .attr("width", (imgBounds.x2 - imgBounds.x1) * roomScale)
+			// .attr("height", (imgBounds.y2 - imgBounds.y1) * roomScale)
+
+			// .attr("x", -room.aabb.width / 2 * roomScale)
+			// .attr("y", -room.aabb.height / 2 * roomScale)
+			// .attr("width", room.aabb.width * roomScale)
+			// .attr("height", room.aabb.height * roomScale)
 
 		//edge stubs
 		let c = {x: room.aabb.cx * roomScale, y: room.aabb.cy * roomScale}
@@ -356,7 +367,7 @@ class DataRender {
 		})
 
 
-		node.select("rect")
+		node.select("rect.roomShape")
 			.attr("x", node => -node.aabb.width / 2 * roomScale)
 			.attr("y", node => -node.aabb.height / 2 * roomScale)
 			.attr("width", node => node.aabb.width * roomScale)

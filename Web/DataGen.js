@@ -564,7 +564,12 @@ class RoomNode {
 	island = null
 	islandDistance = 0//0 = hub, 1 = adjacent to hub, 2 = adjacent to that, etc.
 	graphParent = null//an adjacent room on our island that's closer to the hub than us
-	/** Bounding box, in local coordinates, center of that, width and height of that, radius of a circle that touches the rectangle edges. */
+	/**
+	 * Bounding box, in local coordinates, center of that, width and height of that, radius of a circle that touches
+	 * the rectangle edges.
+	 * Note this is based on items in the room, note that mapData.tileBounds tells us how the thumbnail
+	 * maps to world space.
+	 */
 	aabb = {x1: Infinity, y1: Infinity, x2: -Infinity, y2: -Infinity, cx: null, cy: null, width: null, height: null, radius: null}
 	mapData = {}
 
@@ -581,6 +586,13 @@ class RoomNode {
 	}
 
 	finishSetup() {
+
+		if (this.mapData.tileBounds) {
+			let bounds = this.mapData.tileBounds
+			this._expandAABB(bounds.x1, -bounds.y1)
+			this._expandAABB(bounds.x2, -bounds.y2)
+		}
+
 		//how big to make a room if we don't have data for its doors
 		const defaultSize = 30
 		const defaultSize2 = defaultSize / 2
