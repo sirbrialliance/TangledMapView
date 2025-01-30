@@ -42,6 +42,7 @@ Next
 - Path finding
 	- Use actual logic for each room-to-room connection
 
+- Search should include data for previewed locations
 
 - Data
 	- xx Additive load and {sceneName}_Boss if it exists as we go

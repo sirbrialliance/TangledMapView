@@ -104,11 +104,9 @@ class DataGen {
 	itemPlacements = {}
 	/**
 	 * Map of location id => LogicState (in logic, out of logic, or previewed)
-	 * Missing randomized items are assumed inaccessible.
+	 * Missing randomized items should be assumed inaccessible.
 	 */
-	accessibleLocations = {}
-
-
+	locationStates = {}
 
 	/** Map of item id => mapData information about that item */
 	allLocations = {}
@@ -135,7 +133,7 @@ class DataGen {
 		this.itemPools = {}
 		this.items = {}
 		this.itemPlacements = {}
-		this.accessibleLocations = {}
+		this.locationStates = {}
 		this.selectedRoom = null
 	}
 
@@ -187,6 +185,12 @@ class DataGen {
 		this._buildDoors()
 
 		this._markVisitedTransitions()
+
+		//Populate obtained items based on what we have from the save file. We should get
+		//better data via updateLogicStates soon.
+		for (let clearedLoc of this.randomizerData["TrackerData"]["clearedLocations"]) {
+			this.locationStates[clearedLoc] = LogicState.OBTAINED;
+		}
 
 		for (let roomId in this.rooms) {
 			this.rooms[roomId].finishSetup()
@@ -380,8 +384,7 @@ class DataGen {
 
 	/** true/false if we have checked the given location. */
 	hasClearedLocation(locationId) {
-		let idx = this.randomizerData["TrackerData"]["clearedLocations"].indexOf(locationId)
-		return idx >= 0
+		return this.locationStates[locationId] === LogicState.OBTAINED;
 	}
 
 	/** Marks the given item (not location) as collected. */
@@ -410,7 +413,7 @@ class DataGen {
 	 */
 	updateLogicStates(locationChanges, transitionChanges) {
 		for (let locationId in locationChanges) {
-			this.accessibleLocations[locationId] = locationChanges[locationId]
+			this.locationStates[locationId] = locationChanges[locationId]
 		}
 		for (let doorId in transitionChanges) {
 			this.accessibleTransitions[doorId] = transitionChanges[doorId]
@@ -422,10 +425,16 @@ class DataGen {
 	 * @returns {number} which LogicState
 	 */
 	getLocationLogicState(locationId) {
-		if (!this.itemPlacements[locationId]) return LogicState.NOT_RANDOMIZED
-		if (this.hasClearedLocation(locationId)) return LogicState.OBTAINED
-		if (this.accessibleLocations[locationId]) return LogicState.IN_LOGIC
-		return LogicState.OUT_OF_LOGIC
+		var state = this.locationStates[locationId]
+		if (state === undefined) {
+			if (!this.itemPlacements[locationId]) {
+				return LogicState.NOT_RANDOMIZED
+			} else {
+				return LogicState.OUT_OF_LOGIC
+			}
+		} else {
+			return state
+		}
 	}
 
 	/**
@@ -551,6 +560,7 @@ class DataGen {
 	/** Indicates that the player has entered a room via the given doorId and we should update accordingly. */
 	addVisit(doorId) {
 		var transition = this.doorTransitions[doorId]
+		if (!transition) return // e.g., pulled into dream world
 		this.visitedDoors[transition.srcDoor] = true
 		this.visitedDoors[transition.dstDoor] = true
 	}

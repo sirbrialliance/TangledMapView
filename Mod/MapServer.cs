@@ -29,6 +29,7 @@ public class MapServer {
 			if (TangledMapViewMod.Instance != null) {
 				Send(TangledMapViewMod.Instance.PrepareSaveDataMessage());
 				Send(TangledMapViewMod.Instance.PreparePlayerMoveMessage());
+				TangledMapViewMod.Instance.mapTracker.SendUpdate();
 			}
 		}
 	}
