@@ -40,7 +40,13 @@ def writeMapData():
 
 def getTileNames():
 	# TileHandler.DEBUG_IMAGE = True
-	# yield "Fungus2_26"
+	# yield "Deepnest_East_09"
+	# return
+
+	# TileHandler.DEBUG_IMAGE = True
+	# for roomId, data in roomInfo.roomData.items():
+	# 	if "crop" not in data: continue
+	# 	yield roomId
 	# return
 
 

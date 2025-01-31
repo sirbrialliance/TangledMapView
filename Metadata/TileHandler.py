@@ -113,10 +113,33 @@ class TileHandler:
 			# print(f"{transition['id']} going {dir} at {x, y, w, h} to paint in {x1, y1, x2, y2} with {color} maybe from {maxLoc}={maxVal}")
 			cv.rectangle(self.image, (x1, y1), (x2, y2), color=color, thickness=cv.FILLED)
 
+	def _clearCroppedAreas(self):
+		roomData = roomInfo.getRoom(self.tileName)
+		if "crop" not in roomData: return
+		crop = roomData["crop"]
+
+		self._debugImage(self.image, "original")
+
+		if "top" in crop:
+			_, pos = self.worldToPixel(0, crop["top"])
+			self.image[:pos, :] = (0, 0, 0, 255)
+		if "bottom" in crop:
+			_, pos = self.worldToPixel(0, crop["bottom"])
+			self.image[pos:, :] = (0, 0, 0, 255)
+
+		if "left" in crop:
+			pos, _ = self.worldToPixel(crop["left"], 0)
+			self.image[:, :pos] = (0, 0, 0, 255)
+		if "right" in crop:
+			pos, _ = self.worldToPixel(crop["right"], 0)
+			self.image[:, pos:] = (0, 0, 0, 255)
+
 
 	def process(self):
 		"""Processes the source image to the final image."""
 		print(f"Looking at {self.tileName} image is {self.image.shape[1]}x{self.image.shape[0]}")
+
+		self._clearCroppedAreas()
 
 		# kill any existing alpha
 		self.image[:, :, 3] = 255
@@ -216,7 +239,7 @@ class TileHandler:
 
 		locations = {}
 		for loc in self.resultData["locations"]:
-			#todo: better sharing of what the orginal item would be?
+			#todo: better sharing of what the original item would be?
 			#old system had randAction/randPool/randType/geo
 			locations[loc["id"]] = {
 				"x": loc["x"],
