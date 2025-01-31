@@ -40,7 +40,7 @@ def writeMapData():
 
 def getTileNames():
 	# TileHandler.DEBUG_IMAGE = True
-	# yield "Dream_01_False_Knight"
+	# yield "Fungus2_26"
 	# return
 
 
@@ -68,7 +68,7 @@ if __name__ == "__main__":
 		print("Looking at", tile)
 		handler = TileHandler.TileHandler(tile)
 
-		if not exists(outputFolder + "/" + tile + ".webp"):
+		if not exists(outputFolder + "/" + tile + ".webp") or TileHandler.DEBUG_IMAGE:
 			handler.process()
 
 		roomData = handler.getData()

@@ -232,6 +232,7 @@ class DataRender {
 					el.textContent = content
 					el.title = item.id
 					itemInfoEl.appendChild(el)
+					return el
 				}
 
 				mkEl("locationId", item.id)
@@ -261,6 +262,7 @@ class DataRender {
 		var this_ = this
 
 		var roomInfoEl = document.getElementById("roomInfo")
+		var coordsEl = document.getElementById("roomMouseCoords")
 
 
 		const linkEls = holder.selectAll("path")
@@ -309,6 +311,15 @@ class DataRender {
 				areaEl.textContent = MapDataAreas[roomInfo.area]
 				roomInfoEl.querySelector(".roomName").textContent = roomInfo.name
 				roomInfoEl.querySelector(".roomId").textContent = room.id
+			})
+			.on("pointermove", (ev, room) => {
+				let pos = new DOMPoint(ev.clientX, ev.clientY)
+				pos = pos.matrixTransform(ev.currentTarget.getScreenCTM().inverse())
+
+				pos.x = pos.x / roomScale + room.aabb.cx
+				pos.y = -pos.y / roomScale - room.aabb.cy//todo: this isn't quite right...'
+
+				coordsEl.textContent = `${Math.round(pos.x * 10) / 10}, ${Math.round(pos.y * 10) / 10}`
 			})
 			.on("pointerleave", (ev, room) => {
 				room.__isHover = false

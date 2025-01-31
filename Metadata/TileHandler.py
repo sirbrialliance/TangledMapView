@@ -41,6 +41,8 @@ class TileHandler:
 		with open(tileName + ".json", "r") as f:
 			self.data = json.load(f)
 
+		self.resultData = None
+
 		if DEBUG_IMAGE:
 			pyplot.figure(dpi=240, figsize=(4, 6))
 			pyplot.tight_layout()
@@ -163,6 +165,8 @@ class TileHandler:
 
 		# Crop and scale image
 		print(f"Will crop from (0, 0):({self.image.shape[1]}, {self.image.shape[0]}) to ({left}, {top}):({right}, {bottom})")
+		# print(f"Starting image aspect: {self.image.shape[1]/float(self.image.shape[0])} new aspect: {(left-right)/(top-bottom)}")
+		# print(f"Starting world aspect: {(self.data['x2']-self.data['x1'])/(self.data['y2']-self.data['y1'])}")
 		self.image = self.image[top:bottom, left:right]
 
 		# Color space conversion (e.g. gamma sRGB <-> linear sRGB) in OpenCV is kinda a mess
@@ -177,7 +181,7 @@ class TileHandler:
 
 		self.image = cv.LUT(linear, gammaLUT)
 
-		cv.imwrite(outputFolder + "/"  + self.tileName + ".webp", self.image)
+		cv.imwrite(outputFolder + "/" + self.tileName + ".webp", self.image)
 		self._debugImage(self.image, "final")
 
 		# Update image -> world mapping in metadata
@@ -185,11 +189,15 @@ class TileHandler:
 			self.pixelToWorld(left, top),
 			self.pixelToWorld(right, bottom),
 		)
-		((self.data["x1"], self.data["y2"]), (self.data["x2"], self.data["y1"])) = newCorners
-		self.logicalImageSize = (self.image.shape[1], self.image.shape[0])
+		self.resultData = self.data.copy()
+		((self.resultData["x1"], self.resultData["y2"]), (self.resultData["x2"], self.resultData["y1"])) = newCorners
+		# self.logicalImageSize = (self.image.shape[1], self.image.shape[0])
+
+		# print(f"Image is now {self.logicalImageSize} covering {newCorners}")
+		# print(f"Ending world aspect: {(self.data['x2']-self.data['x1'])/(self.data['y2']-self.data['y1'])}")
 
 		with open(outputFolder + "/" + self.tileName + ".json", "wt") as f:
-			json.dump(self.data, f, indent=2)
+			json.dump(self.resultData, f, indent=2)
 
 		if DEBUG_IMAGE:
 			pyplot.show()
@@ -197,13 +205,17 @@ class TileHandler:
 
 	def getData(self):
 		"""Returns the JSONable data to include for this tile/room."""
+
+		if self.resultData is None:
+			with open(outputFolder + "/" + self.tileName + ".json", "rt") as f:
+				self.resultData = json.load(f)
 		
 		baseData = roomInfo.getRoom(self.tileName)
 		if DEBUG_IMAGE:
 			print(self.tileName, "baseData", json.dumps(baseData, indent=2))
 
 		locations = {}
-		for loc in self.data["locations"]:
+		for loc in self.resultData["locations"]:
 			#todo: better sharing of what the orginal item would be?
 			#old system had randAction/randPool/randType/geo
 			locations[loc["id"]] = {
@@ -212,7 +224,7 @@ class TileHandler:
 			}
 
 		transitions = {}
-		for t in self.data["transitions"]:
+		for t in self.resultData["transitions"]:
 			try:
 				randoT = baseData["transitions"][t["id"]]
 			except KeyError:
@@ -232,10 +244,10 @@ class TileHandler:
 			"items": locations,# I'm good at consistent naming. This is a list of locations you can get items at.
 			"transitions": transitions,
 			"tileBounds": {
-				"x1": self.data["x1"],
-				"y1": self.data["y1"],
-				"x2": self.data["x2"],
-				"y2": self.data["y2"],
+				"x1": round(self.resultData["x1"], 1),
+				"y1": round(self.resultData["y1"], 1),
+				"x2": round(self.resultData["x2"], 1),
+				"y2": round(self.resultData["y2"], 1),
 			}
 		}
 

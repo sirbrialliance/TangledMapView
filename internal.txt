@@ -9,21 +9,12 @@ Next
 -------------------------------------------------------------------------
 
 - Things
-	- xx enter new transition doesn't reveal room
-
-	- Sync icon sets/colors used
-
-	- Wrong text before loading save
-	- items don't update as you grab them
-
-	- New data crunch
-
-	- Use bounds from images
-
 	- Setting to show none/locatoins/all/transitions live ingame view
 
-- Map tiles
+- Update door icons (currently circles)
 
+
+- Map tiles
 
 	- Empty images:
 		- Abyss_22

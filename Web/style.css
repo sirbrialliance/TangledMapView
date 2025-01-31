@@ -293,6 +293,15 @@ body.noAnimate .mapNode > rect.currentRoute, body.noAnimate .roomLink.currentRou
 	margin: 0 5px;
 }
 
+#roomInfo #roomMouseCoords {
+	font-family: monospace;
+	font-size: 60%;
+	display: inline-block;
+	width: 120px;
+	text-align: center;
+	white-space: pre;
+}
+
 [data-area=Abyss] { border-color: var(--area-Abyss-border); background-color: var(--area-Abyss-fill); color: var(--area-Abyss-border);}
 [data-area=Cliffs] { border-color: var(--area-Cliffs-border); background-color: var(--area-Cliffs-fill); color: var(--area-Cliffs-border);}
 [data-area=Crossroads] { border-color: var(--area-Crossroads-border); background-color: var(--area-Crossroads-fill); color: var(--area-Crossroads-border);}
