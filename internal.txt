@@ -13,30 +13,7 @@ Next
 
 - Update door icons (currently circles)
 
-
 - Map tiles
-
-	- Empty images/black box:
-		- Abyss_22
-		- Crossroads_47
-		- Crossroads_49
-		- Crossroads_49b
-		- Deepnest_09
-		- Deepnest_30
-		- Fungus1_16_alt
-		- Fungus2_02
-		- RestingGrounds_09
-		- Room_Town_Stag_Station
-		- Room_Tram
-		- Room_Tram_RG
-		- Ruins1_29
-		- Ruins2_08
-		- Ruins2_10
-		- Ruins2_10b
-
-
-	- Black boxes in dark rooms (no lantern?)
-
 	- no Cinematic_Stag_travel.webp
 
 - delete testSaveData.js

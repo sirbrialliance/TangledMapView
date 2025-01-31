@@ -31,6 +31,28 @@ public class MappingCamera : MonoBehaviour {
 	public const float MapTileScale = 20f;
 	public const float LiveViewZoom = 100;
 
+	/// <summary>
+	/// Rooms that need more fiddling to render without issues.
+	/// </summary>
+	private List<string> problemRooms = new List<string> {
+		"Abyss_22",
+		"Crossroads_47",
+		"Crossroads_49",
+		"Crossroads_49b",
+		"Deepnest_09",
+		"Deepnest_30",
+		"Fungus1_16_alt",
+		"Fungus2_02",
+		"RestingGrounds_09",
+		"Room_Town_Stag_Station",
+		"Room_Tram",
+		"Room_Tram_RG",
+		"Ruins1_29",
+		"Ruins2_08",
+		"Ruins2_10",
+		"Ruins2_10b",
+	};
+
 	public static MappingCamera Create(TangledMapViewMod mod) {
 		mod.LogDebug("Creating MappingCamera");
 
@@ -401,8 +423,12 @@ public class MappingCamera : MonoBehaviour {
 
 			while (DoingLoading) yield return null;
 
+			var problemRoom = problemRooms.Contains(name);
+
+			if (problemRoom) yield return new WaitForSeconds(6);
+
 			yield return StartCoroutine(SnapScene());
-			yield return new WaitForSeconds(.1f);
+			yield return new WaitForSeconds(problemRoom ? 1 : .1f);
 
 			if (Input.anyKey) break;
 		}

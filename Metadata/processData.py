@@ -40,7 +40,9 @@ def writeMapData():
 
 def getTileNames():
 	# TileHandler.DEBUG_IMAGE = True
-	# yield "Deepnest_East_09"
+	# yield "Crossroads_49"
+	# yield "Crossroads_49b"
+	# yield "Ruins2_10"
 	# return
 
 	# TileHandler.DEBUG_IMAGE = True
