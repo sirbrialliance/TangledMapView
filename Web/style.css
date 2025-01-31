@@ -155,6 +155,10 @@ image.mapIcon {
 #mainMap.showItemsInPool-Stag .pool-Stag { display: unset; }
 #mainMap.showItemsInPool-Vessel .pool-Vessel { display: unset; }
 
+#mainMap.brightenTiles image.mapTile {
+	filter: url(#filter-brightenTile);
+}
+
 #icon-bench {
 	stroke: black;
 	stroke-width: .2px;

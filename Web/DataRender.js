@@ -121,6 +121,7 @@ class DataRender {
 			.selectAll("image.mapTile")
 			.data([room.id])
 			.join("image")
+			.classed("mapTile", true)
 			.attr("href", "MapTiles/" + room.id + ".webp")
 			.attr("x", (imgBounds.x1 - room.aabb.cx) * roomScale)
 			.attr("y", -(imgBounds.y2 + room.aabb.cy) * roomScale)

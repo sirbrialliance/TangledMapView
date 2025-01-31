@@ -8,24 +8,29 @@
 Next
 -------------------------------------------------------------------------
 
-- Things
-	- Setting to show none/locatoins/all/transitions live ingame view
-
 - Update door icons (currently circles)
+- correct door/transition logic state
 
-- Map tiles
-	- no Cinematic_Stag_travel.webp
+- pathing uses benches
+- pathing visible in-game
+
+- "fps saver" could update while loading scenes...
+
+- try some more to make rooms start aligned with door sides
+
+- no Cinematic_Stag_travel.webp
 
 - delete testSaveData.js
 - commit some TestSaves
 
+
 - Path finding
 	- Use actual logic for each room-to-room connection
+	- List transitions/actions to take on page
 
 - Search should include data for previewed locations
 
 - Data
-	- xx Additive load and {sceneName}_Boss if it exists as we go
 	- may be able to use clues in itemchanger data for unknown positions?
 	- Pool names in randomizer don't match my old data export
 	- Missing items: check again

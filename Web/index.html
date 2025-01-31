@@ -87,6 +87,15 @@
 				</feComponentTransfer>
 				<feComposite in="SourceGraphic" in2="shadow" operator="over"/>
 			</filter>
+
+			<filter id="filter-brightenTile">
+				<feComponentTransfer>
+					<!-- For some reason Firefox ignores tables with more than 4 values? -->
+					<feFuncR type="table" tableValues="0 0.6 .9 1"/>
+					<feFuncG type="table" tableValues="0 0.6 .9 1"/>
+					<feFuncB type="table" tableValues="0 0.6 .9 1"/>
+				</feComponentTransfer>
+			</filter>
 		</defs>
 	</svg>
 	<div id="controlPanel">
@@ -113,6 +122,9 @@
 				</label>
 				<label title="Stop animating/updating when not focused. Turn on if you have performance issues with the game.">FPS Saver:
 					<button id="pref-fpsSaver" onclick="app.updatePref('fpsSaver', !app.prefs['fpsSaver'])">On</button><br>
+				</label>
+				<label title="Make room thumbnails brighter">Brighten rooms:
+					<button id="pref-brightenTiles" onclick="app.updatePref('brightenTiles', !app.prefs['brightenTiles'])">On</button><br>
 				</label>
 				<label>Layout:
 					<select id="pref-layout" onchange="app.updatePref('layout', this.value)">

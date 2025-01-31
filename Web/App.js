@@ -7,6 +7,7 @@ class App {
 		clusterBasedOnAll: false,
 		followPlayer: true,
 		fpsSaver: true,
+		brightenTiles: false,
 		layout: "islands",
 		visibleItems: "relevant",
 	}
@@ -87,6 +88,7 @@ class App {
 		const nodeHolder = svg.append("g").attr("id", "mainMap")
 
 		this.dataRender.renderInto(nodeHolder)
+		this._nodeHolder = nodeHolder
 
 		updateSize()
 
@@ -431,6 +433,8 @@ class App {
 	}
 
 	_updateView() {
+		this._nodeHolder.classed("brightenTiles", this.prefs.brightenTiles)
+
 		this.dataRender.update()
 		this.updateRoute()
 	}
