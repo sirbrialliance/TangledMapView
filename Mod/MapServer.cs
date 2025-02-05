@@ -18,14 +18,22 @@ public class MapServer {
 	private ILogger logger;
 
 	internal class WSHandler : WebSocketBehavior {
+		public ILogger logger;
 		protected override void OnMessage(MessageEventArgs e) {
-			// var msg = JsonConvert.DeserializeObject<JObject>(e.Data);
-			// if ((string)msg["type"] == "___") {
-			//
-			// }
+			TangledMapViewMod.Instance.OnMainThread(() => {
+				var msg = JsonConvert.DeserializeObject<JObject>(e.Data);
+				if ((string)msg["type"] == "setMessage") {
+					TangledMapViewMod.Instance.hud.SetVisibleMessage((string)msg["message"]);
+				} else if ((string)msg["type"] == "setPathHint") {
+					TangledMapViewMod.Instance.hud.SetPathHintIcon((int)msg["state"], (float)msg["x"], (float)msg["y"]);
+				} else {
+					logger.LogWarn($"Unknown message received: {e.Data}");
+				}
+			});
 		}
 
 		protected override void OnOpen() {
+			logger.Log($"WS OnOpen called {this.ID}");
 			if (TangledMapViewMod.Instance != null) {
 				Send(TangledMapViewMod.Instance.PrepareSaveDataMessage());
 				Send(TangledMapViewMod.Instance.PreparePlayerMoveMessage());
@@ -56,7 +64,7 @@ public class MapServer {
 		};
 
 
-		server.AddWebSocketService<WSHandler>("/ws");
+		server.AddWebSocketService<WSHandler>("/ws", handler => handler.logger = logger);
 		sessions = server.WebSocketServices["/ws"].Sessions;
 
 		server.Start();

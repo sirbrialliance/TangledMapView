@@ -9,6 +9,8 @@ using RandomizerMod.Logging;
 using RandomizerMod.RandomizerData;
 using RandomizerMod.RC;
 using UnityEngine;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 using USceneManager = UnityEngine.SceneManagement.SceneManager;
 using RandoMod = RandomizerMod.RandomizerMod;
@@ -30,6 +32,11 @@ internal class HUDManager : MonoBehaviour {
 
 	public Camera overlayCamera;
 
+	public TextMesh playerMessages;
+
+	private List<Action> mainThreadTasks = new List<Action>();
+	private CheckMarkerWorld pathHint;
+
 	public void Start() {
 		// MappingCamera.Create(mod);
 
@@ -39,6 +46,80 @@ internal class HUDManager : MonoBehaviour {
 		overlayCamera.enabled = false;
 
 		TangledMapViewMod.onDataChange += OnDataChange;
+
+		CreateMessagePanel();
+	}
+
+	public void OnMainThread(Action task) {
+		lock (mainThreadTasks) mainThreadTasks.Add(task);
+	}
+
+	public void Update() {
+		// ReSharper disable once InconsistentlySynchronizedField
+		if (mainThreadTasks.Count > 0) {
+			lock (mainThreadTasks) {
+				foreach (var task in mainThreadTasks) {
+					try {
+						task.Invoke();
+					} catch (Exception ex) {
+						mod.LogError(ex);
+					}
+				}
+				mainThreadTasks.Clear();
+			}
+		}
+	}
+
+	private void CreateMessagePanel() {
+		var textGO = new GameObject("Player Messages");
+		textGO.transform.SetParent(transform, true);
+		textGO.layer = Layer;
+		textGO.transform.localScale = new Vector3(.01f, .01f, .01f);
+
+		var text = playerMessages = textGO.AddComponent<TextMesh>();
+
+		text.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+		text.text = "";
+		text.characterSize = 20;
+		text.fontSize = 40;
+		text.alignment = TextAlignment.Center;
+		text.anchor = TextAnchor.MiddleCenter;
+
+		/*
+		var canvasGO = new GameObject("Canvas", typeof(Canvas));
+		canvasGO.transform.SetParent(transform, false);
+		var canvas = canvasGO.GetComponent<Canvas>();
+		canvas.renderMode = RenderMode.ScreenSpaceCamera;
+		canvas.worldCamera = overlayCamera;
+
+		var textGO = new GameObject("Player Messages", typeof(Text), typeof(Outline), typeof(CanvasGroup));
+		textGO.transform.SetParent(canvasGO.transform, true);
+
+		const float padding = 20;
+		var textRT = (RectTransform)textGO.transform;
+		textRT.pivot = Vector2.zero;
+		textRT.anchorMin = Vector2.zero;
+		textRT.anchorMax = Vector2.one;
+		textRT.anchoredPosition = new Vector2(padding, padding);
+		textRT.sizeDelta = new Vector2(-padding * 2, -padding * 2);
+
+		var text = playerMessages = textRT.GetComponent<Text>();
+		text.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+		text.text = "";
+		text.color = Color.white;
+		text.raycastTarget = false;
+		text.fontSize = 42;
+		text.alignment = TextAnchor.LowerLeft;
+		text.verticalOverflow = VerticalWrapMode.Overflow;
+
+		var cGroup = textGO.GetComponent<CanvasGroup>();
+		cGroup.blocksRaycasts = false;
+		cGroup.interactable = false;
+
+		var outline = textGO.GetComponent<Outline>();
+		outline.effectColor = Color.black;
+		outline.effectDistance = new Vector2(2, 2);
+		*/
 	}
 
 
@@ -235,6 +316,10 @@ internal class HUDManager : MonoBehaviour {
 			if (marker) Destroy(marker.gameObject);
 		}
 		markers.Clear();
+		if (pathHint) {
+			Destroy(pathHint.gameObject);
+			pathHint = null;
+		}
 	}
 
 	private void LogicDump() {
@@ -303,6 +388,28 @@ internal class HUDManager : MonoBehaviour {
 
 
 		LogManager.Write(sb.ToString(), "DebugLogicDump.txt");
+	}
+
+	/// <summary>
+	/// Displays a text message to the player on-screen.
+	/// </summary>
+	public void SetVisibleMessage(string message) {
+		playerMessages.text = message;
+
+		playerMessages.transform.position = HeroController.instance.transform.position;
+	}
+
+	public void SetPathHintIcon(int state, float x, float y) {
+		if (pathHint) Destroy(pathHint.gameObject);
+		if (state <= 0) return;
+
+		var go = GameObject.CreatePrimitive(PrimitiveType.Quad);
+		go.name = "Marker path hint";
+		go.layer = Layer;
+		pathHint = go.AddComponent<CheckMarkerWorld>();
+		pathHint.element = new RoomElement {x = x, y = y};
+		pathHint.state = CheckState.PathHint;
+		pathHint.UpdateVisuals();
 	}
 }
 

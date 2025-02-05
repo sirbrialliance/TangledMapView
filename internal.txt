@@ -8,8 +8,6 @@
 Next
 -------------------------------------------------------------------------
 
-- correct door/transition logic state
-
 - Path finding
 	- uses benches
 	- visible in-game
@@ -17,6 +15,10 @@ Next
 	- List transitions/actions to take on page
 
 - "fps saver" could update while loading scenes...
+
+- sometimes we load a save but the page doens't get it
+
+- slow WS connect sometimes on startup
 
 - try some more to make rooms start aligned with door sides
 

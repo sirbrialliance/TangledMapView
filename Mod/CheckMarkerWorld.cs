@@ -34,6 +34,11 @@ public class CheckMarkerWorld : CheckMarker {
 		pos.y = Mathf.Clamp(pos.y, rectMin.y, rectMax.y);
 
 		transform.localPosition = pos + offset;
+
+		if (state == CheckState.PathHint) {
+			//spin a bit
+			transform.localRotation = Quaternion.AngleAxis(Time.time * -50, Vector3.forward);
+		}
 	}
 }
 }

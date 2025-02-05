@@ -357,6 +357,10 @@ class App {
 		} catch {
 			route = []
 		}
+
+		route.reverse()//pathfinder gives it to us backwards
+		// console.log(route)
+
 		if (route.length === 0) {
 			//no route found
 			//still highlight the room, though
@@ -370,12 +374,30 @@ class App {
 			} else {
 				statusEl.textContent = ""
 			}
+			this.setPlayerMessage("")
+			this.clearPathHint()
 		} else {
-			statusEl.textContent = `Route to target in ${route.length} step(s).`
-		}
+			let steps = `Route to target in ${route.length} step(s).\n`
+			for (let room of route) {
+				steps += `${room.id}\n`
+			}
+			statusEl.textContent = steps
 
-		route.reverse()//pathfinder gives it to us backwards
-		//console.log(route)
+			//Find door, set marker
+			if (route.length >= 2) {
+				let thisRoom = this.data.rooms[route[0].id]
+				let nextRoom = this.data.rooms[route[1].id]
+				for (let doorId in thisRoom.doors) {
+					let transition = this.data.transitions[doorId]
+					if (transition && transition.dstRoom.id === nextRoom.id) {
+						let door = thisRoom.doors[doorId]
+						this.setPathHint(door.x || 0, -door.y || 0)
+					}
+				}
+
+			}
+
+		}
 
 		this.dataRender.highlightPath(route.map(x => {
 			//chop off ".1" or whatnot for split rooms so we just have the base room id
@@ -547,6 +569,35 @@ class App {
 				console.warn("Unknown message: ", msg)
 				break
 		}
+	}
+
+	setPlayerMessage(text) {
+		if (!this.ws) return
+		this.ws.send(JSON.stringify({
+			type: "setMessage",
+			message: text,
+		}))
+	}
+
+	setPathHint(x, y) {
+		if (!this.ws) {
+			console.log("Would set path hint to", x, y)
+			return
+		}
+		this.ws.send(JSON.stringify({
+			type: "setPathHint",
+			state: 1,
+			x, y,
+		}))
+	}
+
+	clearPathHint() {
+		if (!this.ws) return
+		this.ws.send(JSON.stringify({
+			type: "setPathHint",
+			state: 0,
+			x: 0, y: 0,
+		}))
 	}
 
 	debugReveal(type) {

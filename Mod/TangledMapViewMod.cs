@@ -39,7 +39,7 @@ public class TangledMapViewMod : Mod, IMenuMod,
 	internal bool saveLoaded, startingSave;
 	public string CurrentRoom { get; private set; }
 	internal MapServer server;
-	private HUDManager hud;
+	internal HUDManager hud;
 	public MapTrackerData mapTracker;
 
 
@@ -86,6 +86,12 @@ public class TangledMapViewMod : Mod, IMenuMod,
 		hud.StartCoroutine(StartWebServer());
 	}
 
+	/// <summary>
+	/// Queues the given action to be called on the main Unity thread.
+	/// </summary>
+	public void OnMainThread(Action task) {
+		hud.OnMainThread(task);
+	}
 
 	private IEnumerator StartWebServer() {
 		Log("Started start coroutine");
@@ -241,6 +247,8 @@ public class TangledMapViewMod : Mod, IMenuMod,
 	private void OnSceneTransition(Transition t) {
 		if (string.IsNullOrEmpty(t.GateName)) return;
 		SendRevealTransition($"{t.SceneName}[{t.GateName}]");
+
+		hud.SetVisibleMessage(null);
 	}
 
 }

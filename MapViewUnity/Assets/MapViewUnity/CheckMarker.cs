@@ -34,12 +34,18 @@ public class CheckMarker : MonoBehaviour {
 			case CheckState.Unchanged:
 			case CheckState.OneWay:
 				return new Color(.5f, .5f, .5f, .4f);
+			case CheckState.PathHint:
+				return new Color(1, .7f, 0, .8f);
 			default:
 				return Color.red;
 		}
 	}
 
 	public Texture2D StateTexture(CheckState state) {
+		if (state == CheckState.PathHint) {
+			return LoadTexture("PathHint");
+		}
+
 		string graphic;
 		switch (state) {
 			case CheckState.UnchangedUnreachable:
