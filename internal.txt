@@ -8,11 +8,13 @@
 Next
 -------------------------------------------------------------------------
 
-- Update door icons (currently circles)
 - correct door/transition logic state
 
-- pathing uses benches
-- pathing visible in-game
+- Path finding
+	- uses benches
+	- visible in-game
+	- Use actual logic for each room-to-room connection
+	- List transitions/actions to take on page
 
 - "fps saver" could update while loading scenes...
 
@@ -24,9 +26,6 @@ Next
 - commit some TestSaves
 
 
-- Path finding
-	- Use actual logic for each room-to-room connection
-	- List transitions/actions to take on page
 
 - Search should include data for previewed locations
 

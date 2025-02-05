@@ -55,7 +55,18 @@ public class MapTrackerData {
 	/// the current items.
 	/// </summary>
 	private void UpdateTransitions() {
-		//todo
+		var transitionStates = new Dictionary<string, int>();
+		var td = MapTrackerData.TD;
+
+		foreach (var doorId in td.uncheckedReachableTransitions) {
+			transitionStates[doorId] = (int)LogicState.IN_LOGIC;
+		}
+
+		foreach (var kvp in td.visitedTransitions) {
+			transitionStates[kvp.Key] = (int)LogicState.OBTAINED;
+		}
+
+		mod.server.Send("logicUpdate", "transitions", transitionStates);
 
 	}
 

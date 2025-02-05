@@ -157,31 +157,6 @@ class DataRender {
 			.selectAll("use.roomLeadOut")
 			.data(edgeDoors)
 			.join("use")
-			.attr("href", d => {
-				// let testList = [
-				// 	"#icon-transition-oneWay",
-				// 	"#icon-transition-unchanged",
-				// 	"#icon-transition-obtained",
-				// 	"#icon-transition-reachable",
-				// 	"#icon-transition-unreachable",
-				// ]
-				// window.__rotateThing = window.__rotateThing + 1 || 0
-				// return testList[window.__rotateThing % 5]
-
-				let transition = this.data.transitions[d.door.doorId]
-				if (!transition) return "#icon-transition-oneWay"
-
-				let state = this.data.getTransitionLogicState(d.door.doorId)
-
-				switch (state) {
-					case LogicState.NOT_RANDOMIZED: return "#icon-transition-unchanged"
-					case LogicState.OBTAINED: return "#icon-transition-obtained"
-					case LogicState.IN_LOGIC: return "#icon-transition-reachable"
-					case LogicState.OUT_OF_LOGIC: return "#icon-transition-unreachable"
-				}
-				return "#icon-entrance-unchanged"
-				//else if (transition.srcSplit !== 0) return "#icon-entrance-split"
-			})
 			.classed("roomLeadOut", true)
 			.attr("x", d => d.x1)
 			.attr("y", d => d.y1)
@@ -341,19 +316,11 @@ class DataRender {
 
 		let visitedDoors = this.data.visitedDoors
 		node.each(function(room) {
-			//update door colors
+			//update doors
 			for (let doorId in room.doors) {
 				let door = room.doors[doorId]
 				if (!door.__el) continue
-
-				if (!this_.data.transitions[doorId]) {
-					//one-way door
-					door.__el.classList.add("noEntry")
-				} else if (visitedDoors[doorId]) {
-					door.__el.classList.add("visitedDoor")
-				} else {
-					door.__el.classList.remove("visitedDoor")
-				}
+				door.__el.setAttribute("href", this_._getDoorIcon(door))
 			}
 
 			//update collected items
@@ -663,6 +630,30 @@ class DataRender {
 		*/
 	}
 
+	_getDoorIcon(door) {
+		// let testList = [
+		// 	"#icon-transition-oneWay",
+		// 	"#icon-transition-unchanged",
+		// 	"#icon-transition-obtained",
+		// 	"#icon-transition-reachable",
+		// 	"#icon-transition-unreachable",
+		// ]
+		// window.__rotateThing = window.__rotateThing + 1 || 0
+		// return testList[window.__rotateThing % 5]
+
+		let transition = this.data.transitions[door.doorId]
+		if (!transition) return "#icon-transition-oneWay"
+
+		let state = this.data.getTransitionLogicState(door.doorId)
+
+		switch (state) {
+			case LogicState.NOT_RANDOMIZED: return "#icon-transition-unchanged"
+			case LogicState.OBTAINED: return "#icon-transition-obtained"
+			case LogicState.IN_LOGIC: return "#icon-transition-reachable"
+			case LogicState.OUT_OF_LOGIC: return "#icon-transition-unreachable"
+		}
+		return "#icon-entrance-unchanged"
+	}
 }
 
 

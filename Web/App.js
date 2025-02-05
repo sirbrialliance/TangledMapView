@@ -536,7 +536,11 @@ class App {
 				if (this.prefs.visibleItems !== "none") this._updateView()
 				break
 			case "logicUpdate":
-				this.data.updateLogicStates(msg.locations || {}, msg.transitions || {})
+				this.data.updateLogicStates({
+					locations: msg.locations || {},
+					transitions: msg.transitions || {},
+					fineTransitions: msg.fineTransitions || {},
+				})
 				this._updateView()
 				break
 			default:

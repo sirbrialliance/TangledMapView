@@ -85,10 +85,16 @@ class DataGen {
 	/** set of doors we've used including src and dst door, door id => true */
 	visitedDoors = {}
 	/**
-	 * Map of door id => [doors in the room you can get to from that door]
-	 * Missing items are assumed inaccessible.
+	 * Map of transition id -> LogicState if we can get to it.
+	 * Note that this doesn't necessarily mean we can get to it directly from where we are
+	 * right now. (That is, don't use for pathing.)
 	 */
-	accessibleTransitions = {}
+	transitionStates = {}
+	/**
+	 * Map of door id => [doors in the room you can get to directly from that door]
+	 * Suitable for pathfinding.
+	 */
+	fineTransitionStates = {}
 
 	/** Map of pool name => enabled for all items pools */
 	itemPools = {}
@@ -128,7 +134,7 @@ class DataGen {
 		this.itemChangerData = null
 		this.transitions = {}
 		this.visitedDoors = {}
-		this.accessibleTransitions = {}
+		this.fineTransitionStates = {}
 		this.rooms = {}
 		this.itemPools = {}
 		this.items = {}
@@ -408,15 +414,26 @@ class DataGen {
 
 	/**
 	 * Call with some or all of the changes to what is/isn't in logic.
-	 * locationChanges = {locationId: (0 out of logic, 1 in logic, 2 previewed), ...}
-	 * transitionChanges = {destDoorId: [accessibleDoorInRoom, ...]}
+	 * @var changes is a map of:
+	 * locations = {locationId: LogicState value, ...}
+	 * transitions = {doorId: LogicState value, ...}
+	 * fineTransitions = {destDoorId: [accessibleDoorInRoom, ...]}
 	 */
-	updateLogicStates(locationChanges, transitionChanges) {
-		for (let locationId in locationChanges) {
-			this.locationStates[locationId] = locationChanges[locationId]
+	updateLogicStates(changes) {
+		changes = {
+			locations: {},
+			transitions: {},
+			fineTransitions: {},
+			...changes,
 		}
-		for (let doorId in transitionChanges) {
-			this.accessibleTransitions[doorId] = transitionChanges[doorId]
+		for (let locationId in changes.locations) {
+			this.locationStates[locationId] = changes.locations[locationId]
+		}
+		for (let doorId in changes.transitions) {
+			this.transitionStates[doorId] = changes.transitions[doorId]
+		}
+		for (let doorId in changes.fineTransitions) {
+			this.fineTransitionStates[doorId] = changes.fineTransitions[doorId]
 		}
 	}
 
@@ -443,6 +460,9 @@ class DataGen {
 	 * @returns {number} which LogicState
 	 */
 	getTransitionLogicState(doorId) {
+		let logicState = this.transitionStates[doorId]
+		if (logicState !== undefined) return logicState
+
 		if (!this.transitions[doorId]?.randomized) return LogicState.NOT_RANDOMIZED
 		if (this.visitedDoors[doorId]) return LogicState.OBTAINED
 
@@ -455,7 +475,7 @@ class DataGen {
 			if (doorId === otherDoorId) continue//ignore self
 			if (!this.visitedDoors[doorId]) continue//ignore places we haven't gone
 
-			let accessDoors = this.accessibleTransitions[doorId]
+			let accessDoors = this.fineTransitionStates[doorId]
 			if (!accessDoors) continue
 
 			for (let passToDoor of accessDoors) {
