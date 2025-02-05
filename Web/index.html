@@ -120,7 +120,7 @@
 				<label title="Frame the new room in the middle of the view as you move from room-to-room.">Follow player:
 					<button id="pref-followPlayer" onclick="app.updatePref('followPlayer', !app.prefs['followPlayer'])">On</button><br>
 				</label>
-				<label title="Stop animating/updating when not focused. Turn on if you have performance issues with the game.">FPS Saver:
+				<label title="Stop animating/updating when not focused. Turn on if you have performance issues with the game. Alternatively, consider loading the page on a separate PC.">FPS Saver:
 					<button id="pref-fpsSaver" onclick="app.updatePref('fpsSaver', !app.prefs['fpsSaver'])">On</button><br>
 				</label>
 				<label title="Make room thumbnails brighter">Brighten rooms:
@@ -158,13 +158,12 @@
 				</div>
 				<div id="routeState"></div>
 				<div class="roomNav">
-					<h2>Selected Room</h2>
+					<h2>Selected Room <button onclick="app.selectRoom(null)">Clear</button></h2>
 					<span class="roomName" id="selectedRoomIdText"></span>
 					<button id="frameSelection"
 						title="Center the currently selected room in the view, if any."
 						onclick="app.zoomToRoom(app.data.selectedRoom)"
 					>View</button>
-					<button onclick="app.selectRoom(null)">Clear</button>
 					<button onclick="app.enterRoom(app.data.selectedRoom)">Enter</button>
 				</div>
 

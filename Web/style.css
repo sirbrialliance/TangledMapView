@@ -176,6 +176,9 @@ image.mapIcon {
 	ry: 5px;
 	fill-opacity: .8;
 }
+.mapNode:hover > rect.roomShape {
+	fill-opacity: .1;
+}
 .mapNode.hoverRelated > rect.roomShape, .mapNode:hover > rect.roomShape {
 	stroke: var(--highlight-color);
 	stroke-width: 3px;
@@ -201,7 +204,7 @@ image.mapIcon {
 .area-White_Palace > rect.roomShape { stroke: var(--area-White_Palace-border); fill: var(--area-White_Palace-fill); }
 .area-FogCanyon > rect.roomShape { stroke: var(--area-FogCanyon-border); fill: var(--area-FogCanyon-fill); }
 
-
+/*
 circle.door {
 	r: 3px;
 	stroke: none;
@@ -211,7 +214,7 @@ circle.door {
 circle.door.visitedDoor {
 	fill: black;
 }
-
+*/
 
 .islandBackdrop {
 	fill: none;
@@ -446,6 +449,10 @@ fieldset {
 
 .roomNav h2 {
 	margin: 3px 0px;
+}
+
+.roomNav h2 > button {
+	font-size: 60%;
 }
 
 .roomNav button {

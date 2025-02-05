@@ -141,7 +141,7 @@ class DataRender {
 		//edge stubs
 		let c = {x: room.aabb.cx * roomScale, y: room.aabb.cy * roomScale}
 		let edgeDoors = Object.values(room.doors)
-			.filter(door => roomDirections[door.side])
+			// .filter(door => roomDirections[door.side])
 			.map(door => {
 				let dir = roomDirections[door.side] || {x: 0, y: 0}
 				return {
@@ -187,15 +187,18 @@ class DataRender {
 			.attr("y", d => d.y1)
 			.attr("transform", d => {
 				let door = d.door
+
 				// let angle = roomDirections[door.side].r
 				// return `rotate(${angle} ${d.x1} ${d.y1})`
 
 				let offset = roomDirections[door.side]
+				if (!offset || typeof offset.x !== "number") return ""
 				return `translate(${offset.x * 2.5} ${offset.y * 2.5})`
 			})
 			.each(function(d) { d.door.__el = this })
 
 
+		/*
 		//door dots
 		let doorDoors = Object.values(room.doors).filter(door => !roomDirections[door.side])
 
@@ -207,7 +210,7 @@ class DataRender {
 			.attr("cx", d => d.x * roomScale - room.aabb.cx * roomScale)
 			.attr("cy", d => d.y * roomScale - room.aabb.cy * roomScale)
 			.each(function(door) { door.__el = this })
-
+		*/
 
 		//items
 		var itemInfoEl = document.getElementById("itemInfo")
@@ -644,11 +647,11 @@ class DataRender {
 				else return item.id.replace(/_/g, " ")
 		}
 
-		if (item.id.match(/^Geo_Rock-/)) return "Geo Rock"
-		if (item.id.match(/^Geo_Chest-/)) return "Geo Chest"
-		if (item.id.match(/^Soul_Totem-/)) return "Soul Refill"
-		if (item.id.match(/^Journal_Entry-/)) return "Journal Entry"
+		//More name-based lookup:
+		var parts = item.id.split('-')
+		return parts[0].replace(/_/g, " ")
 
+		/*
 		if (item.id.indexOf("-") < 0) {
 			return item.id.replace(/_/g, " ")
 		}
@@ -657,6 +660,7 @@ class DataRender {
 
 		console.warn("Don't know how to describe item", item)
 		return "<unknown: " + item.id + ">"
+		*/
 	}
 
 }
