@@ -1,0 +1,1179 @@
+# This file's a bunch of information about rooms in the game.
+# It includes some common/friendly room names, information about split rooms
+# (rooms with one or more transition that can never be reached from any other),
+# stag stations, special transport (trams, elevators, etc.).
+#
+# If you think a different name is more suitable/recognizable by the
+# community please let me know!
+#
+# It's hand-edited unlike most of the data files.
+#
+# And YAML...cuz...I'm already reading it for the scenes and I don't have to
+# put in as many quotation marks as I do with JSON.
+#
+# A lot of the random rooms that have manual transitions defined are rooms that don't start linked, so the
+# data grabber doesn't pick up on where they connect once the door is open.
+---
+
+areas: # By level name prefix
+  Abyss: Ancient Basin
+  Cliffs: Howling Cliffs
+  Crossroads: Forgotten Crossroads
+  Deepnest: Deepnest
+  Deepnest_East: Kingdom's Edge
+  # Dream: Dream
+  FogCanyon: Fog Canyon # fake prefix, all the Fog Canyon rooms start with "Fungus3_" so we reassign the area
+  Fungus1: Greenpath
+  Fungus2: Fungal Wastes
+  Fungus3: Queen's Gardens
+  # GG: Godhome # GG = God's Glory, BTW
+  # Grimm: mapped to Dirtmouth (Town)
+  Hive: The Hive
+  Mines: Crystal Peak
+  RestingGrounds: Resting Grounds
+  Room: Room # assorted
+  Ruins1: City of Tears
+  Ruins2: City of Tears
+  Town: Dirtmouth
+  Waterways: Royal Waterways
+  White_Palace: White Palace
+
+rooms:
+  # Normally we don't want Cinematic_* scenes, but we use this one as a hub for routing.
+  Cinematic_Stag_travel:
+    name: Stag Travel
+    area: Room
+    randomizerArea: StagTravel
+
+  Abyss_01:
+    name: Broken Elevator Shaft
+    area: Ruins2
+    #would not be considered a split room with spicy skips, but being conservative:
+    splitRoom:
+      - - left1
+        - left3
+        - right1
+      - - left2
+        - right2
+  Abyss_02:
+  Abyss_03_b:
+    name: Lower Tram (West)
+    area: Deepnest
+    transitions:
+      tram:
+        x: 32.4
+        y: 10.4
+        to: Abyss_03[tram_west]
+        side: right
+  Abyss_03:
+    name: Lower Tram (Center)
+    transitions:
+      tram_west:
+        x: 74.5
+        y: 10.4
+        to: Abyss_03_b[tram]
+        side: left
+      tram_east:
+        x: 92.6
+        y: 10.4
+        to: Abyss_03_c[tram]
+        side: right
+  Abyss_03_c:
+    name: Lower Tram (East)
+    area: Deepnest_East
+    transitions:
+      tram:
+        x: 44.4
+        y: 10.4
+        to: Abyss_03[tram_east]
+        side: left
+  Abyss_04:
+    name: Ancient Basin
+  Abyss_05:
+    name: Old White Palace Location
+    transitions:
+      dream:
+        x: 129
+        y: 17.4
+        to: White_Palace_03_hub[magic_circle]
+        side: top
+  Abyss_06_Core:
+    name: Abyss Core
+  Abyss_08:
+    name: Lifeblood Core
+    transitions:
+      magic_circle:
+        x: 63
+        y: 3
+        to: Abyss_06_Core[door_dreamReturn] # todo, is that the right location?
+  Abyss_09:
+    name: Abyss Lake
+    splitRoom:
+      - - right1
+        - right2
+        - left1
+      - - right3
+  Abyss_10:
+    name: Shade Cloak
+  Abyss_12:
+    name: Abyss Shriek
+  Abyss_15:
+    name: Void Heart
+  Abyss_16:
+  Abyss_17:
+    name: Lesser Mawlek Miniboss for Ore
+  Abyss_18:
+    name: Superdash Over Spikes
+    crop:
+      top: 27
+  Abyss_19:
+    name: Broken Vessel
+    boss: Broken Vessel, Lost Kin
+  Abyss_20:
+    name: Mawlurks
+  Abyss_21:
+    name: Monarch Wings
+    crop:
+      left: 35
+      bottom: 208
+  Abyss_22:
+    name: Stag
+    stag: HiddenStation
+  Abyss_Lighthouse_room:
+    name: Inside Lighthouse
+
+  Cliffs_01:
+    name: Cliffs West
+  Cliffs_02:
+    name: Cliffs East & Gorb
+    boss: Gorb
+  Cliffs_03:
+    name: Stag Nest
+    stag: StagNest
+  Cliffs_04:
+    name: Joni's Dark and Spiky Path
+  Cliffs_05:
+    name: Joni's Repose
+  Cliffs_06:
+    name: Grimm Summon
+
+  Crossroads_01:
+    name: Crossroads Entry
+    # we have two "top" transitions, but they both go to the same place, so nix one
+    transitions:
+      top1:
+        to: Town[bot1]
+        x: 52.5
+        y: 42.5
+      top2:
+        to: null # to nix from list
+  Crossroads_02:
+    name: Outside Black Egg
+    transitions:
+      door1:
+        to: Room_temple[left1]
+        x: 46.47
+        y: 3.77
+  Crossroads_03:
+    name: Outside Stag
+  Crossroads_04:
+    name: Salubra & Gruz Mother
+    boss: GruzMother
+    transitions:
+      door_charmshop:
+        to: Room_Charm_Shop[left1]
+        x: 144.05999
+        y: 10.74
+      door_Mender_House:
+        to: Room_Mender_House[left1]
+        x: 57.099998322
+        y: 2.6674399300000005
+  Crossroads_05:
+  Crossroads_06:
+    name: Outside Ancestral Mound
+    transitions:
+      door1: # door doesn't start linked/open
+        to: Crossroads_ShamanTemple[left1]
+        x: 28.41
+        y: 29.66
+  Crossroads_07:
+    name: Platforms
+  Crossroads_08:
+    name: Asipid Miniboss
+  Crossroads_09:
+    name: Brooding Mawlek
+    boss: Brooding Mawlek
+  Crossroads_10:
+    name: False Knight
+    boss: False Knight, Failed Champion
+  Crossroads_11_alt:
+    name: Baulder Exit Gate
+  Crossroads_12:
+  Crossroads_13:
+  Crossroads_14:
+  Crossroads_15:
+  Crossroads_16:
+  Crossroads_18:
+  Crossroads_19:
+  Crossroads_21:
+    transitions:
+      top2: # random weird thing goes to "Crossroads_22[bot2]" which doesn't exist
+        to: null
+  Crossroads_22:
+    name: Glowing Womb
+  Crossroads_25:
+  Crossroads_27:
+    name: Outside Tram
+  Crossroads_30:
+    name: Hot Springs
+  Crossroads_31:
+    name: Spike Pogo Grub
+  Crossroads_33:
+    name: Cornifer
+  Crossroads_35:
+  Crossroads_36:
+  Crossroads_37:
+  Crossroads_38:
+    name: Grubfather
+  Crossroads_39:
+  Crossroads_40:
+  Crossroads_42:
+  Crossroads_43:
+  Crossroads_45:
+    name: Myla
+  Crossroads_46:
+    name: Upper Tram (West)
+    transitions:
+      tram:
+        x: 18.5
+        y: 10.4
+        to: Crossroads_46b[tram]
+        side: right
+  Crossroads_46b:
+    name: Upper Tram (East)
+    area: RestingGrounds
+    transitions:
+      tram:
+        x: 33
+        y: 10.4
+        to: Crossroads_46[tram]
+        side: left
+  Crossroads_47:
+    name: Stag
+    stag: Crossroads
+  Crossroads_48:
+  Crossroads_49:
+    name: West Elevator (Upper)
+    transitions:
+      elevator:
+        x: 15
+        y: 159
+        to: Crossroads_49b[elevator]
+        side: bot
+    crop:
+      bottom: 148
+  Crossroads_49b:
+    name: West Elevator (Lower)
+    area: Ruins1
+    transitions:
+      elevator:
+        x: 15
+        y: 5.4
+        to: Crossroads_49[elevator]
+        side: top
+    crop:
+      top: 50
+  Crossroads_50:
+    name: Blue Lake
+    area: RestingGrounds
+  Crossroads_52:
+  Crossroads_ShamanTemple:
+    name: Ancestral Mound
+
+  Deepnest_01:
+    name: Outside Moss Prophet
+    area: Fungus2
+  Deepnest_01b:
+  Deepnest_02:
+  Deepnest_03:
+  Deepnest_09:
+    name: Stag
+    stag: Deepnest
+  Deepnest_10:
+    name: Distant Village
+    transitions:
+      door1:
+        to: Deepnest_Spider_Town[left1]
+        x: 32.87
+        y: 117.51
+  Deepnest_14:
+    name: Failed Tramway (East)
+  Deepnest_16:
+  Deepnest_17:
+  Deepnest_26:
+    name: Failed Tramway (Center)
+    crop:
+      left: 113
+  Deepnest_26b:
+    name: Failed Tramway (West)
+  Deepnest_30:
+    name: Hot Springs
+  Deepnest_31:
+    name: Path to Nosk
+  Deepnest_32:
+    name: Nosk
+    boss: Nosk
+  Deepnest_33:
+    name: Zote is Tied Up
+  Deepnest_34:
+  Deepnest_35:
+    name: Outside Galien
+  Deepnest_36:
+    name: Fake Grubs
+  Deepnest_37:
+  Deepnest_38:
+    name: Garpede Pogo Party
+  Deepnest_39:
+    name: Outside Weaver's Den
+  Deepnest_40:
+    name: Galien
+    boss: Galien
+  Deepnest_41:
+    name: Midwife
+  Deepnest_42:
+    name: Outside Mask Maker
+  Deepnest_43:
+    area: Fungus3
+  Deepnest_44:
+    name: Sharp Shadow
+  Deepnest_45_v02:
+    name: Weaver's Den
+  Deepnest_Spider_Town:
+    name: Herrah
+
+  Deepnest_East_01:
+  Deepnest_East_02:
+  Deepnest_East_03:
+    name: Lower Cliff Face
+  Deepnest_East_04:
+    name: Bardoon
+  Deepnest_East_06:
+    name: Path to Oro
+  Deepnest_East_07:
+    name: Upper Cliff Face
+    splitRoom:
+      - - bot2
+        - left1
+        - left2
+        - right1
+      - - bot1
+  Deepnest_East_08:
+  Deepnest_East_09:
+    name: Outside Colosseum
+    crop:
+      right: 180
+  Deepnest_East_10:
+    name: Markoth
+    boss: Markoth
+  Deepnest_East_11:
+    crop:
+      bottom: 32
+  Deepnest_East_12:
+    name: Outside Hornet 2
+  Deepnest_East_13:
+    name: Camp
+  Deepnest_East_14:
+    crop:
+      left: 45
+  Deepnest_East_14b:
+    name: Quick Slash
+  Deepnest_East_15:
+    name: Lifeblood
+  Deepnest_East_16:
+  Deepnest_East_17:
+    name: Very Deep Dive
+  Deepnest_East_18:
+  Deepnest_East_Hornet:
+    name: Hornet Fight 2
+    boss: Hornet Sentinel
+
+  Fungus1_01:
+  Fungus1_01b:
+    name: Bench
+  Fungus1_02:
+    name: Fireball Skip to Follow Hornet
+  Fungus1_03:
+  Fungus1_04:
+    name: Hornet Fight 1
+    boss: Hornet Protector
+  Fungus1_05:
+  Fungus1_06:
+    name: Cornifer
+  Fungus1_07:
+  Fungus1_08:
+    name: The Hunter
+  Fungus1_09:
+    name: Route to Sheo
+  Fungus1_10:
+    name: Straightaway (Grimmchild)
+  Fungus1_11:
+    name: Outside No Eyes
+  Fungus1_12:
+  Fungus1_13:
+    name: Durandoo Pogo Party
+  Fungus1_14:
+    name: Thorns of Agony
+  Fungus1_15:
+    name: Outside Sheo
+  Fungus1_16_alt:
+    name: Stag
+    stag: Greenpath
+  Fungus1_17:
+  Fungus1_19:
+  Fungus1_20_v02:
+    name: Vengefly King
+    boss: Vengefly King
+  Fungus1_21:
+    name: Outside Hornet 1
+  Fungus1_22:
+    name: Outside Stag
+  Fungus1_25:
+  Fungus1_26:
+    name: Lake of Unn
+  Fungus1_28:
+    name: Baulder's Shell
+    area: Cliffs
+  Fungus1_29:
+    name: Moss Charger
+    boss: Moss Charger
+  Fungus1_30:
+  Fungus1_31:
+    name: Toll Bench
+  Fungus1_32:
+    name: Moss Knight Miniboss
+  Fungus1_34:
+    name: Path to No Eyes
+  Fungus1_35:
+    name: No Eyes
+    boss: No Eyes
+  Fungus1_36:
+  Fungus1_37:
+    name: Dead End Bench
+  Fungus1_Slug:
+    name: Unn
+
+
+
+  Fungus2_01:
+    name: Queen's Station
+  Fungus2_02:
+    name: Queen's Station Stag
+    stag: FungalWastes
+  Fungus2_03:
+  Fungus2_04:
+  Fungus2_05:
+    name: Shrumal Ogre Miniboss
+  Fungus2_06:
+    name: Acid Climb
+  Fungus2_07:
+  Fungus2_08:
+  Fungus2_09:
+    name: Meet Cloth
+  Fungus2_10:
+    name: Outside City
+  Fungus2_11:
+    name: Explosion Pogo
+  Fungus2_12:
+  Fungus2_13:
+    name: Outside Mantis Village
+  Fungus2_14:
+    name: Mantis Village (Upper)
+    transitions:
+      # The bottom transition has three transitions, but they are all the same except where you land/come up,
+      # so nix 1 and 2. Randomizer only uses bot3/top3
+      bot1:
+        to: null
+      bot2:
+        to: null
+      bot3:
+        to: Fungus2_15[top3]
+        x: 52.0
+        y: -0.5
+  Fungus2_15:
+    name: Mantis Lords
+    boss: Mantis Lords
+    transitions:
+      # The other side of the Fungus2_14 issue
+      top1:
+        to: null
+      top2:
+        to: null
+      top3:
+        to: Fungus2_14[bot3]
+        x: 33.5
+        y: 120.5
+  Fungus2_17:
+  Fungus2_18:
+    name: Cornifer
+  Fungus2_19:
+  Fungus2_20:
+    name: Room of Three Things
+  Fungus2_21:
+    name: City Entrance (Platforming)
+  Fungus2_23:
+    name: Bretta Rescue
+  Fungus2_25:
+    name: Mantis Deepnest Entrance
+    area: Deepnest
+  Fungus2_26:
+    name: Leg Eater
+  Fungus2_28:
+  Fungus2_29:
+    name: Upper Fungal Core
+  Fungus2_30:
+    name: Lower Fungal Core
+  Fungus2_31:
+    name: Mantis Village (Loot)
+  Fungus2_32:
+    name: Elder Hu
+    boss: Elder Hu
+  Fungus2_33:
+  Fungus2_34:
+    name: Willoh
+
+  Fungus1_24:
+    name: Cornifer
+    area: Fungus3
+  Fungus1_23:
+    area: Fungus3
+  Fungus3_03:
+    name: Acid Entrance
+    area: FogCanyon
+  Fungus3_04:
+  Fungus3_05:
+    name: Mantis Petra Miniboss
+  Fungus3_08:
+  Fungus3_10:
+    name: Mantis Traitor Miniboss
+  Fungus3_11:
+  Fungus3_13:
+    name: Outside Stag Station
+  Fungus3_21:
+    name: Path to the Traitor
+  Fungus3_22:
+    name: That Really Tall Room With a Grub At the Top
+  Fungus3_23:
+    name: Traitor Lord
+    boss: Traitor Lord
+  Fungus3_39:
+    name: Moss Prophet
+  Fungus3_40:
+    name: Stag & Marmu
+    boss: Marmu
+    stag: RoyalGardens
+  Fungus3_44:
+    name: Outside Howling Wraiths
+    area: FogCanyon
+  Fungus3_48:
+    name: Outside White Lady
+    splitRoom:
+      - - right1
+        - door1
+      - - right2
+        - bot1
+    transitions:
+      door1:
+        to: Room_Queen[left1]
+        x: 38.021
+        y: 93.644
+  Fungus3_49:
+    name: Traitor's Child's Grave
+  Fungus3_50:
+    name: Toll Bench
+  Fungus3_34:
+
+  # Fog Canyon
+  Fungus3_01:
+    area: FogCanyon
+  Fungus3_02:
+    area: FogCanyon
+  Fungus3_24:
+    area: FogCanyon
+  Fungus3_25:
+    area: FogCanyon
+    name: Cornifer
+  Fungus3_25b:
+    area: FogCanyon
+  Fungus3_26:
+    name: Tall Hub
+    area: FogCanyon
+  Fungus3_27:
+    area: FogCanyon
+  Fungus3_28:
+    name: Spicy Charm Notch
+    area: FogCanyon
+  Fungus3_30:
+    name: Life Blood & Seal
+    area: FogCanyon
+  Fungus3_35:
+    name: 'Millibelle the "Banker"'
+    area: FogCanyon
+  Fungus3_47:
+    name: Outside Teacher's Archives
+    area: FogCanyon
+  Fungus3_archive:
+    name: Teacher's Archives
+    area: FogCanyon
+  Fungus3_archive_02:
+    name: Uumuu & Monomon
+    boss: Uumuu
+    area: FogCanyon
+
+
+  GG_Atrium:
+    name: Godhome
+  # GG_Engine:
+  #   name:
+  # GG_Engine_Prime:
+  #   name:
+  # GG_Engine_Root:
+  #   name:
+  GG_Lurker:
+    name: Pale Lurker
+    boss: Pale Lurker
+    area: Deepnest_East
+    crop:
+      bottom: 37
+  # GG_Mage_Knight:
+  #   name:
+  # GG_Mage_Knight_V:
+  #   name:
+  GG_Pipeway:
+    name: Flukemungas
+    area: Waterways
+  GG_Waterways:
+    name: Junk Pit
+    area: Waterways
+  # GG_Workshop:
+  #   name:
+  # GG_Wyrm:
+  #   name:
+
+  Grimm_Divine:
+    name: Divine
+    area: Town
+    randomizerArea: Dirtmouth
+  Grimm_Main_Tent:
+    name: Grimm
+    boss: Grimm, Nightmare King Grimm
+    area: Town
+    randomizerArea: Dirtmouth
+
+  Hive_01:
+    splitRoom:
+      - - left1
+        - right2
+      - - right1
+  Hive_02:
+  Hive_03:
+    splitRoom:
+      - - bot1
+        - right1
+      - - top1
+    crop:
+      bottom: 102
+  Hive_03_c:
+    crop:
+      bottom: 56
+  Hive_04:
+    crop:
+      bottom: 75
+      left: 95
+  Hive_05:
+    name: Hive Knight
+    boss: Hive Knight
+    crop:
+      top: 50
+
+  Mines_01:
+    name: Dive Entrance
+  Mines_02:
+    name: Entrance Common
+  Mines_03:
+  Mines_04:
+  Mines_05:
+  Mines_06:
+    name: Path to Deep Focus
+  Mines_07:
+    name: Dark Path East
+  Mines_10:
+  Mines_11:
+    name: Shopkeeper's Key
+  Mines_13:
+    name: Northwest Bench
+  Mines_16:
+    name: Fake Grub
+  Mines_17:
+  Mines_18:
+    name: Crystal Guradian
+    boss: Crystal Guradian
+  Mines_19:
+    name: Crushers & Grub
+  Mines_20:
+    crop:
+      bottom: 50
+  Mines_23:
+  Mines_24:
+    name: Grub Betwixt Spikes
+  Mines_25:
+    name: Peak Climb
+  Mines_28:
+    name: Outside Crystallized Mound
+  Mines_29:
+    name: Southeast Bench
+  Mines_30:
+    name: Cornifer
+  Mines_31:
+    name: Superdash
+  Mines_32:
+    name: Enraged Guardian
+    boss: Enraged Guardian
+  Mines_33:
+    name: Dark Toll Entrance
+    area: Crossroads
+  Mines_34:
+    name: Hallownest's Crown
+    transitions:
+      right1: # probably here for safety, but not useful for mapping
+        to: null
+  Mines_35:
+    name: Crystallized Mound
+  Mines_36:
+    name: Deep Focus
+  Mines_37:
+    name: Crushers & Cash
+
+  RestingGrounds_02:
+    name: Xero
+    boss: Xero
+  RestingGrounds_04:
+    name: Dreamer's Interruption
+  RestingGrounds_05:
+    name: Hub
+  RestingGrounds_06:
+    name: Lower West Resting Grounds
+  RestingGrounds_07:
+    name: Moth Seer
+    crop:
+      top: 21
+  RestingGrounds_08:
+    name: Spirit's Glade
+  RestingGrounds_09:
+    name: Stag Station
+    stag: RestingGrounds
+  RestingGrounds_10:
+    name: Lower Resting Grounds
+  RestingGrounds_12:
+    name: Outside Grey Mourner
+  RestingGrounds_17:
+    name: Dreamshield
+
+  Room_Bretta:
+    name: Bertta's House
+    area: Town
+    transitions:
+      door1:
+        to: Room_Bretta_Basement[top1]
+        x: 16.56
+        y: 5.67
+  Room_Bretta_Basement:
+    name: Bertta's Basement
+    area: Town
+    boss: Grey Prince Zote
+  Room_Charm_Shop:
+    name: Salubra's Shop
+    area: Crossroads
+
+  Room_Colosseum_01:
+    name: Colosseum Entrance
+    area: Deepnest_East
+    # dynamic right transition, so we just add manual "fake" transitions
+    transitions:
+      trial1:
+        x: 60.5
+        y: 3
+        to: Room_Colosseum_Bronze[left1]
+        side: right
+      trial2:
+        x: 60.5
+        y: 13
+        to: Room_Colosseum_Silver[left1]
+        side: right
+      trial3:
+        x: 60.5
+        y: 23
+        to: Room_Colosseum_Gold[left1]
+        side: right
+  Room_Colosseum_02:
+    name: Colosseum Bench
+    area: Deepnest_East
+    crop:
+      bottom: 21
+  Room_Colosseum_Bronze:
+    name: Trial of the Warrior
+    area: Deepnest_East
+    randomizerArea: Colosseum
+    transitions:
+      left1:
+        x: 1.5
+        y: 7
+        to: Room_Colosseum_01[trial1]
+  Room_Colosseum_Silver:
+    name: Trial of the Conqueror
+    area: Deepnest_East
+    randomizerArea: Colosseum
+    transitions:
+      left1:
+        x: 1.5
+        y: 7
+        to: Room_Colosseum_01[trial2]
+  Room_Colosseum_Gold:
+    name: Trial of the Fool
+    area: Deepnest_East
+    randomizerArea: Colosseum
+    transitions:
+      left1:
+        x: 1.5
+        y: 7
+        to: Room_Colosseum_01[trial3]
+  Room_Colosseum_Spectate:
+    name: Colosseum Spectate
+    area: Deepnest_East
+    crop:
+      left: 70
+
+  Room_Final_Boss_Core:
+    name: Hollow Knight
+    area: Crossroads
+    randomizerArea: Black_Egg_Temple
+  Room_Fungus_Shaman:
+    name: Howling Wraiths
+    area: Fungus3
+  Room_GG_Shortcut:
+    name: Junk Pit Shortcut
+    area: Waterways
+  # Room_Jinn:
+  #   name: Jinn
+  #   randomizerArea: Dirtmouth
+  Room_Mansion:
+    name: Grey Mourner
+    area: RestingGrounds
+  Room_Mask_Maker:
+    name: Mask Maker
+    area: Deepnest
+  Room_Mender_House:
+    name: Menderbug's House
+    area: Crossroads
+    randomizerArea: Forgotten_Crossroads
+  Room_Ouiji:
+    name: Jiji
+    area: Town
+    randomizerArea: Dirtmouth
+  Room_Queen:
+    name: White Lady
+    area: Fungus3
+  Room_Slug_Shrine:
+    name: Lake of Unn Bench
+    area: Fungus1
+  Room_Sly_Storeroom:
+    name: Sly's Basement
+    area: Town
+  Room_Town_Stag_Station:
+    name: Dirtmouth Stag
+    area: Town
+    stag: Town
+  Room_Wyrm:
+    name: Cast off Shell
+    area: Deepnest_East
+  Room_Final_Boss_Atrium:
+    name: Outside Hollow Knight
+    area: Crossroads
+  Room_mapper:
+    name: Cornifer's Shop
+    area: Town
+  Room_nailmaster:
+    name: Nailmaster Mato
+    area: Cliffs
+  Room_nailmaster_02:
+    name: Nailmaster Sheo
+    area: Fungus1
+  Room_nailmaster_03:
+    name: Nailmaster Oro
+    area: Deepnest_East
+  Room_nailsmith:
+    name: Nailsmith
+    area: Ruins1
+    randomizerArea: City_of_Tears
+  Room_ruinhouse:
+    name: Infected Sly
+    area: Crossroads
+    randomizerArea: Forgotten_Crossroads
+  Room_shop:
+    name: Sly's Shop
+    area: Town
+    transitions:
+      door1:
+        to: Room_Sly_Storeroom[top1]
+        x: 19.07
+        y: 5.68718
+    crop:
+      top: 14
+  Room_spider_small:
+    name: Brumm's Betrayal
+    area: Deepnest
+  Room_temple:
+    name: Black Egg Temple
+    area: Crossroads
+    transitions:
+      door1:
+        x: 35
+        y: 4.57
+        to: Room_Final_Boss_Atrium[left1]
+  Ruins1_01:
+  Ruins1_02:
+    name: Early City Bench
+  Ruins1_03:
+  Ruins1_04:
+    name: Outside Nailsmith
+  Ruins1_05:
+    splitRoom:
+      - - bot3
+        - right1
+        - right2
+        - top1
+      - - bot1
+        - bot2
+    crop:
+      bottom: 95
+  Ruins1_05b:
+    name: Relic Seeker Lemm
+  Ruins1_05c:
+    crop:
+      top: 118
+      bottom: 25
+  Ruins1_06:
+    name: Zote Likes to Hang Out Here
+  Ruins1_09:
+    name: Soul Twister Miniboss
+  Ruins1_17:
+    name: Platforms
+  Ruins1_18:
+    name: Tower Shortcut
+    splitRoom:
+      - - right1
+        - left1
+      - - right2 # bench side
+  Ruins1_23:
+    name: Soul Sanctum Entrance
+    boss: Soul Warrior
+  Ruins1_24:
+    name: Soul Master
+    boss: Soul Master, Soul Tyrant
+    splitRoom:
+      - - left1
+        - right1
+      - - left2
+        - right2
+  Ruins1_25:
+  Ruins1_27:
+    name: Fountain
+  Ruins1_28:
+    name: City Storerooms
+  Ruins1_29:
+    name: City Storerooms Stag
+    stag: Ruins1
+  Ruins1_30:
+  Ruins1_31:
+    name: Cornifer
+  Ruins1_31b:
+    name: Shade Soul
+  Ruins1_32:
+    name: After Soul Master
+
+  Ruins2_01:
+    crop:
+      bottom: 36
+  Ruins2_01_b:
+    name: Foot of Watcher's Tower
+  Ruins2_03:
+    name: Watcher Knights
+    boss: Watcher Knight
+    splitRoom:
+      - - bot1
+        - top1
+      - - bot2
+    crop:
+      bottom: 19
+  Ruins2_03b:
+    crop:
+      top: 55
+  Ruins2_04:
+    name: Hub Area
+  Ruins2_05:
+  Ruins2_06:
+    name: King's Station
+  Ruins2_07:
+    name: Swim Bypass
+  Ruins2_08:
+    name: King's Station Stag
+    stag: Ruins2
+  Ruins2_09:
+    name: Vessel Fragment
+  Ruins2_10:
+    name: East Elevator (Upper)
+    transitions:
+      elevator:
+        x: 15
+        y: 159
+        to: Ruins2_10b[elevator]
+        side: bot
+    crop:
+      bottom: 148
+  Ruins2_10b:
+    name: East Elevator (Lower)
+    transitions:
+      elevator:
+        x: 15
+        y: 10
+        to: Ruins2_10[elevator]
+        side: top
+  Ruins2_11:
+    name: The Collector
+    boss: The Collector
+  Ruins2_11_b:
+    name: Tower of Love
+    crop:
+      top: 71
+      left: 29
+  Ruins2_Watcher_Room:
+    name: Lurien's Tower
+  Ruins_Bathhouse:
+    name: Bathhouse
+    area: Ruins2
+  Ruins_Elevator:
+    name: Elevator to Bathhouse
+    area: Ruins2
+  Ruins_House_01:
+    name: Husk Sentry Miniboss Room
+    area: Ruins2
+  Ruins_House_02:
+    name: Gorgeous Husk
+    area: Ruins2
+  Ruins_House_03:
+    name: Eternal Emilitia
+    area: Ruins2
+
+  Town:
+    name: Dirtmouth
+    transitions:
+      door_bretta:
+        to: Room_Bretta[right1]
+        x: 165.6210056
+        y: 10.87395055
+      door_sly:
+        to: Room_shop[left1]
+        x: 120.85837204913
+        y: 10.644788846994999
+      door_station:
+        to: Room_Town_Stag_Station[left1]
+        x: 142.5016043229
+        y: 10.645210062404999
+  Tutorial_01:
+    name: King's Pass
+    area: Cliffs
+
+  Waterways_01:
+    name: Top Entrance
+  Waterways_02:
+    name: Slanted Bench
+  Waterways_03:
+    name: Tuk (Egg Seller)
+    crop:
+      left: 39
+  Waterways_04:
+  Waterways_04b:
+  Waterways_05:
+    name: Dung Defender
+    boss: Dung Defender
+  Waterways_06:
+  Waterways_07:
+  Waterways_08:
+    name: Outside Flukemarm
+  Waterways_09:
+    name: Hwurmp Miniboss, Cornifer
+  Waterways_12:
+    name: Flukemarm
+    boss: Flukemarm
+  Waterways_13:
+    name: Isma's Tear
+  Waterways_14:
+  Waterways_15:
+    name: White Defender
+    boss: White Defender
+
+  White_Palace_01:
+  White_Palace_02:
+    name: Kingsmould Miniboss 2
+  White_Palace_03_hub:
+    name: Hub
+    transitions:
+      magic_circle:
+        x: 11.1
+        y: 43.4
+        to: Abyss_05[dream]
+        side: bot
+  White_Palace_04:
+  White_Palace_05:
+    splitRoom:
+      - - left1
+        - right1
+      - - left2
+        - right2
+    crop:
+      left: 37
+  White_Palace_06:
+    name: Outside PoP
+  White_Palace_07:
+  White_Palace_08:
+    name: Workshop
+  White_Palace_09:
+    name: Throne Room
+  White_Palace_11:
+    name: Entrance
+    transitions:
+      magic_circle:
+        x: 16.5
+        y: 17.4
+        to: Abyss_05[dream]
+        side: bot
+  White_Palace_12:
+    crop:
+      bottom: 123
+  White_Palace_13:
+    crop:
+      bottom: 105
+  White_Palace_14:
+  White_Palace_15:
+  White_Palace_16:
+    crop:
+      left: 126
+  White_Palace_18:
+    name: Path of Pain Entrance
+  White_Palace_17:
+    name: Path of Pain 2
+  White_Palace_19:
+    name: Path of Pain 3
+  White_Palace_20:
+    name: Path of Pain Finish
+    crop:
+      bottom: 110
