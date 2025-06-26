@@ -1,0 +1,49 @@
+{
+  "id": "Crossroads_36",
+  "locations": [
+    {
+      "id": "Geo_Rock-Crossroads_Above_Mawlek",
+      "x": 53.34,
+      "y": 52.59,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Soul_Totem-Crossroads_Mawlek_Lower",
+      "x": 6.84,
+      "y": 32.69,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    }
+  ],
+  "transitions": [
+    {
+      "target": null,
+      "id": "Crossroads_36[right1]",
+      "x": 60.5,
+      "y": 45.0,
+      "z": 0.0,
+      "w": 1.0,
+      "h": 4.0,
+      "d": 0.0
+    },
+    {
+      "target": null,
+      "id": "Crossroads_36[right2]",
+      "x": 60.5,
+      "y": 5.0,
+      "z": 0.0,
+      "w": 1.0,
+      "h": 4.0,
+      "d": 0.0
+    }
+  ],
+  "x1": -3.99624765478424,
+  "y1": -5.046824887748556,
+  "x2": 65.046904315197,
+  "y2": 61.19563822963438
+}

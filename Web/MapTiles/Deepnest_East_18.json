@@ -1,0 +1,50 @@
+{
+  "id": "Deepnest_East_18",
+  "locations": [
+    {
+      "id": "Wanderer's_Journal-Kingdom's_Edge_Requires_Dive",
+      "x": 57.07,
+      "y": 25.2765388,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    }
+  ],
+  "transitions": [
+    {
+      "target": null,
+      "id": "Deepnest_East_18[top1]",
+      "x": 37.0,
+      "y": 41.5,
+      "z": 0.0,
+      "w": 4.0,
+      "h": 1.0,
+      "d": 0.0
+    },
+    {
+      "target": null,
+      "id": "Deepnest_East_18[bot1]",
+      "x": 65.0,
+      "y": -0.5,
+      "z": 0.0,
+      "w": 4.0,
+      "h": 1.0,
+      "d": 0.0
+    },
+    {
+      "target": null,
+      "id": "Deepnest_East_18[right2]",
+      "x": 110.5,
+      "y": 15.0,
+      "z": 0.0,
+      "w": 1.0,
+      "h": 4.0,
+      "d": 0.0
+    }
+  ],
+  "x1": -2.7972297037322047,
+  "y1": -5.045939294503691,
+  "x2": 115.04809542131589,
+  "y2": 44.995077932731746
+}

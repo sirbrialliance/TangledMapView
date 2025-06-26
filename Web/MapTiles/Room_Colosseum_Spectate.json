@@ -1,0 +1,30 @@
+{
+  "id": "Room_Colosseum_Spectate",
+  "locations": [],
+  "transitions": [
+    {
+      "target": null,
+      "id": "Room_Colosseum_Spectate[bot1]",
+      "x": 135.0,
+      "y": 2.5,
+      "z": 0.0,
+      "w": 4.0,
+      "h": 1.0,
+      "d": 0.0
+    },
+    {
+      "target": null,
+      "id": "Room_Colosseum_Spectate[right1]",
+      "x": 176.0,
+      "y": 9.0,
+      "z": 0.0,
+      "w": 1.0,
+      "h": 8.0,
+      "d": 0.0
+    }
+  ],
+  "x1": 76.7716929232308,
+  "y1": -5.045576407506703,
+  "x2": 185.04876219054765,
+  "y2": 36.59159964253798
+}

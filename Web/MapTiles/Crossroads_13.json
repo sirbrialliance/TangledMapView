@@ -1,0 +1,58 @@
+{
+  "id": "Crossroads_13",
+  "locations": [
+    {
+      "id": "Mask_Shard-Crossroads_Goam",
+      "x": 6.38,
+      "y": 24.1800385,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Geo_Rock-Crossroads_Below_Goam_Mask_Shard",
+      "x": 20.27,
+      "y": 2.62,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Geo_Rock-Crossroads_After_Goam_Mask_Shard",
+      "x": 69.6878357,
+      "y": 2.55463123,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    }
+  ],
+  "transitions": [
+    {
+      "target": null,
+      "id": "Crossroads_13[left1]",
+      "x": -0.5,
+      "y": 13.0,
+      "z": 0.0,
+      "w": 1.0,
+      "h": 4.0,
+      "d": 0.0
+    },
+    {
+      "target": null,
+      "id": "Crossroads_13[right1]",
+      "x": 80.5,
+      "y": 14.0,
+      "z": 0.0,
+      "w": 1.0,
+      "h": 4.0,
+      "d": 0.0
+    }
+  ],
+  "x1": -3.996998499249625,
+  "y1": -3.9955190440627333,
+  "x2": 85.04752376188094,
+  "y2": 49.79462285287528
+}

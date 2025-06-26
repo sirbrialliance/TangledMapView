@@ -1,0 +1,87 @@
+{
+  "id": "Crossroads_08",
+  "locations": [
+    {
+      "id": "Geo_Rock-Crossroads_Aspid_Arena",
+      "x": 9.07,
+      "y": 38.7,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Geo_Rock-Crossroads_Aspid_Arena_Dupe_1",
+      "x": 12.3835049,
+      "y": 37.819355,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Geo_Rock-Crossroads_Aspid_Arena_Dupe_2",
+      "x": 16.02,
+      "y": 32.62,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Geo_Rock-Crossroads_Aspid_Arena_Hidden",
+      "x": 38.52,
+      "y": 33.62,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    }
+  ],
+  "transitions": [
+    {
+      "target": null,
+      "id": "Crossroads_08[left1]",
+      "x": -0.5,
+      "y": 22.0,
+      "z": 0.0,
+      "w": 1.0,
+      "h": 4.0,
+      "d": 0.0
+    },
+    {
+      "target": null,
+      "id": "Crossroads_08[left2]",
+      "x": -0.5,
+      "y": 6.0,
+      "z": 0.0,
+      "w": 1.0,
+      "h": 4.0,
+      "d": 0.0
+    },
+    {
+      "target": null,
+      "id": "Crossroads_08[right1]",
+      "x": 51.5,
+      "y": 24.0,
+      "z": 0.0,
+      "w": 1.0,
+      "h": 8.0,
+      "d": 0.0
+    },
+    {
+      "target": null,
+      "id": "Crossroads_08[right2]",
+      "x": 52.5,
+      "y": 9.0,
+      "z": 0.0,
+      "w": 1.0,
+      "h": 4.0,
+      "d": 0.0
+    }
+  ],
+  "x1": -3.9958304378040306,
+  "y1": -2.544082605242256,
+  "x2": 57.04656011118833,
+  "y2": 44.99364575059571
+}

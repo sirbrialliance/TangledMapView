@@ -1,0 +1,59 @@
+{
+  "id": "RestingGrounds_06",
+  "locations": [
+    {
+      "id": "Grimmkin_Flame-Resting_Grounds",
+      "x": 31.05,
+      "y": 19.96,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Soul_Totem-Below_Xero",
+      "x": 5.221,
+      "y": 15.346,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    }
+  ],
+  "transitions": [
+    {
+      "target": null,
+      "id": "RestingGrounds_06[left1]",
+      "x": -0.5,
+      "y": 8.0,
+      "z": 0.0,
+      "w": 1.0,
+      "h": 4.0,
+      "d": 0.0
+    },
+    {
+      "target": null,
+      "id": "RestingGrounds_06[right1]",
+      "x": 110.5,
+      "y": 8.0,
+      "z": 0.0,
+      "w": 1.0,
+      "h": 4.0,
+      "d": 0.0
+    },
+    {
+      "target": null,
+      "id": "RestingGrounds_06[top1]",
+      "x": 8.0,
+      "y": 30.5,
+      "z": 0.0,
+      "w": 4.0,
+      "h": 1.0,
+      "d": 0.0
+    }
+  ],
+  "x1": -3.9976914197768374,
+  "y1": -4.594594594594595,
+  "x2": 115.04809542131589,
+  "y2": 33.993993993993996
+}

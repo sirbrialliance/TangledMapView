@@ -1,0 +1,30 @@
+{
+  "id": "Deepnest_East_Hornet",
+  "locations": [],
+  "transitions": [
+    {
+      "target": null,
+      "id": "Deepnest_East_Hornet[left1]",
+      "x": -0.5,
+      "y": 83.0,
+      "z": 0.0,
+      "w": 1.0,
+      "h": 4.0,
+      "d": 0.0
+    },
+    {
+      "target": null,
+      "id": "Deepnest_East_Hornet[left2]",
+      "x": 16.0,
+      "y": 7.5,
+      "z": 0.0,
+      "w": 1.0,
+      "h": 8.0,
+      "d": 0.0
+    }
+  ],
+  "x1": -3.9965889710062537,
+  "y1": -3.547311379741559,
+  "x2": 67.94428652643548,
+  "y2": 99.04543559816591
+}

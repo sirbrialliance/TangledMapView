@@ -1,0 +1,115 @@
+{
+  "id": "Deepnest_East_07",
+  "locations": [
+    {
+      "id": "Rancid_Egg-Upper_Kingdom's_Edge",
+      "x": 61.71,
+      "y": 140.272888,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Wanderer's_Journal-Kingdom's_Edge_Entrance",
+      "x": 14.74,
+      "y": 2.277461,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Whispering_Root-Kingdoms_Edge",
+      "x": 59.66,
+      "y": 14.4306583,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Geo_Rock-Kingdom's_Edge_Above_Root",
+      "x": 77.7,
+      "y": 29.63,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Geo_Rock-Kingdom's_Edge_Above_Tower",
+      "x": 6.76,
+      "y": 57.6394424,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Soul_Totem-Upper_Kingdom's_Edge",
+      "x": 83.22,
+      "y": 135.55,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    }
+  ],
+  "transitions": [
+    {
+      "target": null,
+      "id": "Deepnest_East_07[bot1]",
+      "x": 6.0,
+      "y": -0.5,
+      "z": 0.0,
+      "w": 4.0,
+      "h": 1.0,
+      "d": 0.0
+    },
+    {
+      "target": null,
+      "id": "Deepnest_East_07[bot2]",
+      "x": 37.0,
+      "y": -0.5,
+      "z": 0.0,
+      "w": 28.0,
+      "h": 1.0,
+      "d": 0.0
+    },
+    {
+      "target": null,
+      "id": "Deepnest_East_07[left1]",
+      "x": -0.5,
+      "y": 171.0,
+      "z": 0.0,
+      "w": 1.0,
+      "h": 4.0,
+      "d": 0.0
+    },
+    {
+      "target": null,
+      "id": "Deepnest_East_07[left2]",
+      "x": 1.5,
+      "y": 32.0,
+      "z": 0.0,
+      "w": 1.0,
+      "h": 8.0,
+      "d": 0.0
+    },
+    {
+      "target": null,
+      "id": "Deepnest_East_07[right1]",
+      "x": 90.5,
+      "y": 65.0,
+      "z": 0.0,
+      "w": 1.0,
+      "h": 4.0,
+      "d": 0.0
+    }
+  ],
+  "x1": -3.9972714870395634,
+  "y1": -5.0488211478923555,
+  "x2": 95.04774897680764,
+  "y2": 193.99857108835437
+}

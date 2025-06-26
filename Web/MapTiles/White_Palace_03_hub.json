@@ -1,0 +1,70 @@
+{
+  "id": "White_Palace_03_hub",
+  "locations": [
+    {
+      "id": "Soul_Totem-White_Palace_Hub",
+      "x": 5.3,
+      "y": 55.67,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    }
+  ],
+  "transitions": [
+    {
+      "target": null,
+      "id": "White_Palace_03_hub[left1]",
+      "x": -0.5,
+      "y": 98.0,
+      "z": 0.0,
+      "w": 1.0,
+      "h": 4.0,
+      "d": 0.0
+    },
+    {
+      "target": null,
+      "id": "White_Palace_03_hub[left2]",
+      "x": -0.5,
+      "y": 35.0,
+      "z": 0.0,
+      "w": 1.0,
+      "h": 4.0,
+      "d": 0.0
+    },
+    {
+      "target": null,
+      "id": "White_Palace_03_hub[right1]",
+      "x": 100.5,
+      "y": 64.0,
+      "z": 0.0,
+      "w": 1.0,
+      "h": 4.0,
+      "d": 0.0
+    },
+    {
+      "target": null,
+      "id": "White_Palace_03_hub[top1]",
+      "x": 54.0,
+      "y": 140.5,
+      "z": 0.0,
+      "w": 4.0,
+      "h": 1.0,
+      "d": 0.0
+    },
+    {
+      "target": null,
+      "id": "White_Palace_03_hub[bot1]",
+      "x": 10.0,
+      "y": -0.5,
+      "z": 0.0,
+      "w": 4.0,
+      "h": 1.0,
+      "d": 0.0
+    }
+  ],
+  "x1": -3.9974989578991247,
+  "y1": -5.048452641450453,
+  "x2": 105.04793664026678,
+  "y2": 143.99812441387934
+}

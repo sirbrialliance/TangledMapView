@@ -1,0 +1,50 @@
+{
+  "id": "RestingGrounds_02",
+  "locations": [],
+  "transitions": [
+    {
+      "target": null,
+      "id": "RestingGrounds_02[right1]",
+      "x": 129.5,
+      "y": 6.0,
+      "z": 0.0,
+      "w": 1.0,
+      "h": 4.0,
+      "d": 0.0
+    },
+    {
+      "target": null,
+      "id": "RestingGrounds_02[left1]",
+      "x": -0.5,
+      "y": 14.0,
+      "z": 0.0,
+      "w": 1.0,
+      "h": 4.0,
+      "d": 0.0
+    },
+    {
+      "target": null,
+      "id": "RestingGrounds_02[bot1]",
+      "x": 98.0,
+      "y": 1.5,
+      "z": 0.0,
+      "w": 4.0,
+      "h": 1.0,
+      "d": 0.0
+    },
+    {
+      "target": null,
+      "id": "RestingGrounds_02[top1]",
+      "x": 109.0,
+      "y": 26.0,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    }
+  ],
+  "x1": -3.997985901309164,
+  "y1": -2.942157953281424,
+  "x2": 134.04833836858006,
+  "y2": 28.993325917686317
+}

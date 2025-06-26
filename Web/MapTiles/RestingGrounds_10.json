@@ -1,0 +1,113 @@
+{
+  "id": "RestingGrounds_10",
+  "locations": [
+    {
+      "id": "Soul_Eater",
+      "x": 216.01,
+      "y": 18.13,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Geo_Chest-Resting_Grounds",
+      "x": 142.97,
+      "y": 8.822608,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Wanderer's_Journal-Resting_Grounds_Catacombs",
+      "x": 220.822235,
+      "y": 3.27657938,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Hallownest_Seal-Resting_Grounds_Catacombs",
+      "x": 62.42,
+      "y": 13.2708,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Grub-Resting_Grounds",
+      "x": 117.521782,
+      "y": 17.4498749,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Geo_Rock-Resting_Grounds_Catacombs_Grub",
+      "x": 96.92,
+      "y": 17.64,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Geo_Rock-Resting_Grounds_Catacombs_Left_Dupe",
+      "x": 33.63,
+      "y": 14.6194172,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Geo_Rock-Resting_Grounds_Catacombs_Left",
+      "x": 46.55,
+      "y": 14.6,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    }
+  ],
+  "transitions": [
+    {
+      "target": null,
+      "id": "RestingGrounds_10[left1]",
+      "x": -0.5,
+      "y": 12.0,
+      "z": 0.0,
+      "w": 1.0,
+      "h": 4.0,
+      "d": 0.0
+    },
+    {
+      "target": null,
+      "id": "RestingGrounds_10[top1]",
+      "x": 72.5,
+      "y": 30.5,
+      "z": 0.0,
+      "w": 4.0,
+      "h": 1.0,
+      "d": 0.0
+    },
+    {
+      "target": null,
+      "id": "RestingGrounds_10[top2]",
+      "x": 130.5,
+      "y": 30.5,
+      "z": 0.0,
+      "w": 4.0,
+      "h": 1.0,
+      "d": 0.0
+    }
+  ],
+  "x1": -0.39807961592318464,
+  "y1": -4.844844844844845,
+  "x2": 229.79795959191839,
+  "y2": 33.993993993993996
+}

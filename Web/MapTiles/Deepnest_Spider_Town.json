@@ -1,0 +1,129 @@
+{
+  "id": "Deepnest_Spider_Town",
+  "locations": [
+    {
+      "id": "Rancid_Egg-Beast's_Den",
+      "x": 112.3,
+      "y": 80.5,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Hallownest_Seal-Beast's_Den",
+      "x": 38.91,
+      "y": 5.318,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Grub-Beast's_Den",
+      "x": 99.98,
+      "y": 119.41,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Geo_Rock-Beast's_Den_Above_Trilobite",
+      "x": 28.48,
+      "y": 120.85,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Geo_Rock-Beast's_Den_Above_Trilobite_Dupe",
+      "x": 25.92,
+      "y": 120.85,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Geo_Rock-Beast's_Den_Below_Herrah",
+      "x": 95.25016,
+      "y": 143.680969,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Geo_Rock-Beast's_Den_Below_Egg",
+      "x": 107.069489,
+      "y": 69.8221741,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Geo_Rock-Beast's_Den_Below_Egg_Dupe",
+      "x": 109.01,
+      "y": 69.76,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Geo_Rock-Beast's_Den_Bottom",
+      "x": 102.025887,
+      "y": 3.9145515,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Geo_Rock-Beast's_Den_Bottom_Dupe",
+      "x": 104.803925,
+      "y": 3.79593086,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Geo_Rock-Beast's_Den_After_Herrah",
+      "x": 94.07,
+      "y": 151.88,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Soul_Totem-Beast's_Den",
+      "x": 57.6342468,
+      "y": 43.2505,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    }
+  ],
+  "transitions": [
+    {
+      "target": null,
+      "id": "Deepnest_Spider_Town[left1]",
+      "x": 5.5,
+      "y": 59.0,
+      "z": 0.0,
+      "w": 1.0,
+      "h": 4.0,
+      "d": 0.0
+    }
+  ],
+  "x1": -3.997856377277599,
+  "y1": -2.948144248486444,
+  "x2": 123.29760628795998,
+  "y2": 171.34772308502238
+}

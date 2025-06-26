@@ -1,0 +1,89 @@
+{
+  "id": "RestingGrounds_05",
+  "locations": [
+    {
+      "id": "Whispering_Root-Resting_Grounds",
+      "x": 15.78,
+      "y": 73.38,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Soul_Totem-Resting_Grounds",
+      "x": 34.48,
+      "y": 35.78,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    }
+  ],
+  "transitions": [
+    {
+      "target": null,
+      "id": "RestingGrounds_05[left1]",
+      "x": -0.5,
+      "y": 4.0,
+      "z": 0.0,
+      "w": 1.0,
+      "h": 4.0,
+      "d": 0.0
+    },
+    {
+      "target": null,
+      "id": "RestingGrounds_05[left2]",
+      "x": 2.0,
+      "y": 79.0,
+      "z": 0.0,
+      "w": 1.0,
+      "h": 4.0,
+      "d": 0.0
+    },
+    {
+      "target": null,
+      "id": "RestingGrounds_05[left3]",
+      "x": 1.5,
+      "y": 55.0,
+      "z": 0.0,
+      "w": 1.0,
+      "h": 4.0,
+      "d": 0.0
+    },
+    {
+      "target": null,
+      "id": "RestingGrounds_05[right1]",
+      "x": 33.5,
+      "y": 77.0,
+      "z": 0.0,
+      "w": 1.0,
+      "h": 8.0,
+      "d": 0.0
+    },
+    {
+      "target": null,
+      "id": "RestingGrounds_05[right2]",
+      "x": 45.5,
+      "y": 55.0,
+      "z": 0.0,
+      "w": 1.0,
+      "h": 4.0,
+      "d": 0.0
+    },
+    {
+      "target": null,
+      "id": "RestingGrounds_05[bot1]",
+      "x": 34.5,
+      "y": -0.5,
+      "z": 0.0,
+      "w": 4.0,
+      "h": 1.0,
+      "d": 0.0
+    }
+  ],
+  "x1": -3.995381062355658,
+  "y1": -3.8473249238799476,
+  "x2": 50.046189376443415,
+  "y2": 94.44541104828185
+}

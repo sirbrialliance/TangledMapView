@@ -1,0 +1,85 @@
+{
+  "id": "Mines_25",
+  "locations": [
+    {
+      "id": "Geo_Rock-Hallownest_Crown_Dive",
+      "x": 14.03,
+      "y": 52.63,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Geo_Rock-Hallownest_Crown_Dive_Dupe",
+      "x": 16.3023586,
+      "y": 51.62914,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Geo_Rock-Hallownest_Crown_Hidden",
+      "x": 22.24,
+      "y": 100.14,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Geo_Rock-Hallownest_Crown_Hidden_Dupe_1",
+      "x": 25.68,
+      "y": 95.57,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Geo_Rock-Hallownest_Crown_Hidden_Dupe_2",
+      "x": 35.54,
+      "y": 95.6,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Soul_Totem-Hallownest_Crown",
+      "x": 52.87,
+      "y": 35.7,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    }
+  ],
+  "transitions": [
+    {
+      "target": null,
+      "id": "Mines_25[left1]",
+      "x": -0.5,
+      "y": 21.0,
+      "z": 0.0,
+      "w": 1.0,
+      "h": 4.0,
+      "d": 0.0
+    },
+    {
+      "target": null,
+      "id": "Mines_25[top1]",
+      "x": 6.0,
+      "y": 130.5,
+      "z": 0.0,
+      "w": 4.0,
+      "h": 1.0,
+      "d": 0.0
+    }
+  ],
+  "x1": -3.9966648137854364,
+  "y1": 13.407802600866956,
+  "x2": 75.04724847137298,
+  "y2": 133.99799933311104
+}

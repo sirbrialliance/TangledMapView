@@ -1,0 +1,78 @@
+{
+  "id": "Fungus2_04",
+  "locations": [
+    {
+      "id": "Wanderer's_Journal-Fungal_Wastes_Thorns_Gauntlet",
+      "x": 21.95,
+      "y": 31.28,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Geo_Rock-Fungal_Below_Shrumal_Ogres",
+      "x": 29.71,
+      "y": 63.18,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Lore_Tablet-Fungal_Wastes_Below_Shrumal_Ogres",
+      "x": 31.85,
+      "y": 11.77,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    }
+  ],
+  "transitions": [
+    {
+      "target": null,
+      "id": "Fungus2_04[top1]",
+      "x": 29.0,
+      "y": 76.5,
+      "z": 0.0,
+      "w": 4.0,
+      "h": 1.0,
+      "d": 0.0
+    },
+    {
+      "target": null,
+      "id": "Fungus2_04[right1]",
+      "x": 36.5,
+      "y": 72.0,
+      "z": 0.0,
+      "w": 1.0,
+      "h": 4.0,
+      "d": 0.0
+    },
+    {
+      "target": null,
+      "id": "Fungus2_04[left1]",
+      "x": -0.5,
+      "y": 12.0,
+      "z": 0.0,
+      "w": 1.0,
+      "h": 4.0,
+      "d": 0.0
+    },
+    {
+      "target": null,
+      "id": "Fungus2_04[right2]",
+      "x": 36.5,
+      "y": 55.0,
+      "z": 0.0,
+      "w": 1.0,
+      "h": 4.0,
+      "d": 0.0
+    }
+  ],
+  "x1": -3.994638069705094,
+  "y1": -4.847316310578426,
+  "x2": 41.0455764075067,
+  "y2": 79.99687337154768
+}

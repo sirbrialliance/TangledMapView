@@ -1,0 +1,77 @@
+{
+  "id": "Crossroads_18",
+  "locations": [
+    {
+      "id": "Geo_Rock-Crossroads_Before_Fungal",
+      "x": 34.226,
+      "y": 19.288,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Geo_Rock-Crossroads_Before_Fungal_Dupe_1",
+      "x": 32.09,
+      "y": 18.62,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Geo_Rock-Crossroads_Before_Fungal_Dupe_2",
+      "x": 35.99,
+      "y": 23.3,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Soul_Totem-Crossroads_Goam_Journal",
+      "x": 22.93833,
+      "y": 11.3686829,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    }
+  ],
+  "transitions": [
+    {
+      "target": null,
+      "id": "Crossroads_18[right1]",
+      "x": 41.5,
+      "y": 37.0,
+      "z": 0.0,
+      "w": 1.0,
+      "h": 4.0,
+      "d": 0.0
+    },
+    {
+      "target": null,
+      "id": "Crossroads_18[right2]",
+      "x": 41.5,
+      "y": 9.0,
+      "z": 0.0,
+      "w": 1.0,
+      "h": 4.0,
+      "d": 0.0
+    },
+    {
+      "target": null,
+      "id": "Crossroads_18[bot1]",
+      "x": 21.0,
+      "y": -0.5,
+      "z": 0.0,
+      "w": 4.0,
+      "h": 1.0,
+      "d": 0.0
+    }
+  ],
+  "x1": -3.494667760459393,
+  "y1": -5.0464617583988565,
+  "x2": 46.04593929450369,
+  "y2": 52.4446032880629
+}

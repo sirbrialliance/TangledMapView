@@ -1,0 +1,102 @@
+{
+  "id": "Crossroads_ShamanTemple",
+  "locations": [
+    {
+      "id": "Vengeful_Spirit",
+      "x": -100.0,
+      "y": -100.0,
+      "z": -100.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Soul_Catcher",
+      "x": 37.81,
+      "y": 20.277462,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Whispering_Root-Ancestral_Mound",
+      "x": 20.30677,
+      "y": 64.25,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Lifeblood_Cocoon-Ancestral_Mound",
+      "x": 39.2119331,
+      "y": 48.2982864,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Geo_Rock-Ancestral_Mound",
+      "x": 29.28835,
+      "y": 45.5190163,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Geo_Rock-Ancestral_Mound_Dupe",
+      "x": 34.4146461,
+      "y": 45.6059036,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Geo_Rock-Ancestral_Mound_Tree",
+      "x": 34.4146461,
+      "y": 45.6059036,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Geo_Rock-Ancestral_Mound_Tree_Dupe",
+      "x": 25.85,
+      "y": 59.64,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Soul_Totem-Ancestral_Mound",
+      "x": 35.01,
+      "y": 35.16,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    }
+  ],
+  "transitions": [
+    {
+      "target": null,
+      "id": "Crossroads_ShamanTemple[left1]",
+      "x": -0.5,
+      "y": 9.0,
+      "z": 0.0,
+      "w": 1.0,
+      "h": 4.0,
+      "d": 0.0
+    }
+  ],
+  "x1": -3.998147576412473,
+  "y1": -2.29594523433386,
+  "x2": 147.0484717505403,
+  "y2": 70.74249605055292
+}

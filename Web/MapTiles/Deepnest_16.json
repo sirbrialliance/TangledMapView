@@ -1,0 +1,85 @@
+{
+  "id": "Deepnest_16",
+  "locations": [
+    {
+      "id": "Hallownest_Seal-Deepnest_By_Mantis_Lords",
+      "x": 77.29805,
+      "y": 30.2598038,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Geo_Rock-Deepnest_By_Mantis_Lords_Garpede_Pogo",
+      "x": 81.16,
+      "y": 23.96,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Geo_Rock-Deepnest_By_Mantis_Lords_Garpede_Pogo_Dupe",
+      "x": 84.064,
+      "y": 23.921,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Geo_Rock-Deepnest_By_Mantis_Lords_Requires_Claw_1",
+      "x": 60.6,
+      "y": 34.9290924,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Geo_Rock-Deepnest_By_Mantis_Lords_Requires_Claw_2",
+      "x": 32.8727646,
+      "y": 11.7650433,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Geo_Rock-Deepnest_By_Mantis_Lords_Requires_Claw_3",
+      "x": 19.35206,
+      "y": 5.77594328,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    }
+  ],
+  "transitions": [
+    {
+      "target": null,
+      "id": "Deepnest_16[left1]",
+      "x": -0.5,
+      "y": 8.0,
+      "z": 0.0,
+      "w": 1.0,
+      "h": 4.0,
+      "d": 0.0
+    },
+    {
+      "target": null,
+      "id": "Deepnest_16[bot1]",
+      "x": 73.0,
+      "y": -0.5,
+      "z": 0.0,
+      "w": 4.0,
+      "h": 1.0,
+      "d": 0.0
+    }
+  ],
+  "x1": -3.997434801197093,
+  "y1": -5.046904315196998,
+  "x2": 102.0478837109876,
+  "y2": 63.99624765478424
+}

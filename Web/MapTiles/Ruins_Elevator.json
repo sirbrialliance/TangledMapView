@@ -1,0 +1,67 @@
+{
+  "id": "Ruins_Elevator",
+  "locations": [
+    {
+      "id": "Rancid_Egg-City_of_Tears_Pleasure_House",
+      "x": 56.0,
+      "y": 95.2653046,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Wanderer's_Journal-Pleasure_House",
+      "x": 46.2835236,
+      "y": 5.27109671,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Geo_Rock-Pleasure_House",
+      "x": 23.6,
+      "y": 52.38,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    },
+    {
+      "id": "Lore_Tablet-Pleasure_House",
+      "x": 22.67,
+      "y": 7.04156256,
+      "z": 0.0,
+      "w": 0.0,
+      "h": 0.0,
+      "d": 0.0
+    }
+  ],
+  "transitions": [
+    {
+      "target": null,
+      "id": "Ruins_Elevator[left1]",
+      "x": 10.5,
+      "y": 7.0,
+      "z": 0.0,
+      "w": 1.0,
+      "h": 4.0,
+      "d": 0.0
+    },
+    {
+      "target": null,
+      "id": "Ruins_Elevator[left2]",
+      "x": 21.0,
+      "y": 141.0,
+      "z": 0.0,
+      "w": 1.0,
+      "h": 4.0,
+      "d": 0.0
+    }
+  ],
+  "x1": -3.9973901696389733,
+  "y1": -1.4476243400944706,
+  "x2": 91.89430187037843,
+  "y2": 152.99527646568492
+}
