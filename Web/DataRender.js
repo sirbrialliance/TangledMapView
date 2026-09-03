@@ -477,6 +477,7 @@ class DataRender {
 		this._crossLinkLines = crossIslandLinks
 
 		this.updateVisibleItems()
+		this.updateTracker()
 	}
 
 	updateVisibleItems() {
@@ -501,6 +502,8 @@ class DataRender {
 		for (let pool of pools) {
 			mainMap.classList.add("showItemsInPool-" + pool)
 		}
+
+		this.updateTracker()
 	}
 
 	highlightPath(rooms) {
@@ -653,6 +656,113 @@ class DataRender {
 			case LogicState.OUT_OF_LOGIC: return "#icon-transition-unreachable"
 		}
 		return "#icon-entrance-unchanged"
+	}
+
+	updateTracker() {
+		var panel = document.getElementById("trackerData")
+		panel.innerHTML = ""
+
+		var targetState
+		switch (app.prefs.trackerTargets) {
+			default:
+			case "inLogic": targetState = LogicState.IN_LOGIC; break
+			case "previewed": targetState = LogicState.PREVIEWED; break
+			case "notInLogic": targetState = LogicState.OUT_OF_LOGIC; break
+			case "obtained": targetState = LogicState.OBTAINED; break
+		}
+
+		var trackerItems = []
+
+		for (let id in this.data.locationStates) {
+			let state = this.data.locationStates[id]
+			if (state !== targetState) continue
+
+			let item = this.data.allLocations[id]
+			if (!item) continue//probably a data error
+			let name = DataRender.getItemDescription(item)
+			let roomId = this.data.locationsToRooms[id]
+			let sortStr = roomId ? roomId + " " + name : "??? " + name
+
+			trackerItems.push({id, item, name, roomId, sortStr})
+		}
+
+		if (trackerItems.length > 0) {
+			trackerItems.sort((a, b) => a.sortStr < b.sortStr ? -1 : 1)
+			let ul = document.createElement("ul")
+			panel.appendChild(ul)
+
+			for (let item of trackerItems) {
+				let el = document.createElement("li")
+
+				let room = this.data.rooms[item.roomId]
+				if (room) {
+					el.title = item.id + " in " + item.roomId + " " + (room.mapData.name || "")
+					el.setAttribute("data-roomId", room.id)
+
+					let roomBoxEl = document.createElement("div")
+					roomBoxEl.className = "roomBox"
+
+					let area = room.mapData.area
+					let areaEl = document.createElement("span")
+					areaEl.className = "areaName"
+					areaEl.textContent = MapDataAreas[area]
+					areaEl.setAttribute("data-area", area)
+					roomBoxEl.appendChild(areaEl)
+
+					let nameEl = document.createElement("span")
+					nameEl.className = "roomName"
+					if (room.mapData.name) nameEl.textContent = room.mapData.name
+					else nameEl.textContent = room.id
+					roomBoxEl.appendChild(nameEl)
+
+					el.appendChild(roomBoxEl)
+				} else {
+					el.title = item.id + " in ???"
+				}
+
+				let contentsBoxEl = document.createElement("div")
+				contentsBoxEl.className = "contentsBox"
+				el.appendChild(contentsBoxEl)
+
+				let itemEl = document.createElement("span")
+				itemEl.className = "locationName"
+				itemEl.textContent = item.name
+				contentsBoxEl.appendChild(itemEl)
+
+				if (this.data.shouldRevealItemAt(item.id)) {
+					let actualEl = document.createElement("span")
+					actualEl.className = "itemAtLocation"
+
+					if (this.data.locationStates[item.id] === LogicState.OBTAINED) {
+						actualEl.classList.add("obtained")
+					} else {
+						actualEl.classList.add("notObtained")
+					}
+					let descriptions = []
+					for (let itemId of this.data.getItemsAt(item.id)) {
+						let realItem = this.data.getNormalItemInfo(itemId)
+						descriptions.push(DataRender.getItemDescription(realItem))
+					}
+					actualEl.textContent = descriptions.join(", ")
+					contentsBoxEl.appendChild(actualEl)
+					el.classList.add("itemRevealed")
+				}
+
+				ul.appendChild(el)
+			}
+		} else {
+			let nothingEl = document.createElement("p")
+			nothingEl.className = "nothingFound"
+			switch (app.prefs.trackerTargets) {
+				default:
+				case "inLogic": nothingEl.textContent = "You are BK'd (or need to visit a previewed location)"; break
+				case "previewed": nothingEl.textContent = "No previews"; break
+				case "notInLogic": nothingEl.textContent = "Nothing is impossible"; break
+				case "obtained": nothingEl.textContent = "You have nothing"; break
+			}
+			panel.appendChild(nothingEl)
+		}
+
 	}
 }
 

@@ -127,6 +127,8 @@ class DataGen {
 	showAllItems = false
 
 	clusterBasedOnAll = true
+	/** Map of location id => room id */
+	locationsToRooms = {}
 
 	clear() {
 		this.saveData = null
@@ -225,6 +227,13 @@ class DataGen {
 				let item = room.items[locationId]
 				item.id = locationId
 				this.allLocations[item.id] = item
+			}
+		}
+
+		this.locationsToRooms = {}
+		for (let roomId in window.mapData.rooms) {
+			for (let locationId in window.mapData.rooms[roomId].items) {
+				this.locationsToRooms[locationId] = roomId
 			}
 		}
 	}
@@ -385,7 +394,8 @@ class DataGen {
 	/** Returns true if we should reveal to the user what item is at the given location. */
 	shouldRevealItemAt(locationItemId) {
 		if (this.showAllItems) return true
-		return this.hasClearedLocation(locationItemId)
+		let state = this.locationStates[locationItemId]
+		return state === LogicState.OBTAINED || state === LogicState.PREVIEWED
 	}
 
 	/** true/false if we have checked the given location. */

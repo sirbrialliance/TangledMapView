@@ -38,7 +38,14 @@
 	--area-FogCanyon-border: #a48fa0;
 	--area-FogCanyon-fill: #1f191d;
 }
-body, html {margin: 0;padding: 0;height: 100%;width: 100%;background: #4e4e4e;}
+body, html {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	width: 100%;
+	background: #4e4e4e;
+	overflow: hidden;
+}
 
 svg { user-select: none; }
 
@@ -242,7 +249,7 @@ body.noAnimate .mapNode > rect.currentRoute, body.noAnimate .roomLink.currentRou
 	100% { stroke: rgb(196, 6, 6); }
 }
 
-#controlPanel {
+#controlPanel, #controlPanel2 {
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -253,10 +260,11 @@ body.noAnimate .mapNode > rect.currentRoute, body.noAnimate .roomLink.currentRou
 	font-family: sans-serif;
 	opacity: .5;
 }
-#controlPanel:hover {
+#controlPanel:hover, #controlPanel2:hover {
 	opacity: 1;
 	background: #444444CC;
 }
+
 
 #blockingMessage {
 	position: fixed;
@@ -468,5 +476,80 @@ fieldset {
 	white-space: pre;
 }
 
+#controlPanel2 {
+	left: initial;
+	right: 0;
+	bottom: 0;
+	width: 300px;
+}
+fieldset#trackerPanel {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+}
+#trackerPanel ul {
+	margin: 0;
+	padding: 0;
+	overflow: auto;
+	position: absolute;
+	top: 2.5em;
+	bottom: 0;
+	right: 0;
+	left: 6px;
+}
+#trackerPanel ul>li {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+#trackerPanel ul>li:nth-child(2n) {
+	background: #4e4e4e;
+}
+#trackerPanel ul>li:hover {
+	background: #3c3c3c;
+}
+#trackerPanel .locationName, #trackerPanel .itemAtLocation {
+	display: inline-block;
+	margin-left: 5px;
+}
 
+#trackerPanel.itemRevealed .locationName {
+	vertical-align: initial;
+}
+#trackerPanel .itemAtLocation {
+	display: block;
+	margin-left: 5px;
+}
+#trackerPanel .itemAtLocation.obtained:before {
+	content: "Was: ";
+	font-size: 60%;
+}
+#trackerPanel .itemAtLocation.notObtained:before {
+	content: "Is: ";
+	font-size: 60%;
+}
+
+#trackerPanel .contentsBox {
+	display: inline-block;
+	vertical-align: center;
+}
+#trackerPanel .roomBox {
+	width: 70px;
+	display: inline-block;
+}
+#trackerPanel .areaName, #trackerPanel .roomName {
+	font-size: 60%;
+	margin-left: 0;
+	white-space: pre;
+	overflow: hidden;
+	display: block;
+}
+#trackerPanel .roomName {
+	margin-left: 3px;
+}
+#trackerPanel *[data-roomId] {
+	cursor: pointer;
+}
 

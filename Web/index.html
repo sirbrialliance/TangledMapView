@@ -146,6 +146,7 @@
 				</label>
 			</fieldset>
 			<fieldset>
+				<legend>Room</legend>
 				<div class="roomNav">
 					<h2>Current Room</h2>
 					<span class="roomName" id="currentRoomIdText"></span>
@@ -166,9 +167,8 @@
 					>View</button>
 					<button onclick="app.enterRoom(app.data.selectedRoom)">Enter</button>
 				</div>
-
-				<br>
-
+			</fieldset>
+			<fieldset>
 				<legend>Search</legend>
 
 				<input type="text" placeholder="Search... (regex)" id="searchInput"></select>
@@ -196,6 +196,23 @@
 			<p>Rooms you can't see/haven't visited are light-colored in results.</p>
 			<p>Note that the ✓ and ✖ next to a "normal item" means you have/haven't gotten whatever item is currently at that location.</p>
 		</fragment>
+	</div>
+
+	<div id="controlPanel2">
+		<fieldset id="trackerPanel">
+			<legend>Tracker</legend>
+
+			<label>Show:
+				<select id="pref-trackerTargets" onchange="app.updatePref('trackerTargets', this.value)">
+					<option value="inLogic">In Logic</option>
+					<option value="previewed">Previewed</option>
+					<option value="notInLogic">Not in Logic</option>
+					<option value="obtained">Obtained</option>
+				</select>
+			</label>
+
+			<div id="trackerData"></div>
+		</fieldset>
 	</div>
 </body>
 <script>

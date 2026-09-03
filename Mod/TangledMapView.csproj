@@ -34,7 +34,7 @@
     <Reference Include="WebSocketSharp">
       <HintPath>websocket-sharp.dll</HintPath>
     </Reference>
-    <Reference Include="RandomizerCore, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="RandomizerCore, Version=2.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>$(HollowKnightRefs)\Mods\RandomizerCore\RandomizerCore.dll</HintPath>
     </Reference>
     <Reference Include="RandomizerMod">

@@ -14,6 +14,17 @@ Next
 	- Use actual logic for each room-to-room connection
 	- List transitions/actions to take on page
 
+- tracker (show avail checks/transitions)
+	- xx base
+	- show actual items for previewed/collected. Or if spoilers.
+- show item distance in live view
+- trollface/other icon for in logic w/ sequence breaks
+
+- it's cdash, not superdash
+-
+
+
+
 - "fps saver" could update while loading scenes...
 
 - sometimes we load a save but the page doens't get it
@@ -35,9 +46,15 @@ Next
 	- may be able to use clues in itemchanger data for unknown positions?
 	- Pool names in randomizer don't match my old data export
 	- Missing items: check again
+		- Gorb (all bosses?)
+		- Lore_Tablet-World_Sense
+		- dramers
 	- Wrong location:
 		- Geo_Rock-Ancestral_Mound or Geo_Rock-Ancestral_Mound_Dupe
 		- Geo_Rock-Abyss_2
+		- cdash
+
+	- Abyss_17 shows as howling cliffs?
 
 	- skip scenes
 		- Cinematic_*, Dream_Final,
@@ -328,5 +345,3 @@ Testing map w/out the game
 
 - To add a test:
 	- Copy SAVENAME.json and SAVENAME.modded.json to the TestCases folder, perhaps renaming as desired.
-
-

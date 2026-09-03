@@ -10,6 +10,7 @@ class App {
 		brightenTiles: false,
 		layout: "islands",
 		visibleItems: "relevant",
+		trackerTargets: "inLogic",
 	}
 
 	/** Should we render/update/animate? We can pause that to help with resource consumption. */
@@ -136,6 +137,17 @@ class App {
 		resultsEl.addEventListener("pointerdown", ev => {
 			let target = ev.target
 			while (target != document.body && !target.getAttribute("data-roomId")) target = target.parentNode
+
+			let targetRoom = target?.getAttribute("data-roomId")
+			if (targetRoom) {
+				this.selectRoom(targetRoom)
+				this.zoomToRoom(targetRoom)
+			}
+		}, { capture: true })
+
+		document.getElementById("trackerPanel").addEventListener("pointerdown", ev => {
+			let target = ev.target
+			while (target !== document.body && !target.getAttribute("data-roomId")) target = target.parentNode
 
 			let targetRoom = target?.getAttribute("data-roomId")
 			if (targetRoom) {
